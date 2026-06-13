@@ -69,6 +69,20 @@
     break-inside: avoid;
   }
 
+  h1,
+  h2,
+  h3,
+  h4,
+  header {
+    break-after: avoid;
+    break-inside: avoid;
+  }
+
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+
   a {
     text-decoration: none;
   }
