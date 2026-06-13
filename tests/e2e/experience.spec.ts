@@ -33,18 +33,23 @@ test.describe('Experience section', () => {
     await page.goto('/');
     const section = page.getByRole('region', { name: /Experience/i });
     const moreToggle = section.getByRole('button', { name: /more/i }).first();
-    await expect(moreToggle).toBeVisible();
+    await moreToggle.scrollIntoViewIfNeeded();
+    await page.waitForFunction(
+      () => !document.querySelector('astro-island')?.hasAttribute('ssr'),
+    );
 
     const entry = section.getByRole('listitem').first();
-    const chipsBefore = await entry.locator('[data-variant]').count();
+    const chips = entry.locator('[data-variant]');
+    const chipsBefore = await chips.count();
+
     await moreToggle.click();
-    const chipsAfter = await entry.locator('[data-variant]').count();
-    expect(chipsAfter).toBeGreaterThan(chipsBefore);
+    await expect(section.getByRole('button', { name: /less/i }).first()).toBeVisible();
+    expect(await chips.count()).toBeGreaterThan(chipsBefore);
 
     const lessToggle = section.getByRole('button', { name: /less/i }).first();
-    await expect(lessToggle).toBeVisible();
     await lessToggle.click();
-    expect(await entry.locator('[data-variant]').count()).toBe(chipsBefore);
+    await expect(section.getByRole('button', { name: /more/i }).first()).toBeVisible();
+    expect(await chips.count()).toBe(chipsBefore);
   });
 
   test('does not horizontally scroll the page at 360px viewport', async ({ page }) => {

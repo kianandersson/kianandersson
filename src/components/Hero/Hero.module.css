@@ -18,7 +18,7 @@
 
 .body {
   font-family: var(--font-sans);
-  font-size: 17px;
+  font-size: 19px;
   line-height: 1.65;
   color: var(--dim);
   max-width: 540px;
@@ -30,7 +30,7 @@
   gap: 12px;
   margin-top: 20px;
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: 15px;
   color: var(--dim);
 }
 
