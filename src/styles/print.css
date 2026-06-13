@@ -36,6 +36,14 @@
     transition: none !important;
     box-shadow: none !important;
     /* biome-ignore-end lint/complexity/noImportantStyles: print disables motion regardless of component specificity */
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  [data-state="off"] {
+    /* biome-ignore-start lint/complexity/noImportantStyles: forces visible off-dots in print since the design token is too pale on paper */
+    background: #b0b0b0 !important;
+    /* biome-ignore-end lint/complexity/noImportantStyles: forces visible off-dots in print since the design token is too pale on paper */
   }
 
   [data-open] {
