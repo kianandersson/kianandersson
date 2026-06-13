@@ -34,7 +34,7 @@
     grid-template-areas:
       "name dots"
       "level years";
-    row-gap: 6px;
+    row-gap: 8px;
   }
 
   .name {
