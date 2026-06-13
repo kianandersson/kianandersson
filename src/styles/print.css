@@ -21,10 +21,11 @@
     /* biome-ignore-end lint/complexity/noImportantStyles: print overrides must beat themed declarations */
   }
 
-  [data-chrome] {
-    /* biome-ignore-start lint/complexity/noImportantStyles: hides chrome (top bar + footer) in print regardless of wrapping */
+  [data-chrome],
+  [data-print-hidden] {
+    /* biome-ignore-start lint/complexity/noImportantStyles: hides chrome and print-irrelevant affordances regardless of wrapping */
     display: none !important;
-    /* biome-ignore-end lint/complexity/noImportantStyles: hides chrome (top bar + footer) in print regardless of wrapping */
+    /* biome-ignore-end lint/complexity/noImportantStyles: hides chrome and print-irrelevant affordances regardless of wrapping */
   }
 
   *,

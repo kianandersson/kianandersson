@@ -74,6 +74,10 @@ test.describe('Print media', () => {
     await expect(page.locator('[data-chrome="top"]')).toBeHidden();
     await expect(page.locator('[data-chrome="bottom"]')).toBeHidden();
 
+    await expect(page.getByText('Available for new projects.')).toBeHidden();
+    await expect(page.getByRole('link', { name: /get in touch/i })).toBeHidden();
+    await expect(page.getByRole('link', { name: /all skills/i })).toBeHidden();
+
     const bg = await page.evaluate(() =>
       getComputedStyle(document.documentElement).getPropertyValue('--bg').trim(),
     );

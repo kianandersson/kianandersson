@@ -19,13 +19,13 @@ export function Hero({ name, available, ctaHref }: HeroProps) {
       <p className={styles.body}>{PLACEHOLDER_BODY}</p>
 
       {available ? (
-        <p className={styles.availability}>
+        <p className={styles.availability} data-print-hidden="true">
           <span className={styles.dot} aria-hidden="true" />
           Available for new projects.
         </p>
       ) : null}
 
-      <div className={styles.ctaWrapper}>
+      <div className={styles.ctaWrapper} data-print-hidden="true">
         <a className={styles.cta} href={ctaHref}>
           Get in touch
           <svg

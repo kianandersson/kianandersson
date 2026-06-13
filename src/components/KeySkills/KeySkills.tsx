@@ -23,7 +23,7 @@ export function KeySkills({ skills }: Props) {
         <h2 id="key-skills-heading" className={styles.heading}>
           Key skills
         </h2>
-        <a href="#skills" className={styles.allSkillsLink}>
+        <a href="#skills" className={styles.allSkillsLink} data-print-hidden="true">
           All skills →
         </a>
       </header>
