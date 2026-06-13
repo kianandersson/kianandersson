@@ -1,0 +1,30 @@
+.section {
+  padding-top: 72px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 14px;
+}
+
+.hash {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.heading {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.list {
+  border-top: 1px solid var(--line);
+}

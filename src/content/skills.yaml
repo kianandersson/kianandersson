@@ -1,0 +1,233 @@
+# Skills data — single source of truth for both the Hero "Key skills" section
+# and the full grouped Skills section. Mark `keySkill: true` to surface a skill
+# in the Hero block; everything else only appears in the grouped section.
+# Placeholder data taken from the design prototype; replace with the real list.
+
+# Programming Languages
+- id: typescript
+  name: TypeScript
+  level: 5
+  years: 8
+  lastUsed: 2026
+  group: Programming Languages
+  keySkill: true
+
+- id: javascript
+  name: JavaScript
+  level: 5
+  years: 10
+  lastUsed: 2026
+  group: Programming Languages
+  keySkill: false
+
+- id: sql
+  name: SQL
+  level: 4
+  years: 8
+  lastUsed: 2026
+  group: Programming Languages
+  keySkill: false
+
+- id: go
+  name: Go
+  level: 2
+  years: 2
+  lastUsed: 2025
+  group: Programming Languages
+  keySkill: true
+
+- id: php
+  name: PHP
+  level: 3
+  years: 6
+  lastUsed: 2021
+  group: Programming Languages
+  keySkill: false
+
+# Frameworks & Libraries
+- id: react
+  name: React
+  level: 4
+  years: 7
+  lastUsed: 2026
+  group: Frameworks & Libraries
+  keySkill: true
+
+- id: nextjs
+  name: Next.js
+  level: 4
+  years: 5
+  lastUsed: 2026
+  group: Frameworks & Libraries
+  keySkill: false
+
+- id: node-js
+  name: Node.js
+  level: 4
+  years: 6
+  lastUsed: 2026
+  group: Frameworks & Libraries
+  keySkill: true
+
+- id: trpc
+  name: tRPC
+  level: 3
+  years: 2
+  lastUsed: 2026
+  group: Frameworks & Libraries
+  keySkill: false
+
+- id: fastify
+  name: Fastify
+  level: 3
+  years: 3
+  lastUsed: 2025
+  group: Frameworks & Libraries
+  keySkill: false
+
+- id: vue
+  name: Vue
+  level: 3
+  years: 3
+  lastUsed: 2021
+  group: Frameworks & Libraries
+  keySkill: false
+
+# Data & Infrastructure
+- id: postgresql
+  name: PostgreSQL
+  level: 3
+  years: 5
+  lastUsed: 2026
+  group: Data & Infrastructure
+  keySkill: true
+
+- id: docker
+  name: Docker
+  level: 4
+  years: 5
+  lastUsed: 2026
+  group: Data & Infrastructure
+  keySkill: false
+
+- id: aws
+  name: AWS
+  level: 3
+  years: 4
+  lastUsed: 2026
+  group: Data & Infrastructure
+  keySkill: true
+
+- id: redis
+  name: Redis
+  level: 3
+  years: 4
+  lastUsed: 2025
+  group: Data & Infrastructure
+  keySkill: false
+
+- id: kubernetes
+  name: Kubernetes
+  level: 2
+  years: 2
+  lastUsed: 2024
+  group: Data & Infrastructure
+  keySkill: false
+
+- id: mongodb
+  name: MongoDB
+  level: 3
+  years: 3
+  lastUsed: 2022
+  group: Data & Infrastructure
+  keySkill: false
+
+# Methodologies & Practices
+- id: domain-driven-design
+  name: Domain-Driven Design
+  level: 4
+  years: 5
+  lastUsed: 2026
+  group: Methodologies & Practices
+  keySkill: false
+
+- id: test-driven-development
+  name: Test-Driven Development
+  level: 4
+  years: 6
+  lastUsed: 2026
+  group: Methodologies & Practices
+  keySkill: false
+
+- id: ci-cd
+  name: CI/CD
+  level: 4
+  years: 6
+  lastUsed: 2026
+  group: Methodologies & Practices
+  keySkill: false
+
+- id: pair-programming
+  name: Pair programming
+  level: 4
+  years: 7
+  lastUsed: 2026
+  group: Methodologies & Practices
+  keySkill: false
+
+- id: continuous-delivery
+  name: Continuous Delivery
+  level: 4
+  years: 5
+  lastUsed: 2026
+  group: Methodologies & Practices
+  keySkill: false
+
+- id: trunk-based-dev
+  name: Trunk-based dev
+  level: 3
+  years: 3
+  lastUsed: 2025
+  group: Methodologies & Practices
+  keySkill: false
+
+# Leadership & Architecture
+- id: code-review-culture
+  name: Code review culture
+  level: 5
+  years: 7
+  lastUsed: 2026
+  group: Leadership & Architecture
+  keySkill: false
+
+- id: clean-architecture
+  name: Clean Architecture
+  level: 4
+  years: 5
+  lastUsed: 2026
+  group: Leadership & Architecture
+  keySkill: false
+
+- id: system-design
+  name: System design
+  level: 4
+  years: 5
+  lastUsed: 2026
+  group: Leadership & Architecture
+  keySkill: false
+
+- id: mentoring
+  name: Mentoring
+  level: 4
+  years: 4
+  lastUsed: 2026
+  group: Leadership & Architecture
+  keySkill: false
+
+- id: technical-roadmapping
+  name: Technical roadmapping
+  level: 3
+  years: 3
+  lastUsed: 2025
+  group: Leadership & Architecture
+  keySkill: false

@@ -1,0 +1,29 @@
+.dots {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.on {
+  background: var(--accent);
+  animation: dotpop 0.45s ease both;
+}
+
+.off {
+  background: var(--line);
+}
+
+@keyframes dotpop {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
