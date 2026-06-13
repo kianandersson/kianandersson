@@ -34,9 +34,7 @@ test.describe('Experience section', () => {
     const section = page.getByRole('region', { name: /Experience/i });
     const moreToggle = section.getByRole('button', { name: /more/i }).first();
     await moreToggle.scrollIntoViewIfNeeded();
-    await page.waitForFunction(
-      () => !document.querySelector('astro-island')?.hasAttribute('ssr'),
-    );
+    await page.waitForFunction(() => !document.querySelector('astro-island')?.hasAttribute('ssr'));
 
     const entry = section.getByRole('listitem').first();
     const chips = entry.locator('[data-variant]');
