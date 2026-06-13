@@ -24,14 +24,14 @@
 }
 
 .link {
-  color: var(--dim);
+  color: var(--text);
   border-radius: 2px;
   transition: color 0.2s;
 }
 
 .link:hover,
 .link:focus-visible {
-  color: var(--text);
+  color: var(--accent);
 }
 
 .link:focus-visible {
