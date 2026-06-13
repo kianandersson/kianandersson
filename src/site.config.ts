@@ -26,6 +26,6 @@ export const siteConfig: SiteConfig = SiteConfigSchema.parse({
     linkedin: 'https://www.linkedin.com/in/kianandersson',
   },
   hero: {
-    available: false,
+    available: true,
   },
 });
