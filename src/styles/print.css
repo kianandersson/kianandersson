@@ -28,6 +28,12 @@
     /* biome-ignore-end lint/complexity/noImportantStyles: hides chrome and print-irrelevant affordances regardless of wrapping */
   }
 
+  [data-timeline] {
+    /* biome-ignore-start lint/complexity/noImportantStyles: collapses the rail gutter once the marker and rail are hidden in print */
+    padding-left: 0 !important;
+    /* biome-ignore-end lint/complexity/noImportantStyles: collapses the rail gutter once the marker and rail are hidden in print */
+  }
+
   *,
   *::before,
   *::after {

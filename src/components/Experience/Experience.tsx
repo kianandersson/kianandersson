@@ -29,8 +29,8 @@ export function Experience({ entries }: Props) {
           Experience
         </h2>
       </header>
-      <div className={styles.timeline}>
-        <span className={styles.rail} aria-hidden="true" />
+      <div className={styles.timeline} data-timeline="true">
+        <span className={styles.rail} aria-hidden="true" data-print-hidden="true" />
         <ol className={styles.list}>
           {entries.map((entry) => (
             <li key={entry.id} className={styles.entry}>
