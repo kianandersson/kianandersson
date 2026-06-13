@@ -15,17 +15,33 @@ const { hero, keySkills, experience, skillGroups } = Astro.props;
 ---
 
 <main>
-  <Hero {...hero} />
-  <KeySkills skills={keySkills} />
-  <Experience entries={experience} client:visible />
-  <SkillGroups groups={skillGroups} client:visible />
+  <section><Hero {...hero} /></section>
+  <section id="key-skills" aria-labelledby="key-skills-heading">
+    <KeySkills skills={keySkills} />
+  </section>
+  <section  id="experience" aria-labelledby="experience-heading">
+    <Experience entries={experience} client:visible />
+  </section>
+  <section id="skills" aria-labelledby="skills-heading">
+    <SkillGroups groups={skillGroups} client:visible />
+  </section>
   <slot />
 </main>
 
 <style>
   main {
+    box-sizing: border-box;
     max-width: var(--container-max);
     margin: 0 auto;
-    padding: 0 var(--container-pad) 100px;
+    padding: 64px var(--container-pad) 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 72px;
+  }
+
+  @media print {
+    main {
+      padding: 0;
+    }
   }
 </style>

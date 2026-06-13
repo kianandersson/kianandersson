@@ -15,7 +15,7 @@ type Props = {
 
 export function KeySkills({ skills }: Props) {
   return (
-    <section className={styles.section} aria-labelledby="key-skills-heading">
+    <div className={styles.root}>
       <header className={styles.header}>
         <span className={styles.hash} aria-hidden="true">
           ##
@@ -32,6 +32,6 @@ export function KeySkills({ skills }: Props) {
           <SkillRow key={skill.id} name={skill.name} level={skill.level} years={skill.years} />
         ))}
       </ul>
-    </section>
+    </div>
   );
 }

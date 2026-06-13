@@ -20,7 +20,7 @@ type Props = {
 
 export function Experience({ entries }: Props) {
   return (
-    <section className={styles.section} aria-labelledby="experience-heading">
+    <div className={styles.root}>
       <header className={styles.header}>
         <span className={styles.hash} aria-hidden="true">
           ##
@@ -35,13 +35,15 @@ export function Experience({ entries }: Props) {
           {entries.map((entry) => (
             <li key={entry.id} className={styles.entry}>
               <TimelineMarker />
-              <h3 className={styles.role}>{entry.role}</h3>
-              <div className={styles.metaLine}>
-                <span className={styles.meta}>{entry.meta}</span>
-                <span aria-hidden="true" className={styles.separator}>
-                  ·
-                </span>
-                <span className={styles.period}>{entry.period}</span>
+              <div className={styles.titleBlock}>
+                <h3 className={styles.role}>{entry.role}</h3>
+                <div className={styles.metaLine}>
+                  <span className={styles.meta}>{entry.meta}</span>
+                  <span aria-hidden="true" className={styles.separator}>
+                    ·
+                  </span>
+                  <span className={styles.period}>{entry.period}</span>
+                </div>
               </div>
               <p className={styles.description}>{entry.description}</p>
               <div className={styles.chipGroups}>
@@ -57,6 +59,6 @@ export function Experience({ entries }: Props) {
           ))}
         </ol>
       </div>
-    </section>
+    </div>
   );
 }

@@ -8,3 +8,9 @@
   background: var(--accent);
   box-shadow: 0 0 0 4px var(--accent-soft);
 }
+
+@media print {
+  .marker {
+    display: none;
+  }
+}

@@ -1,13 +1,14 @@
-.section {
-  padding-top: 72px;
+.root {
   container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .header {
   display: flex;
   align-items: baseline;
   gap: 8px;
-  padding-bottom: 16px;
 }
 
 .allSkillsLink {
@@ -19,16 +20,25 @@
   padding: 4px 8px;
   border-radius: 4px;
   transition: color 0.2s;
+  text-decoration: none;
 }
 
-.allSkillsLink:hover,
 .allSkillsLink:focus-visible {
   color: var(--accent);
-}
-
-.allSkillsLink:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+@media (hover: hover) {
+  .allSkillsLink:hover {
+    color: var(--accent);
+  }
+}
+
+@media print {
+  .allSkillsLink {
+    display: none;
+  }
 }
 
 .hash {
@@ -39,6 +49,7 @@
 }
 
 .heading {
+  margin: 0;
   font-family: var(--font-sans);
   font-weight: 600;
   font-size: 24px;

@@ -13,7 +13,7 @@ type Props = {
 export function ChipList({ label, items, limit, variant }: Props) {
   const [isOpen, setOpen] = useState(false);
   const toggle = useCallback(() => setOpen((prev) => !prev), []);
-  const { visible, hasMore, hiddenCount } = sliceList(items, limit, isOpen);
+  const { visible, hidden, hasMore, hiddenCount } = sliceList(items, limit);
 
   return (
     <div className={styles.row}>
@@ -21,6 +21,9 @@ export function ChipList({ label, items, limit, variant }: Props) {
       <div className={styles.chips}>
         {visible.map((item) => (
           <Chip key={item} label={item} variant={variant} />
+        ))}
+        {hidden.map((item) => (
+          <Chip key={item} label={item} variant={variant} isHidden={!isOpen} />
         ))}
         {hasMore && (
           <button type="button" onClick={toggle} aria-expanded={isOpen} className={styles.toggle}>

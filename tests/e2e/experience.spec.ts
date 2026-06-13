@@ -37,17 +37,17 @@ test.describe('Experience section', () => {
     await page.waitForFunction(() => !document.querySelector('astro-island')?.hasAttribute('ssr'));
 
     const entry = section.getByRole('listitem').first();
-    const chips = entry.locator('[data-variant]');
-    const chipsBefore = await chips.count();
+    const visibleChips = entry.locator('[data-variant]:not([data-hidden])');
+    const before = await visibleChips.count();
 
     await moreToggle.click();
     await expect(section.getByRole('button', { name: /less/i }).first()).toBeVisible();
-    expect(await chips.count()).toBeGreaterThan(chipsBefore);
+    expect(await visibleChips.count()).toBeGreaterThan(before);
 
     const lessToggle = section.getByRole('button', { name: /less/i }).first();
     await lessToggle.click();
     await expect(section.getByRole('button', { name: /more/i }).first()).toBeVisible();
-    expect(await chips.count()).toBe(chipsBefore);
+    expect(await visibleChips.count()).toBe(before);
   });
 
   test('does not horizontally scroll the page at 360px viewport', async ({ page }) => {

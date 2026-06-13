@@ -17,3 +17,16 @@
 .off {
   background: var(--line);
 }
+
+@media print {
+  .on,
+  .off {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* --line is too pale on paper; force a visible mid-grey for off-dots. */
+  .off {
+    background: #b0b0b0;
+  }
+}

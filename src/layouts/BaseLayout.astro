@@ -1,7 +1,8 @@
 ---
-import '../styles/tokens.css';
-import '../styles/base.css';
+import { Footer } from '../components/Footer/Footer';
+import { TopBar } from '../components/TopBar/TopBar';
 import { siteConfig } from '../site.config';
+import '../styles/tokens.css';
 
 interface Props {
   title?: string;
@@ -9,8 +10,8 @@ interface Props {
 }
 
 const {
-  title = `${siteConfig.name} — Freelance full-stack engineer`,
-  description = `${siteConfig.name}, freelance full-stack engineer based in ${siteConfig.location}. Software built end-to-end.`,
+  title = `${siteConfig.name} — Senior Fullstack Engineer`,
+  description = `${siteConfig.name}, senior fullstack engineer based in ${siteConfig.location}.`,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
@@ -30,6 +31,8 @@ const personJsonLd = {
 };
 
 const jsonLdSerialized = JSON.stringify(personJsonLd).replace(/</g, '\\u003c');
+
+const currentYear = new Date().getFullYear();
 ---
 
 <!doctype html>
@@ -54,9 +57,65 @@ const jsonLdSerialized = JSON.stringify(personJsonLd).replace(/</g, '\\u003c');
     <link rel="preload" href="/fonts/Geist.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/GeistMono.woff2" as="font" type="font/woff2" crossorigin />
 
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          if (stored === 'dark' || stored === 'light') {
+            document.documentElement.dataset.theme = stored;
+            return;
+          }
+        } catch (e) {}
+        var prefersDark = window.matchMedia
+          && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.dataset.theme = prefersDark ? 'dark' : 'light';
+      })();
+    </script>
+
     <script type="application/ld+json" is:inline set:html={jsonLdSerialized} />
   </head>
   <body>
+    <TopBar githubHref={siteConfig.links.github} client:load />
     <slot />
+    <Footer name={siteConfig.name} year={currentYear} sourceHref={siteConfig.links.source} />
   </body>
 </html>
+
+<style is:global>
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    min-height: 100vh;
+    transition:
+      background 0.4s ease,
+      color 0.4s ease;
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    body {
+      transition: none;
+    }
+  }
+
+  @page {
+    margin: 1.5cm;
+  }
+</style>

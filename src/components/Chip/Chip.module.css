@@ -16,3 +16,15 @@
   color: var(--dim);
   background: var(--chip);
 }
+
+.chip[data-hidden="true"] {
+  display: none;
+}
+
+@media print {
+  .chip[data-variant="stack"],
+  .chip[data-variant="methods"] {
+    padding: 0 4px;
+    background: transparent;
+  }
+}

@@ -24,7 +24,7 @@ export function SkillGroups({ groups }: Props) {
   const [openGroup, setOpenGroup] = useState<string | null>(null);
 
   return (
-    <section id="skills" className={styles.section} aria-labelledby="skills-heading">
+    <div className={styles.root}>
       <header className={styles.header}>
         <span className={styles.hash} aria-hidden="true">
           ##
@@ -55,6 +55,6 @@ export function SkillGroups({ groups }: Props) {
           </Accordion>
         ))}
       </div>
-    </section>
+    </div>
   );
 }

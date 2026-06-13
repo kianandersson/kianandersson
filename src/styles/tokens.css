@@ -49,3 +49,24 @@
   --ok: #46c46e;
   --shadow: rgba(0, 0, 0, 0.5);
 }
+
+@media print {
+  :root {
+    --bg: #ffffff;
+  }
+
+  [data-theme="dark"] {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --chip: #eceae5;
+    --text: #1d1d1f;
+    --dim: #65656b;
+    --faint: #6a6a78;
+    --line: #e4e2dd;
+    --accent: #b03e24;
+    --accent-soft: rgba(192, 69, 42, 0.1);
+    --accent-line: rgba(192, 69, 42, 0.3);
+    --ok: #34a853;
+    --shadow: rgba(0, 0, 0, 0.08);
+  }
+}
