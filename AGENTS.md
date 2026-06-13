@@ -1,0 +1,67 @@
+# AGENTS.md
+
+Things an agent cannot infer from reading the code. Everything else is implicit and omitted on purpose.
+
+## Product
+
+Personal CV / freelance landing page. Engineering discipline is the demonstration — pick the right tool, not the default.
+
+**Print** must produce a clean CV: always light theme regardless of selection, chrome hidden, all collapsed content expanded.
+
+## Architecture
+
+Atomic Design layers, flat folders.
+
+- **Layouts** — chrome shell only.
+- **Templates** — compose organisms. Never fetch data, never wire handlers.
+- **Pages** — the only layer that calls `getCollection`, reads `site.config.ts`, binds handlers.
+- **Components** — pure props in, JSX out. No global state, no config imports.
+
+Start static (zero JS). Add `client:*` in the template only when state, handlers, or effects require it.
+
+**Rule of two.** A hook or atom is extracted only on the second consumer.
+
+### Composition
+
+Composition — structure, spacing, landmarks, print pagination — belongs to the template. Organisms own only their internal content and never spacing relative to siblings.
+
+- Template renders the `<section>` wrappers with `aria-labelledby` → organism heading id. **Heading ids are an organism's public API.** Organism roots are `<div>`.
+- Print spacing uses `section ~ section { margin-block-start }` on `main`. `margin-block-start` is the only property the CSS Fragmentation spec truncates at forced page breaks — required so `break-before: page` doesn't leave whitespace. `break-before: page` lives on the template's `<section>`.
+- `src/styles/print.css` is crosscutting only (light tokens, no animations, `print-color-adjust: exact`, `@page`). No selectors into organism internals — each component's own `@media print` block hides its affordances and expands its collapsed content.
+
+### Theme
+
+JS only sets `document.documentElement.dataset.theme`. Tokens drive everything else.
+
+## Testing
+
+- **Vitest** — pure logic and islands, behavior-level.
+- **Playwright** — flows, screenshot diff (one per breakpoint per page), axe in every e2e.
+
+Strict red-green-refactor on the Vitest layer. Playwright/axe are gates, not test-first targets.
+
+- No snapshot tests.
+- Tests describe behavior, not structure.
+- No coverage gate.
+- No Storybook.
+
+Region/landmark assertions belong at the template or e2e layer, not in organism unit tests.
+
+## Budget
+
+- Lighthouse 100/100/100/100
+- JS < 10 KB gzipped
+- LCP < 1s
+
+## Workflow
+
+- PR-only to `main`, squash-merge. **PR title becomes the squash commit message.**
+- Conventional Commits on PR titles.
+
+## Principles
+
+- Vertical slices, not horizontal layers.
+- Match the scope of the request.
+- Trust framework guarantees.
+- No comments unless the WHY is non-obvious.
+- English in all artifacts.
