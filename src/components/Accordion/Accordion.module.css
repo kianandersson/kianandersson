@@ -91,6 +91,5 @@
 
   .panel {
     grid-template-rows: 1fr;
-    break-inside: avoid;
   }
 }

@@ -63,23 +63,11 @@ const { hero, keySkills, experience, skillGroups } = Astro.props;
   @media print {
     main {
       display: block;
+      padding: 0;
     }
 
-    /* Print uses block flow because flex gap is preserved as leading whitespace
-       at forced page breaks (CSS Fragmentation truncates margin, not gap).
-       padding-block-start survives page breaks — gives every section the same
-       top breathing room whether it starts mid-page or on a fresh page. */
-    section {
-      padding-block-start: 24px;
-    }
-
-    section ~ section {
-      margin-block-start: 48px;
-    }
-
-    section[aria-labelledby="experience-heading"],
-    section[aria-labelledby="skills-heading"] {
-      break-before: page;
+    section:not(:first-of-type) {
+      margin-block-start: 72px;
     }
   }
 </style>

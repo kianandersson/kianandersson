@@ -116,9 +116,4 @@
   .rail {
     display: none;
   }
-
-  .entry ~ .entry {
-    break-before: page;
-    break-inside: avoid;
-  }
 }
