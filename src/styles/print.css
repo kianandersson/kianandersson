@@ -65,6 +65,10 @@
     /* biome-ignore-end lint/complexity/noImportantStyles: collapses button padding so +N more reads as inline static text on paper */
   }
 
+  section {
+    break-inside: avoid;
+  }
+
   ol > li {
     break-inside: avoid;
   }
