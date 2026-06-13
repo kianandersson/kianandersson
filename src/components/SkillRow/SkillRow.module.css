@@ -1,36 +1,54 @@
-.row td {
+.row {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  align-items: center;
+  column-gap: 16px;
   padding: 12px 0;
   border-bottom: 1px solid var(--line);
-  vertical-align: middle;
 }
 
-.nameCell {
+.name {
   font-family: var(--font-sans);
   font-size: 15px;
   color: var(--text);
   white-space: nowrap;
-  padding-right: 24px;
 }
 
-.levelCell {
+.meta {
+  display: flex;
+  gap: 16px;
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--dim);
   white-space: nowrap;
-  text-align: right;
-  padding-right: 16px;
+  justify-content: flex-end;
 }
 
-.yearsCell {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--dim);
-  white-space: nowrap;
-  text-align: right;
-  padding-right: 16px;
+.dots {
+  display: flex;
 }
 
-.dotsCell {
-  white-space: nowrap;
-  text-align: right;
+@container (max-width: 480px) {
+  .row {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "name dots"
+      "meta meta";
+    row-gap: 4px;
+  }
+
+  .name {
+    grid-area: name;
+  }
+
+  .meta {
+    grid-area: meta;
+    justify-content: flex-start;
+  }
+
+  .dots {
+    grid-area: dots;
+    justify-content: flex-end;
+  }
 }

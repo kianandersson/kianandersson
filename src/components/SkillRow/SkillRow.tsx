@@ -11,13 +11,15 @@ export type SkillRowProps = {
 
 export function SkillRow({ name, level, years }: SkillRowProps) {
   return (
-    <tr className={styles.row}>
-      <td className={styles.nameCell}>{name}</td>
-      <td className={styles.levelCell}>{levelLabel(level)}</td>
-      <td className={styles.yearsCell}>{formatYears(years)}</td>
-      <td className={styles.dotsCell}>
+    <li className={styles.row}>
+      <span className={styles.name}>{name}</span>
+      <div className={styles.meta}>
+        <span className={styles.level}>{levelLabel(level)}</span>
+        <span className={styles.years}>{formatYears(years)}</span>
+      </div>
+      <div className={styles.dots}>
         <DotRating level={level} />
-      </td>
-    </tr>
+      </div>
+    </li>
   );
 }

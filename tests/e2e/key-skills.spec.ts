@@ -18,17 +18,45 @@ test.describe('Key Skills section', () => {
     await page.goto('/');
     const section = page.getByRole('region', { name: /Key skills/i });
 
-    const typescriptRow = section.locator('tr', { hasText: 'TypeScript' });
+    const typescriptRow = section.getByRole('listitem').filter({ hasText: 'TypeScript' });
     await expect(typescriptRow.locator('[data-state="on"]')).toHaveCount(5);
     await expect(typescriptRow.locator('[data-state="off"]')).toHaveCount(0);
 
-    const goRow = section.locator('tr', { hasText: /^Go/ });
+    const goRow = section.getByRole('listitem').filter({ hasText: /^Go/ });
     await expect(goRow.locator('[data-state="on"]')).toHaveCount(2);
     await expect(goRow.locator('[data-state="off"]')).toHaveCount(3);
   });
 
-  test('keeps horizontal overflow inside the table at a 320px viewport', async ({ page }) => {
-    await page.setViewportSize({ width: 320, height: 800 });
+  test('keeps name and meta on the same line at desktop widths', async ({ page }) => {
+    await page.setViewportSize({ width: 1024, height: 800 });
+    await page.goto('/');
+
+    const row = page.getByRole('listitem').filter({ hasText: 'TypeScript' });
+    const nameBox = await row.getByText('TypeScript').boundingBox();
+    const levelBox = await row.getByText('Expert').boundingBox();
+
+    expect(nameBox).not.toBeNull();
+    expect(levelBox).not.toBeNull();
+    if (!nameBox || !levelBox) return;
+    expect(Math.abs(levelBox.y - nameBox.y)).toBeLessThan(8);
+  });
+
+  test('stacks meta beneath the name at narrow viewports', async ({ page }) => {
+    await page.setViewportSize({ width: 360, height: 800 });
+    await page.goto('/');
+
+    const row = page.getByRole('listitem').filter({ hasText: 'TypeScript' });
+    const nameBox = await row.getByText('TypeScript').boundingBox();
+    const levelBox = await row.getByText('Expert').boundingBox();
+
+    expect(nameBox).not.toBeNull();
+    expect(levelBox).not.toBeNull();
+    if (!nameBox || !levelBox) return;
+    expect(levelBox.y).toBeGreaterThanOrEqual(nameBox.y + nameBox.height - 2);
+  });
+
+  test('does not horizontally scroll the page at 360px viewport', async ({ page }) => {
+    await page.setViewportSize({ width: 360, height: 800 });
     await page.goto('/');
 
     const pageOverflow = await page.evaluate(() => {
