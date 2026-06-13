@@ -69,6 +69,11 @@
     break-inside: avoid;
   }
 
+  section[aria-labelledby="experience-heading"],
+  section[aria-labelledby="skills-heading"] {
+    break-before: page;
+  }
+
   ol > li {
     break-inside: avoid;
   }
