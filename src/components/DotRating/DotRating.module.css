@@ -12,18 +12,8 @@
 
 .on {
   background: var(--accent);
-  animation: dotpop 0.45s ease both;
 }
 
 .off {
   background: var(--line);
-}
-
-@keyframes dotpop {
-  from {
-    transform: scale(0);
-  }
-  to {
-    transform: scale(1);
-  }
 }
