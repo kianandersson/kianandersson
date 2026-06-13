@@ -1,6 +1,6 @@
 import { formatYears } from '../../lib/formatYears';
 import { levelLabel, type SkillLevel } from '../../lib/skill';
-import { DotRating } from '../DotRating/DotRating';
+import { LevelMeter } from '../LevelMeter/LevelMeter';
 import styles from './SkillRow.module.css';
 
 export type SkillRowProps = {
@@ -15,8 +15,8 @@ export function SkillRow({ name, level, years }: SkillRowProps) {
       <span className={styles.name}>{name}</span>
       <span className={styles.level}>{levelLabel(level)}</span>
       <span className={styles.years}>{formatYears(years)}</span>
-      <div className={styles.dots}>
-        <DotRating level={level} />
+      <div className={styles.meter}>
+        <LevelMeter level={level} />
       </div>
     </li>
   );

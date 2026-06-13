@@ -24,7 +24,7 @@
   text-align: right;
 }
 
-.dots {
+.meter {
   display: flex;
 }
 
@@ -32,7 +32,7 @@
   .row {
     grid-template-columns: 1fr auto;
     grid-template-areas:
-      "name dots"
+      "name meter"
       "level years";
     row-gap: 8px;
   }
@@ -41,8 +41,8 @@
     grid-area: name;
   }
 
-  .dots {
-    grid-area: dots;
+  .meter {
+    grid-area: meter;
   }
 
   .level {
