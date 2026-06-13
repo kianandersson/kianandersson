@@ -36,8 +36,13 @@ export function Experience({ entries }: Props) {
             <li key={entry.id} className={styles.entry}>
               <TimelineMarker />
               <h3 className={styles.role}>{entry.role}</h3>
-              <div className={styles.meta}>{entry.meta}</div>
-              <div className={styles.period}>{entry.period}</div>
+              <div className={styles.metaLine}>
+                <span className={styles.meta}>{entry.meta}</span>
+                <span aria-hidden="true" className={styles.separator}>
+                  ·
+                </span>
+                <span className={styles.period}>{entry.period}</span>
+              </div>
               <p className={styles.description}>{entry.description}</p>
               <div className={styles.chipGroups}>
                 <ChipList label="Stack" items={entry.stack} limit={CHIP_LIMIT} variant="stack" />
