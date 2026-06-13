@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { groupSkills } from '../lib/group-skills';
 import { siteConfig } from '../site.config';
 import IndexTemplate from '../templates/IndexTemplate.astro';
 
@@ -10,15 +11,23 @@ const hero = {
   ctaHref: `mailto:${siteConfig.email}`,
 };
 
-const allSkills = await getCollection('skills');
+const allSkills = (await getCollection('skills')).map((entry) => ({
+  id: entry.id,
+  name: entry.data.name,
+  level: entry.data.level,
+  years: entry.data.years,
+  group: entry.data.group,
+  keySkill: entry.data.keySkill,
+}));
+
 const keySkills = allSkills
-  .filter((entry) => entry.data.keySkill)
-  .map((entry) => ({
-    id: entry.id,
-    name: entry.data.name,
-    level: entry.data.level,
-    years: entry.data.years,
-  }));
+  .filter((entry) => entry.keySkill)
+  .map(({ id, name, level, years }) => ({ id, name, level, years }));
+
+const skillGroups = groupSkills(allSkills).map(({ group, items }) => ({
+  group,
+  skills: items.map(({ id, name, level, years }) => ({ id, name, level, years })),
+}));
 
 const experience = (await getCollection('experience'))
   .sort((a, b) => b.data.start.getTime() - a.data.start.getTime())
@@ -34,5 +43,26 @@ const experience = (await getCollection('experience'))
 ---
 
 <BaseLayout>
-  <IndexTemplate hero={hero} keySkills={keySkills} experience={experience} />
+  <IndexTemplate
+    hero={hero}
+    keySkills={keySkills}
+    experience={experience}
+    skillGroups={skillGroups}
+  />
 </BaseLayout>
+
+<script>
+  document.addEventListener('click', (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const link = target.closest('a[href^="#"]');
+    if (!(link instanceof HTMLAnchorElement)) return;
+    const id = link.getAttribute('href')?.slice(1);
+    if (!id) return;
+    const section = document.getElementById(id);
+    if (!section) return;
+    event.preventDefault();
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    section.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' });
+  });
+</script>

@@ -5,30 +5,9 @@
 
 .header {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 8px;
   padding-bottom: 16px;
-}
-
-.allSkillsLink {
-  margin-left: auto;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  white-space: nowrap;
-  color: var(--faint);
-  padding: 4px 8px;
-  border-radius: 4px;
-  transition: color 0.2s;
-}
-
-.allSkillsLink:hover,
-.allSkillsLink:focus-visible {
-  color: var(--accent);
-}
-
-.allSkillsLink:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
 }
 
 .hash {
@@ -47,17 +26,22 @@
   white-space: nowrap;
 }
 
+.groups {
+  border-bottom: 1px solid var(--line);
+}
+
 .list {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
   grid-template-columns: 1fr auto auto auto;
+}
+
+.list > li:first-child {
   border-top: 1px solid var(--line);
 }
 
-@container (max-width: 480px) {
-  .list {
-    display: block;
-  }
+.list > li:last-child {
+  border-bottom: 0;
 }
