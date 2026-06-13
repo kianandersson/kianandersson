@@ -67,6 +67,7 @@
 .meta {
   font-family: var(--font-mono);
   font-size: 12px;
+  font-weight: 500;
   color: var(--dim);
   margin-top: 8px;
 }
