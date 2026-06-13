@@ -27,8 +27,9 @@ const { hero, keySkills, experience, skillGroups } = Astro.props;
     max-width: var(--container-max);
     margin: 0 auto;
     padding: 64px var(--container-pad) 100px;
-    display: flex;
-    flex-direction: column;
-    gap: 72px;
+  }
+
+  main > :global(section + section) {
+    margin-top: 72px;
   }
 </style>
