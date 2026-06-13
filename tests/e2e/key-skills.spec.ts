@@ -34,7 +34,10 @@ test.describe('Key Skills section', () => {
     await page.setViewportSize({ width: 1024, height: 800 });
     await page.goto('/');
 
-    const row = page.getByRole('region', { name: /Key skills/i }).getByRole('listitem').first();
+    const row = page
+      .getByRole('region', { name: /Key skills/i })
+      .getByRole('listitem')
+      .first();
     const cells = row.locator(':scope > span');
     const nameBox = await cells.nth(0).boundingBox();
     const levelBox = await cells.nth(1).boundingBox();
@@ -49,7 +52,10 @@ test.describe('Key Skills section', () => {
     await page.setViewportSize({ width: 360, height: 800 });
     await page.goto('/');
 
-    const row = page.getByRole('region', { name: /Key skills/i }).getByRole('listitem').first();
+    const row = page
+      .getByRole('region', { name: /Key skills/i })
+      .getByRole('listitem')
+      .first();
     const cells = row.locator(':scope > span');
     const nameBox = await cells.nth(0).boundingBox();
     const levelBox = await cells.nth(1).boundingBox();
