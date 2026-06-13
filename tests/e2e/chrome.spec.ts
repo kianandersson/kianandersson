@@ -2,13 +2,21 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
 test.describe('Top bar', () => {
-  test('exposes GitHub, theme toggle, and print controls', async ({ page }) => {
+  test('exposes GitHub link and theme toggle', async ({ page }) => {
     await page.goto('/');
     const topbar = page.locator('[data-chrome="top"]');
     await expect(topbar).toBeVisible();
     await expect(topbar.getByRole('link', { name: /github/i })).toBeVisible();
     await expect(topbar.getByRole('button', { name: /toggle theme/i })).toBeVisible();
-    await expect(topbar.getByRole('button', { name: /print/i })).toBeVisible();
+  });
+
+  test('spans the full viewport width', async ({ page }) => {
+    await page.goto('/');
+    const topbar = page.locator('[data-chrome="top"]');
+    const width = await topbar.evaluate((el) => el.getBoundingClientRect().width);
+    const viewport = page.viewportSize();
+    expect(viewport).not.toBeNull();
+    expect(width).toBe(viewport?.width);
   });
 });
 

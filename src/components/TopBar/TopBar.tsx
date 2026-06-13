@@ -1,4 +1,3 @@
-import { PrintButton } from '../PrintButton/PrintButton';
 import { ThemeToggle } from '../ThemeToggle/ThemeToggle';
 import styles from './TopBar.module.css';
 
@@ -23,7 +22,6 @@ export function TopBar({ githubHref }: Props) {
           </svg>
         </a>
         <ThemeToggle />
-        <PrintButton />
       </div>
     </header>
   );

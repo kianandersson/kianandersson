@@ -25,18 +25,16 @@
 
 .link {
   color: var(--text);
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 1px;
-  border-radius: 0;
-  transition:
-    color 0.2s,
-    border-color 0.2s;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  border-radius: 2px;
+  transition: color 0.2s;
 }
 
 .link:hover,
 .link:focus-visible {
   color: var(--accent);
-  border-color: var(--accent);
 }
 
 .link:focus-visible {

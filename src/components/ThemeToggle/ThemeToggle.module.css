@@ -28,20 +28,4 @@
 .icon {
   display: grid;
   place-items: center;
-  animation: spin-in 0.35s ease both;
-}
-
-@keyframes spin-in {
-  from {
-    transform: rotate(-90deg) scale(0.6);
-  }
-  to {
-    transform: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .icon {
-    animation: none;
-  }
 }
