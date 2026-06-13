@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import IndexTemplate from '../templates/IndexTemplate.astro';
+import { siteConfig } from '../site.config';
+
+const hero = {
+  name: siteConfig.firstName,
+  available: siteConfig.hero.available,
+  ctaHref: `mailto:${siteConfig.email}`,
+};
+---
+
+<BaseLayout>
+  <IndexTemplate hero={hero} />
+</BaseLayout>

@@ -1,0 +1,17 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "types": ["@testing-library/jest-dom"]
+  },
+  "exclude": [
+    "dist",
+    "node_modules",
+    "design",
+    "docs",
+    "scripts",
+    "playwright-report",
+    "test-results"
+  ]
+}

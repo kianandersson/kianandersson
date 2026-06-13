@@ -1,0 +1,51 @@
+@font-face {
+  font-family: "Geist";
+  src: url("/fonts/Geist-Variable.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/fonts/GeistMono-Variable.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg: #f4f3f1;
+  --surface: #ffffff;
+  --chip: #eceae5;
+  --text: #1d1d1f;
+  --dim: #65656b;
+  --faint: #9b9ba1;
+  --line: #e4e2dd;
+  --accent: #c0452a;
+  --accent-soft: rgba(192, 69, 42, 0.1);
+  --accent-line: rgba(192, 69, 42, 0.3);
+  --ok: #34a853;
+  --shadow: rgba(0, 0, 0, 0.08);
+
+  --font-sans: "Geist", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --container-max: 700px;
+  --container-pad: 28px;
+}
+
+[data-theme="dark"] {
+  --bg: #17171a;
+  --surface: #1f1f23;
+  --chip: #2a2a2f;
+  --text: #f4f4f6;
+  --dim: #9e9ea6;
+  --faint: #68686f;
+  --line: #2c2c31;
+  --accent: #ef7351;
+  --accent-soft: rgba(239, 115, 81, 0.16);
+  --accent-line: rgba(239, 115, 81, 0.38);
+  --ok: #46c46e;
+  --shadow: rgba(0, 0, 0, 0.5);
+}
