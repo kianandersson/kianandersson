@@ -19,8 +19,20 @@ const keySkills = allSkills
     level: entry.data.level,
     years: entry.data.years,
   }));
+
+const work = (await getCollection('work'))
+  .sort((a, b) => b.data.start.getTime() - a.data.start.getTime())
+  .map((entry) => ({
+    id: entry.id,
+    role: entry.data.role,
+    meta: entry.data.meta,
+    period: entry.data.period,
+    description: entry.data.description,
+    stack: entry.data.stack,
+    methods: entry.data.methods,
+  }));
 ---
 
 <BaseLayout>
-  <IndexTemplate hero={hero} keySkills={keySkills} />
+  <IndexTemplate hero={hero} keySkills={keySkills} work={work} />
 </BaseLayout>

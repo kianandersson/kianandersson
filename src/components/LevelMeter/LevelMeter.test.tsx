@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render } from '@testing-library/preact';
 import { describe, expect, it } from 'vitest';
 import { LevelMeter } from './LevelMeter';
 

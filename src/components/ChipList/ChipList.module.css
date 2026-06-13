@@ -1,0 +1,44 @@
+.row {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--faint);
+  flex: 0 0 56px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.toggle {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 4px 8px;
+  cursor: pointer;
+  align-self: center;
+  background: transparent;
+  border: none;
+  color: var(--dim);
+  border-radius: 4px;
+  transition: color 0.2s;
+}
+
+.toggle:hover,
+.toggle:focus-visible {
+  color: var(--accent);
+}
+
+.toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

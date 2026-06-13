@@ -1,0 +1,16 @@
+role: Full-stack Engineer
+meta: Studio Nord
+period: Aug 2019 — May 2021
+start: 2019-08-01
+description: >-
+  Delivered client projects across web and API, and built a shared component
+  library used across the studio.
+stack:
+  - Vue
+  - Node
+  - MongoDB
+  - Docker
+methods:
+  - Clean Architecture
+  - Code review culture
+  - Agile / Scrum

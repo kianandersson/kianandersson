@@ -1,0 +1,18 @@
+.chip {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 4px 12px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.chip[data-variant="stack"] {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.chip[data-variant="methods"] {
+  color: var(--dim);
+  background: var(--chip);
+}

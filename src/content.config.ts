@@ -1,5 +1,7 @@
 import { defineCollection } from 'astro:content';
-import { file } from 'astro/loaders';
+import { readdir, readFile } from 'node:fs/promises';
+import { join, resolve } from 'node:path';
+import { file, type Loader } from 'astro/loaders';
 import yaml from 'js-yaml';
 import { z } from 'zod';
 
@@ -8,6 +10,26 @@ function slugify(name: string): string {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
+}
+
+function yamlDir(relativeDir: string): Loader {
+  return {
+    name: 'yaml-dir',
+    load: async ({ store, parseData, generateDigest, logger }) => {
+      const dir = resolve(process.cwd(), relativeDir);
+      store.clear();
+      const files = await readdir(dir);
+      for (const fileName of files) {
+        if (!fileName.endsWith('.yaml')) continue;
+        const id = fileName.replace(/\.yaml$/, '');
+        const text = await readFile(join(dir, fileName), 'utf-8');
+        const raw = yaml.load(text) as Record<string, unknown>;
+        const data = await parseData({ id, data: raw });
+        store.set({ id, data, digest: generateDigest(text) });
+      }
+      logger.info(`Loaded ${store.keys().length} entries from ${relativeDir}`);
+    },
+  };
 }
 
 const skills = defineCollection({
@@ -30,4 +52,17 @@ const skills = defineCollection({
   }),
 });
 
-export const collections = { skills };
+const work = defineCollection({
+  loader: yamlDir('src/content/work'),
+  schema: z.object({
+    role: z.string().min(1),
+    meta: z.string().min(1),
+    period: z.string().min(1),
+    description: z.string().min(1),
+    stack: z.array(z.string().min(1)),
+    methods: z.array(z.string().min(1)),
+    start: z.coerce.date(),
+  }),
+});
+
+export const collections = { skills, work };
