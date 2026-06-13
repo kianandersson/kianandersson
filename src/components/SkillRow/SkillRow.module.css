@@ -32,8 +32,8 @@
   .row {
     grid-template-columns: 1fr auto;
     grid-template-areas:
-      "name years"
-      "dots level";
+      "name dots"
+      "level years";
     row-gap: 6px;
   }
 
@@ -41,16 +41,16 @@
     grid-area: name;
   }
 
-  .years {
-    grid-area: years;
-  }
-
   .dots {
     grid-area: dots;
-    justify-content: flex-start;
   }
 
   .level {
     grid-area: level;
+    text-align: left;
+  }
+
+  .years {
+    grid-area: years;
   }
 }
