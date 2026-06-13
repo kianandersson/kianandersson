@@ -21,14 +21,16 @@
   transition: color 0.2s;
 }
 
-.allSkillsLink:hover,
 .allSkillsLink:focus-visible {
   color: var(--accent);
-}
-
-.allSkillsLink:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+@media (hover: hover) {
+  .allSkillsLink:hover {
+    color: var(--accent);
+  }
 }
 
 .hash {

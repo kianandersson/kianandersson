@@ -15,7 +15,8 @@ export function TopBar({ githubHref }: Props) {
           aria-label="GitHub"
           title="GitHub"
           className={styles.link}
-          rel="noopener"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
             <title>GitHub</title>

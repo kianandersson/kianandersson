@@ -107,10 +107,18 @@
     transform 0.25s ease;
 }
 
-.cta:hover .arrow,
 .cta:focus-visible .arrow {
   width: 16px;
   margin-left: 8px;
   opacity: 1;
   transform: translateX(0);
+}
+
+@media (hover: hover) {
+  .cta:hover .arrow {
+    width: 16px;
+    margin-left: 8px;
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
