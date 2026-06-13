@@ -1,21 +1,21 @@
 ---
-import { Experience, type WorkEntry } from '../components/Experience/Experience';
+import { Experience, type ExperienceEntry } from '../components/Experience/Experience';
 import { Hero, type HeroProps } from '../components/Hero/Hero';
 import { type KeySkill, KeySkills } from '../components/KeySkills/KeySkills';
 
 interface Props {
   hero: HeroProps;
   keySkills: KeySkill[];
-  work: WorkEntry[];
+  experience: ExperienceEntry[];
 }
 
-const { hero, keySkills, work } = Astro.props;
+const { hero, keySkills, experience } = Astro.props;
 ---
 
 <main>
   <Hero {...hero} />
   <KeySkills skills={keySkills} />
-  <Experience entries={work} client:visible />
+  <Experience entries={experience} client:visible />
   <slot />
 </main>
 

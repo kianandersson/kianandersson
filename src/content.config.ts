@@ -52,8 +52,8 @@ const skills = defineCollection({
   }),
 });
 
-const work = defineCollection({
-  loader: yamlDir('src/content/work'),
+const experience = defineCollection({
+  loader: yamlDir('src/content/experience'),
   schema: z.object({
     role: z.string().min(1),
     meta: z.string().min(1),
@@ -65,4 +65,4 @@ const work = defineCollection({
   }),
 });
 
-export const collections = { skills, work };
+export const collections = { skills, experience };

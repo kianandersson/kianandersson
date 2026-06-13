@@ -1,8 +1,8 @@
 import { render, screen, within } from '@testing-library/preact';
 import { describe, expect, it } from 'vitest';
-import { Experience, type WorkEntry } from './Experience';
+import { Experience, type ExperienceEntry } from './Experience';
 
-const entries: WorkEntry[] = [
+const entries: ExperienceEntry[] = [
   {
     id: 'freelance',
     role: 'Lead Engineer',

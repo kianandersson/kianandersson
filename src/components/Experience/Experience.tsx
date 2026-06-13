@@ -4,7 +4,7 @@ import styles from './Experience.module.css';
 
 const CHIP_LIMIT = 6;
 
-export type WorkEntry = {
+export type ExperienceEntry = {
   id: string;
   role: string;
   meta: string;
@@ -15,7 +15,7 @@ export type WorkEntry = {
 };
 
 type Props = {
-  entries: WorkEntry[];
+  entries: ExperienceEntry[];
 };
 
 export function Experience({ entries }: Props) {

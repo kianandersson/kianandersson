@@ -9,7 +9,7 @@ test.describe('Experience section', () => {
     await expect(section.getByRole('heading', { level: 2, name: /Experience/i })).toBeVisible();
   });
 
-  test('renders at least one work entry', async ({ page }) => {
+  test('renders at least one experience entry', async ({ page }) => {
     await page.goto('/');
     const section = page.getByRole('region', { name: /Experience/i });
     const entries = section.getByRole('listitem');
