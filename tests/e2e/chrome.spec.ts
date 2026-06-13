@@ -2,10 +2,11 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
 test.describe('Top bar', () => {
-  test('exposes GitHub link and theme toggle', async ({ page }) => {
+  test('exposes print, GitHub, and theme toggle controls', async ({ page }) => {
     await page.goto('/');
     const topbar = page.locator('[data-chrome="top"]');
     await expect(topbar).toBeVisible();
+    await expect(topbar.getByRole('button', { name: /print/i })).toBeVisible();
     await expect(topbar.getByRole('link', { name: /github/i })).toBeVisible();
     await expect(topbar.getByRole('button', { name: /toggle theme/i })).toBeVisible();
   });

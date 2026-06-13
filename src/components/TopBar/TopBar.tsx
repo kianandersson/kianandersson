@@ -1,3 +1,4 @@
+import { PrintButton } from '../PrintButton/PrintButton';
 import { ThemeToggle } from '../ThemeToggle/ThemeToggle';
 import styles from './TopBar.module.css';
 
@@ -9,6 +10,7 @@ export function TopBar({ githubHref }: Props) {
   return (
     <header className={styles.bar} data-chrome="top">
       <div className={styles.actions}>
+        <PrintButton />
         <a
           href={githubHref}
           aria-label="GitHub"
