@@ -21,14 +21,6 @@ Start static (zero JS). Add `client:*` in the template only when state, handlers
 
 **Rule of two.** A hook or atom is extracted only on the second consumer.
 
-### Composition
-
-Composition — structure, spacing, landmarks, print pagination — belongs to the template. Organisms own only their internal content and never spacing relative to siblings.
-
-- Template renders the `<section>` wrappers with `aria-labelledby` → organism heading id. **Heading ids are an organism's public API.** Organism roots are `<div>`.
-- Print spacing uses `section ~ section { margin-block-start }` on `main`. `margin-block-start` is the only property the CSS Fragmentation spec truncates at forced page breaks — required so `break-before: page` doesn't leave whitespace. `break-before: page` lives on the template's `<section>`.
-- `src/styles/print.css` is crosscutting only (light tokens, no animations, `print-color-adjust: exact`, `@page`). No selectors into organism internals — each component's own `@media print` block hides its affordances and expands its collapsed content.
-
 ### Theme
 
 JS only sets `document.documentElement.dataset.theme`. Tokens drive everything else.

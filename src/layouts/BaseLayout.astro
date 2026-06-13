@@ -3,8 +3,6 @@ import { Footer } from '../components/Footer/Footer';
 import { TopBar } from '../components/TopBar/TopBar';
 import { siteConfig } from '../site.config';
 import '../styles/tokens.css';
-import '../styles/base.css';
-import '../styles/print.css';
 
 interface Props {
   title?: string;
@@ -82,3 +80,42 @@ const currentYear = new Date().getFullYear();
     <Footer name={siteConfig.name} year={currentYear} sourceHref={siteConfig.links.source} />
   </body>
 </html>
+
+<style is:global>
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    min-height: 100vh;
+    transition:
+      background 0.4s ease,
+      color 0.4s ease;
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    body {
+      transition: none;
+    }
+  }
+
+  @page {
+    margin: 1.5cm;
+  }
+</style>

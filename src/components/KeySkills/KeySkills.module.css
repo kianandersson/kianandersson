@@ -46,6 +46,7 @@
 }
 
 .heading {
+  margin: 0;
   font-family: var(--font-sans);
   font-weight: 600;
   font-size: 24px;

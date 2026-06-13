@@ -4,6 +4,7 @@
 }
 
 .inner {
+  box-sizing: border-box;
   max-width: var(--container-max);
   margin: 0 auto;
   padding: 24px var(--container-pad);
