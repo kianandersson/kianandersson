@@ -1,4 +1,4 @@
-import { useExpand } from '../../hooks/useExpand';
+import { useCallback, useState } from 'react';
 import { sliceList } from '../../lib/chip-list';
 import { Chip, type ChipVariant } from '../Chip/Chip';
 import styles from './ChipList.module.css';
@@ -11,7 +11,8 @@ type Props = {
 };
 
 export function ChipList({ label, items, limit, variant }: Props) {
-  const { isOpen, toggle } = useExpand();
+  const [isOpen, setOpen] = useState(false);
+  const toggle = useCallback(() => setOpen((prev) => !prev), []);
   const { visible, hasMore, hiddenCount } = sliceList(items, limit, isOpen);
 
   return (

@@ -31,4 +31,9 @@ describe('KeySkills', () => {
     render(<KeySkills skills={[]} />);
     expect(screen.queryAllByRole('listitem')).toHaveLength(0);
   });
+
+  it('links to the full skills section', () => {
+    render(<KeySkills skills={sampleSkills} />);
+    expect(screen.getByRole('link', { name: /All skills/i })).toHaveAttribute('href', '#skills');
+  });
 });

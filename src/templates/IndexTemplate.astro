@@ -2,20 +2,23 @@
 import { Experience, type ExperienceEntry } from '../components/Experience/Experience';
 import { Hero, type HeroProps } from '../components/Hero/Hero';
 import { type KeySkill, KeySkills } from '../components/KeySkills/KeySkills';
+import { type SkillGroup, SkillGroups } from '../components/SkillGroups/SkillGroups';
 
 interface Props {
   hero: HeroProps;
   keySkills: KeySkill[];
   experience: ExperienceEntry[];
+  skillGroups: SkillGroup[];
 }
 
-const { hero, keySkills, experience } = Astro.props;
+const { hero, keySkills, experience, skillGroups } = Astro.props;
 ---
 
 <main>
   <Hero {...hero} />
   <KeySkills skills={keySkills} />
   <Experience entries={experience} client:visible />
+  <SkillGroups groups={skillGroups} client:visible />
   <slot />
 </main>
 

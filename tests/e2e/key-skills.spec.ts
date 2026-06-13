@@ -82,4 +82,14 @@ test.describe('Key Skills section', () => {
     const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations).toEqual([]);
   });
+
+  test('"All skills" scrolls to the Skills section without changing the URL', async ({ page }) => {
+    await page.goto('/');
+    const link = page
+      .getByRole('region', { name: /Key skills/i })
+      .getByRole('link', { name: /All skills/i });
+    await link.click();
+    await expect(page.getByRole('region', { name: /^Skills$/i })).toBeInViewport();
+    expect(new URL(page.url()).hash).toBe('');
+  });
 });
