@@ -5,7 +5,7 @@
 .heading {
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 32px;
+  font-size: 38px;
   line-height: 1.12;
   letter-spacing: -0.025em;
   color: var(--text);
@@ -18,7 +18,7 @@
 
 .body {
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.65;
   color: var(--dim);
   max-width: 540px;
@@ -75,7 +75,7 @@
   align-items: center;
   gap: 8px;
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
   background: var(--text);
   color: var(--bg);
