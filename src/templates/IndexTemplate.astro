@@ -1,15 +1,18 @@
 ---
 import { Hero, type HeroProps } from '../components/Hero/Hero';
+import { type KeySkill, KeySkills } from '../components/KeySkills/KeySkills';
 
 interface Props {
   hero: HeroProps;
+  keySkills: KeySkill[];
 }
 
-const { hero } = Astro.props;
+const { hero, keySkills } = Astro.props;
 ---
 
 <main>
   <Hero {...hero} />
+  <KeySkills skills={keySkills} />
   <slot />
 </main>
 

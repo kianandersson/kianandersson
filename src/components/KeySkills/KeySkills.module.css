@@ -1,0 +1,42 @@
+.section {
+  padding-top: 72px;
+  container-type: inline-size;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 16px;
+}
+
+.hash {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.heading {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  border-top: 1px solid var(--line);
+}
+
+@container (max-width: 480px) {
+  .list {
+    display: block;
+  }
+}

@@ -1,0 +1,206 @@
+# Skills data — single source of truth for both the Hero "Key skills" section
+# and the full grouped Skills section. Mark `keySkill: true` to surface a skill
+# in the Hero block; everything else only appears in the grouped section.
+# The entry id is derived from `name` (lowercased, non-alphanumerics → "-").
+# Placeholder data taken from the design prototype; replace with the real list.
+
+# Programming Languages
+- name: TypeScript
+  level: 5
+  years: 8
+  lastUsed: 2026
+  group: Programming Languages
+  keySkill: true
+
+- name: JavaScript
+  level: 5
+  years: 10
+  lastUsed: 2026
+  group: Programming Languages
+  keySkill: false
+
+- name: SQL
+  level: 4
+  years: 8
+  lastUsed: 2026
+  group: Programming Languages
+  keySkill: false
+
+- name: Go
+  level: 2
+  years: 2
+  lastUsed: 2025
+  group: Programming Languages
+  keySkill: true
+
+- name: PHP
+  level: 3
+  years: 6
+  lastUsed: 2021
+  group: Programming Languages
+  keySkill: false
+
+# Frameworks & Libraries
+- name: React
+  level: 4
+  years: 7
+  lastUsed: 2026
+  group: Frameworks & Libraries
+  keySkill: true
+
+- name: Next.js
+  level: 4
+  years: 5
+  lastUsed: 2026
+  group: Frameworks & Libraries
+  keySkill: false
+
+- name: Node.js
+  level: 4
+  years: 6
+  lastUsed: 2026
+  group: Frameworks & Libraries
+  keySkill: true
+
+- name: tRPC
+  level: 3
+  years: 2
+  lastUsed: 2026
+  group: Frameworks & Libraries
+  keySkill: false
+
+- name: Fastify
+  level: 3
+  years: 3
+  lastUsed: 2025
+  group: Frameworks & Libraries
+  keySkill: false
+
+- name: Vue
+  level: 3
+  years: 3
+  lastUsed: 2021
+  group: Frameworks & Libraries
+  keySkill: false
+
+# Data & Infrastructure
+- name: PostgreSQL
+  level: 3
+  years: 5
+  lastUsed: 2026
+  group: Data & Infrastructure
+  keySkill: true
+
+- name: Docker
+  level: 4
+  years: 5
+  lastUsed: 2026
+  group: Data & Infrastructure
+  keySkill: false
+
+- name: AWS
+  level: 3
+  years: 4
+  lastUsed: 2026
+  group: Data & Infrastructure
+  keySkill: true
+
+- name: Redis
+  level: 3
+  years: 4
+  lastUsed: 2025
+  group: Data & Infrastructure
+  keySkill: false
+
+- name: Kubernetes
+  level: 2
+  years: 2
+  lastUsed: 2024
+  group: Data & Infrastructure
+  keySkill: false
+
+- name: MongoDB
+  level: 3
+  years: 3
+  lastUsed: 2022
+  group: Data & Infrastructure
+  keySkill: false
+
+# Methodologies & Practices
+- name: Domain-Driven Design
+  level: 4
+  years: 5
+  lastUsed: 2026
+  group: Methodologies & Practices
+  keySkill: false
+
+- name: Test-Driven Development
+  level: 4
+  years: 6
+  lastUsed: 2026
+  group: Methodologies & Practices
+  keySkill: false
+
+- name: CI/CD
+  level: 4
+  years: 6
+  lastUsed: 2026
+  group: Methodologies & Practices
+  keySkill: false
+
+- name: Pair programming
+  level: 4
+  years: 7
+  lastUsed: 2026
+  group: Methodologies & Practices
+  keySkill: false
+
+- name: Continuous Delivery
+  level: 4
+  years: 5
+  lastUsed: 2026
+  group: Methodologies & Practices
+  keySkill: false
+
+- name: Trunk-based dev
+  level: 3
+  years: 3
+  lastUsed: 2025
+  group: Methodologies & Practices
+  keySkill: false
+
+# Leadership & Architecture
+- name: Code review culture
+  level: 5
+  years: 7
+  lastUsed: 2026
+  group: Leadership & Architecture
+  keySkill: false
+
+- name: Clean Architecture
+  level: 4
+  years: 5
+  lastUsed: 2026
+  group: Leadership & Architecture
+  keySkill: false
+
+- name: System design
+  level: 4
+  years: 5
+  lastUsed: 2026
+  group: Leadership & Architecture
+  keySkill: false
+
+- name: Mentoring
+  level: 4
+  years: 4
+  lastUsed: 2026
+  group: Leadership & Architecture
+  keySkill: false
+
+- name: Technical roadmapping
+  level: 3
+  years: 3
+  lastUsed: 2025
+  group: Leadership & Architecture
+  keySkill: false

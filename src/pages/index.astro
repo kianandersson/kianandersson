@@ -1,4 +1,5 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { siteConfig } from '../site.config';
 import IndexTemplate from '../templates/IndexTemplate.astro';
@@ -8,8 +9,18 @@ const hero = {
   available: siteConfig.hero.available,
   ctaHref: `mailto:${siteConfig.email}`,
 };
+
+const allSkills = await getCollection('skills');
+const keySkills = allSkills
+  .filter((entry) => entry.data.keySkill)
+  .map((entry) => ({
+    id: entry.id,
+    name: entry.data.name,
+    level: entry.data.level,
+    years: entry.data.years,
+  }));
 ---
 
 <BaseLayout>
-  <IndexTemplate hero={hero} />
+  <IndexTemplate hero={hero} keySkills={keySkills} />
 </BaseLayout>

@@ -1,0 +1,56 @@
+.row {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  align-items: center;
+  column-gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.name {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.level,
+.years {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--dim);
+  white-space: nowrap;
+  text-align: right;
+}
+
+.meter {
+  display: flex;
+}
+
+@container (max-width: 480px) {
+  .row {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "name meter"
+      "level years";
+    row-gap: 8px;
+  }
+
+  .name {
+    grid-area: name;
+  }
+
+  .meter {
+    grid-area: meter;
+  }
+
+  .level {
+    grid-area: level;
+    text-align: left;
+  }
+
+  .years {
+    grid-area: years;
+  }
+}
