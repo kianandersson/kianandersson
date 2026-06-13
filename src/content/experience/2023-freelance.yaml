@@ -1,0 +1,26 @@
+role: Lead Engineer
+meta: Freelance
+period: Mar 2023 — Present
+start: 2023-03-01
+description: >-
+  Architect and ship products end-to-end for a small roster of long-term clients,
+  owning everything from infrastructure to UI.
+stack:
+  - TypeScript
+  - Next.js
+  - Node
+  - PostgreSQL
+  - AWS
+  - React
+  - Prisma
+  - Redis
+  - Docker
+  - tRPC
+methods:
+  - Domain-Driven Design
+  - Test-Driven Development
+  - Trunk-based dev
+  - CI/CD
+  - Pair programming
+  - Continuous Delivery
+  - Clean Architecture

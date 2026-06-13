@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/preact';
 import type { ReactNode } from 'react';
 import { describe, expect, it } from 'vitest';
 import { SkillRow } from './SkillRow';

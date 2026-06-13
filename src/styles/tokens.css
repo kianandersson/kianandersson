@@ -20,9 +20,9 @@
   --chip: #eceae5;
   --text: #1d1d1f;
   --dim: #65656b;
-  --faint: #9b9ba1;
+  --faint: #6a6a78;
   --line: #e4e2dd;
-  --accent: #c0452a;
+  --accent: #b03e24;
   --accent-soft: rgba(192, 69, 42, 0.1);
   --accent-line: rgba(192, 69, 42, 0.3);
   --ok: #34a853;
@@ -41,7 +41,7 @@
   --chip: #2a2a2f;
   --text: #f4f4f6;
   --dim: #9e9ea6;
-  --faint: #68686f;
+  --faint: #828289;
   --line: #2c2c31;
   --accent: #ef7351;
   --accent-soft: rgba(239, 115, 81, 0.16);
