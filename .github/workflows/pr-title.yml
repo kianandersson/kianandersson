@@ -6,7 +6,7 @@ on:
 
 jobs:
   validate:
-    name: Validate PR title (Conventional Commits)
+    name: Validate PR title
     runs-on: ubuntu-latest
     steps:
       - uses: amannn/action-semantic-pull-request@v5

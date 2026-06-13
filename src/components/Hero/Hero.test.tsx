@@ -14,14 +14,14 @@ describe('Hero', () => {
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent("Hi, I'm Kian.");
   });
 
-  it('shows availability badge when available', () => {
+  it('shows available status when available', () => {
     render(<Hero {...baseProps} available={true} />);
-    expect(screen.getByText(/Available for new projects/i)).toBeInTheDocument();
+    expect(screen.getByText('Available for new projects.')).toBeInTheDocument();
   });
 
-  it('hides availability badge when not available', () => {
+  it('shows unavailable status when not available', () => {
     render(<Hero {...baseProps} available={false} />);
-    expect(screen.queryByText(/Available for new projects/i)).not.toBeInTheDocument();
+    expect(screen.getByText('Not available for new projects right now.')).toBeInTheDocument();
   });
 
   it('links the CTA to the provided href', () => {

@@ -39,21 +39,25 @@
   display: inline-block;
   width: 8px;
   height: 8px;
-}
-
-.dot::before,
-.dot::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  width: 8px;
-  height: 8px;
   border-radius: 50%;
   background: var(--ok);
 }
 
 .dot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--ok);
   animation: dotRing 2.4s ease-out infinite;
+}
+
+.dotInactive {
+  background: var(--accent);
+}
+
+.dotInactive::before {
+  display: none;
 }
 
 @keyframes dotRing {

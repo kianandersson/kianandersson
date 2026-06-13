@@ -11,7 +11,7 @@ describe('formatYears', () => {
     expect(formatYears(8)).toBe('+8 yrs');
   });
 
-  it('uses plural yrs for zero years', () => {
-    expect(formatYears(0)).toBe('+0 yrs');
+  it('shows <1 yrs for zero years', () => {
+    expect(formatYears(0)).toBe('<1 yrs');
   });
 });
