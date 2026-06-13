@@ -11,34 +11,39 @@ describe('ChipList', () => {
     expect(screen.getByText('Stack')).toBeInTheDocument();
   });
 
-  it('starts collapsed, showing only `limit` items', () => {
+  it('renders every item into the DOM even when collapsed', () => {
     render(<ChipList label="Stack" items={stack} limit={4} variant="stack" />);
-    expect(screen.getByText('TypeScript')).toBeInTheDocument();
-    expect(screen.getByText('React')).toBeInTheDocument();
-    expect(screen.getByText('Node')).toBeInTheDocument();
-    expect(screen.getByText('PostgreSQL')).toBeInTheDocument();
-    expect(screen.queryByText('Redis')).not.toBeInTheDocument();
-    expect(screen.queryByText('Docker')).not.toBeInTheDocument();
+    for (const item of stack) {
+      expect(screen.getByText(item)).toBeInTheDocument();
+    }
   });
 
-  it('reveals every item after the user clicks "show more"', async () => {
+  it('marks overflow items with data-hidden when collapsed', () => {
+    render(<ChipList label="Stack" items={stack} limit={4} variant="stack" />);
+    expect(screen.getByText('TypeScript')).not.toHaveAttribute('data-hidden');
+    expect(screen.getByText('Redis')).toHaveAttribute('data-hidden', 'true');
+    expect(screen.getByText('Docker')).toHaveAttribute('data-hidden', 'true');
+  });
+
+  it('clears data-hidden on every item once expanded', async () => {
     const user = userEvent.setup();
     render(<ChipList label="Stack" items={stack} limit={4} variant="stack" />);
     await user.click(screen.getByRole('button', { name: /more/i }));
-    expect(screen.getByText('Redis')).toBeInTheDocument();
-    expect(screen.getByText('Docker')).toBeInTheDocument();
+    for (const item of stack) {
+      expect(screen.getByText(item)).not.toHaveAttribute('data-hidden');
+    }
   });
 
-  it('collapses back when the user clicks "show less"', async () => {
+  it('restores data-hidden after collapsing again', async () => {
     const user = userEvent.setup();
     render(<ChipList label="Stack" items={stack} limit={4} variant="stack" />);
     await user.click(screen.getByRole('button', { name: /more/i }));
     await user.click(screen.getByRole('button', { name: /less/i }));
-    expect(screen.queryByText('Redis')).not.toBeInTheDocument();
-    expect(screen.queryByText('Docker')).not.toBeInTheDocument();
+    expect(screen.getByText('Redis')).toHaveAttribute('data-hidden', 'true');
+    expect(screen.getByText('Docker')).toHaveAttribute('data-hidden', 'true');
   });
 
-  it('reports the count of hidden items in the collapsed toggle label', () => {
+  it('reports the count of overflow items in the collapsed toggle label', () => {
     render(<ChipList label="Stack" items={stack} limit={4} variant="stack" />);
     expect(screen.getByRole('button', { name: /2 more/i })).toBeInTheDocument();
   });

@@ -16,3 +16,7 @@
   color: var(--dim);
   background: var(--chip);
 }
+
+.chip[data-hidden="true"] {
+  display: none;
+}
