@@ -37,9 +37,7 @@ export function Experience({ entries }: Props) {
               <TimelineMarker />
               <h3 className={styles.role}>{entry.role}</h3>
               <div className={styles.meta}>{entry.meta}</div>
-              <div className={styles.period} data-axe-faint>
-                {entry.period}
-              </div>
+              <div className={styles.period}>{entry.period}</div>
               <p className={styles.description}>{entry.description}</p>
               <div className={styles.chipGroups}>
                 <ChipList label="Stack" items={entry.stack} limit={CHIP_LIMIT} variant="stack" />

@@ -16,9 +16,7 @@ export function ChipList({ label, items, limit, variant }: Props) {
 
   return (
     <div className={styles.row}>
-      <span className={styles.label} data-axe-faint>
-        {label}
-      </span>
+      <span className={styles.label}>{label}</span>
       <div className={styles.chips}>
         {visible.map((item) => (
           <Chip key={item} label={item} variant={variant} />

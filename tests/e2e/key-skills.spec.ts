@@ -79,7 +79,7 @@ test.describe('Key Skills section', () => {
 
   test('passes axe accessibility audit', async ({ page }) => {
     await page.goto('/');
-    const results = await new AxeBuilder({ page }).exclude('[data-axe-faint]').analyze();
+    const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations).toEqual([]);
   });
 });
