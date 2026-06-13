@@ -59,16 +59,10 @@
     break-inside: avoid;
   }
 
-  [data-hidden] {
-    /* biome-ignore-start lint/complexity/noImportantStyles: reveals collapsed overflow chips for print */
-    display: revert !important;
-    /* biome-ignore-end lint/complexity/noImportantStyles: reveals collapsed overflow chips for print */
-  }
-
   [data-chip-toggle] {
-    /* biome-ignore-start lint/complexity/noImportantStyles: hides the +N more toggle in print since all chips are revealed */
-    display: none !important;
-    /* biome-ignore-end lint/complexity/noImportantStyles: hides the +N more toggle in print since all chips are revealed */
+    /* biome-ignore-start lint/complexity/noImportantStyles: collapses button padding so +N more reads as inline static text on paper */
+    padding: 0 !important;
+    /* biome-ignore-end lint/complexity/noImportantStyles: collapses button padding so +N more reads as inline static text on paper */
   }
 
   ol > li {

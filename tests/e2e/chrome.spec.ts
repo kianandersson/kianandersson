@@ -63,7 +63,9 @@ test.describe('Theme toggle', () => {
 });
 
 test.describe('Print media', () => {
-  test('hides chrome, forces light tokens, and reveals collapsed content', async ({ page }) => {
+  test('hides chrome, forces light tokens, keeps the short chip list with +N more', async ({
+    page,
+  }) => {
     await page.emulateMedia({ colorScheme: 'dark' });
     await page.goto('/');
     await page.waitForFunction(() => !document.querySelector('astro-island')?.hasAttribute('ssr'));
@@ -83,12 +85,21 @@ test.describe('Print media', () => {
     );
     expect(bg).toBe('#ffffff');
 
-    const allChips = page.locator('[data-variant]');
-    const chipCount = await allChips.count();
-    expect(chipCount).toBeGreaterThan(0);
-    for (let i = 0; i < chipCount; i++) {
-      await expect(allChips.nth(i)).toBeVisible();
+    const visibleChips = page.locator('[data-variant]:not([data-hidden])');
+    const visibleCount = await visibleChips.count();
+    expect(visibleCount).toBeGreaterThan(0);
+    for (let i = 0; i < visibleCount; i++) {
+      await expect(visibleChips.nth(i)).toBeVisible();
     }
+
+    const overflowChips = page.locator('[data-variant][data-hidden]');
+    const overflowCount = await overflowChips.count();
+    expect(overflowCount).toBeGreaterThan(0);
+    for (let i = 0; i < overflowCount; i++) {
+      await expect(overflowChips.nth(i)).toBeHidden();
+    }
+
+    await expect(page.getByRole('button', { name: /more/i }).first()).toBeVisible();
   });
 
   test('passes axe accessibility audit in print media', async ({ page }) => {

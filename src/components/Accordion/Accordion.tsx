@@ -24,7 +24,11 @@ export function Accordion({ title, count, isOpen, onToggle, children }: Props) {
       >
         <span className={styles.titleGroup}>
           <span className={styles.title}>{title}</span>
-          {count !== undefined && <span className={styles.count}>{count}</span>}
+          {count !== undefined && (
+            <span className={styles.count} data-print-hidden="true">
+              {count}
+            </span>
+          )}
         </span>
         <span
           aria-hidden="true"
