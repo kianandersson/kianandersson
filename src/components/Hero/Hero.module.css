@@ -1,3 +1,10 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+}
+
 .heading {
   font-family: var(--font-sans);
   font-weight: 600;
@@ -5,7 +12,7 @@
   line-height: 1.12;
   letter-spacing: -0.025em;
   color: var(--text);
-  margin: 0 0 20px;
+  margin: 0;
 }
 
 .name {
@@ -25,7 +32,7 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  margin: 20px 0 0;
+  margin: 0;
   font-family: var(--font-sans);
   font-size: 15px;
   color: var(--dim);
@@ -61,10 +68,6 @@
   100% {
     opacity: 0;
   }
-}
-
-.ctaWrapper {
-  margin-top: 24px;
 }
 
 .cta {
@@ -134,7 +137,7 @@
 
 @media print {
   .availability,
-  .ctaWrapper {
+  .cta {
     display: none;
   }
 }

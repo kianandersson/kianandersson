@@ -16,10 +16,10 @@ const { hero, keySkills, experience, skillGroups } = Astro.props;
 
 <main>
   <section><Hero {...hero} /></section>
-  <section aria-labelledby="key-skills-heading">
+  <section id="key-skills" aria-labelledby="key-skills-heading">
     <KeySkills skills={keySkills} />
   </section>
-  <section aria-labelledby="experience-heading">
+  <section  id="experience" aria-labelledby="experience-heading">
     <Experience entries={experience} client:visible />
   </section>
   <section id="skills" aria-labelledby="skills-heading">
@@ -41,12 +41,7 @@ const { hero, keySkills, experience, skillGroups } = Astro.props;
 
   @media print {
     main {
-      display: block;
       padding: 0;
-    }
-
-    section:not(:first-of-type) {
-      margin-block-start: 72px;
     }
   }
 </style>

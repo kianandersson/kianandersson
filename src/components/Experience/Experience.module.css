@@ -1,12 +1,14 @@
 .root {
   container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .header {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding-bottom: 16px;
 }
 
 .hash {
@@ -53,6 +55,15 @@
 
 .entry {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 @supports (animation-timeline: view()) {
@@ -90,8 +101,6 @@
   flex-wrap: wrap;
   align-items: baseline;
   gap: 8px;
-  margin-top: 8px;
-  margin-bottom: 16px;
   font-family: var(--font-mono);
   font-size: 12px;
 }
@@ -114,7 +123,7 @@
   line-height: 1.6;
   color: var(--dim);
   max-width: 560px;
-  margin: 0 0 16px;
+  margin: 0;
 }
 
 .chipGroups {
