@@ -82,3 +82,15 @@
     transition: none;
   }
 }
+
+@media print {
+  .count,
+  .chevron {
+    display: none;
+  }
+
+  .panel {
+    grid-template-rows: 1fr;
+    break-inside: avoid;
+  }
+}

@@ -1,4 +1,4 @@
-.section {
+.root {
   container-type: inline-size;
 }
 
@@ -103,5 +103,20 @@
 @container (max-width: 480px) {
   .timeline {
     padding-left: 24px;
+  }
+}
+
+@media print {
+  .timeline {
+    padding-left: 0;
+  }
+
+  .rail {
+    display: none;
+  }
+
+  .entry ~ .entry {
+    break-before: page;
+    break-inside: avoid;
   }
 }

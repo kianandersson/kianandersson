@@ -32,3 +32,9 @@
     color: var(--accent);
   }
 }
+
+@media print {
+  .bar {
+    display: none;
+  }
+}

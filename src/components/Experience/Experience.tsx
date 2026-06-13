@@ -20,7 +20,7 @@ type Props = {
 
 export function Experience({ entries }: Props) {
   return (
-    <section className={styles.section} aria-labelledby="experience-heading">
+    <div className={styles.root}>
       <header className={styles.header}>
         <span className={styles.hash} aria-hidden="true">
           ##
@@ -29,8 +29,8 @@ export function Experience({ entries }: Props) {
           Experience
         </h2>
       </header>
-      <div className={styles.timeline} data-timeline="true">
-        <span className={styles.rail} aria-hidden="true" data-print-hidden="true" />
+      <div className={styles.timeline}>
+        <span className={styles.rail} aria-hidden="true" />
         <ol className={styles.list}>
           {entries.map((entry) => (
             <li key={entry.id} className={styles.entry}>
@@ -57,6 +57,6 @@ export function Experience({ entries }: Props) {
           ))}
         </ol>
       </div>
-    </section>
+    </div>
   );
 }

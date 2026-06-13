@@ -118,3 +118,10 @@
     transform: translateX(0);
   }
 }
+
+@media print {
+  .availability,
+  .ctaWrapper {
+    display: none;
+  }
+}

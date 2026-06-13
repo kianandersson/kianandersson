@@ -1,4 +1,4 @@
-.section {
+.root {
   container-type: inline-size;
 }
 
@@ -29,6 +29,12 @@
 @media (hover: hover) {
   .allSkillsLink:hover {
     color: var(--accent);
+  }
+}
+
+@media print {
+  .allSkillsLink {
+    display: none;
   }
 }
 

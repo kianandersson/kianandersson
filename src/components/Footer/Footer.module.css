@@ -40,3 +40,9 @@
     color: var(--accent);
   }
 }
+
+@media print {
+  .footer {
+    display: none;
+  }
+}

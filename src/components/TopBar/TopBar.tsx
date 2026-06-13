@@ -8,7 +8,7 @@ type Props = {
 
 export function TopBar({ githubHref }: Props) {
   return (
-    <header className={styles.bar} data-chrome="top">
+    <header className={styles.bar}>
       <div className={styles.actions}>
         <a
           href={githubHref}

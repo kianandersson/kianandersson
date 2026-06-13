@@ -8,7 +8,7 @@ type Props = {
 
 export function Footer({ name, year, sourceHref }: Props) {
   return (
-    <footer className={styles.footer} data-chrome="bottom">
+    <footer className={styles.footer}>
       <div className={styles.inner}>
         <span>
           © {year} {name}

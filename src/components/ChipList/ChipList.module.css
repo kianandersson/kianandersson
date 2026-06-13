@@ -44,3 +44,9 @@
     color: var(--accent);
   }
 }
+
+@media print {
+  .toggle {
+    padding: 0;
+  }
+}

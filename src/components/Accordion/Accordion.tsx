@@ -24,18 +24,9 @@ export function Accordion({ title, count, isOpen, onToggle, children }: Props) {
       >
         <span className={styles.titleGroup}>
           <span className={styles.title}>{title}</span>
-          {count !== undefined && (
-            <span className={styles.count} data-print-hidden="true">
-              {count}
-            </span>
-          )}
+          {count !== undefined && <span className={styles.count}>{count}</span>}
         </span>
-        <span
-          aria-hidden="true"
-          className={styles.chevron}
-          data-open={isOpen}
-          data-print-hidden="true"
-        >
+        <span aria-hidden="true" className={styles.chevron} data-open={isOpen}>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <title>chevron</title>
             <path d="M6 9l6 6 6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

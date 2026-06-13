@@ -15,10 +15,16 @@ const { hero, keySkills, experience, skillGroups } = Astro.props;
 ---
 
 <main>
-  <Hero {...hero} />
-  <KeySkills skills={keySkills} />
-  <Experience entries={experience} client:visible />
-  <SkillGroups groups={skillGroups} client:visible />
+  <section><Hero {...hero} /></section>
+  <section aria-labelledby="key-skills-heading">
+    <KeySkills skills={keySkills} />
+  </section>
+  <section aria-labelledby="experience-heading">
+    <Experience entries={experience} client:visible />
+  </section>
+  <section id="skills" aria-labelledby="skills-heading">
+    <SkillGroups groups={skillGroups} client:visible />
+  </section>
   <slot />
 </main>
 
@@ -27,9 +33,31 @@ const { hero, keySkills, experience, skillGroups } = Astro.props;
     max-width: var(--container-max);
     margin: 0 auto;
     padding: 64px var(--container-pad) 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 72px;
   }
 
-  main > :global(section + section) {
-    margin-top: 72px;
+  @media print {
+    main {
+      display: block;
+    }
+
+    /* Print uses block flow because flex gap is preserved as leading whitespace
+       at forced page breaks (CSS Fragmentation truncates margin, not gap).
+       padding-block-start survives page breaks — gives every section the same
+       top breathing room whether it starts mid-page or on a fresh page. */
+    section {
+      padding-block-start: 24px;
+    }
+
+    section ~ section {
+      margin-block-start: 48px;
+    }
+
+    section[aria-labelledby="experience-heading"],
+    section[aria-labelledby="skills-heading"] {
+      break-before: page;
+    }
   }
 </style>

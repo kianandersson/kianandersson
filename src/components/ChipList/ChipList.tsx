@@ -26,13 +26,7 @@ export function ChipList({ label, items, limit, variant }: Props) {
           <Chip key={item} label={item} variant={variant} isHidden={!isOpen} />
         ))}
         {hasMore && (
-          <button
-            type="button"
-            onClick={toggle}
-            aria-expanded={isOpen}
-            className={styles.toggle}
-            data-chip-toggle="true"
-          >
+          <button type="button" onClick={toggle} aria-expanded={isOpen} className={styles.toggle}>
             {isOpen ? 'Show less' : `+${hiddenCount} more`}
           </button>
         )}

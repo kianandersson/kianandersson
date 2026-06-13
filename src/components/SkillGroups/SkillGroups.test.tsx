@@ -23,11 +23,6 @@ describe('SkillGroups', () => {
     expect(screen.getByRole('heading', { level: 2, name: /^Skills$/i })).toBeInTheDocument();
   });
 
-  it('exposes the section as a region named "Skills"', () => {
-    render(<SkillGroups groups={groups} />);
-    expect(screen.getByRole('region', { name: /Skills/i })).toBeInTheDocument();
-  });
-
   it('renders one accordion trigger per group with its title', () => {
     render(<SkillGroups groups={groups} />);
     expect(screen.getByRole('button', { name: /Programming Languages/i })).toBeInTheDocument();

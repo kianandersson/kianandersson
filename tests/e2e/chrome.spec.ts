@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test';
 test.describe('Top bar', () => {
   test('exposes print, GitHub, and theme toggle controls', async ({ page }) => {
     await page.goto('/');
-    const topbar = page.locator('[data-chrome="top"]');
+    const topbar = page.getByRole('banner');
     await expect(topbar).toBeVisible();
     await expect(topbar.getByRole('button', { name: /print/i })).toBeVisible();
     await expect(topbar.getByRole('link', { name: /github/i })).toBeVisible();
@@ -13,7 +13,7 @@ test.describe('Top bar', () => {
 
   test('spans the full viewport width', async ({ page }) => {
     await page.goto('/');
-    const topbar = page.locator('[data-chrome="top"]');
+    const topbar = page.getByRole('banner');
     const width = await topbar.evaluate((el) => el.getBoundingClientRect().width);
     const viewport = page.viewportSize();
     expect(viewport).not.toBeNull();
@@ -24,7 +24,7 @@ test.describe('Top bar', () => {
 test.describe('Footer', () => {
   test('shows copyright and links to the open-source repository', async ({ page }) => {
     await page.goto('/');
-    const footer = page.locator('[data-chrome="bottom"]');
+    const footer = page.getByRole('contentinfo');
     await expect(footer).toBeVisible();
     await expect(footer.getByText(/Kian Andersson/i)).toBeVisible();
     const sourceLink = footer.getByRole('link', { name: /open-source/i });
@@ -73,8 +73,8 @@ test.describe('Print media', () => {
 
     await page.emulateMedia({ media: 'print', colorScheme: 'dark' });
 
-    await expect(page.locator('[data-chrome="top"]')).toBeHidden();
-    await expect(page.locator('[data-chrome="bottom"]')).toBeHidden();
+    await expect(page.getByRole('banner')).toBeHidden();
+    await expect(page.getByRole('contentinfo')).toBeHidden();
 
     await expect(page.getByText('Available for new projects.')).toBeHidden();
     await expect(page.getByRole('link', { name: /get in touch/i })).toBeHidden();

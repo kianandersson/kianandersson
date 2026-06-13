@@ -11,7 +11,7 @@ const PLACEHOLDER_BODY =
 
 export function Hero({ name, available, ctaHref }: HeroProps) {
   return (
-    <section className={styles.hero}>
+    <div>
       <h1 className={styles.heading}>
         Hi, I'm <span className={styles.name}>{name}</span>.
       </h1>
@@ -19,13 +19,13 @@ export function Hero({ name, available, ctaHref }: HeroProps) {
       <p className={styles.body}>{PLACEHOLDER_BODY}</p>
 
       {available ? (
-        <p className={styles.availability} data-print-hidden="true">
+        <p className={styles.availability}>
           <span className={styles.dot} aria-hidden="true" />
           Available for new projects.
         </p>
       ) : null}
 
-      <div className={styles.ctaWrapper} data-print-hidden="true">
+      <div className={styles.ctaWrapper}>
         <a className={styles.cta} href={ctaHref}>
           Get in touch
           <svg
@@ -45,6 +45,6 @@ export function Hero({ name, available, ctaHref }: HeroProps) {
           </svg>
         </a>
       </div>
-    </section>
+    </div>
   );
 }

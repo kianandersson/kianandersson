@@ -1,4 +1,4 @@
-.section {
+.root {
   container-type: inline-size;
 }
 
@@ -43,4 +43,11 @@
 
 .list > li:last-child {
   border-bottom: 0;
+}
+
+@media print {
+  .groupSlot ~ .groupSlot {
+    break-before: page;
+    break-inside: avoid;
+  }
 }
