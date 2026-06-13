@@ -73,7 +73,6 @@
 .cta {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
   font-family: var(--font-sans);
   font-size: 15px;
   font-weight: 500;
@@ -81,18 +80,37 @@
   color: var(--bg);
   padding: 12px 24px;
   border-radius: 980px;
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s;
-}
-
-.cta:hover,
-.cta:focus-visible {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px var(--shadow);
+  transition: transform 0.12s ease;
 }
 
 .cta:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+.cta:active {
+  transform: scale(0.97);
+}
+
+.arrow {
+  display: inline-block;
+  width: 0;
+  height: 16px;
+  margin-left: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateX(-6px);
+  transition:
+    width 0.25s ease,
+    margin-left 0.25s ease,
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.cta:hover .arrow,
+.cta:focus-visible .arrow {
+  width: 16px;
+  margin-left: 8px;
+  opacity: 1;
+  transform: translateX(0);
 }
