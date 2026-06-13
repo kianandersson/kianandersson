@@ -1,0 +1,62 @@
+---
+import '../styles/tokens.css';
+import '../styles/base.css';
+import { siteConfig } from '../site.config';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${siteConfig.name} — Freelance full-stack engineer`,
+  description = `${siteConfig.name}, freelance full-stack engineer based in ${siteConfig.location}. Software built end-to-end.`,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: siteConfig.name,
+  email: `mailto:${siteConfig.email}`,
+  url: Astro.site?.toString(),
+  jobTitle: 'Senior Fullstack Engineer',
+  address: {
+    '@type': 'PostalAddress',
+    addressCountry: siteConfig.location,
+  },
+  sameAs: [siteConfig.links.github, siteConfig.links.linkedin],
+};
+
+const jsonLdSerialized = JSON.stringify(personJsonLd).replace(/</g, '\\u003c');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <link rel="preload" href="/fonts/Geist.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/GeistMono.woff2" as="font" type="font/woff2" crossorigin />
+
+    <script type="application/ld+json" is:inline set:html={jsonLdSerialized} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

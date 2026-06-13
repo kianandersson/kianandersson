@@ -1,0 +1,22 @@
+---
+import { Hero, type HeroProps } from '../components/Hero/Hero';
+
+interface Props {
+  hero: HeroProps;
+}
+
+const { hero } = Astro.props;
+---
+
+<main>
+  <Hero {...hero} />
+  <slot />
+</main>
+
+<style>
+  main {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--container-pad) 100px;
+  }
+</style>

@@ -1,0 +1,93 @@
+.hero {
+  padding-top: 64px;
+}
+
+.heading {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 38px;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+.name {
+  color: var(--accent);
+}
+
+.body {
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--dim);
+  max-width: 540px;
+}
+
+.availability {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  color: var(--dim);
+}
+
+.dot {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ok);
+}
+
+.dot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--ok);
+  animation: dotRing 2.4s ease-out infinite;
+}
+
+@keyframes dotRing {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.ctaWrapper {
+  margin-top: 24px;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 500;
+  background: var(--text);
+  color: var(--bg);
+  padding: 12px 24px;
+  border-radius: 980px;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.cta:hover,
+.cta:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--shadow);
+}
