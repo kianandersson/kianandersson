@@ -24,10 +24,14 @@ export function KeySkills({ skills }: Props) {
           Key skills
         </h2>
       </header>
-      <div className={styles.list}>
-        {skills.map((skill) => (
-          <SkillRow key={skill.id} name={skill.name} level={skill.level} years={skill.years} />
-        ))}
+      <div className={styles.scrollWrapper}>
+        <table className={styles.table} aria-labelledby="key-skills-heading">
+          <tbody>
+            {skills.map((skill) => (
+              <SkillRow key={skill.id} name={skill.name} level={skill.level} years={skill.years} />
+            ))}
+          </tbody>
+        </table>
       </div>
     </section>
   );

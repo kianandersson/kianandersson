@@ -18,13 +18,24 @@ test.describe('Key Skills section', () => {
     await page.goto('/');
     const section = page.getByRole('region', { name: /Key skills/i });
 
-    const typescriptRow = section.locator('div', { hasText: /^TypeScript/ }).first();
+    const typescriptRow = section.locator('tr', { hasText: 'TypeScript' });
     await expect(typescriptRow.locator('[data-state="on"]')).toHaveCount(5);
     await expect(typescriptRow.locator('[data-state="off"]')).toHaveCount(0);
 
-    const goRow = section.locator('div', { hasText: /^Go/ }).first();
+    const goRow = section.locator('tr', { hasText: /^Go/ });
     await expect(goRow.locator('[data-state="on"]')).toHaveCount(2);
     await expect(goRow.locator('[data-state="off"]')).toHaveCount(3);
+  });
+
+  test('keeps horizontal overflow inside the table at a 320px viewport', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 800 });
+    await page.goto('/');
+
+    const pageOverflow = await page.evaluate(() => {
+      const root = document.documentElement;
+      return root.scrollWidth - root.clientWidth;
+    });
+    expect(pageOverflow).toBeLessThanOrEqual(0);
   });
 
   test('passes axe accessibility audit', async ({ page }) => {

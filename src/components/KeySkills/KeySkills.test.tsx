@@ -15,6 +15,11 @@ describe('KeySkills', () => {
     expect(screen.getByRole('heading', { level: 2, name: /Key skills/i })).toBeInTheDocument();
   });
 
+  it('lays the skills out as a table so columns align', () => {
+    render(<KeySkills skills={sampleSkills} />);
+    expect(screen.getByRole('table')).toBeInTheDocument();
+  });
+
   it('renders one row per skill it receives', () => {
     render(<KeySkills skills={sampleSkills} />);
     expect(screen.getByText('TypeScript')).toBeInTheDocument();
@@ -22,7 +27,7 @@ describe('KeySkills', () => {
     expect(screen.getByText('Go')).toBeInTheDocument();
   });
 
-  it('renders nothing in the list when no skills are provided', () => {
+  it('renders nothing in the table when no skills are provided', () => {
     const { container } = render(<KeySkills skills={[]} />);
     expect(container.querySelectorAll('[data-state]').length).toBe(0);
   });
