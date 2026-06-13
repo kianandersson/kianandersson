@@ -52,14 +52,6 @@
   animation: dotRing 2.4s ease-out infinite;
 }
 
-.dotInactive {
-  background: var(--accent);
-}
-
-.dotInactive::before {
-  display: none;
-}
-
 @keyframes dotRing {
   0% {
     transform: scale(1);

@@ -2,11 +2,10 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
 test.describe('Home page', () => {
-  test('renders the hero with availability badge and CTA', async ({ page }) => {
+  test('renders the hero heading and CTA', async ({ page }) => {
     await page.goto('/');
 
     await expect(page.getByRole('heading', { level: 1 })).toHaveText("Hi, I'm Kian.");
-    await expect(page.getByText(/Available for new projects/i)).toBeVisible();
     await expect(page.getByRole('link', { name: /Get in touch/i })).toHaveAttribute(
       'href',
       'mailto:mail@kianandersson.dk',
