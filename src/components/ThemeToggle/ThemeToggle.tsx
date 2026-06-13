@@ -10,12 +10,14 @@ function readTheme(): Theme {
 
 export function ThemeToggle() {
   const [theme, setTheme] = useState<Theme | undefined>(undefined);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   useEffect(() => {
     setTheme(readTheme());
   }, []);
 
   const toggle = useCallback(() => {
+    setHasInteracted(true);
     setTheme((prev) => {
       const next = prev === 'dark' ? 'light' : 'dark';
       document.documentElement.dataset.theme = next;
@@ -29,6 +31,7 @@ export function ThemeToggle() {
   }, []);
 
   const isDark = theme === 'dark';
+  const iconClass = hasInteracted ? `${styles.icon} ${styles.iconAnimate}` : styles.icon;
 
   return (
     <button
@@ -39,7 +42,7 @@ export function ThemeToggle() {
       title="Toggle theme"
       className={styles.button}
     >
-      <span className={styles.icon} aria-hidden="true">
+      <span key={theme ?? 'initial'} className={iconClass} aria-hidden="true">
         {isDark ? (
           <svg
             width="17"

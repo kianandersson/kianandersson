@@ -29,3 +29,22 @@
   display: grid;
   place-items: center;
 }
+
+.iconAnimate {
+  animation: spin-in 0.35s ease both;
+}
+
+@keyframes spin-in {
+  from {
+    transform: rotate(-90deg) scale(0.6);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iconAnimate {
+    animation: none;
+  }
+}
