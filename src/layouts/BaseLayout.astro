@@ -79,6 +79,6 @@ const currentYear = new Date().getFullYear();
   <body>
     <TopBar githubHref={siteConfig.links.github} client:load />
     <slot />
-    <Footer name={siteConfig.name} year={currentYear} sourceHref={siteConfig.links.github} />
+    <Footer name={siteConfig.name} year={currentYear} sourceHref={siteConfig.links.source} />
   </body>
 </html>

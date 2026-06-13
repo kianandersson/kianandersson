@@ -15,7 +15,7 @@ export function Footer({ name, year, sourceHref }: Props) {
         </span>
         <span className={styles.source}>
           This website is{' '}
-          <a href={sourceHref} className={styles.link} rel="noopener">
+          <a href={sourceHref} className={styles.link} target="_blank" rel="noopener noreferrer">
             open-source
           </a>
         </span>
