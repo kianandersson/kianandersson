@@ -67,6 +67,14 @@ jobs:
       artifact-name: ${{ needs.build.outputs.artifact-name }}
       artifact-path: ${{ needs.build.outputs.artifact-path }}
 
+  lighthouse-local:
+    name: Lighthouse (local)
+    needs: build
+    uses: ./.github/workflows/lighthouse-local.yml
+    with:
+      artifact-name: ${{ needs.build.outputs.artifact-name }}
+      artifact-path: ${{ needs.build.outputs.artifact-path }}
+
   preview:
     name: Preview
     if: github.event.pull_request.draft == false

@@ -1,0 +1,34 @@
+name: Lighthouse local
+
+# Runs Lighthouse CI against the build artifact via the static-serve
+# mode in lighthouserc.cjs. Used to catch SEO regressions before
+# deploy — the hosted preview audit can't, because Cloudflare adds
+# `X-Robots-Tag: noindex` to every workers.dev response.
+on:
+  workflow_call:
+    inputs:
+      artifact-name:
+        required: true
+        type: string
+      artifact-path:
+        required: true
+        type: string
+
+jobs:
+  lighthouse-local:
+    name: Lighthouse audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.artifact-name }}
+          path: ${{ inputs.artifact-path }}
+
+      - run: pnpm lhci
