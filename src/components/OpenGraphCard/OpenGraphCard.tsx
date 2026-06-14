@@ -6,16 +6,17 @@ type Props = {
   name: string;
   role: string;
   skills: string[];
+  availableFrom?: Date;
 };
 
-export function OpenGraphCard({ name, role, skills }: Props) {
+export function OpenGraphCard({ name, role, skills, availableFrom }: Props) {
   const [firstName, ...rest] = name.trim().split(/\s+/);
   const lastName = rest.join(' ');
 
   return (
     <div className={styles.card}>
       <div className={styles.badge}>
-        <AvailabilityPill />
+        <AvailabilityPill availableFrom={availableFrom} />
       </div>
 
       <div className={styles.identity}>

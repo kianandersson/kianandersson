@@ -11,12 +11,6 @@ export type HeroProps = {
 const PLACEHOLDER_BODY =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.';
 
-function renderAvailability(availableFrom: Date | undefined) {
-  if (!availableFrom) return null;
-  const isFuture = availableFrom.getTime() > Date.now();
-  return <AvailabilityPill pulse from={isFuture ? availableFrom : undefined} />;
-}
-
 export function Hero({ name, availableFrom, ctaHref }: HeroProps) {
   return (
     <div className={styles.root}>
@@ -26,7 +20,7 @@ export function Hero({ name, availableFrom, ctaHref }: HeroProps) {
 
       <p className={styles.body}>{PLACEHOLDER_BODY}</p>
 
-      {renderAvailability(availableFrom)}
+      <AvailabilityPill pulse availableFrom={availableFrom} />
 
       <CtaButton href={ctaHref}>Get in touch</CtaButton>
     </div>

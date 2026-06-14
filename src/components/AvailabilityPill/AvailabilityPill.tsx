@@ -3,19 +3,21 @@ import { StatusDot } from '../StatusDot/StatusDot';
 import styles from './AvailabilityPill.module.css';
 
 type Props = {
-  /** Animate the status dot. On for live pages, off for static snapshots. */
+  /** Animate the green dot when the date is in the past. Off for static snapshots. */
   pulse?: boolean;
-  /** When set to a future date, the pill announces the start date instead of immediate availability. */
-  from?: Date;
+  /** Drives the pill state: undefined hides it; past dates render the live pill; future dates announce the start date. */
+  availableFrom?: Date;
 };
 
-export function AvailabilityPill({ pulse = false, from }: Props) {
+export function AvailabilityPill({ pulse = false, availableFrom }: Props) {
+  if (!availableFrom) return null;
+  const isFuture = availableFrom.getTime() > Date.now();
   return (
     <span className={styles.pill}>
-      <StatusDot pulse={pulse && !from} tone={from ? 'warn' : 'ok'} />
-      {from ? (
+      <StatusDot pulse={pulse && !isFuture} tone={isFuture ? 'warn' : 'ok'} />
+      {isFuture ? (
         <>
-          Available from <span className={styles.date}>{formatDate(from)}</span>
+          Available from <span className={styles.date}>{formatDate(availableFrom)}</span>
         </>
       ) : (
         'Available for new projects'
