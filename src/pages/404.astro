@@ -1,0 +1,35 @@
+---
+import { NotFound } from '../components/NotFound/NotFound';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig } from '../site.config';
+
+const title = `${siteConfig.name} - Page not found`;
+const description = "The page you're after couldn't be found.";
+---
+
+<BaseLayout title={title} description={description} showPrint={false}>
+  <main class="root">
+    <NotFound />
+  </main>
+</BaseLayout>
+
+<script is:inline>
+  (function () {
+    var el = document.getElementById('requested-url');
+    if (!el) return;
+    el.textContent = window.location;
+  })();
+</script>
+
+<style>
+  .root {
+    box-sizing: border-box;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--container-pad);
+    min-height: calc(100vh - 86px - 70px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+</style>

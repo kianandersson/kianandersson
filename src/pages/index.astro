@@ -1,7 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { formatPeriod } from '../lib/formatPeriod';
 import { groupSkills } from '../lib/group-skills';
+import { buildPersonJsonLd } from '../lib/person-json-ld';
 import { siteConfig } from '../site.config';
 import IndexTemplate from '../templates/IndexTemplate.astro';
 
@@ -29,20 +31,34 @@ const skillGroups = groupSkills(allSkills).map(({ group, items }) => ({
   skills: items.map(({ id, name, level, years }) => ({ id, name, level, years })),
 }));
 
-const experience = (await getCollection('experience'))
-  .sort((a, b) => b.data.start.getTime() - a.data.start.getTime())
-  .map((entry) => ({
-    id: entry.id,
-    role: entry.data.role,
+const experienceEntries = (await getCollection('experience')).sort(
+  (a, b) => b.data.start.getTime() - a.data.start.getTime(),
+);
+
+const experience = experienceEntries.map((entry) => ({
+  id: entry.id,
+  role: entry.data.role,
+  meta: entry.data.meta,
+  period: formatPeriod(entry.data.start, entry.data.end),
+  description: entry.data.description,
+  stack: entry.data.stack,
+  methods: entry.data.methods,
+}));
+
+const jsonLd = buildPersonJsonLd(
+  siteConfig,
+  experienceEntries.map((entry) => ({
     meta: entry.data.meta,
-    period: entry.data.period,
-    description: entry.data.description,
-    stack: entry.data.stack,
-    methods: entry.data.methods,
-  }));
+    role: entry.data.role,
+    start: entry.data.start,
+    end: entry.data.end,
+  })),
+  new URL('/', Astro.site).toString(),
+  allSkills.filter((skill) => skill.level >= 3).map(({ name }) => ({ name })),
+);
 ---
 
-<BaseLayout>
+<BaseLayout jsonLd={jsonLd}>
   <IndexTemplate
     hero={hero}
     keySkills={keySkills}

@@ -1,3 +1,4 @@
+import { CtaButton } from '../CtaButton/CtaButton';
 import styles from './Hero.module.css';
 
 export type HeroProps = {
@@ -25,24 +26,7 @@ export function Hero({ name, available, ctaHref }: HeroProps) {
         </p>
       ) : null}
 
-      <a className={styles.cta} href={ctaHref}>
-        Get in touch
-        <svg
-          className={styles.arrow}
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M5 12h14" />
-          <path d="M13 6l6 6-6 6" />
-        </svg>
-      </a>
+      <CtaButton href={ctaHref}>Get in touch</CtaButton>
     </div>
   );
 }

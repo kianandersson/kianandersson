@@ -1,34 +1,29 @@
 ---
 import { Footer } from '../components/Footer/Footer';
 import { TopBar } from '../components/TopBar/TopBar';
+import { buildPersonJsonLd, type PersonJsonLd } from '../lib/person-json-ld';
 import { siteConfig } from '../site.config';
 import '../styles/tokens.css';
 
 interface Props {
   title?: string;
   description?: string;
+  jsonLd?: PersonJsonLd;
+  showPrint?: boolean;
 }
 
 const {
   title = `${siteConfig.name} — Senior Fullstack Engineer`,
   description = `${siteConfig.name}, senior fullstack engineer based in ${siteConfig.location}.`,
+  jsonLd,
+  showPrint = true,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImage = new URL('/og.png', Astro.site).toString();
 
-const personJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: siteConfig.name,
-  email: `mailto:${siteConfig.email}`,
-  url: Astro.site?.toString(),
-  jobTitle: 'Senior Fullstack Engineer',
-  address: {
-    '@type': 'PostalAddress',
-    addressCountry: siteConfig.location,
-  },
-  sameAs: [siteConfig.links.github, siteConfig.links.linkedin],
-};
+const personJsonLd =
+  jsonLd ?? buildPersonJsonLd(siteConfig, [], Astro.site?.toString() ?? canonical);
 
 const jsonLdSerialized = JSON.stringify(personJsonLd).replace(/</g, '\\u003c');
 
@@ -49,10 +44,12 @@ const currentYear = new Date().getFullYear();
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
 
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
     <link rel="preload" href="/fonts/Geist.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/GeistMono.woff2" as="font" type="font/woff2" crossorigin />
@@ -75,7 +72,7 @@ const currentYear = new Date().getFullYear();
     <script type="application/ld+json" is:inline set:html={jsonLdSerialized} />
   </head>
   <body>
-    <TopBar githubHref={siteConfig.links.github} client:load />
+    <TopBar githubHref={siteConfig.links.github} showPrint={showPrint} client:load />
     <slot />
     <Footer name={siteConfig.name} year={currentYear} sourceHref={siteConfig.links.source} />
   </body>
