@@ -1,4 +1,4 @@
-import { formatDate } from '../../lib/formatPeriod';
+import { formatDate } from '../../lib/formatDate';
 import { StatusDot } from '../StatusDot/StatusDot';
 import styles from './AvailabilityPill.module.css';
 
