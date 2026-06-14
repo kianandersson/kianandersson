@@ -1,0 +1,39 @@
+name: Pull request
+
+# PR pipeline: build, test, deploy a preview, audit it with Lighthouse.
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  deployments: write
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+
+  test:
+    needs: build
+    uses: ./.github/workflows/test.yml
+
+  deploy:
+    if: github.event.pull_request.draft == false
+    needs: [build, test]
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: preview-pr-${{ github.event.pull_request.number }}
+      mode: preview
+      preview-alias: pr-${{ github.event.pull_request.number }}
+    secrets: inherit
+
+  lighthouse:
+    if: github.event.pull_request.draft == false
+    needs: deploy
+    uses: ./.github/workflows/lighthouse.yml
+    with:
+      url: ${{ needs.deploy.outputs.url }}

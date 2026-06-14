@@ -1,0 +1,44 @@
+name: Build
+
+# Produces the shippable `dist/` artifact. Reusable — called by
+# pull-request.yml and release.yml.
+on:
+  workflow_call:
+
+jobs:
+  build:
+    name: Astro build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Required before build: the og-image integration screenshots the /og
+      # page with Playwright during astro:build:done.
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Build
+        run: pnpm build
+
+      - name: Check JS bundle size (< 10 KB gzipped)
+        run: pnpm check:bundle
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 1
+          if-no-files-found: error

@@ -1,16 +1,17 @@
-name: Checks
+name: Test
 
-# Reusable: runs lint/typecheck/test/build/e2e and uploads the built
-# `dist/` so a downstream deploy job can pick it up via download-artifact
-# in the same workflow run. Not triggered directly.
+# Verifies code correctness: lint, typecheck, unit tests, and end-to-end
+# tests against the built `dist/` (downloaded from the build artifact).
+# Reusable — callers must run build.yml first so the `dist` artifact
+# exists in the same run.
 on:
   workflow_call:
 
 jobs:
-  checks:
-    name: Lint + typecheck + test + build + e2e
+  test:
+    name: Lint + typecheck + unit + e2e
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@v4
@@ -34,16 +35,14 @@ jobs:
       - name: Unit tests (Vitest)
         run: pnpm test
 
-      # Required before build: the og-image integration screenshots the /og
-      # page with Playwright during astro:build:done.
       - name: Install Playwright browsers
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Build (astro build)
-        run: pnpm build
-
-      - name: Check JS bundle size (< 10 KB gzipped)
-        run: pnpm check:bundle
+      - name: Download dist for e2e
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
 
       - name: E2E + axe (Playwright)
         run: pnpm test:e2e
@@ -55,11 +54,3 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 7
-
-      - name: Upload dist for deploy jobs
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: dist/
-          retention-days: 1
-          if-no-files-found: error

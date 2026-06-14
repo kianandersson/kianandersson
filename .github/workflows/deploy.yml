@@ -1,0 +1,57 @@
+name: Deploy
+
+# Single deploy workflow, parameterised by GitHub environment. Callers
+# pick the environment (e.g. `production` or `preview-pr-12`) and the
+# mode — production runs `wrangler deploy`; preview runs
+# `wrangler versions upload --preview-alias=<alias>` so each PR gets a
+# readable URL like `pr-12-<worker>.workers.dev`.
+#
+# Cloudflare Workers does not currently support custom domains for
+# preview URLs — they're locked to workers.dev.
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: 'GitHub environment to deploy to'
+        required: true
+        type: string
+      mode:
+        description: '`production` or `preview`'
+        required: true
+        type: string
+      preview-alias:
+        description: 'Preview alias (preview mode only) — appears in the URL'
+        required: false
+        type: string
+        default: ''
+    outputs:
+      url:
+        description: 'URL of the deployed version'
+        value: ${{ jobs.deploy.outputs.url }}
+
+jobs:
+  deploy:
+    name: Deploy to ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      url: ${{ steps.deploy.outputs.deployment-url }}
+    environment:
+      name: ${{ inputs.environment }}
+      url: ${{ steps.deploy.outputs.deployment-url }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: ${{ inputs.mode == 'preview' && format('versions upload --preview-alias={0}', inputs.preview-alias) || 'deploy' }}

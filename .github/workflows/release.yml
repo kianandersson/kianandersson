@@ -1,9 +1,8 @@
 name: Release
 
-# Production deploy pipeline: run checks on the chosen ref, then
-# deploy to production. Triggered automatically on push to main, and
-# manually via "Run workflow" in the Actions UI (handy for redeploying
-# the current main after a transient failure).
+# Production pipeline: build, test, deploy to production. Runs on push
+# to `main` and on manual `workflow_dispatch` (Actions UI → Run workflow)
+# for redeploying the current main on demand.
 on:
   push:
     branches: [main]
@@ -18,10 +17,17 @@ permissions:
   deployments: write
 
 jobs:
-  checks:
-    uses: ./.github/workflows/_checks.yml
+  build:
+    uses: ./.github/workflows/build.yml
 
-  deploy-production:
-    needs: checks
-    uses: ./.github/workflows/_deploy-production.yml
+  test:
+    needs: build
+    uses: ./.github/workflows/test.yml
+
+  deploy:
+    needs: [build, test]
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: production
+      mode: production
     secrets: inherit

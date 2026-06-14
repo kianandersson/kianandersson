@@ -1,0 +1,35 @@
+name: Lighthouse
+
+# Runs Lighthouse CI against a deployed URL. Used after a preview deploy
+# to get realistic edge + TLS numbers instead of `staticDistDir`.
+on:
+  workflow_call:
+    inputs:
+      url:
+        description: 'URL to audit'
+        required: true
+        type: string
+
+jobs:
+  lighthouse:
+    name: Audit ${{ inputs.url }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lighthouse CI
+        env:
+          PREVIEW_URL: ${{ inputs.url }}
+        run: pnpm exec lhci autorun --config=./lighthouserc.preview.cjs
