@@ -29,7 +29,7 @@ export const siteConfig: SiteConfig = SiteConfigSchema.parse({
   role: 'Senior Full-stack Engineer',
   email: 'mail@kianandersson.dk',
   location: 'Denmark',
-  availableFrom: '2026-08-01',
+  availableFrom: '2026-06-01',
   links: {
     github: 'https://github.com/kianandersson',
     linkedin: 'https://www.linkedin.com/in/kianandersson',
