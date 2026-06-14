@@ -2,6 +2,7 @@
 import { Experience, type ExperienceEntry } from '../components/Experience/Experience';
 import { Hero, type HeroProps } from '../components/Hero/Hero';
 import { type KeySkill, KeySkills } from '../components/KeySkills/KeySkills';
+import { type Language, Miscellaneous } from '../components/Miscellaneous/Miscellaneous';
 import { type SkillGroup, SkillGroups } from '../components/SkillGroups/SkillGroups';
 
 interface Props {
@@ -9,9 +10,10 @@ interface Props {
   keySkills: KeySkill[];
   experience: ExperienceEntry[];
   skillGroups: SkillGroup[];
+  languages: Language[];
 }
 
-const { hero, keySkills, experience, skillGroups } = Astro.props;
+const { hero, keySkills, experience, skillGroups, languages } = Astro.props;
 ---
 
 <main>
@@ -24,6 +26,9 @@ const { hero, keySkills, experience, skillGroups } = Astro.props;
   </section>
   <section id="skills" aria-labelledby="skills-heading">
     <SkillGroups groups={skillGroups} client:visible />
+  </section>
+  <section id="miscellaneous" aria-labelledby="miscellaneous-heading">
+    <Miscellaneous languages={languages} />
   </section>
   <slot />
 </main>
