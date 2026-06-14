@@ -30,6 +30,13 @@ jobs:
       artifact-name: ${{ needs.build.outputs.artifact-name }}
       artifact-path: ${{ needs.build.outputs.artifact-path }}
 
+  bundle-size:
+    needs: build
+    uses: ./.github/workflows/bundle-size.yml
+    with:
+      artifact-name: ${{ needs.build.outputs.artifact-name }}
+      artifact-path: ${{ needs.build.outputs.artifact-path }}
+
   create-preview:
     if: github.event.pull_request.draft == false
     needs: [build, test]

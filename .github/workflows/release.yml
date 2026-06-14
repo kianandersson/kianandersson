@@ -30,8 +30,15 @@ jobs:
       artifact-name: ${{ needs.build.outputs.artifact-name }}
       artifact-path: ${{ needs.build.outputs.artifact-path }}
 
+  bundle-size:
+    needs: build
+    uses: ./.github/workflows/bundle-size.yml
+    with:
+      artifact-name: ${{ needs.build.outputs.artifact-name }}
+      artifact-path: ${{ needs.build.outputs.artifact-path }}
+
   deploy:
-    needs: [build, test, e2e]
+    needs: [build, test, e2e, bundle-size]
     uses: ./.github/workflows/deploy.yml
     with:
       environment: production
