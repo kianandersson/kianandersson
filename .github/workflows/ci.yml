@@ -1,13 +1,13 @@
 name: CI
 
+# Pull request pipeline: run the checks, and if they pass on a
+# non-draft PR, deploy a Cloudflare preview.
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
 
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ci-pr-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 permissions:
@@ -15,142 +15,13 @@ permissions:
   deployments: write
 
 jobs:
-  ci:
-    name: Lint + typecheck + test + build + e2e
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Lint (Biome)
-        run: pnpm lint
-
-      - name: Typecheck (astro check)
-        run: pnpm typecheck
-
-      - name: Unit tests (Vitest)
-        run: pnpm test
-
-      # Required before build: the og-image integration screenshots the /og
-      # page with Playwright during astro:build:done.
-      - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps chromium
-
-      - name: Build (astro build)
-        run: pnpm build
-
-      - name: Check JS bundle size (< 10 KB gzipped)
-        run: pnpm check:bundle
-
-      - name: E2E + axe (Playwright)
-        run: pnpm test:e2e
-
-      - name: Upload Playwright report on failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 7
-
-      - name: Upload dist for deploy jobs
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: dist/
-          retention-days: 1
-          if-no-files-found: error
+  checks:
+    uses: ./.github/workflows/_checks.yml
 
   deploy-preview:
-    name: Deploy preview to Cloudflare
-    needs: ci
-    if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    concurrency:
-      group: deploy-preview-pr-${{ github.event.pull_request.number }}
-      cancel-in-progress: true
-    environment:
-      name: preview-pr-${{ github.event.pull_request.number }}
-      url: ${{ steps.deploy.outputs.deployment-url }}
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Download dist artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist/
-
-      # `--preview-alias` produces a readable URL like
-      # `pr-12-<worker>.<account>.workers.dev` instead of a random hash.
-      # Cloudflare Workers does not currently support custom domains for
-      # preview URLs — they must live on workers.dev.
-      - name: Deploy preview
-        id: deploy
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          packageManager: pnpm
-          command: versions upload --preview-alias=pr-${{ github.event.pull_request.number }}
-
-      - name: Lighthouse against live preview
-        env:
-          PREVIEW_URL: ${{ steps.deploy.outputs.deployment-url }}
-        run: pnpm exec lhci autorun --config=./lighthouserc.preview.cjs
-
-  deploy-production:
-    name: Deploy to production
-    needs: ci
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    concurrency:
-      group: deploy-production
-      cancel-in-progress: false
-    environment:
-      name: production
-      url: https://kianandersson.com
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-
-      - name: Download dist artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist/
-
-      - name: Deploy
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy
+    if: github.event.pull_request.draft == false
+    needs: checks
+    uses: ./.github/workflows/_deploy-preview.yml
+    with:
+      pr-number: ${{ github.event.pull_request.number }}
+    secrets: inherit
