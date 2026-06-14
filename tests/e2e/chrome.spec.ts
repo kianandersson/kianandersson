@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
+import { siteConfig } from '../../src/site.config';
 
 test.describe('Top bar', () => {
   test('exposes print, GitHub, and theme toggle controls', async ({ page }) => {
@@ -26,7 +27,7 @@ test.describe('Footer', () => {
     await page.goto('/');
     const footer = page.getByRole('contentinfo');
     await expect(footer).toBeVisible();
-    await expect(footer.getByText(/Kian Andersson/i)).toBeVisible();
+    await expect(footer.getByText(siteConfig.name)).toBeVisible();
     const sourceLink = footer.getByRole('link', { name: /open-source/i });
     await expect(sourceLink).toBeVisible();
     await expect(sourceLink).toHaveAttribute('href', /github/i);
