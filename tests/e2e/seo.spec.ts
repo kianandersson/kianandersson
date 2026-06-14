@@ -46,7 +46,8 @@ test.describe('SEO surfaces', () => {
       ]),
     );
     expect(Array.isArray(data.knowsAbout)).toBe(true);
-    expect(data.knowsAbout).toEqual(expect.arrayContaining(['TypeScript', 'PostgreSQL']));
+    expect(data.knowsAbout).toEqual(expect.arrayContaining(['TypeScript', 'React']));
+    expect(data.knowsAbout).not.toContain('PHP');
   });
 
   test('og.png is a real PNG', async ({ request }) => {
