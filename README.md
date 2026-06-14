@@ -18,6 +18,7 @@ pnpm dev
 
 ```sh
 pnpm build              # production build
+pnpm check              # typecheck + lint + tests (fast gates)
 pnpm typecheck          # astro check
 pnpm lint               # biome
 pnpm test               # vitest (unit + island)
@@ -28,4 +29,4 @@ pnpm test:lighthouse    # lighthouse CI
 
 ## License
 
-[MIT](./LICENSE).
+Licensed under [MIT](./LICENSE).
