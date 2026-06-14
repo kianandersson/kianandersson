@@ -66,17 +66,9 @@ jobs:
       artifact-name: ${{ needs.build.outputs.artifact-name }}
       artifact-path: ${{ needs.build.outputs.artifact-path }}
 
-  lighthouse-local:
-    name: Lighthouse (local)
-    needs: build
-    uses: ./.github/workflows/lighthouse-local.yml
-    with:
-      artifact-name: ${{ needs.build.outputs.artifact-name }}
-      artifact-path: ${{ needs.build.outputs.artifact-path }}
-
   deploy:
     name: Deploy to production
-    needs: [url, build, test, e2e, bundle-size, lighthouse-local]
+    needs: [url, build, test, e2e, bundle-size]
     uses: ./.github/workflows/deploy.yml
     with:
       environment: production
@@ -85,3 +77,10 @@ jobs:
       artifact-name: ${{ needs.build.outputs.artifact-name }}
       artifact-path: ${{ needs.build.outputs.artifact-path }}
     secrets: inherit
+
+  audit:
+    name: Audit production
+    needs: [url, deploy]
+    uses: ./.github/workflows/lighthouse.yml
+    with:
+      url: ${{ needs.url.outputs.url }}

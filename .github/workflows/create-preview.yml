@@ -1,7 +1,10 @@
 name: Create preview
 
-# Deploys a per-PR Cloudflare preview and audits it with Lighthouse.
-# Reusable — called from pull-request.yml.
+# Deploys a per-PR Cloudflare preview. Reusable — called from
+# pull-request.yml. (We don't audit the preview URL with Lighthouse —
+# Cloudflare adds `X-Robots-Tag: noindex` to every workers.dev
+# response, which fails SEO checks. The PR's lighthouse-local job
+# catches code-level regressions instead.)
 on:
   workflow_call:
     inputs:
@@ -10,7 +13,7 @@ on:
         required: true
         type: number
       url:
-        description: Preview URL — published on the environment widget and audited by Lighthouse.
+        description: Preview URL — published on the environment widget.
         required: true
         type: string
       artifact-name:
@@ -31,10 +34,3 @@ jobs:
       artifact-name: ${{ inputs.artifact-name }}
       artifact-path: ${{ inputs.artifact-path }}
     secrets: inherit
-
-  audit-preview:
-    name: Audit preview
-    needs: deploy-preview
-    uses: ./.github/workflows/lighthouse.yml
-    with:
-      url: ${{ inputs.url }}
