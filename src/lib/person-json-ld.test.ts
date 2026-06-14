@@ -2,14 +2,16 @@ import { describe, expect, it } from 'vitest';
 import { buildPersonJsonLd } from './person-json-ld';
 
 const site = {
-  name: 'Kian Andersson',
+  name: 'Test Person',
   email: 'mail@example.com',
-  location: 'Denmark',
+  location: 'Testland',
   links: {
-    github: 'https://github.com/kianandersson',
-    linkedin: 'https://www.linkedin.com/in/kianandersson',
+    github: 'https://github.com/example-user',
+    linkedin: 'https://www.linkedin.com/in/example-user',
   },
 };
+
+const siteUrl = 'https://example.com/';
 
 const experience = [
   { meta: 'Freelance', role: 'Lead Engineer', start: new Date('2023-03-01') },
@@ -35,32 +37,32 @@ const experience = [
 
 describe('buildPersonJsonLd', () => {
   it('uses Schema.org Person with mailto email and provided URL', () => {
-    const json = buildPersonJsonLd(site, experience, 'https://kianandersson.dk/');
+    const json = buildPersonJsonLd(site, experience, siteUrl);
 
     expect(json['@context']).toBe('https://schema.org');
     expect(json['@type']).toBe('Person');
-    expect(json.name).toBe('Kian Andersson');
+    expect(json.name).toBe('Test Person');
     expect(json.email).toBe('mailto:mail@example.com');
-    expect(json.url).toBe('https://kianandersson.dk/');
+    expect(json.url).toBe(siteUrl);
   });
 
   it('exposes sameAs links pointing at social profiles', () => {
-    const json = buildPersonJsonLd(site, experience, 'https://kianandersson.dk/');
+    const json = buildPersonJsonLd(site, experience, siteUrl);
 
     expect(json.sameAs).toEqual([
-      'https://github.com/kianandersson',
-      'https://www.linkedin.com/in/kianandersson',
+      'https://github.com/example-user',
+      'https://www.linkedin.com/in/example-user',
     ]);
   });
 
   it('maps the most recent experience to worksFor', () => {
-    const json = buildPersonJsonLd(site, experience, 'https://kianandersson.dk/');
+    const json = buildPersonJsonLd(site, experience, siteUrl);
 
     expect(json.worksFor).toEqual({ '@type': 'Organization', name: 'Freelance' });
   });
 
   it('maps past experiences to alumniOf in reverse chronological order', () => {
-    const json = buildPersonJsonLd(site, experience, 'https://kianandersson.dk/');
+    const json = buildPersonJsonLd(site, experience, siteUrl);
 
     expect(json.alumniOf).toEqual([
       { '@type': 'Organization', name: 'Nordic SaaS ApS' },
@@ -70,7 +72,7 @@ describe('buildPersonJsonLd', () => {
   });
 
   it('emits the current occupation as a plain Occupation', () => {
-    const json = buildPersonJsonLd(site, experience, 'https://kianandersson.dk/');
+    const json = buildPersonJsonLd(site, experience, siteUrl);
 
     expect(json.hasOccupation?.[0]).toEqual({
       '@type': 'Occupation',
@@ -79,7 +81,7 @@ describe('buildPersonJsonLd', () => {
   });
 
   it('wraps past occupations in Role with start + end dates per Schema.org guidance', () => {
-    const json = buildPersonJsonLd(site, experience, 'https://kianandersson.dk/');
+    const json = buildPersonJsonLd(site, experience, siteUrl);
 
     expect(json.hasOccupation?.slice(1)).toEqual([
       {
@@ -115,7 +117,7 @@ describe('buildPersonJsonLd', () => {
           end: new Date('2023-12-31'),
         },
       ],
-      'https://kianandersson.dk/',
+      siteUrl,
     );
 
     expect(json.worksFor).toEqual({ '@type': 'Organization', name: 'Now Co' });
@@ -132,7 +134,7 @@ describe('buildPersonJsonLd', () => {
   });
 
   it('omits worksFor and alumniOf when no experience is given', () => {
-    const json = buildPersonJsonLd(site, [], 'https://kianandersson.dk/');
+    const json = buildPersonJsonLd(site, [], siteUrl);
 
     expect(json.worksFor).toBeUndefined();
     expect(json.alumniOf).toBeUndefined();
@@ -140,7 +142,7 @@ describe('buildPersonJsonLd', () => {
   });
 
   it('lists provided skills as knowsAbout', () => {
-    const json = buildPersonJsonLd(site, experience, 'https://kianandersson.dk/', [
+    const json = buildPersonJsonLd(site, experience, siteUrl, [
       { name: 'TypeScript' },
       { name: 'PostgreSQL' },
       { name: 'React' },
@@ -150,7 +152,7 @@ describe('buildPersonJsonLd', () => {
   });
 
   it('omits knowsAbout when no skills are provided', () => {
-    const json = buildPersonJsonLd(site, experience, 'https://kianandersson.dk/');
+    const json = buildPersonJsonLd(site, experience, siteUrl);
     expect(json.knowsAbout).toBeUndefined();
   });
 });
