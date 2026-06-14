@@ -1,0 +1,53 @@
+name: Production URL
+description: Resolve the worker's production URL — custom domain if one is attached, workers.dev fallback otherwise.
+
+inputs:
+  api-token:
+    description: Cloudflare API token.
+    required: true
+  account-id:
+    description: Cloudflare account ID.
+    required: true
+  worker-name:
+    description: Worker script name.
+    required: true
+
+outputs:
+  url:
+    description: Production URL of the worker.
+    value: ${{ steps.resolve.outputs.url }}
+
+runs:
+  using: composite
+  steps:
+    - id: resolve
+      shell: bash
+      env:
+        CF_TOKEN: ${{ inputs.api-token }}
+        CF_ACCOUNT: ${{ inputs.account-id }}
+        WORKER: ${{ inputs.worker-name }}
+      run: |
+        # A custom domain attached to the worker is the canonical
+        # production URL.
+        custom=$(curl -fsS \
+          -H "Authorization: Bearer $CF_TOKEN" \
+          "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/workers/domains?service=$WORKER" \
+          | jq -r '.result[0].hostname // empty')
+
+        if [ -n "$custom" ]; then
+          echo "url=https://$custom" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
+
+        # No custom domain — fall back to the workers.dev URL.
+        subdomain=$(curl -fsS \
+          -H "Authorization: Bearer $CF_TOKEN" \
+          "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/workers/subdomain" \
+          | jq -r '.result.subdomain // empty')
+
+        if [ -z "$subdomain" ]; then
+          echo "::error::No custom domain on $WORKER and could not fetch workers.dev subdomain"
+          exit 1
+        fi
+
+        echo "url=https://$WORKER.$subdomain.workers.dev" >> "$GITHUB_OUTPUT"

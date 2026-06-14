@@ -1,10 +1,9 @@
 name: Release
 
-# Production pipeline. The site URL lives on the GitHub `production`
-# environment as the `URL` variable; resolving it up front lets build
-# bake the canonical/sitemap/og:image into the same URL that deploy
-# publishes on the environment widget. Runs on push to `main` and on
-# manual `workflow_dispatch` for redeploying the current main on demand.
+# Production pipeline. The site URL is resolved from the Cloudflare
+# API — the worker's attached custom domain if one exists, the
+# workers.dev fallback otherwise. Runs on push to `main` and on manual
+# `workflow_dispatch` for redeploying the current main on demand.
 on:
   push:
     branches: [main]
@@ -23,17 +22,21 @@ jobs:
     name: Site URL
     runs-on: ubuntu-latest
     timeout-minutes: 2
-    environment: production
     outputs:
-      url: ${{ vars.URL }}
+      url: ${{ steps.url.outputs.url }}
     steps:
-      - name: Verify URL is configured
+      - uses: actions/checkout@v4
+
+      - id: worker
         shell: bash
-        run: |
-          if [ -z "${{ vars.URL }}" ]; then
-            echo "::error::URL is not set on the production environment. Add it under Settings → Environments → production → Environment variables."
-            exit 1
-          fi
+        run: echo "name=$(jq -r '.name' wrangler.jsonc)" >> "$GITHUB_OUTPUT"
+
+      - id: url
+        uses: ./.github/actions/production-url
+        with:
+          api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          account-id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          worker-name: ${{ steps.worker.outputs.name }}
 
   build:
     name: Build
