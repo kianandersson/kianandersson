@@ -54,8 +54,15 @@ test.describe('SEO surfaces', () => {
   test('404 renders and is axe-clean', async ({ page }) => {
     await page.goto('/this-page-does-not-exist', { waitUntil: 'domcontentloaded' });
 
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Page not found.');
-    await expect(page.getByRole('link', { name: /back home/i })).toHaveAttribute('href', '/');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+      "This page couldn't be found.",
+    );
+    await expect(page.getByRole('link', { name: /back to home/i })).toHaveAttribute('href', '/');
+    await expect(page.locator('#requested-path')).toHaveText('/this-page-does-not-exist');
+
+    await page.evaluate(() =>
+      Promise.all(document.getAnimations().map((a) => a.finished.catch(() => {}))),
+    );
 
     const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations).toEqual([]);

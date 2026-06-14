@@ -3,98 +3,282 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { siteConfig } from '../site.config';
 
 const title = `Page not found — ${siteConfig.name}`;
-const description = 'The page you were looking for does not exist.';
+const description = "The page you're after couldn't be found.";
 ---
 
 <BaseLayout title={title} description={description}>
   <main class="root">
-    <p class="eyebrow">404</p>
-    <h1 class="heading">Page not found.</h1>
-    <p class="body">The page you were looking for does not exist.</p>
-    <a class="cta" href="/">
-      Back home
-      <svg
-        class="arrow"
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        aria-hidden="true"
-      >
-        <path d="M5 12h14"></path>
-        <path d="M13 6l6 6-6 6"></path>
-      </svg>
+    <div class="rise eyebrow">
+      <span class="hashes">##</span>
+      <span class="label">ERROR · 404 · NOT FOUND</span>
+    </div>
+
+    <h1 class="rise heading">This page couldn't be found.</h1>
+
+    <p class="rise body">
+      The page you're after couldn't be found. It was moved, renamed, or never shipped — let's get
+      you back to <span class="anchor">solid ground.</span>
+    </p>
+
+    <div class="rise terminal">
+      <div class="terminal-bar">
+        <span class="dot dot-red" aria-hidden="true"></span>
+        <span class="dot dot-amber" aria-hidden="true"></span>
+        <span class="dot dot-green" aria-hidden="true"></span>
+        <span class="terminal-title">zsh — kianandersson.dk</span>
+      </div>
+      <div class="terminal-body">
+        <div class="line">
+          <span class="prompt">$</span> curl -sI kianandersson.dk<span
+            class="path"
+            id="requested-path">/that-page</span
+          >
+        </div>
+        <div class="response">HTTP/2 <span class="status">404</span> Not Found</div>
+        <div class="response">content-type: text/html; charset=utf-8</div>
+        <div class="response">x-route-matched: none</div>
+      </div>
+    </div>
+
+    <a class="rise cta" href="/">
+      <span class="arrow" aria-hidden="true">
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M19 12H5"></path>
+          <path d="M11 6l-6 6 6 6"></path>
+        </svg>
+      </span>
+      Back to home
     </a>
   </main>
 </BaseLayout>
+
+<script is:inline>
+  (function () {
+    var el = document.getElementById('requested-path');
+    if (!el) return;
+    var p = window.location && window.location.pathname;
+    if (p && p !== '/' && p.length < 40) el.textContent = p;
+  })();
+</script>
 
 <style>
   .root {
     box-sizing: border-box;
     max-width: var(--container-max);
-    min-height: 70vh;
     margin: 0 auto;
-    padding: 96px var(--container-pad);
+    padding: 0 var(--container-pad);
+    min-height: calc(100vh - 86px - 70px);
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: flex-start;
-    gap: 16px;
   }
 
   .eyebrow {
-    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .hashes {
     font-family: var(--font-mono);
-    font-size: 14px;
     color: var(--accent);
-    letter-spacing: 0.04em;
+    font-weight: 600;
+    font-size: 15px;
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--dim);
   }
 
   .heading {
-    margin: 0;
+    margin: 0 0 16px;
     font-family: var(--font-sans);
     font-weight: 600;
-    font-size: 38px;
+    font-size: 28px;
     line-height: 1.15;
     letter-spacing: -0.025em;
     color: var(--text);
   }
 
   .body {
-    margin: 0;
+    margin: 0 0 28px;
     font-family: var(--font-sans);
-    font-size: 19px;
-    line-height: 1.65;
+    font-size: 18px;
+    line-height: 1.6;
     color: var(--dim);
-    max-width: 40ch;
+    max-width: 480px;
+  }
+
+  .anchor {
+    color: var(--text);
+  }
+
+  .terminal {
+    width: 100%;
+    max-width: 520px;
+    margin-bottom: 32px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    overflow: hidden;
+    box-shadow: 0 1px 2px var(--shadow);
+  }
+
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+  }
+
+  .dot-red {
+    background: #e35d4b;
+  }
+
+  .dot-amber {
+    background: #e3b341;
+  }
+
+  .dot-green {
+    background: #46c46e;
+  }
+
+  .terminal-title {
+    margin-left: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--dim);
+  }
+
+  .terminal-body {
+    padding: 16px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.9;
+  }
+
+  .line {
+    color: var(--text);
+    word-break: break-all;
+  }
+
+  .prompt {
+    color: var(--accent);
+  }
+
+  .path {
+    color: var(--text);
+  }
+
+  .response {
+    color: var(--dim);
+  }
+
+  .status {
+    color: var(--accent);
+    font-weight: 600;
   }
 
   .cta {
-    margin-top: 16px;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
     font-family: var(--font-sans);
     font-size: 15px;
     font-weight: 500;
-    color: var(--accent);
+    background: var(--text);
+    color: var(--bg);
+    padding: 12px 24px;
+    border-radius: 980px;
     text-decoration: none;
+    transition: transform 0.12s ease;
+  }
+
+  .cta:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .cta:active {
+    transform: scale(0.97);
   }
 
   .arrow {
-    transition: transform 0.2s ease;
+    display: inline-block;
+    width: 0;
+    height: 16px;
+    margin-right: 0;
+    opacity: 0;
+    overflow: hidden;
+    transform: translateX(6px);
+    transition:
+      width 0.25s ease,
+      margin-right 0.25s ease,
+      opacity 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .arrow svg {
+    display: block;
+  }
+
+  .cta:focus-visible .arrow {
+    width: 16px;
+    margin-right: 8px;
+    opacity: 1;
+    transform: translateX(0);
   }
 
   @media (hover: hover) {
     .cta:hover .arrow {
-      transform: translateX(4px);
+      width: 16px;
+      margin-right: 8px;
+      opacity: 1;
+      transform: translateX(0);
     }
   }
 
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .rise {
+    animation: rise 0.6s ease both;
+  }
+
   @media (prefers-reduced-motion: reduce) {
+    .rise {
+      animation: none;
+    }
+
+    .cta,
     .arrow {
       transition: none;
     }
