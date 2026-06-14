@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   url:
-    name: Site URL
+    name: Preview URL
     runs-on: ubuntu-latest
     timeout-minutes: 2
     outputs:
