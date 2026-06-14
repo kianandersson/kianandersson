@@ -39,7 +39,7 @@ jobs:
           path: ${{ inputs.artifact-path }}
 
       - env:
-          SITE_URL: ${{ inputs.site-url }}
+          URL: ${{ inputs.site-url }}
         run: pnpm test:e2e
 
       - name: Upload Playwright report on failure

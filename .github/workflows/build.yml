@@ -45,7 +45,7 @@ jobs:
 
       - name: Build
         env:
-          SITE_URL: ${{ inputs.site-url }}
+          URL: ${{ inputs.site-url }}
         run: pnpm build
 
       - name: Upload artifact
