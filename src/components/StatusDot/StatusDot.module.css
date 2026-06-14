@@ -7,7 +7,12 @@
   background: var(--ok);
 }
 
-.dot[data-pulse]::before {
+.dot[data-tone="warn"] {
+  background: var(--warn);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--warn) 16%, transparent);
+}
+
+.dot[data-tone="ok"]::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -31,7 +36,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dot[data-pulse]::before {
+  .dot[data-tone="ok"]::before {
     animation: none;
   }
 }

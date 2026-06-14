@@ -11,9 +11,7 @@ const SiteConfigSchema = z.object({
     linkedin: z.url(),
     source: z.url(),
   }),
-  hero: z.object({
-    available: z.boolean(),
-  }),
+  availableFrom: z.coerce.date().optional(),
 });
 
 export type SiteConfig = z.infer<typeof SiteConfigSchema>;
@@ -24,12 +22,10 @@ export const siteConfig: SiteConfig = SiteConfigSchema.parse({
   role: 'Senior Full-stack Engineer',
   email: 'mail@kianandersson.dk',
   location: 'Denmark',
+  availableFrom: '2026-08-01',
   links: {
     github: 'https://github.com/kianandersson',
     linkedin: 'https://www.linkedin.com/in/kianandersson',
     source: 'https://github.com/kianandersson/kianandersson.com',
-  },
-  hero: {
-    available: true,
   },
 });

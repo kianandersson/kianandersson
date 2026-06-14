@@ -9,11 +9,10 @@ const baseProps = {
 };
 
 describe('OpenGraphCard', () => {
-  it('shows the name, role and availability', () => {
+  it('shows the name and role', () => {
     render(<OpenGraphCard {...baseProps} />);
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('KianAndersson');
     expect(screen.getByText('Senior Full-stack Engineer')).toBeInTheDocument();
-    expect(screen.getByText('Available for new projects')).toBeInTheDocument();
   });
 
   it('renders the given skills as chips', () => {

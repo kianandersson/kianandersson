@@ -1,4 +1,3 @@
-import { AvailabilityPill } from '../AvailabilityPill/AvailabilityPill';
 import { Chip } from '../Chip/Chip';
 import styles from './OpenGraphCard.module.css';
 
@@ -14,10 +13,6 @@ export function OpenGraphCard({ name, role, skills }: Props) {
 
   return (
     <div className={styles.card}>
-      <div className={styles.badge}>
-        <AvailabilityPill />
-      </div>
-
       <div className={styles.identity}>
         <h1 className={styles.name}>
           {firstName}
