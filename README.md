@@ -19,7 +19,7 @@ pnpm test               # vitest (unit + island)
 pnpm test:e2e           # playwright + axe
 pnpm lint               # biome
 pnpm typecheck          # astro check
-pnpm lhci               # lighthouse CI
+pnpm test:lighthouse    # lighthouse CI
 pnpm test:bundle        # gzipped JS budget
 ```
 
