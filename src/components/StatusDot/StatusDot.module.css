@@ -12,17 +12,13 @@
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--warn) 16%, transparent);
 }
 
-.dot[data-pulse]::before {
+.dot[data-tone="ok"]::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: 50%;
   background: var(--ok);
   animation: dotRing 2.4s ease-out infinite;
-}
-
-.dot[data-tone="warn"][data-pulse]::before {
-  background: var(--warn);
 }
 
 @keyframes dotRing {
@@ -40,7 +36,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dot[data-pulse]::before {
+  .dot[data-tone="ok"]::before {
     animation: none;
   }
 }

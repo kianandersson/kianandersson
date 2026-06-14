@@ -8,11 +8,11 @@ describe('StatusDot', () => {
     expect(container.firstElementChild).toHaveAttribute('aria-hidden', 'true');
   });
 
-  it('opts into the pulse animation only when requested', () => {
+  it('exposes the tone via a data attribute', () => {
     const { container, rerender } = render(<StatusDot />);
-    expect(container.firstElementChild).not.toHaveAttribute('data-pulse');
+    expect(container.firstElementChild).toHaveAttribute('data-tone', 'ok');
 
-    rerender(<StatusDot pulse />);
-    expect(container.firstElementChild).toHaveAttribute('data-pulse');
+    rerender(<StatusDot tone="warn" />);
+    expect(container.firstElementChild).toHaveAttribute('data-tone', 'warn');
   });
 });

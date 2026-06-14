@@ -2,9 +2,7 @@ import { formatDate } from '../../lib/formatPeriod';
 import { StatusDot } from '../StatusDot/StatusDot';
 import styles from './AvailabilityPill.module.css';
 
-export type AvailabilityPillProps =
-  | { variant: 'available'; pulse?: boolean }
-  | { variant: 'from'; from: Date };
+export type AvailabilityPillProps = { variant: 'available' } | { variant: 'from'; from: Date };
 
 export function AvailabilityPill(props: AvailabilityPillProps) {
   if (props.variant === 'from') {
@@ -17,7 +15,7 @@ export function AvailabilityPill(props: AvailabilityPillProps) {
   }
   return (
     <span className={styles.pill}>
-      <StatusDot tone="ok" pulse={props.pulse} />
+      <StatusDot tone="ok" />
       Available for new projects
     </span>
   );

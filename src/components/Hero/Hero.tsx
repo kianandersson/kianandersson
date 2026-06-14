@@ -24,7 +24,7 @@ export function Hero({ name, availableFrom, ctaHref }: HeroProps) {
         (availableFrom.getTime() > Date.now() ? (
           <AvailabilityPill variant="from" from={availableFrom} />
         ) : (
-          <AvailabilityPill variant="available" pulse />
+          <AvailabilityPill variant="available" />
         ))}
 
       <CtaButton href={ctaHref}>Get in touch</CtaButton>
