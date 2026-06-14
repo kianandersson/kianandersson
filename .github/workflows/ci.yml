@@ -10,9 +10,13 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   ci:
-    name: Lint + typecheck + test + build + e2e + lighthouse
+    name: Lint + typecheck + test + build + e2e + lighthouse + deploy
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
@@ -60,3 +64,33 @@ jobs:
 
       - name: Lighthouse CI
         run: pnpm lhci
+
+      # Deploys the already-built dist/ to Cloudflare. Production runs on
+      # push to main; PRs publish a non-production version and post the
+      # preview URL back as a sticky comment.
+      - name: Deploy to Cloudflare (production)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          packageManager: pnpm
+          command: deploy
+
+      - name: Deploy preview to Cloudflare
+        if: github.event_name == 'pull_request'
+        id: preview
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          packageManager: pnpm
+          command: versions upload
+
+      - name: Comment preview URL on PR
+        if: github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: cloudflare-preview
+          message: |
+            Cloudflare preview: ${{ steps.preview.outputs.deployment-url }}
