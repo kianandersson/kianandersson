@@ -70,17 +70,6 @@ const currentYear = new Date().getFullYear();
     </script>
 
     <script type="application/ld+json" is:inline set:html={jsonLdSerialized} />
-
-    {
-      siteConfig.analytics.cloudflareToken && (
-        <script
-          is:inline
-          defer
-          src="https://static.cloudflareinsights.com/beacon.min.js"
-          data-cf-beacon={`{"token": "${siteConfig.analytics.cloudflareToken}"}`}
-        />
-      )
-    }
   </head>
   <body>
     <TopBar githubHref={siteConfig.links.github} showPrint={showPrint} client:load />
