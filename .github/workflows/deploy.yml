@@ -48,9 +48,13 @@ jobs:
           name: ${{ inputs.artifact-name }}
           path: ${{ inputs.artifact-path }}
 
+      # Force npm to avoid pulling in pnpm just to install wrangler —
+      # the action auto-detects from pnpm-lock.yaml otherwise, and this
+      # job intentionally doesn't set up Node/pnpm.
       - id: deploy
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          packageManager: npm
           command: ${{ inputs.command }}
