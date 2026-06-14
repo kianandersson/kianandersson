@@ -1,4 +1,4 @@
-# kianandersson.com
+# Kian Andersson
 
 Source for [kianandersson.dk](https://kianandersson.dk).
 
