@@ -38,14 +38,16 @@ jobs:
       - name: Unit tests (Vitest)
         run: pnpm test
 
+      # Required before build: the og-image integration screenshots the /og
+      # page with Playwright during astro:build:done.
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+
       - name: Build (astro build)
         run: pnpm build
 
       - name: Check JS bundle size (< 10 KB gzipped)
         run: pnpm check:bundle
-
-      - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps chromium
 
       - name: E2E + axe (Playwright)
         run: pnpm test:e2e
