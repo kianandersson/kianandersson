@@ -14,7 +14,7 @@ on:
 
 jobs:
   bundle-size:
-    name: JS bundle stays under budget
+    name: Bundle size
     runs-on: ubuntu-latest
     timeout-minutes: 5
 

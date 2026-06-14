@@ -17,7 +17,7 @@ on:
 
 jobs:
   lighthouse:
-    name: Audit ${{ inputs.url }}
+    name: Lighthouse audit
     runs-on: ubuntu-latest
     timeout-minutes: 10
 

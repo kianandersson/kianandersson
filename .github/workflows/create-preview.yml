@@ -17,7 +17,8 @@ on:
         type: string
 
 jobs:
-  deploy:
+  deploy-preview:
+    name: Deploy preview
     uses: ./.github/workflows/deploy.yml
     with:
       environment: preview-pr-${{ inputs.pr-number }}
@@ -26,8 +27,9 @@ jobs:
       artifact-path: ${{ inputs.artifact-path }}
     secrets: inherit
 
-  lighthouse:
-    needs: deploy
+  audit-preview:
+    name: Audit preview
+    needs: deploy-preview
     uses: ./.github/workflows/lighthouse.yml
     with:
-      url: ${{ needs.deploy.outputs.url }}
+      url: ${{ needs.deploy-preview.outputs.url }}

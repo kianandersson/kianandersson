@@ -8,7 +8,7 @@ on:
 
 jobs:
   lint:
-    name: Lint (Biome)
+    name: Lint
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -17,7 +17,7 @@ jobs:
       - run: pnpm lint
 
   typecheck:
-    name: Typecheck (astro check)
+    name: Typecheck
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -26,7 +26,7 @@ jobs:
       - run: pnpm typecheck
 
   unit:
-    name: Unit tests (Vitest)
+    name: Unit tests
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

@@ -1,7 +1,7 @@
-name: E2E
+name: End-to-end tests
 
-# Browser end-to-end + accessibility tests against the build artifact
-# passed in by the caller.
+# Browser end-to-end and accessibility tests against the build
+# artifact passed in by the caller.
 on:
   workflow_call:
     inputs:
@@ -16,7 +16,7 @@ on:
 
 jobs:
   e2e:
-    name: E2E + axe (Playwright)
+    name: End-to-end tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
 

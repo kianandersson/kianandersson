@@ -18,12 +18,15 @@ permissions:
 
 jobs:
   build:
+    name: Build
     uses: ./.github/workflows/build.yml
 
   test:
+    name: Test
     uses: ./.github/workflows/test.yml
 
   e2e:
+    name: End-to-end tests
     needs: build
     uses: ./.github/workflows/e2e.yml
     with:
@@ -31,6 +34,7 @@ jobs:
       artifact-path: ${{ needs.build.outputs.artifact-path }}
 
   bundle-size:
+    name: Bundle size
     needs: build
     uses: ./.github/workflows/bundle-size.yml
     with:
@@ -38,6 +42,7 @@ jobs:
       artifact-path: ${{ needs.build.outputs.artifact-path }}
 
   deploy:
+    name: Deploy to production
     needs: [build, test, e2e, bundle-size]
     uses: ./.github/workflows/deploy.yml
     with:
