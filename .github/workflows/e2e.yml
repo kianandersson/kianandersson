@@ -5,6 +5,10 @@ name: End-to-end tests
 on:
   workflow_call:
     inputs:
+      site-url:
+        description: Same site URL the build was made with — the tests read astro.config to derive expected canonical/og:image values.
+        required: true
+        type: string
       artifact-name:
         description: Name of the build artifact to download
         required: true
@@ -34,7 +38,9 @@ jobs:
           name: ${{ inputs.artifact-name }}
           path: ${{ inputs.artifact-path }}
 
-      - run: pnpm test:e2e
+      - env:
+          SITE_URL: ${{ inputs.site-url }}
+        run: pnpm test:e2e
 
       - name: Upload Playwright report on failure
         if: failure()

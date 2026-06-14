@@ -55,9 +55,10 @@ jobs:
 
   e2e:
     name: End-to-end tests
-    needs: build
+    needs: [site-url, build]
     uses: ./.github/workflows/e2e.yml
     with:
+      site-url: ${{ needs.site-url.outputs.url }}
       artifact-name: ${{ needs.build.outputs.artifact-name }}
       artifact-path: ${{ needs.build.outputs.artifact-path }}
 
