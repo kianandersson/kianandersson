@@ -1,0 +1,53 @@
+name: Build
+
+on:
+  workflow_call:
+    inputs:
+      url:
+        description: Absolute URL the build will be deployed to. Drives canonical, og:image, sitemap, robots.txt.
+        required: true
+        type: string
+    outputs:
+      artifact-name:
+        description: Name of the uploaded build artifact
+        value: ${{ jobs.build.outputs.artifact-name }}
+      artifact-path:
+        description: Path consumers should extract the artifact to
+        value: ${{ jobs.build.outputs.artifact-path }}
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      artifact-name: ${{ steps.meta.outputs.name }}
+      artifact-path: ${{ steps.meta.outputs.path }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup
+
+      - id: meta
+        shell: bash
+        run: |
+          echo "name=dist" >> "$GITHUB_OUTPUT"
+          echo "path=dist/" >> "$GITHUB_OUTPUT"
+
+      # The og-image integration screenshots /og with Playwright during astro:build:done.
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Build
+        env:
+          URL: ${{ inputs.url }}
+        run: pnpm build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.meta.outputs.name }}
+          path: ${{ steps.meta.outputs.path }}
+          retention-days: 1
+          if-no-files-found: error

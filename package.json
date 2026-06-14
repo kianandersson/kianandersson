@@ -18,8 +18,8 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:e2e:install": "playwright install --with-deps chromium",
-    "lhci": "lhci autorun",
-    "check:bundle": "node scripts/check-bundle.mjs"
+    "test:bundle": "vitest run --config vitest.bundle.config.ts",
+    "lhci": "lhci autorun"
   },
   "dependencies": {
     "@astrojs/preact": "^5.1.5",
@@ -44,6 +44,7 @@
     "js-yaml": "^4.2.0",
     "jsdom": "^29.1.1",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.8",
+    "wrangler": "^4.100.0"
   }
 }

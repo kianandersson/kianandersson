@@ -1,0 +1,54 @@
+name: Deploy
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: GitHub environment to deploy to.
+        required: true
+        type: string
+      command:
+        description: Wrangler command (e.g. `deploy` or `versions upload --preview-alias=…`).
+        required: true
+        type: string
+      url:
+        description: URL to publish on the GitHub deployment widget.
+        required: true
+        type: string
+      artifact-name:
+        description: Name of the build artifact to download.
+        required: true
+        type: string
+      artifact-path:
+        description: Where to extract the build artifact.
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: ${{ inputs.environment }}
+      url: ${{ inputs.url }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup
+        with:
+          install: false
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.artifact-name }}
+          path: ${{ inputs.artifact-path }}
+
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          packageManager: pnpm
+          command: ${{ inputs.command }}
