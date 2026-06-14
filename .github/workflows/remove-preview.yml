@@ -4,40 +4,34 @@ on:
   pull_request:
     types: [closed]
 
-permissions:
-  deployments: write
+permissions: {}
 
 jobs:
-  deactivate-deployments:
+  delete-environment:
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
-      # GITHUB_TOKEN can't delete the environment itself — that needs
-      # `administration: write`, which isn't available as a GITHUB_TOKEN
-      # scope. Marking the deployments inactive is what removes the
-      # active environment widget from the PR; the empty environment
-      # record in repo settings is harmless. Cloudflare auto-prunes
-      # old Worker versions.
-      - name: Deactivate preview deployments
+      # Deleting an environment needs `Administration: write`, which the default
+      # GITHUB_TOKEN can't be granted. ENV_CLEANUP_TOKEN is a fine-grained PAT
+      # scoped to this repo with that permission. Cloudflare auto-prunes old
+      # Worker versions on its own.
+      - name: Delete preview environment
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.ENV_CLEANUP_TOKEN }}
           script: |
             const envName = `preview-pr-${context.payload.pull_request.number}`;
-            const deployments = await github.paginate(
-              github.rest.repos.listDeployments,
-              {
+            try {
+              await github.rest.repos.deleteAnEnvironment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                environment: envName,
-                per_page: 100,
-              },
-            );
-            for (const d of deployments) {
-              await github.rest.repos.createDeploymentStatus({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                deployment_id: d.id,
-                state: 'inactive',
+                environment_name: envName,
               });
+              core.info(`Deleted environment ${envName}`);
+            } catch (e) {
+              if (e.status === 404) {
+                core.info(`Environment ${envName} not found — nothing to delete`);
+              } else {
+                throw e;
+              }
             }
-            core.info(`Deactivated ${deployments.length} deployment(s) for ${envName}`);
