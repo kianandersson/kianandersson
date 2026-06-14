@@ -21,7 +21,7 @@ export type SiteConfig = z.infer<typeof SiteConfigSchema>;
 export const siteConfig: SiteConfig = SiteConfigSchema.parse({
   name: 'Kian Andersson',
   firstName: 'Kian',
-  role: 'Freelance full-stack engineer',
+  role: 'Senior Full-stack Engineer',
   email: 'mail@kianandersson.dk',
   location: 'Denmark',
   links: {
