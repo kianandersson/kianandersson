@@ -27,10 +27,6 @@ on:
         description: Where to extract the build artifact.
         required: true
         type: string
-    outputs:
-      url:
-        description: Same URL the caller supplied — re-exposed for chaining.
-        value: ${{ inputs.url }}
 
 jobs:
   deploy:

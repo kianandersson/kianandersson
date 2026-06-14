@@ -20,7 +20,7 @@ pnpm test:e2e           # playwright + axe
 pnpm lint               # biome
 pnpm typecheck          # astro check
 pnpm lhci               # lighthouse CI
-pnpm check:bundle       # gzipped JS budget
+pnpm test:bundle        # gzipped JS budget
 ```
 
 ## License
