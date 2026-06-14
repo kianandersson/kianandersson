@@ -15,6 +15,10 @@ interface ExperienceSource {
   end?: Date;
 }
 
+interface SkillSource {
+  name: string;
+}
+
 interface Organization {
   '@type': 'Organization';
   name: string;
@@ -44,16 +48,18 @@ export interface PersonJsonLd {
   worksFor?: Organization;
   alumniOf?: Organization[];
   hasOccupation?: (Occupation | DatedRole)[];
+  knowsAbout?: string[];
 }
 
-function toIsoDate(date: Date): string {
-  return date.toISOString().slice(0, 10);
+function toIsoMonth(date: Date): string {
+  return date.toISOString().slice(0, 7);
 }
 
 export function buildPersonJsonLd(
   site: PersonSource,
   experience: ExperienceSource[],
   url: string,
+  skills: SkillSource[] = [],
 ): PersonJsonLd {
   const sorted = [...experience].sort((a, b) => b.start.getTime() - a.start.getTime());
   const current = sorted.find((entry) => !entry.end);
@@ -66,8 +72,8 @@ export function buildPersonJsonLd(
   for (const entry of past) {
     hasOccupation.push({
       '@type': 'Role',
-      startDate: toIsoDate(entry.start),
-      endDate: entry.end ? toIsoDate(entry.end) : undefined,
+      startDate: toIsoMonth(entry.start),
+      endDate: entry.end ? toIsoMonth(entry.end) : undefined,
       hasOccupation: { '@type': 'Occupation', name: entry.role },
     });
   }
@@ -86,5 +92,6 @@ export function buildPersonJsonLd(
       ? past.map((entry) => ({ '@type': 'Organization', name: entry.meta }))
       : undefined,
     hasOccupation: hasOccupation.length ? hasOccupation : undefined,
+    knowsAbout: skills.length ? skills.map((skill) => skill.name) : undefined,
   };
 }

@@ -39,11 +39,14 @@ test.describe('SEO surfaces', () => {
       expect.arrayContaining([
         expect.objectContaining({
           '@type': 'Role',
-          startDate: expect.stringMatching(/^\d{4}-\d{2}-\d{2}$/),
+          startDate: expect.stringMatching(/^\d{4}-\d{2}$/),
+          endDate: expect.stringMatching(/^\d{4}-\d{2}$/),
           hasOccupation: expect.objectContaining({ '@type': 'Occupation' }),
         }),
       ]),
     );
+    expect(Array.isArray(data.knowsAbout)).toBe(true);
+    expect(data.knowsAbout).toEqual(expect.arrayContaining(['TypeScript', 'PostgreSQL']));
   });
 
   test('og.png is a real PNG', async ({ request }) => {

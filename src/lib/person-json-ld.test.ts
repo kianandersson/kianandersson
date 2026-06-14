@@ -84,20 +84,20 @@ describe('buildPersonJsonLd', () => {
     expect(json.hasOccupation?.slice(1)).toEqual([
       {
         '@type': 'Role',
-        startDate: '2021-06-01',
-        endDate: '2023-02-28',
+        startDate: '2021-06',
+        endDate: '2023-02',
         hasOccupation: { '@type': 'Occupation', name: 'Senior Full-stack Engineer' },
       },
       {
         '@type': 'Role',
-        startDate: '2019-08-01',
-        endDate: '2021-05-31',
+        startDate: '2019-08',
+        endDate: '2021-05',
         hasOccupation: { '@type': 'Occupation', name: 'Full-stack Engineer' },
       },
       {
         '@type': 'Role',
-        startDate: '2017-01-01',
-        endDate: '2019-07-31',
+        startDate: '2017-01',
+        endDate: '2019-07',
         hasOccupation: { '@type': 'Occupation', name: 'Junior Developer' },
       },
     ]);
@@ -124,8 +124,8 @@ describe('buildPersonJsonLd', () => {
       { '@type': 'Occupation', name: 'Lead' },
       {
         '@type': 'Role',
-        startDate: '2020-01-01',
-        endDate: '2023-12-31',
+        startDate: '2020-01',
+        endDate: '2023-12',
         hasOccupation: { '@type': 'Occupation', name: 'Senior' },
       },
     ]);
@@ -137,5 +137,20 @@ describe('buildPersonJsonLd', () => {
     expect(json.worksFor).toBeUndefined();
     expect(json.alumniOf).toBeUndefined();
     expect(json.hasOccupation).toBeUndefined();
+  });
+
+  it('lists provided skills as knowsAbout', () => {
+    const json = buildPersonJsonLd(site, experience, 'https://kianandersson.dk/', [
+      { name: 'TypeScript' },
+      { name: 'PostgreSQL' },
+      { name: 'React' },
+    ]);
+
+    expect(json.knowsAbout).toEqual(['TypeScript', 'PostgreSQL', 'React']);
+  });
+
+  it('omits knowsAbout when no skills are provided', () => {
+    const json = buildPersonJsonLd(site, experience, 'https://kianandersson.dk/');
+    expect(json.knowsAbout).toBeUndefined();
   });
 });

@@ -54,6 +54,7 @@ const jsonLd = buildPersonJsonLd(
     end: entry.data.end,
   })),
   new URL('/', Astro.site).toString(),
+  allSkills.map(({ name }) => ({ name })),
 );
 ---
 
