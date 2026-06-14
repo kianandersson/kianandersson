@@ -1,6 +1,9 @@
 name: Pull request
 
-# PR pipeline: build, test, deploy a preview, audit it with Lighthouse.
+# PR pipeline. Maximises parallelism: static checks run alongside build,
+# e2e starts as soon as the artifact is ready, preview deploys as soon
+# as the static checks pass (so reviewers see the change without waiting
+# for e2e).
 on:
   pull_request:
     branches: [main]
@@ -18,26 +21,21 @@ jobs:
     uses: ./.github/workflows/build.yml
 
   test:
-    needs: build
     uses: ./.github/workflows/test.yml
+
+  e2e:
+    needs: build
+    uses: ./.github/workflows/e2e.yml
     with:
       artifact-name: ${{ needs.build.outputs.artifact-name }}
       artifact-path: ${{ needs.build.outputs.artifact-path }}
 
-  deploy:
+  create-preview:
     if: github.event.pull_request.draft == false
     needs: [build, test]
-    uses: ./.github/workflows/deploy.yml
+    uses: ./.github/workflows/create-preview.yml
     with:
-      environment: preview-pr-${{ github.event.pull_request.number }}
-      command: versions upload --preview-alias=pr-${{ github.event.pull_request.number }}
+      pr-number: ${{ github.event.pull_request.number }}
       artifact-name: ${{ needs.build.outputs.artifact-name }}
       artifact-path: ${{ needs.build.outputs.artifact-path }}
     secrets: inherit
-
-  lighthouse:
-    if: github.event.pull_request.draft == false
-    needs: deploy
-    uses: ./.github/workflows/lighthouse.yml
-    with:
-      url: ${{ needs.deploy.outputs.url }}

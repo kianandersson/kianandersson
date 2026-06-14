@@ -1,0 +1,33 @@
+name: Create preview
+
+# Deploys a per-PR Cloudflare preview and audits it with Lighthouse.
+# Reusable — called from pull-request.yml.
+on:
+  workflow_call:
+    inputs:
+      pr-number:
+        description: PR number — used for the environment name and preview alias
+        required: true
+        type: number
+      artifact-name:
+        required: true
+        type: string
+      artifact-path:
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: preview-pr-${{ inputs.pr-number }}
+      command: versions upload --preview-alias=pr-${{ inputs.pr-number }}
+      artifact-name: ${{ inputs.artifact-name }}
+      artifact-path: ${{ inputs.artifact-path }}
+    secrets: inherit
+
+  lighthouse:
+    needs: deploy
+    uses: ./.github/workflows/lighthouse.yml
+    with:
+      url: ${{ needs.deploy.outputs.url }}
