@@ -42,11 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Skip dep install — wrangler-action installs wrangler itself,
-      # and we don't run any project scripts here.
       - uses: ./.github/actions/setup
-        with:
-          install: false
 
       - name: Download build artifact
         uses: actions/download-artifact@v4
