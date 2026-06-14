@@ -12,11 +12,11 @@ concurrency:
 
 permissions:
   contents: read
-  pull-requests: write
+  deployments: write
 
 jobs:
   ci:
-    name: Lint + typecheck + test + build + e2e + lighthouse + deploy
+    name: Lint + typecheck + test + build + e2e
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
@@ -42,14 +42,16 @@ jobs:
       - name: Unit tests (Vitest)
         run: pnpm test
 
+      # Required before build: the og-image integration screenshots the /og
+      # page with Playwright during astro:build:done.
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+
       - name: Build (astro build)
         run: pnpm build
 
       - name: Check JS bundle size (< 10 KB gzipped)
         run: pnpm check:bundle
-
-      - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps chromium
 
       - name: E2E + axe (Playwright)
         run: pnpm test:e2e
@@ -62,35 +64,93 @@ jobs:
           path: playwright-report/
           retention-days: 7
 
-      - name: Lighthouse CI
-        run: pnpm lhci
+      - name: Upload dist for deploy jobs
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 1
+          if-no-files-found: error
 
-      # Deploys the already-built dist/ to Cloudflare. Production runs on
-      # push to main; PRs publish a non-production version and post the
-      # preview URL back as a sticky comment.
-      - name: Deploy to Cloudflare (production)
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+  deploy-preview:
+    name: Deploy preview to Cloudflare
+    needs: ci
+    if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: deploy-preview-pr-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
+    environment:
+      name: preview-pr-${{ github.event.pull_request.number }}
+      url: ${{ steps.deploy.outputs.deployment-url }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      # `--preview-alias` produces a readable URL like
+      # `pr-12-<worker>.<account>.workers.dev` instead of a random hash.
+      # Cloudflare Workers does not currently support custom domains for
+      # preview URLs — they must live on workers.dev.
+      - name: Deploy preview
+        id: deploy
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           packageManager: pnpm
+          command: versions upload --preview-alias=pr-${{ github.event.pull_request.number }}
+
+      - name: Lighthouse against live preview
+        env:
+          PREVIEW_URL: ${{ steps.deploy.outputs.deployment-url }}
+        run: pnpm exec lhci autorun --config=./lighthouserc.preview.cjs
+
+  deploy-production:
+    name: Deploy to production
+    needs: ci
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: deploy-production
+      cancel-in-progress: false
+    environment:
+      name: production
+      url: https://kianandersson.com
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy
-
-      - name: Deploy preview to Cloudflare
-        if: github.event_name == 'pull_request'
-        id: preview
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          packageManager: pnpm
-          command: versions upload
-
-      - name: Comment preview URL on PR
-        if: github.event_name == 'pull_request'
-        uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          header: cloudflare-preview
-          message: |
-            Cloudflare preview: ${{ steps.preview.outputs.deployment-url }}
