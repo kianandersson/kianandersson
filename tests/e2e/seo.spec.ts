@@ -23,7 +23,10 @@ test.describe('SEO surfaces', () => {
     const data = JSON.parse(jsonLd ?? '{}');
 
     expect(data['@type']).toBe('Person');
-    expect(data.worksFor).toMatchObject({ '@type': 'Organization', name: 'Freelance' });
+    expect(data.worksFor).toMatchObject({
+      '@type': 'Organization',
+      name: 'Freelance',
+    });
     expect(data.alumniOf).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ name: 'Nordic SaaS ApS' }),
@@ -47,7 +50,7 @@ test.describe('SEO surfaces', () => {
     );
     expect(Array.isArray(data.knowsAbout)).toBe(true);
     expect(data.knowsAbout).toEqual(expect.arrayContaining(['TypeScript', 'React']));
-    expect(data.knowsAbout).not.toContain('PHP');
+    expect(data.knowsAbout).not.toContain('Go');
   });
 
   test('og.png is a real PNG', async ({ request }) => {
@@ -67,13 +70,16 @@ test.describe('SEO surfaces', () => {
   });
 
   test('404 renders and is axe-clean', async ({ page }) => {
-    await page.goto('/this-page-does-not-exist', { waitUntil: 'domcontentloaded' });
+    await page.goto('/this-page-does-not-exist', {
+      waitUntil: 'domcontentloaded',
+    });
 
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(
       "This page couldn't be found.",
     );
     await expect(page.getByRole('link', { name: /back to home/i })).toHaveAttribute('href', '/');
-    await expect(page.locator('#requested-path')).toHaveText('/this-page-does-not-exist');
+    await expect(page.locator('#requested-url')).toContainText('/this-page-does-not-exist');
+    await expect(page.getByRole('banner').getByRole('button', { name: /print/i })).toHaveCount(0);
 
     await page.evaluate(() =>
       Promise.all(document.getAnimations().map((a) => a.finished.catch(() => {}))),

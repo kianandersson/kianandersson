@@ -16,19 +16,19 @@ describe('NotFound', () => {
     expect(cta).toHaveAttribute('href', '/');
   });
 
-  it('shows a default placeholder path in the terminal mock', () => {
+  it('shows a default placeholder url in the terminal mock', () => {
     render(<NotFound />);
-    expect(screen.getByTestId('requested-path')).toHaveTextContent('/that-page');
+    expect(screen.getByTestId('requested-url')).toHaveTextContent('/');
   });
 
-  it('renders the path passed in as the requested path', () => {
-    render(<NotFound requestedPath="/missing" />);
-    expect(screen.getByTestId('requested-path')).toHaveTextContent('/missing');
+  it('renders the url passed in as the requested url', () => {
+    render(<NotFound requestedUrl="/missing" />);
+    expect(screen.getByTestId('requested-url')).toHaveTextContent('/missing');
   });
 
   it('shows the curl response lines', () => {
     render(<NotFound />);
-    expect(screen.getByText(/HTTP\/2/)).toBeInTheDocument();
-    expect(screen.getByText(/x-route-matched: none/)).toBeInTheDocument();
+    expect(screen.getByText(/HTTP\/2 404 Not Found/)).toBeInTheDocument();
+    expect(screen.getByText(/content-type:/)).toBeInTheDocument();
   });
 });

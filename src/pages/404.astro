@@ -7,7 +7,7 @@ const title = `Page not found — ${siteConfig.name}`;
 const description = "The page you're after couldn't be found.";
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} showPrint={false}>
   <main class="root">
     <NotFound />
   </main>
@@ -15,10 +15,9 @@ const description = "The page you're after couldn't be found.";
 
 <script is:inline>
   (function () {
-    var el = document.getElementById('requested-path');
+    var el = document.getElementById('requested-url');
     if (!el) return;
-    var p = window.location && window.location.pathname;
-    if (p && p !== '/' && p.length < 40) el.textContent = p;
+    el.textContent = window.location;
   })();
 </script>
 

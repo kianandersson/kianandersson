@@ -9,12 +9,14 @@ interface Props {
   title?: string;
   description?: string;
   jsonLd?: PersonJsonLd;
+  showPrint?: boolean;
 }
 
 const {
   title = `${siteConfig.name} — Senior Fullstack Engineer`,
   description = `${siteConfig.name}, senior fullstack engineer based in ${siteConfig.location}.`,
   jsonLd,
+  showPrint = true,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
@@ -81,7 +83,7 @@ const currentYear = new Date().getFullYear();
     }
   </head>
   <body>
-    <TopBar githubHref={siteConfig.links.github} client:load />
+    <TopBar githubHref={siteConfig.links.github} showPrint={showPrint} client:load />
     <slot />
     <Footer name={siteConfig.name} year={currentYear} sourceHref={siteConfig.links.source} />
   </body>
