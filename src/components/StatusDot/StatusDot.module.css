@@ -7,6 +7,11 @@
   background: var(--ok);
 }
 
+.dot[data-tone="warn"] {
+  background: var(--warn);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--warn) 16%, transparent);
+}
+
 .dot[data-pulse]::before {
   content: "";
   position: absolute;
@@ -14,6 +19,10 @@
   border-radius: 50%;
   background: var(--ok);
   animation: dotRing 2.4s ease-out infinite;
+}
+
+.dot[data-tone="warn"][data-pulse]::before {
+  background: var(--warn);
 }
 
 @keyframes dotRing {
