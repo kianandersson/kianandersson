@@ -1,0 +1,49 @@
+name: End-to-end tests
+
+on:
+  workflow_call:
+    inputs:
+      url:
+        description: Same site URL the build was made with — the tests read astro.config to derive expected canonical/og:image values.
+        required: true
+        type: string
+      artifact-name:
+        description: Name of the build artifact to download
+        required: true
+        type: string
+      artifact-path:
+        description: Where to extract the build artifact
+        required: true
+        type: string
+
+jobs:
+  e2e:
+    name: End-to-end tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.artifact-name }}
+          path: ${{ inputs.artifact-path }}
+
+      - env:
+          URL: ${{ inputs.url }}
+        run: pnpm test:e2e
+
+      - name: Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

@@ -1,0 +1,35 @@
+name: Create preview
+
+# No Lighthouse audit of the preview URL — Cloudflare adds
+# `X-Robots-Tag: noindex` to every workers.dev response, which fails
+# SEO checks. The PR's lighthouse-local job catches code-level
+# regressions instead.
+on:
+  workflow_call:
+    inputs:
+      pr-number:
+        description: PR number — used for the environment name and preview alias.
+        required: true
+        type: number
+      url:
+        description: Preview URL — published on the environment widget.
+        required: true
+        type: string
+      artifact-name:
+        required: true
+        type: string
+      artifact-path:
+        required: true
+        type: string
+
+jobs:
+  deploy-preview:
+    name: Deploy preview
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: preview-pr-${{ inputs.pr-number }}
+      command: versions upload --preview-alias=pr-${{ inputs.pr-number }}
+      url: ${{ inputs.url }}
+      artifact-name: ${{ inputs.artifact-name }}
+      artifact-path: ${{ inputs.artifact-path }}
+    secrets: inherit

@@ -1,0 +1,25 @@
+name: Lighthouse
+
+on:
+  workflow_call:
+    inputs:
+      url:
+        description: URL to audit. Exposed to the LHCI config as `URL`.
+        required: true
+        type: string
+
+jobs:
+  lighthouse:
+    name: Lighthouse audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup
+
+      - name: Lighthouse CI
+        env:
+          URL: ${{ inputs.url }}
+        run: pnpm exec lhci autorun
