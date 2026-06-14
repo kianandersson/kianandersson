@@ -1,10 +1,10 @@
 name: Release
 
 # Production pipeline. The site URL lives on the GitHub `production`
-# environment as `SITE_URL`; resolving it up front lets build bake the
-# canonical/sitemap/og:image into the same URL that deploy publishes
-# on the environment widget. Runs on push to `main` and on manual
-# `workflow_dispatch` for redeploying the current main on demand.
+# environment as the `URL` variable; resolving it up front lets build
+# bake the canonical/sitemap/og:image into the same URL that deploy
+# publishes on the environment widget. Runs on push to `main` and on
+# manual `workflow_dispatch` for redeploying the current main on demand.
 on:
   push:
     branches: [main]
@@ -25,13 +25,13 @@ jobs:
     timeout-minutes: 2
     environment: production
     outputs:
-      url: ${{ vars.SITE_URL }}
+      url: ${{ vars.URL }}
     steps:
-      - name: Verify SITE_URL is configured
+      - name: Verify URL is configured
         shell: bash
         run: |
-          if [ -z "${{ vars.SITE_URL }}" ]; then
-            echo "::error::SITE_URL is not set on the production environment. Add it under Settings → Environments → production → Environment variables."
+          if [ -z "${{ vars.URL }}" ]; then
+            echo "::error::URL is not set on the production environment. Add it under Settings → Environments → production → Environment variables."
             exit 1
           fi
 
