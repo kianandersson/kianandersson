@@ -1,9 +1,10 @@
 name: Pull request
 
-# PR pipeline. Resolves the preview URL up front (computed from the
-# Cloudflare workers.dev subdomain + worker name in wrangler.jsonc) so
-# build can bake it into canonical/sitemap/og:image and deploy can put
-# the same URL on the GitHub deployment widget.
+# PR pipeline. The `site-url` job composes the preview URL up front
+# and publishes it as the `URL` variable on the per-PR environment —
+# same shape as production, where the variable is set manually. Build
+# bakes that URL into canonical/sitemap/og:image, deploy publishes it
+# on the GitHub deployment widget.
 on:
   pull_request:
     branches: [main]
@@ -15,12 +16,15 @@ concurrency:
 permissions:
   contents: read
   deployments: write
+  actions: write
 
 jobs:
   site-url:
     name: Site URL
     runs-on: ubuntu-latest
     timeout-minutes: 2
+    environment:
+      name: preview-pr-${{ github.event.pull_request.number }}
     outputs:
       url: ${{ steps.url.outputs.url }}
     steps:
@@ -40,6 +44,23 @@ jobs:
         shell: bash
         run: |
           echo "url=https://pr-${{ github.event.pull_request.number }}-${{ steps.worker.outputs.name }}.${{ steps.subdomain.outputs.subdomain }}.workers.dev" >> "$GITHUB_OUTPUT"
+
+      # Mirror production's pattern: the environment owns its URL as a
+      # variable. Idempotent — POST creates on first run, PATCH updates
+      # on subsequent runs.
+      - name: Publish URL on the preview environment
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          URL: ${{ steps.url.outputs.url }}
+          ENV_NAME: preview-pr-${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          if ! gh api -X POST "repos/$REPO/environments/$ENV_NAME/variables" \
+              -f name=URL -f value="$URL" 2>/dev/null; then
+            gh api -X PATCH "repos/$REPO/environments/$ENV_NAME/variables/URL" \
+              -f name=URL -f value="$URL"
+          fi
 
   build:
     name: Build
