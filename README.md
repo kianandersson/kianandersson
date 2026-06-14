@@ -18,12 +18,12 @@ pnpm dev
 
 ```sh
 pnpm build              # production build
-pnpm test               # vitest (unit + island)
-pnpm test:e2e           # playwright + axe
-pnpm lint               # biome
 pnpm typecheck          # astro check
-pnpm test:lighthouse    # lighthouse CI
+pnpm lint               # biome
+pnpm test               # vitest (unit + island)
 pnpm test:bundle        # gzipped JS budget
+pnpm test:e2e           # playwright + axe
+pnpm test:lighthouse    # lighthouse CI
 ```
 
 ## License
