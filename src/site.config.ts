@@ -3,6 +3,7 @@ import { z } from 'zod';
 const SiteConfigSchema = z.object({
   name: z.string(),
   firstName: z.string(),
+  role: z.string(),
   email: z.email(),
   location: z.string(),
   links: z.object({
@@ -20,6 +21,7 @@ export type SiteConfig = z.infer<typeof SiteConfigSchema>;
 export const siteConfig: SiteConfig = SiteConfigSchema.parse({
   name: 'Kian Andersson',
   firstName: 'Kian',
+  role: 'Freelance full-stack engineer',
   email: 'mail@kianandersson.dk',
   location: 'Denmark',
   links: {

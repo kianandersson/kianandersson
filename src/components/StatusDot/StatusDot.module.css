@@ -1,0 +1,37 @@
+.dot {
+  position: relative;
+  display: inline-block;
+  width: var(--status-dot-size, 8px);
+  height: var(--status-dot-size, 8px);
+  border-radius: 50%;
+  background: var(--ok);
+}
+
+.dot[data-pulse]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--ok);
+  animation: dotRing 2.4s ease-out infinite;
+}
+
+@keyframes dotRing {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot[data-pulse]::before {
+    animation: none;
+  }
+}
