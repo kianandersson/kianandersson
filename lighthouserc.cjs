@@ -1,8 +1,8 @@
-// Lighthouse CI config. Target switches based on `PREVIEW_URL`:
+// Lighthouse CI config. Target switches based on `URL`:
 // - unset → static-serve `dist/` (local + the PR's lighthouse-local job)
 // - set   → audit the live deployed URL (release's post-deploy audit)
-const target = process.env.PREVIEW_URL
-  ? { url: [process.env.PREVIEW_URL] }
+const target = process.env.URL
+  ? { url: [process.env.URL] }
   : { staticDistDir: './dist' };
 
 module.exports = {
