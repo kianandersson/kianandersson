@@ -2,3 +2,10 @@ allowBuilds:
   esbuild: true
   sharp: true
   workerd: false
+
+# Force Lighthouse 13.x under @lhci/cli (pinned to 12.6.1). Lighthouse 13.0.2
+# added `content-signal` to the robots.txt directive safelist, which Cloudflare's
+# zone-level Content Signals feature injects into every robots.txt response —
+# without it, the SEO `robots-txt` audit fails on a "Unknown directive" line.
+overrides:
+  lighthouse: ^13.4.0
