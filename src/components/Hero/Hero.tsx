@@ -1,3 +1,4 @@
+import { AvailabilityPill } from '../AvailabilityPill/AvailabilityPill';
 import { CtaButton } from '../CtaButton/CtaButton';
 import styles from './Hero.module.css';
 
@@ -19,12 +20,7 @@ export function Hero({ name, available, ctaHref }: HeroProps) {
 
       <p className={styles.body}>{PLACEHOLDER_BODY}</p>
 
-      {available ? (
-        <p className={styles.availability}>
-          <span className={styles.dot} aria-hidden="true" />
-          Available for new projects.
-        </p>
-      ) : null}
+      {available ? <AvailabilityPill pulse /> : null}
 
       <CtaButton href={ctaHref}>Get in touch</CtaButton>
     </div>

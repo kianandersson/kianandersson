@@ -1,0 +1,53 @@
+---
+// The 1200×630 canvas for the Open Graph image, served as a normal page at
+// `/og`. OpenGraphCard is authored at normal web dimensions (600px wide); here
+// we scale the whole card 2× to fill the OG frame. The `og-image` integration
+// screenshots this into `/og.png`. Because it's a regular Astro page, all CSS
+// (tokens, component styles, anything child components import) is bundled
+// automatically — no manual style stitching required.
+import { getCollection } from 'astro:content';
+import { OpenGraphCard } from '../components/OpenGraphCard/OpenGraphCard';
+import { siteConfig } from '../site.config';
+import '../styles/tokens.css';
+
+// The card is always rendered in dark theme, regardless of the visitor's
+// system or stored preference — this page carries its own theme context.
+const theme = 'dark';
+
+// Same source the Hero "Key skills" block draws from.
+const skills = (await getCollection('skills'))
+  .filter((skill) => skill.data.keySkill)
+  .map((skill) => skill.data.name);
+---
+
+<html lang="en" data-theme={theme}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Kian Andersson — Freelance full-stack engineer</title>
+    <style is:global>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        width: 1200px;
+        height: 630px;
+        background: var(--bg);
+        text-rendering: optimizeLegibility;
+      }
+      /* OpenGraphCard is authored 600px wide; the OG image is 1200px → scale 2×. */
+      .canvas {
+        width: 600px;
+        transform: scale(2);
+        transform-origin: top left;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="canvas">
+      <OpenGraphCard name={siteConfig.name} role={siteConfig.role} skills={skills} />
+    </div>
+  </body>
+</html>

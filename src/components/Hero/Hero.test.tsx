@@ -16,12 +16,12 @@ describe('Hero', () => {
 
   it('shows availability badge when available', () => {
     render(<Hero {...baseProps} available={true} />);
-    expect(screen.getByText('Available for new projects.')).toBeInTheDocument();
+    expect(screen.getByText('Available for new projects')).toBeInTheDocument();
   });
 
   it('hides availability badge when not available', () => {
     render(<Hero {...baseProps} available={false} />);
-    expect(screen.queryByText('Available for new projects.')).not.toBeInTheDocument();
+    expect(screen.queryByText('Available for new projects')).not.toBeInTheDocument();
   });
 
   it('links the CTA to the provided href', () => {
