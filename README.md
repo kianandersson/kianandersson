@@ -21,7 +21,7 @@ pnpm build              # production build
 pnpm check              # typecheck + lint + tests (fast gates)
 pnpm typecheck          # astro check
 pnpm lint               # biome
-pnpm test               # vitest (unit + island)
+pnpm test               # vitest
 pnpm test:bundle        # gzipped JS budget
 pnpm test:e2e           # playwright + axe
 pnpm test:lighthouse    # lighthouse CI
@@ -29,4 +29,4 @@ pnpm test:lighthouse    # lighthouse CI
 
 ## License
 
-Licensed under [MIT](./LICENSE).
+This project is licensed under the [MIT License](./LICENSE).
