@@ -28,7 +28,7 @@ jobs:
       - uses: ./.github/actions/setup
 
       - name: Install Playwright browsers
-        run: pnpm test:e2e:install
+        run: pnpm exec playwright install --with-deps chromium
 
       - name: Download build artifact
         uses: actions/download-artifact@v4

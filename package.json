@@ -18,7 +18,6 @@
     "test:watch": "vitest",
     "test:bundle": "vitest run --config vitest.bundle.config.ts",
     "test:e2e": "playwright test",
-    "test:e2e:install": "playwright install --with-deps chromium",
     "test:lighthouse": "lhci autorun",
     "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm test:bundle"
   },
