@@ -1,7 +1,9 @@
 name: Lighthouse
 
-# Runs Lighthouse CI against a deployed URL. Used after a preview deploy
-# to get realistic edge + TLS numbers instead of `staticDistDir`.
+# Runs Lighthouse CI against a deployed URL. Used after a preview
+# deploy to get realistic edge + TLS numbers. The same lighthouserc.cjs
+# is used for local runs against `dist/` — it just switches target
+# based on whether `PREVIEW_URL` is set.
 on:
   workflow_call:
     inputs:
@@ -9,11 +11,6 @@ on:
         description: URL to audit. Exposed to the LHCI config as `PREVIEW_URL`.
         required: true
         type: string
-      config:
-        description: Path to the LHCI config file
-        required: false
-        type: string
-        default: ./lighthouserc.preview.cjs
 
 jobs:
   lighthouse:
@@ -29,4 +26,4 @@ jobs:
       - name: Lighthouse CI
         env:
           PREVIEW_URL: ${{ inputs.url }}
-        run: pnpm exec lhci autorun --config=${{ inputs.config }}
+        run: pnpm exec lhci autorun

@@ -1,10 +1,14 @@
-// Lighthouse config for the hosted preview deploy, targeting the
-// live URL from `PREVIEW_URL` (set by the deploy job after
-// `wrangler versions upload`).
+// Lighthouse CI config. Same assertions either way — only the target
+// switches: local `pnpm lhci` serves `dist/` as a static site, while CI
+// sets `PREVIEW_URL` to audit the live deployed preview instead.
+const target = process.env.PREVIEW_URL
+  ? { url: [process.env.PREVIEW_URL] }
+  : { staticDistDir: './dist' };
+
 module.exports = {
   ci: {
     collect: {
-      url: [process.env.PREVIEW_URL],
+      ...target,
       numberOfRuns: 3,
       settings: { preset: 'desktop' },
     },
