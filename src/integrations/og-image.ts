@@ -49,6 +49,16 @@ async function captureOg(page: Page, url: string): Promise<Buffer> {
   return page.screenshot({ type: 'png', clip: { x: 0, y: 0, ...CANVAS } });
 }
 
+async function withBrowser<T>(fn: (page: Page) => Promise<T>): Promise<T> {
+  const browser = await chromium.launch();
+  try {
+    const page = await browser.newPage({ viewport: CANVAS });
+    return await fn(page);
+  } finally {
+    await browser.close();
+  }
+}
+
 /**
  * Renders the Open Graph image by screenshotting the `/og` page.
  *
@@ -63,35 +73,25 @@ export function ogImage(): AstroIntegration {
     hooks: {
       'astro:build:done': async ({ dir, logger }) => {
         const outDir = fileURLToPath(dir);
-        const browser = await chromium.launch();
-
-        try {
-          const page = await browser.newPage({ viewport: CANVAS });
+        const png = await withBrowser(async (page) => {
           await serveBuildDir(page, outDir);
-          const png = await captureOg(page, `${INTERNAL_ORIGIN}/og/`);
-          await writeFile(join(outDir, OUTPUT_FILE), png);
-          logger.info(`Wrote ${OUTPUT_FILE}`);
-        } finally {
-          await browser.close();
-        }
+          return captureOg(page, `${INTERNAL_ORIGIN}/og/`);
+        });
+        await writeFile(join(outDir, OUTPUT_FILE), png);
+        logger.info(`Wrote ${OUTPUT_FILE}`);
       },
 
       'astro:server:setup': ({ server, logger }) => {
         server.middlewares.use(`/${OUTPUT_FILE}`, async (req, res) => {
-          const host = req.headers.host ?? 'localhost';
-          let browser: Awaited<ReturnType<typeof chromium.launch>> | undefined;
           try {
-            browser = await chromium.launch();
-            const page = await browser.newPage({ viewport: CANVAS });
-            const png = await captureOg(page, `http://${host}/og`);
+            const host = req.headers.host ?? 'localhost';
+            const png = await withBrowser((page) => captureOg(page, `http://${host}/og`));
             res.setHeader('content-type', 'image/png');
             res.end(png);
           } catch (error) {
             logger.error(`Failed to render /${OUTPUT_FILE}: ${error}`);
             res.statusCode = 500;
             res.end();
-          } finally {
-            await browser?.close();
           }
         });
       },
