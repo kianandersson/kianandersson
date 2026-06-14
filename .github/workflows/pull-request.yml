@@ -1,6 +1,6 @@
 name: Pull request
 
-# PR pipeline. The `site-url` job composes the preview URL from the
+# PR pipeline. The `url` job composes the preview URL from the
 # workers.dev subdomain (fetched from the Cloudflare API) and the
 # worker name in wrangler.jsonc, so build can bake it into
 # canonical/sitemap/og:image and deploy can publish it on the GitHub
@@ -18,7 +18,7 @@ permissions:
   deployments: write
 
 jobs:
-  site-url:
+  url:
     name: Site URL
     runs-on: ubuntu-latest
     timeout-minutes: 2
@@ -44,10 +44,10 @@ jobs:
 
   build:
     name: Build
-    needs: site-url
+    needs: url
     uses: ./.github/workflows/build.yml
     with:
-      site-url: ${{ needs.site-url.outputs.url }}
+      url: ${{ needs.url.outputs.url }}
 
   test:
     name: Test
@@ -55,10 +55,10 @@ jobs:
 
   e2e:
     name: End-to-end tests
-    needs: [site-url, build]
+    needs: [url, build]
     uses: ./.github/workflows/e2e.yml
     with:
-      site-url: ${{ needs.site-url.outputs.url }}
+      url: ${{ needs.url.outputs.url }}
       artifact-name: ${{ needs.build.outputs.artifact-name }}
       artifact-path: ${{ needs.build.outputs.artifact-path }}
 
@@ -73,11 +73,11 @@ jobs:
   preview:
     name: Preview
     if: github.event.pull_request.draft == false
-    needs: [site-url, build, test]
+    needs: [url, build, test]
     uses: ./.github/workflows/create-preview.yml
     with:
       pr-number: ${{ github.event.pull_request.number }}
-      url: ${{ needs.site-url.outputs.url }}
+      url: ${{ needs.url.outputs.url }}
       artifact-name: ${{ needs.build.outputs.artifact-name }}
       artifact-path: ${{ needs.build.outputs.artifact-path }}
     secrets: inherit

@@ -18,7 +18,7 @@ permissions:
   deployments: write
 
 jobs:
-  site-url:
+  url:
     name: Site URL
     runs-on: ubuntu-latest
     timeout-minutes: 2
@@ -40,10 +40,10 @@ jobs:
 
   build:
     name: Build
-    needs: site-url
+    needs: url
     uses: ./.github/workflows/build.yml
     with:
-      site-url: ${{ needs.site-url.outputs.url }}
+      url: ${{ needs.url.outputs.url }}
 
   test:
     name: Test
@@ -51,10 +51,10 @@ jobs:
 
   e2e:
     name: End-to-end tests
-    needs: [site-url, build]
+    needs: [url, build]
     uses: ./.github/workflows/e2e.yml
     with:
-      site-url: ${{ needs.site-url.outputs.url }}
+      url: ${{ needs.url.outputs.url }}
       artifact-name: ${{ needs.build.outputs.artifact-name }}
       artifact-path: ${{ needs.build.outputs.artifact-path }}
 
@@ -68,12 +68,12 @@ jobs:
 
   deploy:
     name: Deploy to production
-    needs: [site-url, build, test, e2e, bundle-size]
+    needs: [url, build, test, e2e, bundle-size]
     uses: ./.github/workflows/deploy.yml
     with:
       environment: production
       command: deploy
-      url: ${{ needs.site-url.outputs.url }}
+      url: ${{ needs.url.outputs.url }}
       artifact-name: ${{ needs.build.outputs.artifact-name }}
       artifact-path: ${{ needs.build.outputs.artifact-path }}
     secrets: inherit

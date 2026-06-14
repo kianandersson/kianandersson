@@ -6,7 +6,7 @@ name: Build
 on:
   workflow_call:
     inputs:
-      site-url:
+      url:
         description: Absolute URL the build will be deployed to. Drives canonical, og:image, sitemap, robots.txt.
         required: true
         type: string
@@ -45,7 +45,7 @@ jobs:
 
       - name: Build
         env:
-          URL: ${{ inputs.site-url }}
+          URL: ${{ inputs.url }}
         run: pnpm build
 
       - name: Upload artifact
