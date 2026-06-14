@@ -27,7 +27,7 @@ jobs:
         run: echo "name=$(jq -r '.name' wrangler.jsonc)" >> "$GITHUB_OUTPUT"
 
       - id: url
-        uses: ./.github/actions/preview-url
+        uses: ./.github/actions/review-url
         with:
           api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           account-id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -70,11 +70,11 @@ jobs:
       artifact-name: ${{ needs.build.outputs.artifact-name }}
       artifact-path: ${{ needs.build.outputs.artifact-path }}
 
-  preview:
-    name: Preview
+  review:
+    name: Review deployment
     if: github.event.pull_request.draft == false
     needs: [url, build, test]
-    uses: ./.github/workflows/create-preview.yml
+    uses: ./.github/workflows/create-review-deployment.yml
     with:
       pr-number: ${{ github.event.pull_request.number }}
       url: ${{ needs.url.outputs.url }}

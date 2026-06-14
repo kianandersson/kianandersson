@@ -1,4 +1,4 @@
-name: Remove preview
+name: Remove review deployment
 
 on:
   pull_request:
@@ -12,11 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
-      # Every PR deploys under the shared `preview` environment, so on close we
+      # Every PR deploys under the shared `review` environment, so on close we
       # just mark the deployment(s) tied to this PR's head SHA inactive — the
       # PR's deployment widget then reads as "inactive" instead of pointing at
       # a now-stale Cloudflare worker version. CF auto-prunes old versions.
-      - name: Deactivate preview deployment
+      - name: Deactivate review deployment
         uses: actions/github-script@v7
         with:
           script: |
@@ -26,7 +26,7 @@ jobs:
               {
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                environment: 'preview',
+                environment: 'review',
                 sha,
                 per_page: 100,
               },
@@ -39,4 +39,4 @@ jobs:
                 state: 'inactive',
               });
             }
-            core.info(`Deactivated ${deployments.length} preview deployment(s) for ${sha}`);
+            core.info(`Deactivated ${deployments.length} review deployment(s) for ${sha}`);

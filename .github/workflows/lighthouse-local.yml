@@ -1,6 +1,6 @@
 name: Lighthouse local
 
-# Catches SEO regressions before deploy — the hosted preview audit
+# Catches SEO regressions before deploy — the hosted review audit
 # can't, because Cloudflare adds `X-Robots-Tag: noindex` to every
 # workers.dev response.
 on:

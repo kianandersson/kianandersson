@@ -1,6 +1,6 @@
-name: Create preview
+name: Create review deployment
 
-# No Lighthouse audit of the preview URL — Cloudflare adds
+# No Lighthouse audit of the review URL — Cloudflare adds
 # `X-Robots-Tag: noindex` to every workers.dev response, which fails
 # SEO checks. The PR's lighthouse-local job catches code-level
 # regressions instead.
@@ -12,7 +12,7 @@ on:
         required: true
         type: number
       url:
-        description: Preview URL — published on the environment widget.
+        description: Review URL — published on the environment widget.
         required: true
         type: string
       artifact-name:
@@ -23,15 +23,15 @@ on:
         type: string
 
 jobs:
-  deploy-preview:
-    name: Deploy preview
-    # All PRs share one `preview` environment with rolling deployments — GitHub
+  deploy-review:
+    name: Deploy review
+    # All PRs share one `review` environment with rolling deployments — GitHub
     # auto-marks the latest as `active` and previous ones as `inactive`, and the
     # per-PR widget reads off the head SHA, so each PR still sees its own URL.
     # This means no per-PR environment records to clean up on close.
     uses: ./.github/workflows/deploy.yml
     with:
-      environment: preview
+      environment: review
       command: versions upload --preview-alias=pr-${{ inputs.pr-number }}
       url: ${{ inputs.url }}
       artifact-name: ${{ inputs.artifact-name }}

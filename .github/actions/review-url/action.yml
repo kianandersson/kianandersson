@@ -1,5 +1,5 @@
-name: Preview URL
-description: Compose the workers.dev URL for a versioned preview alias of a worker.
+name: Review URL
+description: Compose the workers.dev URL for a versioned review alias of a worker.
 
 inputs:
   api-token:
@@ -12,12 +12,12 @@ inputs:
     description: Worker script name.
     required: true
   alias:
-    description: Preview alias — becomes the leftmost segment of the URL (e.g. `pr-12`).
+    description: Cloudflare preview alias — becomes the leftmost segment of the URL (e.g. `pr-12`).
     required: true
 
 outputs:
   url:
-    description: Preview URL of the worker version.
+    description: Review URL of the worker version.
     value: ${{ steps.resolve.outputs.url }}
 
 runs:
