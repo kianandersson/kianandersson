@@ -31,8 +31,19 @@ test.describe('SEO surfaces', () => {
         expect.objectContaining({ name: 'Webbureau' }),
       ]),
     );
-    expect(Array.isArray(data.hasOccupation)).toBe(true);
-    expect(data.hasOccupation.length).toBeGreaterThan(0);
+    expect(data.hasOccupation[0]).toMatchObject({
+      '@type': 'Occupation',
+      name: 'Lead Engineer',
+    });
+    expect(data.hasOccupation.slice(1)).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          '@type': 'Role',
+          startDate: expect.stringMatching(/^\d{4}-\d{2}-\d{2}$/),
+          hasOccupation: expect.objectContaining({ '@type': 'Occupation' }),
+        }),
+      ]),
+    );
   });
 
   test('og.png is a real PNG', async ({ request }) => {

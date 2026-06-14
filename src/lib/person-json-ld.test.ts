@@ -54,33 +54,33 @@ describe('buildPersonJsonLd', () => {
     ]);
   });
 
-  it('emits hasOccupation entries with role + start date + employer', () => {
+  it('emits the current occupation as a plain Occupation', () => {
     const json = buildPersonJsonLd(site, experience, 'https://kianandersson.dk/');
 
-    expect(json.hasOccupation).toEqual([
+    expect(json.hasOccupation?.[0]).toEqual({
+      '@type': 'Occupation',
+      name: 'Lead Engineer',
+    });
+  });
+
+  it('wraps past occupations in Role with startDate per Schema.org guidance', () => {
+    const json = buildPersonJsonLd(site, experience, 'https://kianandersson.dk/');
+
+    expect(json.hasOccupation?.slice(1)).toEqual([
       {
-        '@type': 'OrganizationRole',
-        roleName: 'Lead Engineer',
-        startDate: '2023-03-01',
-        worksFor: { '@type': 'Organization', name: 'Freelance' },
-      },
-      {
-        '@type': 'OrganizationRole',
-        roleName: 'Senior Full-stack Engineer',
+        '@type': 'Role',
         startDate: '2021-06-01',
-        worksFor: { '@type': 'Organization', name: 'Nordic SaaS ApS' },
+        hasOccupation: { '@type': 'Occupation', name: 'Senior Full-stack Engineer' },
       },
       {
-        '@type': 'OrganizationRole',
-        roleName: 'Full-stack Engineer',
+        '@type': 'Role',
         startDate: '2019-08-01',
-        worksFor: { '@type': 'Organization', name: 'Studio Nord' },
+        hasOccupation: { '@type': 'Occupation', name: 'Full-stack Engineer' },
       },
       {
-        '@type': 'OrganizationRole',
-        roleName: 'Junior Developer',
+        '@type': 'Role',
         startDate: '2017-01-01',
-        worksFor: { '@type': 'Organization', name: 'Webbureau' },
+        hasOccupation: { '@type': 'Occupation', name: 'Junior Developer' },
       },
     ]);
   });

@@ -19,11 +19,15 @@ interface Organization {
   name: string;
 }
 
-interface OrganizationRole {
-  '@type': 'OrganizationRole';
-  roleName: string;
+interface Occupation {
+  '@type': 'Occupation';
+  name: string;
+}
+
+interface DatedRole {
+  '@type': 'Role';
   startDate: string;
-  worksFor: Organization;
+  hasOccupation: Occupation;
 }
 
 export interface PersonJsonLd {
@@ -37,7 +41,7 @@ export interface PersonJsonLd {
   sameAs: string[];
   worksFor?: Organization;
   alumniOf?: Organization[];
-  hasOccupation?: OrganizationRole[];
+  hasOccupation?: (Occupation | DatedRole)[];
 }
 
 function toIsoDate(date: Date): string {
@@ -52,6 +56,18 @@ export function buildPersonJsonLd(
   const sorted = [...experience].sort((a, b) => b.start.getTime() - a.start.getTime());
   const [current, ...past] = sorted;
 
+  const hasOccupation: (Occupation | DatedRole)[] = [];
+  if (current) {
+    hasOccupation.push({ '@type': 'Occupation', name: current.role });
+  }
+  for (const entry of past) {
+    hasOccupation.push({
+      '@type': 'Role',
+      startDate: toIsoDate(entry.start),
+      hasOccupation: { '@type': 'Occupation', name: entry.role },
+    });
+  }
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',
@@ -65,13 +81,6 @@ export function buildPersonJsonLd(
     alumniOf: past.length
       ? past.map((entry) => ({ '@type': 'Organization', name: entry.meta }))
       : undefined,
-    hasOccupation: sorted.length
-      ? sorted.map((entry) => ({
-          '@type': 'OrganizationRole',
-          roleName: entry.role,
-          startDate: toIsoDate(entry.start),
-          worksFor: { '@type': 'Organization', name: entry.meta },
-        }))
-      : undefined,
+    hasOccupation: hasOccupation.length ? hasOccupation : undefined,
   };
 }
