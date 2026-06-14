@@ -3,6 +3,7 @@ import { buildPersonJsonLd } from './person-json-ld';
 
 const site = {
   name: 'Test Person',
+  role: 'Test Role',
   email: 'mail@example.com',
   location: 'Testland',
   links: {
@@ -44,6 +45,12 @@ describe('buildPersonJsonLd', () => {
     expect(json.name).toBe('Test Person');
     expect(json.email).toBe('mailto:mail@example.com');
     expect(json.url).toBe(siteUrl);
+  });
+
+  it('uses the site role as jobTitle', () => {
+    const json = buildPersonJsonLd(site, experience, siteUrl);
+
+    expect(json.jobTitle).toBe('Test Role');
   });
 
   it('exposes sameAs links pointing at social profiles', () => {

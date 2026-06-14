@@ -1,5 +1,6 @@
 interface PersonSource {
   name: string;
+  role: string;
   email: string;
   location: string;
   links: {
@@ -84,7 +85,7 @@ export function buildPersonJsonLd(
     name: site.name,
     email: `mailto:${site.email}`,
     url,
-    jobTitle: 'Senior Fullstack Engineer',
+    jobTitle: site.role,
     address: { '@type': 'PostalAddress', addressCountry: site.location },
     sameAs: [site.links.github, site.links.linkedin],
     worksFor: current ? { '@type': 'Organization', name: current.meta } : undefined,
