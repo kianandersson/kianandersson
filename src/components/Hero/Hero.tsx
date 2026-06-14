@@ -20,7 +20,12 @@ export function Hero({ name, availableFrom, ctaHref }: HeroProps) {
 
       <p className={styles.body}>{PLACEHOLDER_BODY}</p>
 
-      <AvailabilityPill pulse availableFrom={availableFrom} />
+      {availableFrom != null &&
+        (availableFrom.getTime() > Date.now() ? (
+          <AvailabilityPill variant="from" from={availableFrom} />
+        ) : (
+          <AvailabilityPill variant="available" pulse />
+        ))}
 
       <CtaButton href={ctaHref}>Get in touch</CtaButton>
     </div>

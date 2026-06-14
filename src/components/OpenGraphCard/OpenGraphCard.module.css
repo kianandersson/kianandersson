@@ -16,12 +16,6 @@
   -webkit-font-smoothing: antialiased;
 }
 
-.badge {
-  position: absolute;
-  top: 38px;
-  right: 40px;
-}
-
 .identity {
   flex: 1;
   display: flex;

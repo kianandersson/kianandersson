@@ -47,12 +47,7 @@ const skills = (await getCollection('skills'))
   </head>
   <body>
     <div class="canvas">
-      <OpenGraphCard
-        name={siteConfig.name}
-        role={siteConfig.role}
-        skills={skills}
-        availableFrom={siteConfig.availableFrom}
-      />
+      <OpenGraphCard name={siteConfig.name} role={siteConfig.role} skills={skills} />
     </div>
   </body>
 </html>

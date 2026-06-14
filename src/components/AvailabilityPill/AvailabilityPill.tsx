@@ -2,26 +2,23 @@ import { formatDate } from '../../lib/formatPeriod';
 import { StatusDot } from '../StatusDot/StatusDot';
 import styles from './AvailabilityPill.module.css';
 
-type Props = {
-  /** Animate the green dot when the date is in the past. Off for static snapshots. */
-  pulse?: boolean;
-  /** Drives the pill state: undefined hides it; past dates render the live pill; future dates announce the start date. */
-  availableFrom?: Date;
-};
+export type AvailabilityPillProps =
+  | { variant: 'available'; pulse?: boolean }
+  | { variant: 'from'; from: Date };
 
-export function AvailabilityPill({ pulse = false, availableFrom }: Props) {
-  if (!availableFrom) return null;
-  const isFuture = availableFrom.getTime() > Date.now();
+export function AvailabilityPill(props: AvailabilityPillProps) {
+  if (props.variant === 'from') {
+    return (
+      <span className={styles.pill}>
+        <StatusDot tone="warn" />
+        Available from <span className={styles.date}>{formatDate(props.from)}</span>
+      </span>
+    );
+  }
   return (
     <span className={styles.pill}>
-      <StatusDot pulse={pulse && !isFuture} tone={isFuture ? 'warn' : 'ok'} />
-      {isFuture ? (
-        <>
-          Available from <span className={styles.date}>{formatDate(availableFrom)}</span>
-        </>
-      ) : (
-        'Available for new projects'
-      )}
+      <StatusDot tone="ok" pulse={props.pulse} />
+      Available for new projects
     </span>
   );
 }
