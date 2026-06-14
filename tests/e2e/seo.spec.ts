@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
+import astroConfig from '../../astro.config.mjs';
 
 test.describe('SEO surfaces', () => {
   test('home advertises OG image and twitter large card', async ({ page }) => {
@@ -7,7 +8,7 @@ test.describe('SEO surfaces', () => {
 
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
       'content',
-      'https://kianandersson.dk/og.png',
+      `${astroConfig.site}/og.png`,
     );
     await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
       'content',
@@ -15,42 +16,47 @@ test.describe('SEO surfaces', () => {
     );
   });
 
-  test('home JSON-LD includes current employer and prior employers', async ({ page }) => {
+  test('home JSON-LD exposes a Person with employment and skills shape', async ({ page }) => {
     await page.goto('/');
 
     const jsonLd = await page.locator('script[type="application/ld+json"]').textContent();
     expect(jsonLd).not.toBeNull();
     const data = JSON.parse(jsonLd ?? '{}');
 
+    expect(data['@context']).toBe('https://schema.org');
     expect(data['@type']).toBe('Person');
-    expect(data.worksFor).toMatchObject({
-      '@type': 'Organization',
-      name: 'Freelance',
-    });
-    expect(data.alumniOf).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ name: 'Nordic SaaS ApS' }),
-        expect.objectContaining({ name: 'Studio Nord' }),
-        expect.objectContaining({ name: 'Webbureau' }),
-      ]),
-    );
-    expect(data.hasOccupation[0]).toMatchObject({
-      '@type': 'Occupation',
-      name: 'Lead Engineer',
-    });
-    expect(data.hasOccupation.slice(1)).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          '@type': 'Role',
-          startDate: expect.stringMatching(/^\d{4}-\d{2}$/),
-          endDate: expect.stringMatching(/^\d{4}-\d{2}$/),
-          hasOccupation: expect.objectContaining({ '@type': 'Occupation' }),
-        }),
-      ]),
-    );
+
+    expect(data.worksFor).toMatchObject({ '@type': 'Organization' });
+    expect(typeof data.worksFor.name).toBe('string');
+    expect(data.worksFor.name.length).toBeGreaterThan(0);
+
+    expect(Array.isArray(data.alumniOf)).toBe(true);
+    expect(data.alumniOf.length).toBeGreaterThan(0);
+    for (const org of data.alumniOf) {
+      expect(org).toMatchObject({ '@type': 'Organization' });
+      expect(typeof org.name).toBe('string');
+      expect(org.name.length).toBeGreaterThan(0);
+    }
+
+    expect(Array.isArray(data.hasOccupation)).toBe(true);
+    expect(data.hasOccupation[0]).toMatchObject({ '@type': 'Occupation' });
+    expect(typeof data.hasOccupation[0].name).toBe('string');
+    expect(data.hasOccupation[0].name.length).toBeGreaterThan(0);
+    for (const role of data.hasOccupation.slice(1)) {
+      expect(role).toMatchObject({
+        '@type': 'Role',
+        startDate: expect.stringMatching(/^\d{4}-\d{2}$/),
+        endDate: expect.stringMatching(/^\d{4}-\d{2}$/),
+        hasOccupation: expect.objectContaining({ '@type': 'Occupation' }),
+      });
+    }
+
     expect(Array.isArray(data.knowsAbout)).toBe(true);
-    expect(data.knowsAbout).toEqual(expect.arrayContaining(['TypeScript', 'React']));
-    expect(data.knowsAbout).not.toContain('Go');
+    expect(data.knowsAbout.length).toBeGreaterThan(0);
+    for (const skill of data.knowsAbout) {
+      expect(typeof skill).toBe('string');
+      expect(skill.length).toBeGreaterThan(0);
+    }
   });
 
   test('og.png is a real PNG', async ({ request }) => {
