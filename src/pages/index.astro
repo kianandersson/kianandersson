@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { formatPeriod } from '../lib/formatPeriod';
 import { groupSkills } from '../lib/group-skills';
 import { buildPersonJsonLd } from '../lib/person-json-ld';
 import { siteConfig } from '../site.config';
@@ -38,7 +39,7 @@ const experience = experienceEntries.map((entry) => ({
   id: entry.id,
   role: entry.data.role,
   meta: entry.data.meta,
-  period: entry.data.period,
+  period: formatPeriod(entry.data.start, entry.data.end),
   description: entry.data.description,
   stack: entry.data.stack,
   methods: entry.data.methods,
@@ -50,6 +51,7 @@ const jsonLd = buildPersonJsonLd(
     meta: entry.data.meta,
     role: entry.data.role,
     start: entry.data.start,
+    end: entry.data.end,
   })),
   new URL('/', Astro.site).toString(),
 );

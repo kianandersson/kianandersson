@@ -13,9 +13,24 @@ const site = {
 
 const experience = [
   { meta: 'Freelance', role: 'Lead Engineer', start: new Date('2023-03-01') },
-  { meta: 'Nordic SaaS ApS', role: 'Senior Full-stack Engineer', start: new Date('2021-06-01') },
-  { meta: 'Studio Nord', role: 'Full-stack Engineer', start: new Date('2019-08-01') },
-  { meta: 'Webbureau', role: 'Junior Developer', start: new Date('2017-01-01') },
+  {
+    meta: 'Nordic SaaS ApS',
+    role: 'Senior Full-stack Engineer',
+    start: new Date('2021-06-01'),
+    end: new Date('2023-02-28'),
+  },
+  {
+    meta: 'Studio Nord',
+    role: 'Full-stack Engineer',
+    start: new Date('2019-08-01'),
+    end: new Date('2021-05-31'),
+  },
+  {
+    meta: 'Webbureau',
+    role: 'Junior Developer',
+    start: new Date('2017-01-01'),
+    end: new Date('2019-07-31'),
+  },
 ];
 
 describe('buildPersonJsonLd', () => {
@@ -63,24 +78,55 @@ describe('buildPersonJsonLd', () => {
     });
   });
 
-  it('wraps past occupations in Role with startDate per Schema.org guidance', () => {
+  it('wraps past occupations in Role with start + end dates per Schema.org guidance', () => {
     const json = buildPersonJsonLd(site, experience, 'https://kianandersson.dk/');
 
     expect(json.hasOccupation?.slice(1)).toEqual([
       {
         '@type': 'Role',
         startDate: '2021-06-01',
+        endDate: '2023-02-28',
         hasOccupation: { '@type': 'Occupation', name: 'Senior Full-stack Engineer' },
       },
       {
         '@type': 'Role',
         startDate: '2019-08-01',
+        endDate: '2021-05-31',
         hasOccupation: { '@type': 'Occupation', name: 'Full-stack Engineer' },
       },
       {
         '@type': 'Role',
         startDate: '2017-01-01',
+        endDate: '2019-07-31',
         hasOccupation: { '@type': 'Occupation', name: 'Junior Developer' },
+      },
+    ]);
+  });
+
+  it('treats an entry without end as the current job and a sibling with end as past', () => {
+    const json = buildPersonJsonLd(
+      site,
+      [
+        { meta: 'Now Co', role: 'Lead', start: new Date('2024-01-01') },
+        {
+          meta: 'Then Co',
+          role: 'Senior',
+          start: new Date('2020-01-01'),
+          end: new Date('2023-12-31'),
+        },
+      ],
+      'https://kianandersson.dk/',
+    );
+
+    expect(json.worksFor).toEqual({ '@type': 'Organization', name: 'Now Co' });
+    expect(json.alumniOf).toEqual([{ '@type': 'Organization', name: 'Then Co' }]);
+    expect(json.hasOccupation).toEqual([
+      { '@type': 'Occupation', name: 'Lead' },
+      {
+        '@type': 'Role',
+        startDate: '2020-01-01',
+        endDate: '2023-12-31',
+        hasOccupation: { '@type': 'Occupation', name: 'Senior' },
       },
     ]);
   });

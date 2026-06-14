@@ -12,6 +12,7 @@ interface ExperienceSource {
   meta: string;
   role: string;
   start: Date;
+  end?: Date;
 }
 
 interface Organization {
@@ -27,6 +28,7 @@ interface Occupation {
 interface DatedRole {
   '@type': 'Role';
   startDate: string;
+  endDate?: string;
   hasOccupation: Occupation;
 }
 
@@ -54,7 +56,8 @@ export function buildPersonJsonLd(
   url: string,
 ): PersonJsonLd {
   const sorted = [...experience].sort((a, b) => b.start.getTime() - a.start.getTime());
-  const [current, ...past] = sorted;
+  const current = sorted.find((entry) => !entry.end);
+  const past = sorted.filter((entry) => entry.end);
 
   const hasOccupation: (Occupation | DatedRole)[] = [];
   if (current) {
@@ -64,6 +67,7 @@ export function buildPersonJsonLd(
     hasOccupation.push({
       '@type': 'Role',
       startDate: toIsoDate(entry.start),
+      endDate: entry.end ? toIsoDate(entry.end) : undefined,
       hasOccupation: { '@type': 'Occupation', name: entry.role },
     });
   }

@@ -57,11 +57,11 @@ const experience = defineCollection({
   schema: z.object({
     role: z.string().min(1),
     meta: z.string().min(1),
-    period: z.string().min(1),
     description: z.string().min(1),
     stack: z.array(z.string().min(1)),
     methods: z.array(z.string().min(1)),
     start: z.coerce.date(),
+    end: z.coerce.date().optional(),
   }),
 });
 
