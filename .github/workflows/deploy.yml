@@ -42,19 +42,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Skip dep install — wrangler-action installs wrangler itself,
+      # and we don't run any project scripts here.
+      - uses: ./.github/actions/setup
+        with:
+          install: false
+
       - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
           name: ${{ inputs.artifact-name }}
           path: ${{ inputs.artifact-path }}
 
-      # Force npm to avoid pulling in pnpm just to install wrangler —
-      # the action auto-detects from pnpm-lock.yaml otherwise, and this
-      # job intentionally doesn't set up Node/pnpm.
       - id: deploy
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          packageManager: npm
+          packageManager: pnpm
           command: ${{ inputs.command }}
