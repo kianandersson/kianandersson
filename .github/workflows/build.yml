@@ -1,28 +1,37 @@
 name: Build
 
-# Produces the shippable `dist/` artifact. Reusable — called by
-# pull-request.yml and release.yml.
+# Produces the shippable build artifact and publishes its name + path
+# as outputs so downstream workflows can fetch it without hardcoding
+# the contract. Reusable — called by pull-request.yml and release.yml.
 on:
   workflow_call:
+    outputs:
+      artifact-name:
+        description: Name of the uploaded build artifact
+        value: ${{ jobs.build.outputs.artifact-name }}
+      artifact-path:
+        description: Path consumers should extract the artifact to
+        value: ${{ jobs.build.outputs.artifact-path }}
 
 jobs:
   build:
     name: Astro build
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    outputs:
+      artifact-name: ${{ steps.meta.outputs.name }}
+      artifact-path: ${{ steps.meta.outputs.path }}
 
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
+      - uses: ./.github/actions/setup
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - id: meta
+        shell: bash
+        run: |
+          echo "name=dist" >> "$GITHUB_OUTPUT"
+          echo "path=dist/" >> "$GITHUB_OUTPUT"
 
       # Required before build: the og-image integration screenshots the /og
       # page with Playwright during astro:build:done.
@@ -35,10 +44,10 @@ jobs:
       - name: Check JS bundle size (< 10 KB gzipped)
         run: pnpm check:bundle
 
-      - name: Upload dist artifact
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: dist
-          path: dist/
+          name: ${{ steps.meta.outputs.name }}
+          path: ${{ steps.meta.outputs.path }}
           retention-days: 1
           if-no-files-found: error

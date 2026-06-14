@@ -20,6 +20,9 @@ jobs:
   test:
     needs: build
     uses: ./.github/workflows/test.yml
+    with:
+      artifact-name: ${{ needs.build.outputs.artifact-name }}
+      artifact-path: ${{ needs.build.outputs.artifact-path }}
 
   deploy:
     if: github.event.pull_request.draft == false
@@ -27,8 +30,9 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     with:
       environment: preview-pr-${{ github.event.pull_request.number }}
-      mode: preview
-      preview-alias: pr-${{ github.event.pull_request.number }}
+      command: versions upload --preview-alias=pr-${{ github.event.pull_request.number }}
+      artifact-name: ${{ needs.build.outputs.artifact-name }}
+      artifact-path: ${{ needs.build.outputs.artifact-path }}
     secrets: inherit
 
   lighthouse:

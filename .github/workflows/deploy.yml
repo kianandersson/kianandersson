@@ -1,32 +1,31 @@
 name: Deploy
 
-# Single deploy workflow, parameterised by GitHub environment. Callers
-# pick the environment (e.g. `production` or `preview-pr-12`) and the
-# mode — production runs `wrangler deploy`; preview runs
-# `wrangler versions upload --preview-alias=<alias>` so each PR gets a
-# readable URL like `pr-12-<worker>.workers.dev`.
-#
-# Cloudflare Workers does not currently support custom domains for
-# preview URLs — they're locked to workers.dev.
+# Single deploy workflow, parameterised by GitHub environment. The
+# caller decides which wrangler command to run, so this workflow only
+# knows "extract this artifact, then run this wrangler command in this
+# environment".
 on:
   workflow_call:
     inputs:
       environment:
-        description: 'GitHub environment to deploy to'
+        description: GitHub environment to deploy to
         required: true
         type: string
-      mode:
-        description: '`production` or `preview`'
+      command:
+        description: Wrangler command to run (e.g. `deploy` or `versions upload --preview-alias=…`)
         required: true
         type: string
-      preview-alias:
-        description: 'Preview alias (preview mode only) — appears in the URL'
-        required: false
+      artifact-name:
+        description: Name of the build artifact to download
+        required: true
         type: string
-        default: ''
+      artifact-path:
+        description: Where to extract the build artifact
+        required: true
+        type: string
     outputs:
       url:
-        description: 'URL of the deployed version'
+        description: URL of the deployed version
         value: ${{ jobs.deploy.outputs.url }}
 
 jobs:
@@ -43,15 +42,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download dist artifact
+      - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
-          name: dist
-          path: dist/
+          name: ${{ inputs.artifact-name }}
+          path: ${{ inputs.artifact-path }}
 
       - id: deploy
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: ${{ inputs.mode == 'preview' && format('versions upload --preview-alias={0}', inputs.preview-alias) || 'deploy' }}
+          command: ${{ inputs.command }}

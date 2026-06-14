@@ -1,11 +1,18 @@
 name: Test
 
 # Verifies code correctness: lint, typecheck, unit tests, and end-to-end
-# tests against the built `dist/` (downloaded from the build artifact).
-# Reusable — callers must run build.yml first so the `dist` artifact
-# exists in the same run.
+# tests against the build artifact passed in by the caller. Reusable.
 on:
   workflow_call:
+    inputs:
+      artifact-name:
+        description: Name of the build artifact to download for e2e
+        required: true
+        type: string
+      artifact-path:
+        description: Where to extract the build artifact
+        required: true
+        type: string
 
 jobs:
   test:
@@ -16,15 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - uses: ./.github/actions/setup
 
       - name: Lint (Biome)
         run: pnpm lint
@@ -38,11 +37,11 @@ jobs:
       - name: Install Playwright browsers
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Download dist for e2e
+      - name: Download build artifact for e2e
         uses: actions/download-artifact@v4
         with:
-          name: dist
-          path: dist/
+          name: ${{ inputs.artifact-name }}
+          path: ${{ inputs.artifact-path }}
 
       - name: E2E + axe (Playwright)
         run: pnpm test:e2e
