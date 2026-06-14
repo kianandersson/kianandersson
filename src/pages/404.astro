@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig } from '../site.config';
+
+const title = `Page not found — ${siteConfig.name}`;
+const description = 'The page you were looking for does not exist.';
+---
+
+<BaseLayout title={title} description={description}>
+  <main class="root">
+    <p class="eyebrow">404</p>
+    <h1 class="heading">Page not found.</h1>
+    <p class="body">The page you were looking for does not exist.</p>
+    <a class="cta" href="/">
+      Back home
+      <svg
+        class="arrow"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M5 12h14"></path>
+        <path d="M13 6l6 6-6 6"></path>
+      </svg>
+    </a>
+  </main>
+</BaseLayout>
+
+<style>
+  .root {
+    box-sizing: border-box;
+    max-width: var(--container-max);
+    min-height: 70vh;
+    margin: 0 auto;
+    padding: 96px var(--container-pad);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .eyebrow {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+
+  .heading {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 38px;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    color: var(--text);
+  }
+
+  .body {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 19px;
+    line-height: 1.65;
+    color: var(--dim);
+    max-width: 40ch;
+  }
+
+  .cta {
+    margin-top: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .arrow {
+    transition: transform 0.2s ease;
+  }
+
+  @media (hover: hover) {
+    .cta:hover .arrow {
+      transform: translateX(4px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .arrow {
+      transition: none;
+    }
+  }
+</style>

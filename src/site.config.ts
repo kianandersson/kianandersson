@@ -13,6 +13,9 @@ const SiteConfigSchema = z.object({
   hero: z.object({
     available: z.boolean(),
   }),
+  analytics: z.object({
+    cloudflareToken: z.string().optional(),
+  }),
 });
 
 export type SiteConfig = z.infer<typeof SiteConfigSchema>;
@@ -29,5 +32,8 @@ export const siteConfig: SiteConfig = SiteConfigSchema.parse({
   },
   hero: {
     available: true,
+  },
+  analytics: {
+    cloudflareToken: import.meta.env.PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN,
   },
 });
