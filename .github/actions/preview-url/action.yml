@@ -1,0 +1,44 @@
+name: Preview URL
+description: Compose the workers.dev URL for a versioned preview alias of a worker.
+
+inputs:
+  api-token:
+    description: Cloudflare API token.
+    required: true
+  account-id:
+    description: Cloudflare account ID.
+    required: true
+  worker-name:
+    description: Worker script name.
+    required: true
+  alias:
+    description: Preview alias — becomes the leftmost segment of the URL (e.g. `pr-12`).
+    required: true
+
+outputs:
+  url:
+    description: Preview URL of the worker version.
+    value: ${{ steps.resolve.outputs.url }}
+
+runs:
+  using: composite
+  steps:
+    - id: resolve
+      shell: bash
+      env:
+        CF_TOKEN: ${{ inputs.api-token }}
+        CF_ACCOUNT: ${{ inputs.account-id }}
+        WORKER: ${{ inputs.worker-name }}
+        ALIAS: ${{ inputs.alias }}
+      run: |
+        subdomain=$(curl -fsS \
+          -H "Authorization: Bearer $CF_TOKEN" \
+          "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/workers/subdomain" \
+          | jq -r '.result.subdomain // empty')
+
+        if [ -z "$subdomain" ]; then
+          echo "::error::Could not fetch workers.dev subdomain"
+          exit 1
+        fi
+
+        echo "url=https://$ALIAS-$WORKER.$subdomain.workers.dev" >> "$GITHUB_OUTPUT"

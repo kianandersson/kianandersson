@@ -27,20 +27,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - id: subdomain
-        uses: ./.github/actions/workers-subdomain
-        with:
-          api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          account-id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-
       - id: worker
         shell: bash
         run: echo "name=$(jq -r '.name' wrangler.jsonc)" >> "$GITHUB_OUTPUT"
 
       - id: url
-        shell: bash
-        run: |
-          echo "url=https://pr-${{ github.event.pull_request.number }}-${{ steps.worker.outputs.name }}.${{ steps.subdomain.outputs.subdomain }}.workers.dev" >> "$GITHUB_OUTPUT"
+        uses: ./.github/actions/preview-url
+        with:
+          api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          account-id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          worker-name: ${{ steps.worker.outputs.name }}
+          alias: pr-${{ github.event.pull_request.number }}
 
   build:
     name: Build
