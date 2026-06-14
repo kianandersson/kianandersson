@@ -1,9 +1,9 @@
 name: Pull request
 
-# PR pipeline. Maximises parallelism: static checks run alongside build,
-# e2e starts as soon as the artifact is ready, preview deploys as soon
-# as the static checks pass (so reviewers see the change without waiting
-# for e2e).
+# PR pipeline. Resolves the preview URL up front (computed from the
+# Cloudflare workers.dev subdomain + worker name in wrangler.jsonc) so
+# build can bake it into canonical/sitemap/og:image and deploy can put
+# the same URL on the GitHub deployment widget.
 on:
   pull_request:
     branches: [main]
@@ -17,16 +17,36 @@ permissions:
   deployments: write
 
 jobs:
+  site-url:
+    name: Site URL
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    outputs:
+      url: ${{ steps.url.outputs.url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: subdomain
+        uses: ./.github/actions/workers-subdomain
+        with:
+          api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          account-id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - id: worker
+        shell: bash
+        run: echo "name=$(jq -r '.name' wrangler.jsonc)" >> "$GITHUB_OUTPUT"
+
+      - id: url
+        shell: bash
+        run: |
+          echo "url=https://pr-${{ github.event.pull_request.number }}-${{ steps.worker.outputs.name }}.${{ steps.subdomain.outputs.subdomain }}.workers.dev" >> "$GITHUB_OUTPUT"
+
   build:
     name: Build
+    needs: site-url
     uses: ./.github/workflows/build.yml
     with:
-      # Deterministic preview URL: `<alias>-<worker>.<workers-subdomain>.workers.dev`
-      # — the worker name comes from wrangler.jsonc, the subdomain
-      # from the `WORKERS_SUBDOMAIN` repo variable. Pre-computed so
-      # the build can bake the canonical/sitemap/og:image into the
-      # same URL Lighthouse audits afterwards.
-      site-url: https://pr-${{ github.event.pull_request.number }}-kianandersson-com.${{ vars.WORKERS_SUBDOMAIN }}.workers.dev
+      site-url: ${{ needs.site-url.outputs.url }}
 
   test:
     name: Test
@@ -51,10 +71,11 @@ jobs:
   preview:
     name: Preview
     if: github.event.pull_request.draft == false
-    needs: [build, test]
+    needs: [site-url, build, test]
     uses: ./.github/workflows/create-preview.yml
     with:
       pr-number: ${{ github.event.pull_request.number }}
+      url: ${{ needs.site-url.outputs.url }}
       artifact-name: ${{ needs.build.outputs.artifact-name }}
       artifact-path: ${{ needs.build.outputs.artifact-path }}
     secrets: inherit

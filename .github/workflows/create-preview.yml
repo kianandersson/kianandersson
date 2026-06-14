@@ -6,9 +6,13 @@ on:
   workflow_call:
     inputs:
       pr-number:
-        description: PR number — used for the environment name and preview alias
+        description: PR number — used for the environment name and preview alias.
         required: true
         type: number
+      url:
+        description: Preview URL — published on the environment widget and audited by Lighthouse.
+        required: true
+        type: string
       artifact-name:
         required: true
         type: string
@@ -23,6 +27,7 @@ jobs:
     with:
       environment: preview-pr-${{ inputs.pr-number }}
       command: versions upload --preview-alias=pr-${{ inputs.pr-number }}
+      url: ${{ inputs.url }}
       artifact-name: ${{ inputs.artifact-name }}
       artifact-path: ${{ inputs.artifact-path }}
     secrets: inherit
@@ -32,4 +37,4 @@ jobs:
     needs: deploy-preview
     uses: ./.github/workflows/lighthouse.yml
     with:
-      url: ${{ needs.deploy-preview.outputs.url }}
+      url: ${{ inputs.url }}

@@ -1,7 +1,9 @@
 name: Release
 
-# Production pipeline: same parallel checks as PR, with production
-# deploy gated on all of them. Runs on push to `main` and on manual
+# Production pipeline. The site URL lives on the GitHub `production`
+# environment as `SITE_URL`; resolving it up front lets build bake the
+# canonical/sitemap/og:image into the same URL that deploy publishes
+# on the environment widget. Runs on push to `main` and on manual
 # `workflow_dispatch` for redeploying the current main on demand.
 on:
   push:
@@ -17,11 +19,28 @@ permissions:
   deployments: write
 
 jobs:
+  site-url:
+    name: Site URL
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    environment: production
+    outputs:
+      url: ${{ vars.SITE_URL }}
+    steps:
+      - name: Verify SITE_URL is configured
+        shell: bash
+        run: |
+          if [ -z "${{ vars.SITE_URL }}" ]; then
+            echo "::error::SITE_URL is not set on the production environment. Add it under Settings → Environments → production → Environment variables."
+            exit 1
+          fi
+
   build:
     name: Build
+    needs: site-url
     uses: ./.github/workflows/build.yml
     with:
-      site-url: ${{ vars.PRODUCTION_URL }}
+      site-url: ${{ needs.site-url.outputs.url }}
 
   test:
     name: Test
@@ -45,11 +64,12 @@ jobs:
 
   deploy:
     name: Deploy to production
-    needs: [build, test, e2e, bundle-size]
+    needs: [site-url, build, test, e2e, bundle-size]
     uses: ./.github/workflows/deploy.yml
     with:
       environment: production
       command: deploy
+      url: ${{ needs.site-url.outputs.url }}
       artifact-name: ${{ needs.build.outputs.artifact-name }}
       artifact-path: ${{ needs.build.outputs.artifact-path }}
     secrets: inherit

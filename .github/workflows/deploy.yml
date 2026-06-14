@@ -1,48 +1,52 @@
 name: Deploy
 
 # Single deploy workflow, parameterised by GitHub environment. The
-# caller decides which wrangler command to run, so this workflow only
-# knows "extract this artifact, then run this wrangler command in this
-# environment".
+# caller decides which wrangler command to run and what URL to publish
+# on the environment widget — this workflow just runs the command in
+# that environment.
 on:
   workflow_call:
     inputs:
       environment:
-        description: GitHub environment to deploy to
+        description: GitHub environment to deploy to.
         required: true
         type: string
       command:
-        description: Wrangler command to run (e.g. `deploy` or `versions upload --preview-alias=…`)
+        description: Wrangler command (e.g. `deploy` or `versions upload --preview-alias=…`).
+        required: true
+        type: string
+      url:
+        description: URL to publish on the GitHub deployment widget.
         required: true
         type: string
       artifact-name:
-        description: Name of the build artifact to download
+        description: Name of the build artifact to download.
         required: true
         type: string
       artifact-path:
-        description: Where to extract the build artifact
+        description: Where to extract the build artifact.
         required: true
         type: string
     outputs:
       url:
-        description: URL of the deployed version
-        value: ${{ jobs.deploy.outputs.url }}
+        description: Same URL the caller supplied — re-exposed for chaining.
+        value: ${{ inputs.url }}
 
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    outputs:
-      url: ${{ steps.deploy.outputs.deployment-url }}
     environment:
       name: ${{ inputs.environment }}
-      url: ${{ steps.deploy.outputs.deployment-url }}
+      url: ${{ inputs.url }}
 
     steps:
       - uses: actions/checkout@v4
 
       - uses: ./.github/actions/setup
+        with:
+          install: false
 
       - name: Download build artifact
         uses: actions/download-artifact@v4
@@ -50,8 +54,7 @@ jobs:
           name: ${{ inputs.artifact-name }}
           path: ${{ inputs.artifact-path }}
 
-      - id: deploy
-        uses: cloudflare/wrangler-action@v3
+      - uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
