@@ -66,27 +66,6 @@
   gap: 8px;
 }
 
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .entry:not(:first-child) {
-      animation: entry-reveal cubic-bezier(0.22, 0.61, 0.36, 1) both;
-      animation-timeline: view();
-      animation-range: entry 24px entry 20vh;
-    }
-
-    @keyframes entry-reveal {
-      from {
-        opacity: 0;
-        transform: translateY(24px);
-      }
-      to {
-        opacity: 1;
-        transform: none;
-      }
-    }
-  }
-}
-
 .role {
   margin: 0;
   font-family: var(--font-sans);
