@@ -6,17 +6,12 @@ Built with [Astro](https://astro.build) and [Preact](https://preactjs.com).
 
 ## Develop
 
-Requires Node ≥20 and pnpm 11.
+Requires Node ≥20, pnpm 11, and Playwright's Chromium.
 
 ```sh
 pnpm install
-pnpm dev
-```
-
-Building or running e2e tests also needs Playwright's Chromium:
-
-```sh
 pnpm exec playwright install --with-deps chromium
+pnpm dev
 ```
 
 ## Common commands
