@@ -8,7 +8,7 @@ on:
   workflow_call:
     inputs:
       pr-number:
-        description: PR number — used for the environment name and preview alias.
+        description: PR number — used for the Cloudflare preview alias.
         required: true
         type: number
       url:
@@ -25,9 +25,13 @@ on:
 jobs:
   deploy-preview:
     name: Deploy preview
+    # All PRs share one `preview` environment with rolling deployments — GitHub
+    # auto-marks the latest as `active` and previous ones as `inactive`, and the
+    # per-PR widget reads off the head SHA, so each PR still sees its own URL.
+    # This means no per-PR environment records to clean up on close.
     uses: ./.github/workflows/deploy.yml
     with:
-      environment: preview-pr-${{ inputs.pr-number }}
+      environment: preview
       command: versions upload --preview-alias=pr-${{ inputs.pr-number }}
       url: ${{ inputs.url }}
       artifact-name: ${{ inputs.artifact-name }}

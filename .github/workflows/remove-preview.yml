@@ -8,27 +8,26 @@ permissions:
   deployments: write
 
 jobs:
-  deactivate-deployments:
+  deactivate-deployment:
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
-      # GITHUB_TOKEN can't delete the environment itself — that needs
-      # `administration: write`, which isn't available as a GITHUB_TOKEN
-      # scope. Marking the deployments inactive is what removes the
-      # active environment widget from the PR; the empty environment
-      # record in repo settings is harmless. Cloudflare auto-prunes
-      # old Worker versions.
-      - name: Deactivate preview deployments
+      # Every PR deploys under the shared `preview` environment, so on close we
+      # just mark the deployment(s) tied to this PR's head SHA inactive — the
+      # PR's deployment widget then reads as "inactive" instead of pointing at
+      # a now-stale Cloudflare worker version. CF auto-prunes old versions.
+      - name: Deactivate preview deployment
         uses: actions/github-script@v7
         with:
           script: |
-            const envName = `preview-pr-${context.payload.pull_request.number}`;
+            const sha = context.payload.pull_request.head.sha;
             const deployments = await github.paginate(
               github.rest.repos.listDeployments,
               {
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                environment: envName,
+                environment: 'preview',
+                sha,
                 per_page: 100,
               },
             );
@@ -40,4 +39,4 @@ jobs:
                 state: 'inactive',
               });
             }
-            core.info(`Deactivated ${deployments.length} deployment(s) for ${envName}`);
+            core.info(`Deactivated ${deployments.length} preview deployment(s) for ${sha}`);
