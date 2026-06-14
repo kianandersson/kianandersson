@@ -1,9 +1,8 @@
 name: Lighthouse local
 
-# Runs Lighthouse CI against the build artifact via the static-serve
-# mode in lighthouserc.cjs. Used to catch SEO regressions before
-# deploy — the hosted preview audit can't, because Cloudflare adds
-# `X-Robots-Tag: noindex` to every workers.dev response.
+# Catches SEO regressions before deploy — the hosted preview audit
+# can't, because Cloudflare adds `X-Robots-Tag: noindex` to every
+# workers.dev response.
 on:
   workflow_call:
     inputs:

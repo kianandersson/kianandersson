@@ -1,9 +1,5 @@
 name: Lighthouse
 
-# Runs Lighthouse CI against a deployed URL — used after release to
-# audit production with realistic edge + TLS numbers. The same
-# lighthouserc.cjs handles local runs against `dist/` too; it switches
-# target based on whether `URL` is set.
 on:
   workflow_call:
     inputs:

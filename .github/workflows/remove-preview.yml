@@ -12,9 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
-      # Removes the `preview-pr-N` GitHub environment (and all its
-      # deployments) when the PR is closed/merged. The Cloudflare Worker
-      # version itself is left alone — CF auto-prunes old versions.
+      # The Cloudflare Worker version itself is left alone — CF auto-prunes old versions.
       - name: Delete preview environment
         uses: actions/github-script@v7
         with:

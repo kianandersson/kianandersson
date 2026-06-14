@@ -1,7 +1,5 @@
 name: End-to-end tests
 
-# Browser end-to-end and accessibility tests against the build
-# artifact passed in by the caller.
 on:
   workflow_call:
     inputs:

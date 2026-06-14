@@ -1,7 +1,5 @@
 name: Bundle size
 
-# Verifies the shipped JS budget against the build artifact passed in
-# by the caller. Reusable.
 on:
   workflow_call:
     inputs:

@@ -27,8 +27,6 @@ runs:
         CF_ACCOUNT: ${{ inputs.account-id }}
         WORKER: ${{ inputs.worker-name }}
       run: |
-        # A custom domain attached to the worker is the canonical
-        # production URL.
         custom=$(curl -fsS \
           -H "Authorization: Bearer $CF_TOKEN" \
           "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/workers/domains?service=$WORKER" \
@@ -39,7 +37,6 @@ runs:
           exit 0
         fi
 
-        # No custom domain — fall back to the workers.dev URL.
         subdomain=$(curl -fsS \
           -H "Authorization: Bearer $CF_TOKEN" \
           "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/workers/subdomain" \

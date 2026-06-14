@@ -1,10 +1,9 @@
 name: Create preview
 
-# Deploys a per-PR Cloudflare preview. Reusable — called from
-# pull-request.yml. (We don't audit the preview URL with Lighthouse —
-# Cloudflare adds `X-Robots-Tag: noindex` to every workers.dev
-# response, which fails SEO checks. The PR's lighthouse-local job
-# catches code-level regressions instead.)
+# No Lighthouse audit of the preview URL — Cloudflare adds
+# `X-Robots-Tag: noindex` to every workers.dev response, which fails
+# SEO checks. The PR's lighthouse-local job catches code-level
+# regressions instead.
 on:
   workflow_call:
     inputs:

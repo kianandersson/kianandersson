@@ -1,10 +1,5 @@
 name: Pull request
 
-# PR pipeline. The `url` job composes the preview URL from the
-# workers.dev subdomain (fetched from the Cloudflare API) and the
-# worker name in wrangler.jsonc, so build can bake it into
-# canonical/sitemap/og:image and deploy can publish it on the GitHub
-# deployment widget.
 on:
   pull_request:
     branches: [main]

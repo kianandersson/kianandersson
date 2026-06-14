@@ -1,8 +1,5 @@
 name: Build
 
-# Produces the shippable build artifact and publishes its name + path
-# as outputs so downstream workflows can fetch it without hardcoding
-# the contract. Reusable — called by pull-request.yml and release.yml.
 on:
   workflow_call:
     inputs:
@@ -38,8 +35,7 @@ jobs:
           echo "name=dist" >> "$GITHUB_OUTPUT"
           echo "path=dist/" >> "$GITHUB_OUTPUT"
 
-      # Required before build: the og-image integration screenshots the /og
-      # page with Playwright during astro:build:done.
+      # The og-image integration screenshots /og with Playwright during astro:build:done.
       - name: Install Playwright browsers
         run: pnpm exec playwright install --with-deps chromium
 

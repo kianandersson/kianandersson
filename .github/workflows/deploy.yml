@@ -1,9 +1,5 @@
 name: Deploy
 
-# Single deploy workflow, parameterised by GitHub environment. The
-# caller decides which wrangler command to run and what URL to publish
-# on the environment widget — this workflow just runs the command in
-# that environment.
 on:
   workflow_call:
     inputs:

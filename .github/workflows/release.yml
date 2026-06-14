@@ -1,9 +1,5 @@
 name: Release
 
-# Production pipeline. The site URL is resolved from the Cloudflare
-# API — the worker's attached custom domain if one exists, the
-# workers.dev fallback otherwise. Runs on push to `main` and on manual
-# `workflow_dispatch` for redeploying the current main on demand.
 on:
   push:
     branches: [main]

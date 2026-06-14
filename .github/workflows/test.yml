@@ -1,8 +1,5 @@
 name: Test
 
-# Static code-quality checks: lint, typecheck, unit tests. None of these
-# need the build artifact, so each runs in its own job in parallel with
-# build (and with each other).
 on:
   workflow_call:
 
