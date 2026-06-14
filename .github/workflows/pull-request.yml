@@ -20,6 +20,13 @@ jobs:
   build:
     name: Build
     uses: ./.github/workflows/build.yml
+    with:
+      # Deterministic preview URL: `<alias>-<worker>.<workers-subdomain>.workers.dev`
+      # — the worker name comes from wrangler.jsonc, the subdomain
+      # from the `WORKERS_SUBDOMAIN` repo variable. Pre-computed so
+      # the build can bake the canonical/sitemap/og:image into the
+      # same URL Lighthouse audits afterwards.
+      site-url: https://pr-${{ github.event.pull_request.number }}-kianandersson-com.${{ vars.WORKERS_SUBDOMAIN }}.workers.dev
 
   test:
     name: Test

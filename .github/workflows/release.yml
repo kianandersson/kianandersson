@@ -20,6 +20,8 @@ jobs:
   build:
     name: Build
     uses: ./.github/workflows/build.yml
+    with:
+      site-url: ${{ vars.PRODUCTION_URL }}
 
   test:
     name: Test

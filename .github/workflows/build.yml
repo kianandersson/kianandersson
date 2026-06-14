@@ -5,6 +5,11 @@ name: Build
 # the contract. Reusable — called by pull-request.yml and release.yml.
 on:
   workflow_call:
+    inputs:
+      site-url:
+        description: Absolute URL the build will be deployed to. Drives canonical, og:image, sitemap, robots.txt.
+        required: true
+        type: string
     outputs:
       artifact-name:
         description: Name of the uploaded build artifact
@@ -39,6 +44,8 @@ jobs:
         run: pnpm exec playwright install --with-deps chromium
 
       - name: Build
+        env:
+          SITE_URL: ${{ inputs.site-url }}
         run: pnpm build
 
       - name: Upload artifact
