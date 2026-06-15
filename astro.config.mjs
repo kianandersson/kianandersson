@@ -43,6 +43,19 @@ export default defineConfig({
     },
   },
   vite: {
+    optimizeDeps: {
+      // Workaround for astro/issues/16248: deps that aren't reachable by the
+      // SSR scanner end up discovered at runtime, triggering rebundles that
+      // reload mid-render — the first request paints an empty page. The
+      // adapter merges this list into its own SSR include.
+      include: [
+        '@astrojs/preact/server.js',
+        'astro/actions/runtime/entrypoints/server.js',
+        'astro/zod',
+        'preact/devtools',
+        'resend',
+      ],
+    },
     plugins: [
       {
         // Top-level `optimizeDeps.force` doesn't reach the SSR environment —
