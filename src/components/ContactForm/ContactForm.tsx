@@ -52,7 +52,6 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
         <span class={`${styles.trafficDot} ${styles.dotRed}`} aria-hidden="true" />
         <span class={`${styles.trafficDot} ${styles.dotAmber}`} aria-hidden="true" />
         <span class={`${styles.trafficDot} ${styles.dotGreen}`} aria-hidden="true" />
-        <span class={styles.title}>Contact</span>
       </div>
 
       <div class={styles.body}>
