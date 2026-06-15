@@ -42,9 +42,4 @@ export default defineConfig({
       }),
     },
   },
-  vite: {
-    optimizeDeps: {
-      exclude: ['resend'],
-    },
-  },
 });
