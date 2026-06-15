@@ -74,7 +74,7 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
             id="contact-subject"
             class={styles.input}
             type="text"
-            placeholder="What's this about?"
+            placeholder="What's on your mind?"
             autocomplete="off"
             value={subject}
             onInput={(event) => setSubject((event.target as HTMLInputElement).value)}
