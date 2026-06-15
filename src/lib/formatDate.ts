@@ -1,5 +1,18 @@
+const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
 export function formatDate(date: Date): string {
-  const day = String(date.getUTCDate()).padStart(2, '0');
-  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-  return `${day}.${month}.${date.getUTCFullYear()}`;
+  return `${date.getUTCDate()} ${MONTHS[date.getUTCMonth()]}`;
 }

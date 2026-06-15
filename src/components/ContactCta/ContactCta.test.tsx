@@ -27,11 +27,11 @@ describe('ContactCta', () => {
   it('renders the "future" pill with a warn-toned dot and a formatted start date', () => {
     render(<ContactCta recipientName={RECIPIENT} availableFrom={FUTURE} />);
     const button = screen.getByRole('button', {
-      name: /get in touch — available from 01\.09\.2099/i,
+      name: /get in touch — available from 1 september/i,
     });
     expect(button).toHaveAttribute('data-availability', 'future');
     expect(button.querySelector('[data-tone="warn"]')).not.toBeNull();
-    expect(button.textContent).toContain('01.09.2099');
+    expect(button.textContent).toContain('1 September');
   });
 
   it('toggles the contact form open and closed on click', async () => {
