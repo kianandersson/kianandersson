@@ -1,9 +1,5 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "kianandersson",
-  "compatibility_date": "2026-01-01",
-  "assets": {
-    "directory": "./dist",
-    "not_found_handling": "404-page"
-  }
+  "compatibility_date": "2026-01-01"
 }

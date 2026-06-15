@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { formatDate } from './formatDate';
 
 describe('formatDate', () => {
-  it('formats as "dd.mm.yyyy" with zero-padded day and month', () => {
-    expect(formatDate(new Date('2026-09-01T00:00:00Z'))).toBe('01.09.2026');
-    expect(formatDate(new Date('2026-12-31T00:00:00Z'))).toBe('31.12.2026');
+  it('formats as "D Mon" with the short English month name and no zero-padded day', () => {
+    expect(formatDate(new Date('2026-09-01T00:00:00Z'))).toBe('1 Sep');
+    expect(formatDate(new Date('2026-12-31T00:00:00Z'))).toBe('31 Dec');
   });
 });

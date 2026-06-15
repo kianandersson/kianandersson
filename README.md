@@ -14,6 +14,14 @@ pnpm exec playwright install --with-deps chromium
 pnpm dev
 ```
 
+## Environment
+
+See `.env.example` for local development.
+
+- `RESEND_API_KEY` — Resend API key.
+- `SENDER_EMAIL` — verified sender address.
+- `RECIPIENT_EMAIL` — destination inbox.
+
 ## Common commands
 
 ```sh

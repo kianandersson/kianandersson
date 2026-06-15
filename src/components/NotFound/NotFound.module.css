@@ -56,19 +56,19 @@
 .terminalBar {
   display: flex;
   align-items: center;
-  gap: 7px;
-  padding: 11px 14px;
+  gap: 9px;
+  padding: 11px 15px;
   border-bottom: 1px solid var(--line);
 }
 
 .dot {
-  width: 9px;
-  height: 9px;
+  width: 13px;
+  height: 13px;
   border-radius: 50%;
 }
 
 .dotRed {
-  background: #e35d4b;
+  background: #e0654f;
 }
 
 .dotAmber {

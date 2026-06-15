@@ -11,6 +11,7 @@ export default defineConfig({
       'react-dom/test-utils': 'preact/test-utils',
       'react-dom': 'preact/compat',
       'react/jsx-runtime': 'preact/jsx-runtime',
+      'astro:actions': new URL('./vitest.astro-actions-stub.ts', import.meta.url).pathname,
     },
   },
   test: {

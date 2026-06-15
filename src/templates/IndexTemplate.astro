@@ -1,12 +1,17 @@
 ---
+import { ContactCta } from '../components/ContactCta/ContactCta';
 import { Experience, type ExperienceEntry } from '../components/Experience/Experience';
-import { Hero, type HeroProps } from '../components/Hero/Hero';
+import Hero from '../components/Hero/Hero.astro';
 import { type KeySkill, KeySkills } from '../components/KeySkills/KeySkills';
 import { type Language, Miscellaneous } from '../components/Miscellaneous/Miscellaneous';
 import { type SkillGroup, SkillGroups } from '../components/SkillGroups/SkillGroups';
 
 interface Props {
-  hero: HeroProps;
+  hero: {
+    name: string;
+    recipientName: string;
+    availableFrom?: Date;
+  };
   keySkills: KeySkill[];
   experience: ExperienceEntry[];
   skillGroups: SkillGroup[];
@@ -17,7 +22,15 @@ const { hero, keySkills, experience, skillGroups, languages } = Astro.props;
 ---
 
 <main>
-  <section><Hero {...hero} /></section>
+  <section>
+    <Hero name={hero.name}>
+      <ContactCta
+        recipientName={hero.recipientName}
+        availableFrom={hero.availableFrom}
+        client:load
+      />
+    </Hero>
+  </section>
   <section id="key-skills" aria-labelledby="key-skills-heading">
     <KeySkills skills={keySkills} />
   </section>

@@ -5,7 +5,6 @@ const SiteConfigSchema = z.object({
   name: z.string(),
   firstName: z.string(),
   role: z.string(),
-  email: z.email(),
   location: z.string(),
   links: z.object({
     github: z.url(),
@@ -27,7 +26,6 @@ export const siteConfig: SiteConfig = SiteConfigSchema.parse({
   name: 'Kian Andersson',
   firstName: 'Kian',
   role: 'Senior Full-stack Engineer',
-  email: 'mail@kianandersson.dk',
   location: 'Denmark',
   availableFrom: '2026-06-01',
   links: {

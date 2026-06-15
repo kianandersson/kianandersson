@@ -22,9 +22,11 @@
     "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm test:bundle"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^13.7.0",
     "@astrojs/preact": "^5.1.5",
     "astro": "^6.4.6",
     "preact": "^10.29.2",
+    "resend": "^6.12.4",
     "zod": "^4.4.3"
   },
   "devDependencies": {

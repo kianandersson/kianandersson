@@ -46,9 +46,16 @@ jobs:
           name: ${{ inputs.artifact-name }}
           path: ${{ inputs.artifact-path }}
 
+      # The pointer is only used by `astro preview` in e2e; together with
+      # `dist/server/wrangler.json` it makes wrangler bail with "do not
+      # share the same base path", so drop it before deploy.
+      - name: Drop adapter pointer that confuses wrangler deploy
+        run: rm -f .wrangler/deploy/config.json
+
       - uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           packageManager: pnpm
+          workingDirectory: dist/server
           command: ${{ inputs.command }}

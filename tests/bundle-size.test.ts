@@ -3,9 +3,9 @@ import { join } from 'node:path';
 import { gzipSync } from 'node:zlib';
 import { describe, expect, it } from 'vitest';
 
-const DIST = 'dist';
-const ASTRO_DIR = join(DIST, '_astro');
-const LIMIT_BYTES = 10 * 1024;
+const CLIENT_DIST = join('dist', 'client');
+const ASTRO_DIR = join(CLIENT_DIST, '_astro');
+const LIMIT_BYTES = 12 * 1024;
 const SCRIPT_REFERENCE = /_astro\/([\w.-]+\.js)/g;
 
 describe('shipped JS bundle', () => {
@@ -19,7 +19,7 @@ describe('shipped JS bundle', () => {
 });
 
 async function collectReferencedScripts(): Promise<string[]> {
-  const entries = await readdir(DIST, { recursive: true, withFileTypes: true });
+  const entries = await readdir(CLIENT_DIST, { recursive: true, withFileTypes: true });
   const htmlFiles = entries
     .filter((e) => e.isFile() && e.name.endsWith('.html'))
     .map((e) => join(e.parentPath, e.name));

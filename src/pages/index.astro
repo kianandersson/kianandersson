@@ -9,8 +9,8 @@ import IndexTemplate from '../templates/IndexTemplate.astro';
 
 const hero = {
   name: siteConfig.firstName,
+  recipientName: siteConfig.name,
   availableFrom: siteConfig.availableFrom,
-  ctaHref: `mailto:${siteConfig.email}`,
 };
 
 const allSkills = (await getCollection('skills')).map((entry) => ({
