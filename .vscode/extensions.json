@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "biomejs.biome",
+    "astro-build.astro-vscode",
+    "ms-playwright.playwright",
+    "vitest.explorer"
+  ]
+}
