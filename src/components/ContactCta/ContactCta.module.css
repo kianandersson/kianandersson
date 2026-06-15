@@ -4,15 +4,20 @@
   gap: 0;
   align-items: flex-start;
   width: 100%;
+  transition: gap 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.root[data-open="true"] {
+  gap: 24px;
 }
 
 .pill {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   height: 44px;
-  padding: 0 6px 0 14px;
+  padding: 0 6px 0 18px;
   border-radius: 980px;
   background: var(--surface);
   border: 1px solid var(--line);
@@ -40,17 +45,6 @@
 
 .pill:active {
   transform: scale(0.97);
-}
-
-@media (hover: hover) {
-  .pill:hover {
-    border-color: #d6d3cd;
-  }
-
-  .pill[data-variant="none"]:hover {
-    background: #2a2a2f;
-    border-color: #2a2a2f;
-  }
 }
 
 .dot {
@@ -119,6 +113,9 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  transition:
+    background 0.26s ease,
+    color 0.26s ease;
 }
 
 .pill[data-variant="none"] .circle {
@@ -146,35 +143,51 @@
   opacity: 0;
 }
 
+.iconLayer[data-icon="close"] {
+  transform: scale(0.6);
+  opacity: 0;
+}
+
 @media (hover: hover) {
-  .pill:hover .iconLayer[data-icon="at"] {
+  .pill:not([data-open="true"]):hover .iconLayer[data-icon="at"] {
     transform: translateX(100%);
     opacity: 0;
   }
-  .pill:hover .iconLayer[data-icon="arrow"] {
+  .pill:not([data-open="true"]):hover .iconLayer[data-icon="arrow"] {
     transform: translateX(0);
     opacity: 1;
   }
 }
 
-.pill:focus-visible .iconLayer[data-icon="at"] {
+.pill:not([data-open="true"]):focus-visible .iconLayer[data-icon="at"] {
   transform: translateX(100%);
   opacity: 0;
 }
 
-.pill:focus-visible .iconLayer[data-icon="arrow"] {
+.pill:not([data-open="true"]):focus-visible .iconLayer[data-icon="arrow"] {
   transform: translateX(0);
   opacity: 1;
 }
 
+.pill[data-open="true"] .iconLayer[data-icon="at"],
+.pill[data-open="true"] .iconLayer[data-icon="arrow"] {
+  opacity: 0;
+}
+
+.pill[data-open="true"] .iconLayer[data-icon="close"] {
+  transform: scale(1);
+  opacity: 1;
+}
+
 .pill[data-open="true"] .circle {
-  color: var(--accent);
+  background: var(--accent);
+  color: #ffffff;
 }
 
 .tooltip {
   position: absolute;
   top: calc(100% + 8px);
-  right: 6px;
+  right: 22px;
   font-family: var(--font-mono);
   font-size: 11px;
   padding: 5px 9px;
@@ -185,7 +198,7 @@
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
-  transform: translateY(-2px);
+  transform: translateX(50%) translateY(-2px);
   transition:
     opacity 0.18s ease,
     transform 0.18s ease;
@@ -195,13 +208,13 @@
 @media (hover: hover) {
   .pill:hover .tooltip {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(50%) translateY(0);
   }
 }
 
 .pill:focus-visible .tooltip {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(50%) translateY(0);
 }
 
 .reveal {
@@ -226,27 +239,92 @@
   opacity: 1;
 }
 
-.content {
-  padding-top: 16px;
+.formWrap {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition:
+    grid-template-rows 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.28s ease,
+    transform 0.28s ease;
+}
+
+.formWrap > * {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.formWrap[data-active="false"] {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.formWrap[data-leaving="true"] {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
 }
 
 .success {
   margin: 0;
-  padding: 12px 4px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
   font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--dim);
+  animation: rise 0.4s ease both;
+}
+
+.success[data-leaving="true"] {
+  animation: fall 0.4s ease forwards;
+}
+
+.successArrow {
+  color: var(--accent);
+  font-size: 15px;
+}
+
+.successText {
+  color: var(--text);
+  font-size: 14px;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fall {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .pill,
   .iconLayer,
+  .circle,
   .reveal,
   .inner,
-  .tooltip {
+  .tooltip,
+  .root,
+  .formWrap {
     transition: none;
   }
-  .dot::before {
+  .dot::before,
+  .success {
     animation: none;
   }
 }

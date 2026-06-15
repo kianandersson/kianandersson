@@ -11,7 +11,7 @@ type Props = {
   onSubmit: (payload: ContactPayload) => void;
 };
 
-const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
 
 export function ContactForm({ recipientName, status, errorMessage, onSubmit }: Props) {
   const [name, setName] = useState('');
@@ -47,7 +47,7 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
           </span>
         </div>
 
-        <div class={styles.row}>
+        <div class={`${styles.row} ${styles.inputRow}`}>
           <label class={styles.fieldLabel} for="contact-from">
             From
           </label>
@@ -64,7 +64,7 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
           />
         </div>
 
-        <div class={styles.row}>
+        <div class={`${styles.row} ${styles.inputRow}`}>
           <label class={styles.fieldLabel} for="contact-email">
             Email
           </label>
@@ -83,13 +83,11 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
         </div>
 
         <div class={`${styles.row} ${styles.messageRow}`}>
-          <label class={styles.fieldLabel} for="contact-message">
-            Message
-          </label>
           <textarea
             id="contact-message"
             class={styles.textarea}
             placeholder="Write your message…"
+            aria-label="Message"
             value={message}
             onInput={(event) => setMessage((event.target as HTMLTextAreaElement).value)}
             disabled={sending}

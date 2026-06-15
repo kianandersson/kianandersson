@@ -1,7 +1,11 @@
-import { useEffect, useRef, useState } from 'preact/hooks';
-import { formatDate } from '../../lib/formatDate';
-import { ContactForm, type ContactPayload, type ContactStatus } from '../ContactForm/ContactForm';
-import styles from './ContactCta.module.css';
+import { useEffect, useRef, useState } from "preact/hooks";
+import { formatDate } from "../../lib/formatDate";
+import {
+  ContactForm,
+  type ContactPayload,
+  type ContactStatus,
+} from "../ContactForm/ContactForm";
+import styles from "./ContactCta.module.css";
 
 export type ContactCtaProps = {
   recipientName: string;
@@ -9,23 +13,34 @@ export type ContactCtaProps = {
   endpoint?: string;
 };
 
-type CtaStatus = ContactStatus | 'success';
+type CtaStatus = ContactStatus | "success";
 
 const COLLAPSE_DELAY_MS = 3200;
 const RESET_DELAY_MS = 560;
 const DEMO_DELAY_MS = 750;
+const FORM_LEAVE_MS = 280;
+const SUCCESS_ENTER_DELAY_MS = -FORM_LEAVE_MS / 2;
+const SUCCESS_LEAVE_MS = 400;
 
-const REGION_ID = 'contact-region';
+const REGION_ID = "contact-region";
 
-export function ContactCta({ recipientName, availableFrom, endpoint }: ContactCtaProps) {
+export function ContactCta({
+  recipientName,
+  availableFrom,
+  endpoint,
+}: ContactCtaProps) {
   const [open, setOpen] = useState(false);
-  const [status, setStatus] = useState<CtaStatus>('idle');
+  const [status, setStatus] = useState<CtaStatus>("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formKey, setFormKey] = useState(0);
 
   const collapseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const requestToken = useRef(0);
+
+  const [formLeaving, setFormLeaving] = useState(false);
+  const [successLeaving, setSuccessLeaving] = useState(false);
 
   function clearTimers() {
     if (collapseTimer.current != null) {
@@ -36,19 +51,25 @@ export function ContactCta({ recipientName, availableFrom, endpoint }: ContactCt
       clearTimeout(resetTimer.current);
       resetTimer.current = null;
     }
+    if (leaveTimer.current != null) {
+      clearTimeout(leaveTimer.current);
+      leaveTimer.current = null;
+    }
   }
 
   function resetState() {
     requestToken.current++;
-    setStatus('idle');
+    setStatus("idle");
     setErrorMessage(null);
+    setFormLeaving(false);
+    setSuccessLeaving(false);
     setFormKey((value) => value + 1);
   }
 
   function close() {
     clearTimers();
     setOpen(false);
-    if (status === 'success') {
+    if (status === "success") {
       resetTimer.current = setTimeout(resetState, RESET_DELAY_MS);
     } else {
       resetState();
@@ -67,14 +88,14 @@ export function ContactCta({ recipientName, availableFrom, endpoint }: ContactCt
 
   async function handleSubmit(payload: ContactPayload) {
     const token = ++requestToken.current;
-    setStatus('sending');
+    setStatus("sending");
     setErrorMessage(null);
 
     try {
       if (endpoint) {
         const response = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
+          method: "POST",
+          headers: { "content-type": "application/json" },
           body: JSON.stringify(payload),
         });
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -82,76 +103,88 @@ export function ContactCta({ recipientName, availableFrom, endpoint }: ContactCt
         await new Promise((resolve) => setTimeout(resolve, DEMO_DELAY_MS));
       }
       if (requestToken.current !== token) return;
-      setStatus('success');
       clearTimers();
-      collapseTimer.current = setTimeout(() => {
-        setOpen(false);
-        resetTimer.current = setTimeout(resetState, RESET_DELAY_MS);
-      }, COLLAPSE_DELAY_MS);
+      setFormLeaving(true);
+      leaveTimer.current = setTimeout(() => {
+        if (requestToken.current !== token) return;
+        setStatus("success");
+        setFormLeaving(false);
+        collapseTimer.current = setTimeout(() => {
+          if (requestToken.current !== token) return;
+          setSuccessLeaving(true);
+          leaveTimer.current = setTimeout(() => {
+            if (requestToken.current !== token) return;
+            setOpen(false);
+            resetTimer.current = setTimeout(resetState, RESET_DELAY_MS);
+          }, SUCCESS_LEAVE_MS);
+        }, COLLAPSE_DELAY_MS);
+      }, FORM_LEAVE_MS + SUCCESS_ENTER_DELAY_MS);
     } catch {
       if (requestToken.current !== token) return;
-      setStatus('error');
+      setStatus("error");
       setErrorMessage("Couldn't send — please try again in a moment.");
     }
   }
 
   useEffect(() => () => clearTimers(), []);
 
-  const variant: 'future' | 'available' | 'none' = availableFrom
+  const variant: "future" | "available" | "none" = availableFrom
     ? availableFrom.getTime() > Date.now()
-      ? 'future'
-      : 'available'
-    : 'none';
+      ? "future"
+      : "available"
+    : "none";
 
   const ariaLabel = open
-    ? 'Close contact form'
-    : variant === 'available'
-      ? 'Get in touch — available for work'
-      : variant === 'future' && availableFrom
+    ? "Close contact form"
+    : variant === "available"
+      ? "Get in touch — available for work"
+      : variant === "future" && availableFrom
         ? `Get in touch — available from ${formatDate(availableFrom)}`
-        : 'Get in touch';
+        : "Get in touch";
 
   return (
-    <div class={styles.root}>
+    <div class={styles.root} data-open={open ? "true" : "false"}>
       <button
         type="button"
         class={styles.pill}
         data-variant={variant}
-        data-open={open ? 'true' : 'false'}
+        data-open={open ? "true" : "false"}
         aria-expanded={open}
         aria-controls={REGION_ID}
         aria-label={ariaLabel}
         onClick={toggle}
       >
-        {variant === 'available' && <span class={styles.dot} data-tone="ok" aria-hidden="true" />}
-        {variant === 'future' && <span class={styles.dot} data-tone="warn" aria-hidden="true" />}
+        {variant === "available" && (
+          <span class={styles.dot} data-tone="ok" aria-hidden="true" />
+        )}
+        {variant === "future" && (
+          <span class={styles.dot} data-tone="warn" aria-hidden="true" />
+        )}
 
         <span class={styles.label}>
-          {variant === 'none' && 'Get in touch'}
-          {variant === 'available' && 'Available for work'}
-          {variant === 'future' && availableFrom && (
+          {variant === "none" && "Get in touch"}
+          {variant === "available" && "Available for work"}
+          {variant === "future" && availableFrom && (
             <>
-              Available from <span class={styles.date}>{formatDate(availableFrom)}</span>
+              Available from{" "}
+              <span class={styles.date}>{formatDate(availableFrom)}</span>
             </>
           )}
         </span>
 
         <span class={styles.circle} aria-hidden="true">
-          {open ? (
+          <span class={styles.iconLayer} data-icon="at">
+            <AtIcon />
+          </span>
+          <span class={styles.iconLayer} data-icon="arrow">
+            <ArrowIcon />
+          </span>
+          <span class={styles.iconLayer} data-icon="close">
             <CloseIcon />
-          ) : (
-            <>
-              <span class={styles.iconLayer} data-icon="at">
-                <AtIcon />
-              </span>
-              <span class={styles.iconLayer} data-icon="arrow">
-                <ArrowIcon />
-              </span>
-            </>
-          )}
+          </span>
         </span>
 
-        {!open && variant !== 'none' && (
+        {!open && variant !== "none" && (
           <span class={styles.tooltip} aria-hidden="true">
             Get in touch
           </span>
@@ -161,23 +194,35 @@ export function ContactCta({ recipientName, availableFrom, endpoint }: ContactCt
       <div
         id={REGION_ID}
         class={styles.reveal}
-        data-open={open ? 'true' : 'false'}
+        data-open={open ? "true" : "false"}
         {...(!open ? { inert: true } : {})}
       >
         <div class={styles.inner}>
-          <div class={styles.content}>
-            {status === 'success' ? (
-              <p class={styles.success}>↳ message sent — I'll be in touch soon.</p>
-            ) : (
-              <ContactForm
-                key={formKey}
-                recipientName={recipientName}
-                status={status as ContactStatus}
-                errorMessage={errorMessage}
-                onSubmit={handleSubmit}
-              />
-            )}
+          <div
+            class={styles.formWrap}
+            data-active={status !== "success" ? "true" : "false"}
+            data-leaving={formLeaving ? "true" : "false"}
+            {...(status === "success" ? { inert: true } : {})}
+          >
+            <ContactForm
+              key={formKey}
+              recipientName={recipientName}
+              status={status as ContactStatus}
+              errorMessage={errorMessage}
+              onSubmit={handleSubmit}
+            />
           </div>
+          {(status === "success" || successLeaving) && (
+            <p
+              class={styles.success}
+              data-leaving={successLeaving ? "true" : "false"}
+            >
+              <span class={styles.successArrow}>↳</span>
+              <span class={styles.successText}>
+                message sent — I'll be in touch soon.
+              </span>
+            </p>
+          )}
         </div>
       </div>
     </div>

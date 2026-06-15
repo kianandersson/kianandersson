@@ -10,15 +10,24 @@ const PLACEHOLDER_BODY =
 ---
 
 <div class="root">
-  <h1 class="heading">
-    Hi, I'm <span class="name">{name}</span>.
-  </h1>
-  <p class="body">{PLACEHOLDER_BODY}</p>
+  <div class="text">
+    <h1 class="heading">
+      Hi, I'm <span class="name">{name}</span>.
+    </h1>
+    <p class="body">{PLACEHOLDER_BODY}</p>
+  </div>
   <slot />
 </div>
 
 <style>
   .root {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  .text {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -43,7 +52,7 @@ const PLACEHOLDER_BODY =
     margin: 0;
     font-family: var(--font-sans);
     font-size: 19px;
-    line-height: 1.65;
+    line-height: 1.6;
     color: var(--dim);
     max-width: 540px;
   }

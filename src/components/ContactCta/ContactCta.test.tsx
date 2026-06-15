@@ -75,12 +75,12 @@ describe('ContactCta', () => {
       await user.click(screen.getByRole('button', { name: /send message/i }));
 
       await act(async () => {
-        await vi.advanceTimersByTimeAsync(750);
+        await vi.advanceTimersByTimeAsync(750 + 280 + 220);
       });
       expect(screen.getByText(/message sent/i)).toBeInTheDocument();
 
       await act(async () => {
-        await vi.advanceTimersByTimeAsync(3200);
+        await vi.advanceTimersByTimeAsync(3200 + 400);
       });
       const pill = screen.getByRole('button', { name: /get in touch/i });
       expect(pill).toHaveAttribute('aria-expanded', 'false');
