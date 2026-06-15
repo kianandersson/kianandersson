@@ -3,10 +3,8 @@ import { join } from 'node:path';
 import { gzipSync } from 'node:zlib';
 import { describe, expect, it } from 'vitest';
 
-// The Cloudflare adapter writes user-facing assets to `dist/client/`; the
-// server bundle in `dist/server/` is worker code and never shipped to browsers.
-const DIST = join('dist', 'client');
-const ASTRO_DIR = join(DIST, '_astro');
+const CLIENT_DIST = join('dist', 'client');
+const ASTRO_DIR = join(CLIENT_DIST, '_astro');
 const LIMIT_BYTES = 12 * 1024;
 const SCRIPT_REFERENCE = /_astro\/([\w.-]+\.js)/g;
 
@@ -21,7 +19,7 @@ describe('shipped JS bundle', () => {
 });
 
 async function collectReferencedScripts(): Promise<string[]> {
-  const entries = await readdir(DIST, { recursive: true, withFileTypes: true });
+  const entries = await readdir(CLIENT_DIST, { recursive: true, withFileTypes: true });
   const htmlFiles = entries
     .filter((e) => e.isFile() && e.name.endsWith('.html'))
     .map((e) => join(e.parentPath, e.name));

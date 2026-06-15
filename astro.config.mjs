@@ -5,16 +5,15 @@ import sitemap from '@astrojs/sitemap';
 import { defineConfig, envField, sessionDrivers } from 'astro/config';
 import { ogImage } from './src/integrations/og-image.ts';
 
-// CI sets URL per environment; the localhost fallback keeps
-// `pnpm build && pnpm preview` self-consistent on a dev machine.
 const site = process.env.URL ?? 'http://localhost:4321';
 
 export default defineConfig({
   site,
   adapter: cloudflare(),
-  // We don't use Astro sessions; point at an in-memory driver so the
-  // Cloudflare adapter doesn't add a SESSION KV binding that wrangler
-  // then tries to provision at deploy time.
+  // Astro 6 has no `session: false` switch. The Cloudflare adapter's
+  // default driver is KV, which adds a SESSION binding wrangler then tries
+  // to provision at deploy time. We don't use sessions — route them to an
+  // in-memory driver so the binding stays out of the generated config.
   session: {
     driver: sessionDrivers.lruCache(),
   },
@@ -26,9 +25,26 @@ export default defineConfig({
   ],
   env: {
     schema: {
-      RESEND_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
-      CONTACT_FROM: envField.string({ context: 'server', access: 'secret', optional: true }),
-      CONTACT_TO: envField.string({ context: 'server', access: 'secret', optional: true }),
+      RESEND_API_KEY: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: true,
+      }),
+      SENDER_EMAIL: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: true,
+      }),
+      RECIPIENT_EMAIL: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: true,
+      }),
+    },
+  },
+  vite: {
+    optimizeDeps: {
+      exclude: ['resend'],
     },
   },
 });

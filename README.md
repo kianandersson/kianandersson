@@ -14,18 +14,13 @@ pnpm exec playwright install --with-deps chromium
 pnpm dev
 ```
 
-## Contact form
+## Environment
 
-Submissions are handled by an Astro Action (`src/actions/index.ts`) running on
-the Cloudflare Worker, which dispatches email via [Resend](https://resend.com).
-
-Three environment variables, configured as Wrangler secrets in production and
-in `.env` locally (see `.env.example`). All three are required; if any are
-missing the action returns an error.
+See `.env.example` for local development.
 
 - `RESEND_API_KEY` — Resend API key.
-- `CONTACT_FROM` — verified sender address, e.g. `noreply@example.com`.
-- `CONTACT_TO` — destination inbox.
+- `SENDER_EMAIL` — verified sender address.
+- `RECIPIENT_EMAIL` — destination inbox.
 
 ## Common commands
 

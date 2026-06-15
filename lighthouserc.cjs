@@ -1,6 +1,3 @@
-// URL unset → static-serve the prerendered client bundle (local + PR's
-//             lighthouse-local job).
-// URL set   → audit the live deployed URL (release's post-deploy audit).
 const target = process.env.URL ? { url: [process.env.URL] } : { staticDistDir: './dist/client' };
 
 module.exports = {
