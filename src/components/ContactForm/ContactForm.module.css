@@ -63,7 +63,7 @@
 }
 
 .messageRow {
-  padding: 14px 16px 4px;
+  padding: 14px 16px;
   border-bottom: 0;
 }
 
@@ -149,6 +149,7 @@
   display: inline-flex;
   align-items: center;
   gap: 9px;
+  flex-shrink: 0;
   height: 40px;
   padding: 0 22px;
   border-radius: 980px;
