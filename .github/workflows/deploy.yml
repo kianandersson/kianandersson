@@ -46,9 +46,14 @@ jobs:
           name: ${{ inputs.artifact-name }}
           path: ${{ inputs.artifact-path }}
 
+      # The Cloudflare adapter writes a full `wrangler.json` next to the
+      # worker entry in `dist/server/` — it carries the assets binding, KV
+      # namespaces, etc. that the root `wrangler.jsonc` deliberately omits.
+      # Run wrangler from there so it picks up the generated config.
       - uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           packageManager: pnpm
+          workingDirectory: dist/server
           command: ${{ inputs.command }}

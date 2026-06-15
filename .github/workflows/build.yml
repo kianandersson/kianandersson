@@ -33,7 +33,7 @@ jobs:
         shell: bash
         run: |
           echo "name=dist" >> "$GITHUB_OUTPUT"
-          echo "path=dist/" >> "$GITHUB_OUTPUT"
+          echo "path=." >> "$GITHUB_OUTPUT"
 
       # The og-image integration screenshots /og with Playwright during astro:build:done.
       - name: Install Playwright browsers
@@ -44,10 +44,20 @@ jobs:
           URL: ${{ inputs.url }}
         run: pnpm build
 
+      # `.wrangler/deploy/config.json` is the pointer the Cloudflare adapter
+      # writes alongside `dist/server/wrangler.json`; both `astro preview` and
+      # `wrangler` resolve the deploy config through it. Hidden files are
+      # excluded by default — `.assetsignore` and the `.wrangler/` pointer
+      # need `include-hidden-files: true` to come along. The exclude guards
+      # against accidentally uploading the locally-mirrored `.env` secrets.
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.meta.outputs.name }}
-          path: ${{ steps.meta.outputs.path }}
+          path: |
+            dist
+            .wrangler/deploy/config.json
+            !dist/server/.dev.vars
+          include-hidden-files: true
           retention-days: 1
           if-no-files-found: error
