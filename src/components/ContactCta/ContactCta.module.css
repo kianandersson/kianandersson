@@ -1,0 +1,258 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 6px 0 14px;
+  border-radius: 980px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.12s ease;
+}
+
+.pill[data-variant="none"] {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+  padding-left: 18px;
+}
+
+.pill:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.pill:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) {
+  .pill:hover {
+    border-color: #d6d3cd;
+  }
+
+  .pill[data-variant="none"]:hover {
+    background: #2a2a2f;
+    border-color: #2a2a2f;
+  }
+}
+
+.dot {
+  position: relative;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ok);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 16%, transparent);
+}
+
+.dot[data-tone="warn"] {
+  background: var(--warn);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--warn) 16%, transparent);
+}
+
+.dot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  animation: pillDotPulse 2.2s ease-out infinite;
+}
+
+@keyframes pillDotPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.label {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.date {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--dim);
+}
+
+.pill[data-variant="none"] .date {
+  color: var(--bg);
+}
+
+.circle {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--text);
+  color: var(--bg);
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pill[data-variant="none"] .circle {
+  background: rgba(244, 243, 241, 0.14);
+}
+
+.iconLayer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.26s ease,
+    opacity 0.26s ease;
+}
+
+.iconLayer[data-icon="at"] {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.iconLayer[data-icon="arrow"] {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+@media (hover: hover) {
+  .pill:hover .iconLayer[data-icon="at"] {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  .pill:hover .iconLayer[data-icon="arrow"] {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.pill:focus-visible .iconLayer[data-icon="at"] {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.pill:focus-visible .iconLayer[data-icon="arrow"] {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.pill[data-open="true"] .circle {
+  color: var(--accent);
+}
+
+.tooltip {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 5px 9px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--text);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-2px);
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+  z-index: 1;
+}
+
+@media (hover: hover) {
+  .pill:hover .tooltip {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pill:focus-visible .tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal {
+  width: 100%;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+
+.inner {
+  min-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.34s ease;
+}
+
+.reveal[data-open="true"] .inner {
+  opacity: 1;
+}
+
+.content {
+  padding-top: 16px;
+}
+
+.success {
+  margin: 0;
+  padding: 12px 4px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--dim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pill,
+  .iconLayer,
+  .reveal,
+  .inner,
+  .tooltip {
+    transition: none;
+  }
+  .dot::before {
+    animation: none;
+  }
+}
+
+@media print {
+  .root {
+    display: none;
+  }
+}

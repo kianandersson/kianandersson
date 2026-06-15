@@ -1,7 +1,6 @@
 interface PersonSource {
   name: string;
   role: string;
-  email: string;
   location: string;
   links: {
     github: string;
@@ -41,7 +40,6 @@ export interface PersonJsonLd {
   '@context': 'https://schema.org';
   '@type': 'Person';
   name: string;
-  email: string;
   url: string;
   jobTitle: string;
   address: { '@type': 'PostalAddress'; addressCountry: string };
@@ -83,7 +81,6 @@ export function buildPersonJsonLd(
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: site.name,
-    email: `mailto:${site.email}`,
     url,
     jobTitle: site.role,
     address: { '@type': 'PostalAddress', addressCountry: site.location },

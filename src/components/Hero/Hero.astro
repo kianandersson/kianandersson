@@ -1,0 +1,50 @@
+---
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+
+const PLACEHOLDER_BODY =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.';
+---
+
+<div class="root">
+  <h1 class="heading">
+    Hi, I'm <span class="name">{name}</span>.
+  </h1>
+  <p class="body">{PLACEHOLDER_BODY}</p>
+  <slot />
+</div>
+
+<style>
+  .root {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .heading {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 38px;
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    margin: 0;
+  }
+
+  .name {
+    color: var(--accent);
+  }
+
+  .body {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 19px;
+    line-height: 1.65;
+    color: var(--dim);
+    max-width: 540px;
+  }
+</style>

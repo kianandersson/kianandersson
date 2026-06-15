@@ -4,7 +4,6 @@ import { buildPersonJsonLd } from './person-json-ld';
 const site = {
   name: 'Test Person',
   role: 'Test Role',
-  email: 'mail@example.com',
   location: 'Testland',
   links: {
     github: 'https://github.com/example-user',
@@ -37,14 +36,20 @@ const experience = [
 ];
 
 describe('buildPersonJsonLd', () => {
-  it('uses Schema.org Person with mailto email and provided URL', () => {
+  it('uses Schema.org Person with the provided URL', () => {
     const json = buildPersonJsonLd(site, experience, siteUrl);
 
     expect(json['@context']).toBe('https://schema.org');
     expect(json['@type']).toBe('Person');
     expect(json.name).toBe('Test Person');
-    expect(json.email).toBe('mailto:mail@example.com');
     expect(json.url).toBe(siteUrl);
+  });
+
+  it('does not expose an email address in the structured data', () => {
+    const json = buildPersonJsonLd(site, experience, siteUrl);
+
+    expect(JSON.stringify(json)).not.toContain('mailto:');
+    expect(JSON.stringify(json)).not.toContain('@example.com');
   });
 
   it('uses the site role as jobTitle', () => {
