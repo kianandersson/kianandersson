@@ -3,10 +3,15 @@ import { formatDate } from '../../lib/formatDate';
 import { ContactForm, type ContactPayload, type ContactStatus } from '../ContactForm/ContactForm';
 import styles from './ContactCta.module.css';
 
+// Calls the Astro Action endpoint directly via fetch instead of importing
+// `actions` from `astro:actions`. The action handler (server-side) still owns
+// validation, error handling and Resend dispatch; we just skip the typed
+// client wrapper to stay under the 10 KB JS budget.
+const ACTION_ENDPOINT = '/_actions/contact.send';
+
 export type ContactCtaProps = {
   recipientName: string;
   availableFrom?: Date;
-  endpoint?: string;
 };
 
 type Variant = 'future' | 'available' | 'none';
@@ -14,7 +19,6 @@ type CtaStatus = ContactStatus | 'success';
 
 const COLLAPSE_DELAY_MS = 3200;
 const RESET_DELAY_MS = 560;
-const DEMO_DELAY_MS = 750;
 const FORM_LEAVE_MS = 280;
 const SUCCESS_LEAVE_MS = 400;
 // Cross-fade: success begins entering halfway through the form's leave animation.
@@ -39,7 +43,7 @@ function pickAriaLabel(open: boolean, variant: Variant, formattedDate: string | 
   return 'Get in touch';
 }
 
-export function ContactCta({ recipientName, availableFrom, endpoint }: ContactCtaProps) {
+export function ContactCta({ recipientName, availableFrom }: ContactCtaProps) {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<CtaStatus>('idle');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -95,22 +99,19 @@ export function ContactCta({ recipientName, availableFrom, endpoint }: ContactCt
     setErrorMessage(null);
 
     try {
-      if (endpoint) {
-        const response = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      } else {
-        await delay(DEMO_DELAY_MS);
-      }
+      const response = await fetch(ACTION_ENDPOINT, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
     } catch {
       if (requestToken.current !== token) return;
       setStatus('error');
       setErrorMessage("Couldn't send — please try again in a moment.");
       return;
     }
+    if (requestToken.current !== token) return;
 
     if (requestToken.current !== token) return;
     setFormLeaving(true);

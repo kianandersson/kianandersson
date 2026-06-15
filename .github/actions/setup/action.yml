@@ -21,3 +21,10 @@ runs:
       name: Install dependencies
       shell: bash
       run: pnpm install --frozen-lockfile
+
+    # Generates the gitignored worker-configuration.d.ts from wrangler.jsonc,
+    # which env.d.ts references for Cloudflare runtime + Env typings.
+    - if: inputs.install == 'true'
+      name: Generate Cloudflare worker types
+      shell: bash
+      run: pnpm exec wrangler types

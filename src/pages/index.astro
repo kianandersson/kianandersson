@@ -1,4 +1,6 @@
 ---
+export const prerender = true;
+
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { formatPeriod } from '../lib/formatPeriod';
@@ -11,10 +13,6 @@ const hero = {
   name: siteConfig.firstName,
   recipientName: siteConfig.name,
   availableFrom: siteConfig.availableFrom,
-  // Only wire the real endpoint in production builds — `astro dev` and `astro
-  // preview` don't run the Worker, so we fall back to the in-component demo
-  // mode locally rather than show the network-error state every send.
-  contactEndpoint: import.meta.env.PROD ? '/api/contact' : undefined,
 };
 
 const allSkills = (await getCollection('skills')).map((entry) => ({

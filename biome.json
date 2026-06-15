@@ -18,7 +18,8 @@
       "!public/fonts",
       "!design",
       "!docs",
-      "!node_modules"
+      "!node_modules",
+      "!worker-configuration.d.ts"
     ]
   },
   "formatter": {

@@ -3,7 +3,9 @@ import { join } from 'node:path';
 import { gzipSync } from 'node:zlib';
 import { describe, expect, it } from 'vitest';
 
-const DIST = 'dist';
+// The Cloudflare adapter writes user-facing assets to `dist/client/`; the
+// server bundle in `dist/server/` is worker code and never shipped to browsers.
+const DIST = join('dist', 'client');
 const ASTRO_DIR = join(DIST, '_astro');
 const LIMIT_BYTES = 10 * 1024;
 const SCRIPT_REFERENCE = /_astro\/([\w.-]+\.js)/g;

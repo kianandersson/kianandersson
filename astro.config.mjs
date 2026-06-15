@@ -1,4 +1,5 @@
 // @ts-check
+import cloudflare from '@astrojs/cloudflare';
 import preact from '@astrojs/preact';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
@@ -10,7 +11,8 @@ const site = process.env.URL ?? 'http://localhost:4321';
 
 export default defineConfig({
   site,
-  output: 'static',
+  output: 'server',
+  adapter: cloudflare(),
   integrations: [
     preact({ compat: true }),
     // `/og` is a render-only canvas for the OG image, not a real page.

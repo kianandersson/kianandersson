@@ -2,10 +2,5 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "kianandersson",
   "compatibility_date": "2026-01-01",
-  "main": "./worker/index.ts",
-  "assets": {
-    "directory": "./dist",
-    "binding": "ASSETS",
-    "not_found_handling": "404-page"
-  }
+  "compatibility_flags": ["nodejs_compat"]
 }

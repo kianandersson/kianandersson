@@ -1,0 +1,10 @@
+# Copy to .dev.vars for local Cloudflare runtime (used by `wrangler dev`).
+# Without these, the contact action runs in dev mode: logs the payload and
+# returns success without dispatching email.
+
+# Resend API key. Required in production.
+RESEND_API_KEY=
+
+# Inbox that contact-form messages are delivered to.
+# Defaults to siteConfig.email if unset.
+CONTACT_TO=

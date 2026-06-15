@@ -56,12 +56,17 @@ describe('ContactCta', () => {
     expect(container.textContent).not.toContain('@');
   });
 
-  describe('submit flow (demo mode)', () => {
+  describe('submit flow', () => {
     beforeEach(() => {
       vi.useFakeTimers();
+      vi.stubGlobal(
+        'fetch',
+        vi.fn(async () => new Response(JSON.stringify({ ok: true }), { status: 200 })),
+      );
     });
     afterEach(() => {
       vi.useRealTimers();
+      vi.unstubAllGlobals();
     });
 
     it('shows the success line, then auto-collapses and resets', async () => {
@@ -74,11 +79,14 @@ describe('ContactCta', () => {
       await user.type(screen.getByLabelText(/message/i), 'Hello');
       await user.click(screen.getByRole('button', { name: /send message/i }));
 
+      // Past SUCCESS_ENTER_AFTER_MS (140ms): success line is in the DOM.
       await act(async () => {
-        await vi.advanceTimersByTimeAsync(750 + 280 + 220);
+        await vi.advanceTimersByTimeAsync(280);
       });
       expect(screen.getByText(/message sent/i)).toBeInTheDocument();
 
+      // Past COLLAPSE_DELAY_MS + SUCCESS_LEAVE_MS: pill closes but the success
+      // line stays in the DOM through its fade-out window.
       await act(async () => {
         await vi.advanceTimersByTimeAsync(3200 + 400);
       });
@@ -86,6 +94,7 @@ describe('ContactCta', () => {
       expect(pill).toHaveAttribute('aria-expanded', 'false');
       expect(screen.getByText(/message sent/i)).toBeInTheDocument();
 
+      // Past RESET_DELAY_MS: state has been torn down.
       await act(async () => {
         await vi.advanceTimersByTimeAsync(560);
       });
