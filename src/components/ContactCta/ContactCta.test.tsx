@@ -69,8 +69,8 @@ describe('ContactCta', () => {
       render(<ContactCta recipientName={RECIPIENT} availableFrom={PAST} />);
 
       await user.click(screen.getByRole('button', { name: /get in touch/i }));
-      await user.type(screen.getByLabelText(/from/i), 'Jane');
-      await user.type(screen.getByLabelText(/email/i), 'jane@example.com');
+      await user.type(screen.getByLabelText(/from/i), 'jane@example.com');
+      await user.type(screen.getByLabelText(/subject/i), 'Project enquiry');
       await user.type(screen.getByLabelText(/message/i), 'Hello');
       await user.click(screen.getByRole('button', { name: /send message/i }));
 

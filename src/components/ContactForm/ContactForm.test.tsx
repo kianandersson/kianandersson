@@ -16,24 +16,24 @@ describe('ContactForm', () => {
     expect(container.textContent).not.toContain('@');
   });
 
-  it('keeps Send disabled until name, valid email and message are present', async () => {
+  it('keeps Send disabled until a valid email, subject and message are present', async () => {
     const user = userEvent.setup();
     render(<ContactForm {...baseProps} onSubmit={vi.fn()} />);
 
     const send = screen.getByRole('button', { name: /send message/i });
     expect(send).toBeDisabled();
 
-    await user.type(screen.getByLabelText(/from/i), 'Jane');
+    await user.type(screen.getByLabelText(/from/i), 'not-an-email');
     expect(send).toBeDisabled();
 
-    await user.type(screen.getByLabelText(/email/i), 'not-an-email');
+    await user.clear(screen.getByLabelText(/from/i));
+    await user.type(screen.getByLabelText(/from/i), 'jane@example.com');
     expect(send).toBeDisabled();
 
-    await user.clear(screen.getByLabelText(/email/i));
-    await user.type(screen.getByLabelText(/email/i), 'jane@example.com');
+    await user.type(screen.getByLabelText(/subject/i), 'Hello');
     expect(send).toBeDisabled();
 
-    await user.type(screen.getByLabelText(/message/i), 'Hello');
+    await user.type(screen.getByLabelText(/message/i), 'World');
     expect(send).toBeEnabled();
   });
 
@@ -42,14 +42,14 @@ describe('ContactForm', () => {
     const user = userEvent.setup();
     render(<ContactForm {...baseProps} onSubmit={onSubmit} />);
 
-    await user.type(screen.getByLabelText(/from/i), '  Jane  ');
-    await user.type(screen.getByLabelText(/email/i), '  jane@example.com  ');
+    await user.type(screen.getByLabelText(/from/i), '  jane@example.com  ');
+    await user.type(screen.getByLabelText(/subject/i), '  Project enquiry  ');
     await user.type(screen.getByLabelText(/message/i), '  Hi there  ');
     await user.click(screen.getByRole('button', { name: /send message/i }));
 
     expect(onSubmit).toHaveBeenCalledWith({
-      name: 'Jane',
       email: 'jane@example.com',
+      subject: 'Project enquiry',
       message: 'Hi there',
     });
   });

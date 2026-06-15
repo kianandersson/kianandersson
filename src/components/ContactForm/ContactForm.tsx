@@ -1,7 +1,7 @@
 import { useState } from 'preact/hooks';
 import styles from './ContactForm.module.css';
 
-export type ContactPayload = { name: string; email: string; message: string };
+export type ContactPayload = { email: string; subject: string; message: string };
 export type ContactStatus = 'idle' | 'sending' | 'error';
 
 type Props = {
@@ -14,19 +14,20 @@ type Props = {
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
 
 export function ContactForm({ recipientName, status, errorMessage, onSubmit }: Props) {
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
 
-  const trimmedName = name.trim();
+  const trimmedSubject = subject.trim();
   const trimmedMessage = message.trim();
-  const valid = trimmedName.length > 0 && EMAIL_RE.test(email.trim()) && trimmedMessage.length > 0;
+  const valid =
+    EMAIL_RE.test(email.trim()) && trimmedSubject.length > 0 && trimmedMessage.length > 0;
   const sending = status === 'sending';
 
   function handleSubmit(event: Event) {
     event.preventDefault();
     if (!valid || sending) return;
-    onSubmit({ name: trimmedName, email: email.trim(), message: trimmedMessage });
+    onSubmit({ email: email.trim(), subject: trimmedSubject, message: trimmedMessage });
   }
 
   return (
@@ -54,29 +55,29 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
           <input
             id="contact-from"
             class={styles.input}
-            type="text"
-            placeholder="Your name"
-            autocomplete="name"
-            value={name}
-            onInput={(event) => setName((event.target as HTMLInputElement).value)}
-            disabled={sending}
-            required
-          />
-        </div>
-
-        <div class={`${styles.row} ${styles.inputRow}`}>
-          <label class={styles.fieldLabel} for="contact-email">
-            Email
-          </label>
-          <input
-            id="contact-email"
-            class={styles.input}
             type="email"
             inputMode="email"
             placeholder="you@company.com"
             autocomplete="email"
             value={email}
             onInput={(event) => setEmail((event.target as HTMLInputElement).value)}
+            disabled={sending}
+            required
+          />
+        </div>
+
+        <div class={`${styles.row} ${styles.inputRow}`}>
+          <label class={styles.fieldLabel} for="contact-subject">
+            Subject
+          </label>
+          <input
+            id="contact-subject"
+            class={styles.input}
+            type="text"
+            placeholder="What's this about?"
+            autocomplete="off"
+            value={subject}
+            onInput={(event) => setSubject((event.target as HTMLInputElement).value)}
             disabled={sending}
             required
           />
