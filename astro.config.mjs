@@ -2,7 +2,7 @@
 import cloudflare from '@astrojs/cloudflare';
 import preact from '@astrojs/preact';
 import sitemap from '@astrojs/sitemap';
-import { defineConfig, envField } from 'astro/config';
+import { defineConfig, envField, sessionDrivers } from 'astro/config';
 import { ogImage } from './src/integrations/og-image.ts';
 
 // CI sets URL per environment; the localhost fallback keeps
@@ -12,6 +12,12 @@ const site = process.env.URL ?? 'http://localhost:4321';
 export default defineConfig({
   site,
   adapter: cloudflare(),
+  // We don't use Astro sessions; point at an in-memory driver so the
+  // Cloudflare adapter doesn't add a SESSION KV binding that wrangler
+  // then tries to provision at deploy time.
+  session: {
+    driver: sessionDrivers.lruCache(),
+  },
   integrations: [
     preact({ compat: true }),
     // `/og` is a render-only canvas for the OG image, not a real page.
