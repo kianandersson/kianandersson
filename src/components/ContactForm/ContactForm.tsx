@@ -107,7 +107,7 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
             data-sending={sending ? 'true' : 'false'}
             disabled={!valid || sending}
           >
-            <span class={styles.sendLabel}>{sending ? 'Sending…' : 'Send message'}</span>
+            {sending ? 'Sending…' : 'Send message'}
             <PaperPlane />
           </button>
         </div>
