@@ -22,17 +22,20 @@ const SUCCESS_ENTER_AFTER_MS = FORM_LEAVE_MS / 2;
 
 const REGION_ID = 'contact-region';
 
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 function pickVariant(availableFrom: Date | undefined): Variant {
   if (!availableFrom) return 'none';
   return availableFrom.getTime() > Date.now() ? 'future' : 'available';
 }
 
-function pickAriaLabel(open: boolean, variant: Variant, availableFrom: Date | undefined): string {
+function pickAriaLabel(open: boolean, variant: Variant, formattedDate: string | null): string {
   if (open) return 'Close contact form';
   if (variant === 'available') return 'Get in touch — available for work';
-  if (variant === 'future' && availableFrom) {
-    return `Get in touch — available from ${formatDate(availableFrom)}`;
-  }
+  if (variant === 'future' && formattedDate)
+    return `Get in touch — available from ${formattedDate}`;
   return 'Get in touch';
 }
 
@@ -41,25 +44,21 @@ export function ContactCta({ recipientName, availableFrom, endpoint }: ContactCt
   const [status, setStatus] = useState<CtaStatus>('idle');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formKey, setFormKey] = useState(0);
-
-  const collapseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const requestToken = useRef(0);
-
   const [formLeaving, setFormLeaving] = useState(false);
   const [successLeaving, setSuccessLeaving] = useState(false);
 
-  function clearTimers() {
-    for (const timer of [collapseTimer, resetTimer, leaveTimer]) {
-      if (timer.current != null) {
-        clearTimeout(timer.current);
-        timer.current = null;
-      }
+  const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const requestToken = useRef(0);
+
+  function cancelResetTimer() {
+    if (resetTimer.current != null) {
+      clearTimeout(resetTimer.current);
+      resetTimer.current = null;
     }
   }
 
   function resetState() {
+    cancelResetTimer();
     requestToken.current++;
     setStatus('idle');
     setErrorMessage(null);
@@ -69,9 +68,12 @@ export function ContactCta({ recipientName, availableFrom, endpoint }: ContactCt
   }
 
   function close() {
-    clearTimers();
     setOpen(false);
     if (status === 'success') {
+      // Stop any in-flight auto-collapse chain, then let the success line fade out
+      // before tearing it down.
+      requestToken.current++;
+      cancelResetTimer();
       resetTimer.current = setTimeout(resetState, RESET_DELAY_MS);
     } else {
       resetState();
@@ -82,7 +84,6 @@ export function ContactCta({ recipientName, availableFrom, endpoint }: ContactCt
     if (open) {
       close();
     } else {
-      clearTimers();
       resetState();
       setOpen(true);
     }
@@ -102,45 +103,55 @@ export function ContactCta({ recipientName, availableFrom, endpoint }: ContactCt
         });
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
       } else {
-        await new Promise((resolve) => setTimeout(resolve, DEMO_DELAY_MS));
+        await delay(DEMO_DELAY_MS);
       }
-      if (requestToken.current !== token) return;
-      clearTimers();
-      setFormLeaving(true);
-      leaveTimer.current = setTimeout(() => {
-        if (requestToken.current !== token) return;
-        setStatus('success');
-        setFormLeaving(false);
-        collapseTimer.current = setTimeout(() => {
-          if (requestToken.current !== token) return;
-          setSuccessLeaving(true);
-          leaveTimer.current = setTimeout(() => {
-            if (requestToken.current !== token) return;
-            setOpen(false);
-            resetTimer.current = setTimeout(resetState, RESET_DELAY_MS);
-          }, SUCCESS_LEAVE_MS);
-        }, COLLAPSE_DELAY_MS);
-      }, SUCCESS_ENTER_AFTER_MS);
     } catch {
       if (requestToken.current !== token) return;
       setStatus('error');
       setErrorMessage("Couldn't send — please try again in a moment.");
+      return;
     }
+
+    if (requestToken.current !== token) return;
+    setFormLeaving(true);
+    await delay(SUCCESS_ENTER_AFTER_MS);
+    if (requestToken.current !== token) return;
+    setStatus('success');
+    setFormLeaving(false);
+
+    await delay(COLLAPSE_DELAY_MS);
+    if (requestToken.current !== token) return;
+    setSuccessLeaving(true);
+
+    await delay(SUCCESS_LEAVE_MS);
+    if (requestToken.current !== token) return;
+    setOpen(false);
+
+    await delay(RESET_DELAY_MS);
+    if (requestToken.current !== token) return;
+    resetState();
   }
 
-  useEffect(() => () => clearTimers(), []);
+  useEffect(
+    () => () => {
+      cancelResetTimer();
+      requestToken.current++;
+    },
+    [],
+  );
 
   const variant = pickVariant(availableFrom);
-  const ariaLabel = pickAriaLabel(open, variant, availableFrom);
+  const formattedDate = availableFrom ? formatDate(availableFrom) : null;
+  const ariaLabel = pickAriaLabel(open, variant, formattedDate);
   const formStatus: ContactStatus = status === 'success' ? 'idle' : status;
 
   return (
-    <div class={styles.root} data-open={open ? 'true' : 'false'}>
+    <div class={styles.root} data-open={open}>
       <button
         type="button"
         class={styles.pill}
         data-variant={variant}
-        data-open={open ? 'true' : 'false'}
+        data-open={open}
         aria-expanded={open}
         aria-controls={REGION_ID}
         aria-label={ariaLabel}
@@ -152,9 +163,9 @@ export function ContactCta({ recipientName, availableFrom, endpoint }: ContactCt
         <span class={styles.label}>
           {variant === 'none' && 'Get in touch'}
           {variant === 'available' && 'Available for work'}
-          {variant === 'future' && availableFrom && (
+          {variant === 'future' && formattedDate && (
             <>
-              Available from <span class={styles.date}>{formatDate(availableFrom)}</span>
+              Available from <span class={styles.date}>{formattedDate}</span>
             </>
           )}
         </span>
@@ -178,18 +189,13 @@ export function ContactCta({ recipientName, availableFrom, endpoint }: ContactCt
         )}
       </button>
 
-      <div
-        id={REGION_ID}
-        class={styles.reveal}
-        data-open={open ? 'true' : 'false'}
-        {...(!open ? { inert: true } : {})}
-      >
+      <div id={REGION_ID} class={styles.reveal} data-open={open} {...(!open && { inert: true })}>
         <div class={styles.inner}>
           <div
             class={styles.formWrap}
-            data-active={status !== 'success' ? 'true' : 'false'}
-            data-leaving={formLeaving ? 'true' : 'false'}
-            {...(status === 'success' ? { inert: true } : {})}
+            data-active={status !== 'success'}
+            data-leaving={formLeaving}
+            {...(status === 'success' && { inert: true })}
           >
             <ContactForm
               key={formKey}
@@ -200,7 +206,7 @@ export function ContactCta({ recipientName, availableFrom, endpoint }: ContactCt
             />
           </div>
           {(status === 'success' || successLeaving) && (
-            <p class={styles.success} data-leaving={successLeaving ? 'true' : 'false'}>
+            <p class={styles.success} data-leaving={successLeaving}>
               <span class={styles.successArrow}>↳</span>
               <span class={styles.successText}>message sent — I'll be in touch soon.</span>
             </p>

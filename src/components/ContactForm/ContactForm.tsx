@@ -104,7 +104,7 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
           <button
             type="submit"
             class={styles.send}
-            data-sending={sending ? 'true' : 'false'}
+            data-sending={sending}
             disabled={!valid || sending}
           >
             {sending ? 'Sending…' : 'Send message'}
