@@ -146,12 +146,8 @@ export function ContactCta({ recipientName, availableFrom }: ContactCtaProps) {
           aria-label={ariaLabel}
           onClick={toggle}
         >
-          {variant === 'available' && (
-            <span class={styles.dot} data-tone="ok" aria-hidden="true" />
-          )}
-          {variant === 'future' && (
-            <span class={styles.dot} data-tone="warn" aria-hidden="true" />
-          )}
+          {variant === 'available' && <span class={styles.dot} data-tone="ok" aria-hidden="true" />}
+          {variant === 'future' && <span class={styles.dot} data-tone="warn" aria-hidden="true" />}
 
           <span class={styles.label}>
             {variant === 'none' && 'Get in touch'}
