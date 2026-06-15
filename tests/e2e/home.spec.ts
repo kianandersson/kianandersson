@@ -32,7 +32,7 @@ test.describe('Home page', () => {
   test('never exposes an email address in the rendered HTML', async ({ page }) => {
     await page.goto('/');
     const html = await page.content();
-    expect(html).not.toContain(siteConfig.email);
+    expect(html).not.toContain('@');
     expect(html).not.toContain('mailto:');
   });
 

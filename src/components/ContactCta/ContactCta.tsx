@@ -1,13 +1,8 @@
+import { actions } from 'astro:actions';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { formatDate } from '../../lib/formatDate';
 import { ContactForm, type ContactPayload, type ContactStatus } from '../ContactForm/ContactForm';
 import styles from './ContactCta.module.css';
-
-// Calls the Astro Action endpoint directly via fetch instead of importing
-// `actions` from `astro:actions`. The action handler (server-side) still owns
-// validation, error handling and Resend dispatch; we just skip the typed
-// client wrapper to stay under the 10 KB JS budget.
-const ACTION_ENDPOINT = '/_actions/contact.send';
 
 export type ContactCtaProps = {
   recipientName: string;
@@ -98,22 +93,14 @@ export function ContactCta({ recipientName, availableFrom }: ContactCtaProps) {
     setStatus('sending');
     setErrorMessage(null);
 
-    try {
-      const response = await fetch(ACTION_ENDPOINT, {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    } catch {
-      if (requestToken.current !== token) return;
+    const { error } = await actions.contact.send(payload);
+    if (requestToken.current !== token) return;
+    if (error) {
       setStatus('error');
       setErrorMessage("Couldn't send — please try again in a moment.");
       return;
     }
-    if (requestToken.current !== token) return;
 
-    if (requestToken.current !== token) return;
     setFormLeaving(true);
     await delay(SUCCESS_ENTER_AFTER_MS);
     if (requestToken.current !== token) return;

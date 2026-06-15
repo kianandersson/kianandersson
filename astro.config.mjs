@@ -2,7 +2,7 @@
 import cloudflare from '@astrojs/cloudflare';
 import preact from '@astrojs/preact';
 import sitemap from '@astrojs/sitemap';
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 import { ogImage } from './src/integrations/og-image.ts';
 
 // CI sets URL per environment; the localhost fallback keeps
@@ -11,7 +11,6 @@ const site = process.env.URL ?? 'http://localhost:4321';
 
 export default defineConfig({
   site,
-  output: 'server',
   adapter: cloudflare(),
   integrations: [
     preact({ compat: true }),
@@ -19,4 +18,11 @@ export default defineConfig({
     sitemap({ filter: (page) => !page.endsWith('/og/') }),
     ogImage(),
   ],
+  env: {
+    schema: {
+      RESEND_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
+      CONTACT_FROM: envField.string({ context: 'server', access: 'secret', optional: true }),
+      CONTACT_TO: envField.string({ context: 'server', access: 'secret', optional: true }),
+    },
+  },
 });

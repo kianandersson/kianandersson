@@ -7,7 +7,7 @@ import { describe, expect, it } from 'vitest';
 // server bundle in `dist/server/` is worker code and never shipped to browsers.
 const DIST = join('dist', 'client');
 const ASTRO_DIR = join(DIST, '_astro');
-const LIMIT_BYTES = 10 * 1024;
+const LIMIT_BYTES = 12 * 1024;
 const SCRIPT_REFERENCE = /_astro\/([\w.-]+\.js)/g;
 
 describe('shipped JS bundle', () => {

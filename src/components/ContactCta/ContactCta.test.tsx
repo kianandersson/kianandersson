@@ -1,7 +1,10 @@
+import { actions } from 'astro:actions';
 import { act, render, screen } from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ContactCta } from './ContactCta';
+
+const sendMock = actions.contact.send as unknown as ReturnType<typeof vi.fn>;
 
 const RECIPIENT = 'Kian Andersson';
 const FUTURE = new Date('2099-09-01T00:00:00Z');
@@ -59,14 +62,11 @@ describe('ContactCta', () => {
   describe('submit flow', () => {
     beforeEach(() => {
       vi.useFakeTimers();
-      vi.stubGlobal(
-        'fetch',
-        vi.fn(async () => new Response(JSON.stringify({ ok: true }), { status: 200 })),
-      );
+      sendMock.mockReset();
+      sendMock.mockResolvedValue({ data: { ok: true }, error: undefined });
     });
     afterEach(() => {
       vi.useRealTimers();
-      vi.unstubAllGlobals();
     });
 
     it('shows the success line, then auto-collapses and resets', async () => {
