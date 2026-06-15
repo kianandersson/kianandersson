@@ -11,7 +11,7 @@ describe('ContactCta', () => {
   it('renders the "no status" solid button when availableFrom is missing', () => {
     render(<ContactCta recipientName={RECIPIENT} />);
     const button = screen.getByRole('button', { name: /get in touch/i });
-    expect(button).toHaveAttribute('data-variant', 'none');
+    expect(button).toHaveAttribute('data-availability', 'none');
     expect(button).toHaveAttribute('aria-expanded', 'false');
   });
 
@@ -20,7 +20,7 @@ describe('ContactCta', () => {
     const button = screen.getByRole('button', {
       name: /get in touch — available for work/i,
     });
-    expect(button).toHaveAttribute('data-variant', 'available');
+    expect(button).toHaveAttribute('data-availability', 'available');
     expect(button.querySelector('[data-tone="ok"]')).not.toBeNull();
   });
 
@@ -29,7 +29,7 @@ describe('ContactCta', () => {
     const button = screen.getByRole('button', {
       name: /get in touch — available from 01\.09\.2099/i,
     });
-    expect(button).toHaveAttribute('data-variant', 'future');
+    expect(button).toHaveAttribute('data-availability', 'future');
     expect(button.querySelector('[data-tone="warn"]')).not.toBeNull();
     expect(button.textContent).toContain('01.09.2099');
   });

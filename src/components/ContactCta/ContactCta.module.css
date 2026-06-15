@@ -31,7 +31,7 @@
     transform 0.12s ease;
 }
 
-.pill[data-variant="none"] {
+.pill[data-availability="none"] {
   background: var(--text);
   color: var(--bg);
   border-color: var(--text);
@@ -97,7 +97,7 @@
   color: var(--dim);
 }
 
-.pill[data-variant="none"] .date {
+.pill[data-availability="none"] .date {
   color: var(--bg);
 }
 
@@ -118,7 +118,7 @@
     color 0.26s ease;
 }
 
-.pill[data-variant="none"] .circle {
+.pill[data-availability="none"] .circle {
   background: rgba(244, 243, 241, 0.14);
 }
 

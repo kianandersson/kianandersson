@@ -150,7 +150,7 @@ export function ContactCta({ recipientName, availableFrom, endpoint }: ContactCt
       <button
         type="button"
         class={styles.pill}
-        data-variant={variant}
+        data-availability={variant}
         data-open={open}
         aria-expanded={open}
         aria-controls={REGION_ID}
