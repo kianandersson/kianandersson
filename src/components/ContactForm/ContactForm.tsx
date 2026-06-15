@@ -1,7 +1,16 @@
 import { useState } from 'preact/hooks';
+import {
+  CONTACT_EMAIL_REGEX,
+  CONTACT_MESSAGE_MAX,
+  CONTACT_SUBJECT_MAX,
+} from '../../lib/contact-validation';
 import styles from './ContactForm.module.css';
 
-export type ContactPayload = { email: string; subject: string; message: string };
+export type ContactPayload = {
+  email: string;
+  subject: string;
+  message: string;
+};
 export type ContactStatus = 'idle' | 'sending' | 'error';
 
 type Props = {
@@ -11,23 +20,30 @@ type Props = {
   onSubmit: (payload: ContactPayload) => void;
 };
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
-
 export function ContactForm({ recipientName, status, errorMessage, onSubmit }: Props) {
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
 
+  const trimmedEmail = email.trim();
   const trimmedSubject = subject.trim();
   const trimmedMessage = message.trim();
   const valid =
-    EMAIL_RE.test(email.trim()) && trimmedSubject.length > 0 && trimmedMessage.length > 0;
+    CONTACT_EMAIL_REGEX.test(trimmedEmail) &&
+    trimmedSubject.length > 0 &&
+    trimmedSubject.length <= CONTACT_SUBJECT_MAX &&
+    trimmedMessage.length > 0 &&
+    trimmedMessage.length <= CONTACT_MESSAGE_MAX;
   const sending = status === 'sending';
 
   function handleSubmit(event: Event) {
     event.preventDefault();
     if (!valid || sending) return;
-    onSubmit({ email: email.trim(), subject: trimmedSubject, message: trimmedMessage });
+    onSubmit({
+      email: trimmedEmail,
+      subject: trimmedSubject,
+      message: trimmedMessage,
+    });
   }
 
   return (
@@ -79,6 +95,7 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
             value={subject}
             onInput={(event) => setSubject((event.target as HTMLInputElement).value)}
             disabled={sending}
+            maxLength={CONTACT_SUBJECT_MAX}
             required
           />
         </div>
@@ -92,6 +109,7 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
             value={message}
             onInput={(event) => setMessage((event.target as HTMLTextAreaElement).value)}
             disabled={sending}
+            maxLength={CONTACT_MESSAGE_MAX}
             required
           />
         </div>

@@ -1,24 +1,28 @@
-import { ActionError, defineAction } from "astro:actions";
-import { CONTACT_FROM, CONTACT_TO, RESEND_API_KEY } from "astro:env/server";
-import { Resend } from "resend";
-import { z } from "zod";
-import { siteConfig } from "../site.config";
+import { ActionError, defineAction } from 'astro:actions';
+import { CONTACT_FROM, CONTACT_TO, RESEND_API_KEY } from 'astro:env/server';
+import { Resend } from 'resend';
+import { z } from 'zod';
+import {
+  CONTACT_EMAIL_REGEX,
+  CONTACT_MESSAGE_MAX,
+  CONTACT_SUBJECT_MAX,
+} from '../lib/contact-validation';
+import { siteConfig } from '../site.config';
 
 export const server = {
   contact: {
     send: defineAction({
-      accept: "json",
+      accept: 'json',
       input: z.object({
-        email: z.email(),
-        subject: z.string().trim().min(1).max(120),
-        message: z.string().trim().min(1).max(5000),
+        email: z.string().trim().regex(CONTACT_EMAIL_REGEX),
+        subject: z.string().trim().min(1).max(CONTACT_SUBJECT_MAX),
+        message: z.string().trim().min(1).max(CONTACT_MESSAGE_MAX),
       }),
       handler: async (input, context) => {
         if (!RESEND_API_KEY || !CONTACT_FROM || !CONTACT_TO) {
           throw new ActionError({
-            code: "INTERNAL_SERVER_ERROR",
-            message:
-              "Couldn't send the message — please try again in a moment. !",
+            code: 'INTERNAL_SERVER_ERROR',
+            message: "Couldn't send the message — please try again in a moment. !",
           });
         }
 
@@ -35,9 +39,8 @@ export const server = {
 
         if (error) {
           throw new ActionError({
-            code: "INTERNAL_SERVER_ERROR",
-            message:
-              "Couldn't send the message — please try again in a moment.",
+            code: 'INTERNAL_SERVER_ERROR',
+            message: "Couldn't send the message — please try again in a moment.",
           });
         }
 
