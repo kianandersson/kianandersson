@@ -4,11 +4,24 @@
   gap: 0;
   align-items: flex-start;
   width: 100%;
+  /* Self-contained stacking context: keeps the tooltip's z-index ordering
+   * scoped to the CTA, so it reliably layers above the sibling reveal/form
+   * without needing arbitrary high z-index values. */
+  isolation: isolate;
   transition: gap 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .root[data-open="true"] {
   gap: 24px;
+}
+
+/* Wraps the button and the tooltip together so the tooltip has a positioning
+ * anchor that's sized like the pill (inline-flex shrinks to button width),
+ * and so the trigger paints as a positioned sibling above the reveal/form
+ * in DOM order — without needing arbitrary z-index values. */
+.trigger {
+  position: relative;
+  display: inline-flex;
 }
 
 .pill {
@@ -202,17 +215,16 @@
   transition:
     opacity 0.18s ease,
     transform 0.18s ease;
-  z-index: 1;
 }
 
 @media (hover: hover) {
-  .pill:hover .tooltip {
+  .trigger:not([data-open="true"]):hover .tooltip {
     opacity: 1;
     transform: translateX(50%) translateY(0);
   }
 }
 
-.pill:focus-visible .tooltip {
+.trigger:not([data-open="true"]) .pill:focus-visible ~ .tooltip {
   opacity: 1;
   transform: translateX(50%) translateY(0);
 }

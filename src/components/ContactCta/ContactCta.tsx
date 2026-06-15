@@ -135,47 +135,49 @@ export function ContactCta({ recipientName, availableFrom }: ContactCtaProps) {
 
   return (
     <div class={styles.root} data-open={open}>
-      <button
-        type="button"
-        class={styles.pill}
-        data-availability={variant}
-        data-open={open}
-        aria-expanded={open}
-        aria-controls={REGION_ID}
-        aria-label={ariaLabel}
-        onClick={toggle}
-      >
-        {variant === 'available' && <span class={styles.dot} data-tone="ok" aria-hidden="true" />}
-        {variant === 'future' && <span class={styles.dot} data-tone="warn" aria-hidden="true" />}
+      <div class={styles.trigger} data-open={open}>
+        <button
+          type="button"
+          class={styles.pill}
+          data-availability={variant}
+          data-open={open}
+          aria-expanded={open}
+          aria-controls={REGION_ID}
+          aria-label={ariaLabel}
+          onClick={toggle}
+        >
+          {variant === 'available' && <span class={styles.dot} data-tone="ok" aria-hidden="true" />}
+          {variant === 'future' && <span class={styles.dot} data-tone="warn" aria-hidden="true" />}
 
-        <span class={styles.label}>
-          {variant === 'none' && 'Get in touch'}
-          {variant === 'available' && 'Available for work'}
-          {variant === 'future' && formattedDate && (
-            <>
-              Available from <span class={styles.date}>{formattedDate}</span>
-            </>
-          )}
-        </span>
+          <span class={styles.label}>
+            {variant === 'none' && 'Get in touch'}
+            {variant === 'available' && 'Available for work'}
+            {variant === 'future' && formattedDate && (
+              <>
+                Available from <span class={styles.date}>{formattedDate}</span>
+              </>
+            )}
+          </span>
 
-        <span class={styles.circle} aria-hidden="true">
-          <span class={styles.iconLayer} data-icon="at">
-            <AtIcon />
+          <span class={styles.circle} aria-hidden="true">
+            <span class={styles.iconLayer} data-icon="at">
+              <AtIcon />
+            </span>
+            <span class={styles.iconLayer} data-icon="arrow">
+              <ArrowIcon />
+            </span>
+            <span class={styles.iconLayer} data-icon="close">
+              <CloseIcon />
+            </span>
           </span>
-          <span class={styles.iconLayer} data-icon="arrow">
-            <ArrowIcon />
-          </span>
-          <span class={styles.iconLayer} data-icon="close">
-            <CloseIcon />
-          </span>
-        </span>
+        </button>
 
-        {!open && variant !== 'none' && (
+        {variant !== 'none' && (
           <span class={styles.tooltip} aria-hidden="true">
             Get in touch
           </span>
         )}
-      </button>
+      </div>
 
       <div id={REGION_ID} class={styles.reveal} data-open={open} {...(!open && { inert: true })}>
         <div class={styles.inner}>
