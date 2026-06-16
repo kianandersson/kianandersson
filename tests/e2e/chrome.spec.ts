@@ -84,7 +84,7 @@ test.describe('Print media', () => {
     const surface = await page.evaluate(() =>
       getComputedStyle(document.documentElement).getPropertyValue('--color-surface').trim(),
     );
-    expect(surface).toBe('#ffffff');
+    expect(surface).toBe('oklch(100% 0 0)');
 
     const visibleChips = page.locator('span[data-variant]:not([data-hidden])');
     const visibleCount = await visibleChips.count();
