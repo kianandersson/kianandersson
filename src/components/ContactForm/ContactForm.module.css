@@ -3,9 +3,9 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  border: 1px solid var(--line);
+  border: 1px solid var(--color-divider);
   border-radius: 12px;
-  background: var(--surface);
+  background: var(--color-surface-raised);
   overflow: hidden;
 }
 
@@ -14,7 +14,7 @@
   align-items: center;
   gap: 9px;
   padding: 11px 15px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .trafficDot {
@@ -45,7 +45,7 @@
   align-items: center;
   gap: 14px;
   padding: 11px 16px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .inputRow {
@@ -61,7 +61,7 @@
   flex: 0 0 52px;
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--faint);
+  color: var(--color-text-subtle);
 }
 
 .recipient {
@@ -70,31 +70,31 @@
   gap: 8px;
   height: 28px;
   padding: 0 13px 0 11px;
-  background: var(--accent-soft);
-  border: 1px solid var(--accent-line);
+  background: color-mix(in oklch, var(--color-accent) 10%, transparent);
+  border: 1px solid color-mix(in oklch, var(--color-accent) 30%, transparent);
   border-radius: 980px;
   font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 500;
-  color: var(--text);
+  color: var(--color-text);
 }
 
 .recipientDot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--color-accent);
 }
 
 .input,
 .textarea {
   font-family: var(--font-sans);
   font-size: 15px;
-  color: var(--text);
+  color: var(--color-text);
   background: transparent;
   border: 0;
   width: 100%;
-  caret-color: var(--accent);
+  caret-color: var(--color-accent);
 }
 
 .input {
@@ -109,7 +109,7 @@
 
 .input::placeholder,
 .textarea::placeholder {
-  color: var(--faint);
+  color: var(--color-text-subtle);
 }
 
 .input:-webkit-autofill,
@@ -118,9 +118,9 @@
 .textarea:-webkit-autofill,
 .textarea:-webkit-autofill:hover,
 .textarea:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 1000px var(--surface) inset;
-  -webkit-text-fill-color: var(--text);
-  caret-color: var(--accent);
+  -webkit-box-shadow: 0 0 0 1000px var(--color-surface-raised) inset;
+  -webkit-text-fill-color: var(--color-text);
+  caret-color: var(--color-accent);
   transition: background-color 5000s ease-in-out 0s;
 }
 
@@ -137,13 +137,13 @@
   justify-content: flex-end;
   gap: 14px;
   padding: 12px 16px;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--color-divider);
 }
 
 .error {
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--dim);
+  color: var(--color-text-muted);
   margin-right: auto;
 }
 
@@ -156,8 +156,8 @@
   padding: 0 22px;
   border-radius: 980px;
   border: 0;
-  background: var(--text);
-  color: var(--bg);
+  background: var(--color-text);
+  color: var(--color-surface);
   font-family: var(--font-sans);
   font-size: 15px;
   font-weight: 500;
@@ -171,7 +171,7 @@
 }
 
 .send:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--color-accent);
   outline-offset: 3px;
 }
 

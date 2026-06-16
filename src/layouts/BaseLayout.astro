@@ -88,8 +88,8 @@ const currentYear = new Date().getFullYear();
   body {
     margin: 0;
     font-family: var(--font-sans);
-    background: var(--bg);
-    color: var(--text);
+    background: var(--color-surface);
+    color: var(--color-text);
     line-height: 1.65;
     min-height: 100vh;
     transition:
@@ -98,8 +98,8 @@ const currentYear = new Date().getFullYear();
   }
 
   ::selection {
-    background: var(--accent-soft);
-    color: var(--accent);
+    background: color-mix(in oklch, var(--color-accent) 10%, transparent);
+    color: var(--color-accent);
   }
 
   @media (prefers-reduced-motion: reduce) {

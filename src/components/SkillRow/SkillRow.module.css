@@ -5,13 +5,13 @@
   align-items: center;
   column-gap: 16px;
   padding: 12px 0;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .name {
   font-family: var(--font-sans);
   font-size: 15px;
-  color: var(--text);
+  color: var(--color-text);
   white-space: nowrap;
 }
 
@@ -19,7 +19,7 @@
 .years {
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--dim);
+  color: var(--color-text-muted);
   white-space: nowrap;
   text-align: right;
 }

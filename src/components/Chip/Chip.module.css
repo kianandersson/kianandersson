@@ -8,13 +8,13 @@
 }
 
 .chip[data-variant="stack"] {
-  color: var(--accent);
-  background: var(--accent-soft);
+  color: var(--color-accent);
+  background: color-mix(in oklch, var(--color-accent) 10%, transparent);
 }
 
 .chip[data-variant="methods"] {
-  color: var(--dim);
-  background: var(--chip);
+  color: var(--color-text-muted);
+  background: var(--color-surface-muted);
 }
 
 .chip[data-hidden="true"] {

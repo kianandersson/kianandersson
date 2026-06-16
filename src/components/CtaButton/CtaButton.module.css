@@ -5,8 +5,8 @@
   font-family: var(--font-sans);
   font-size: 15px;
   font-weight: 500;
-  background: var(--text);
-  color: var(--bg);
+  background: var(--color-text);
+  color: var(--color-surface);
   padding: 0 24px;
   border-radius: 980px;
   text-decoration: none;
@@ -14,7 +14,7 @@
 }
 
 .cta:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
 

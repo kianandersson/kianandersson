@@ -13,7 +13,7 @@
 
 .hash {
   font-family: var(--font-mono);
-  color: var(--accent);
+  color: var(--color-accent);
   font-weight: 600;
   font-size: 15px;
 }
@@ -24,13 +24,13 @@
   font-weight: 600;
   font-size: 24px;
   letter-spacing: -0.015em;
-  color: var(--text);
+  color: var(--color-text);
   white-space: nowrap;
 }
 
 .timeline {
   position: relative;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--color-divider);
   padding-left: 32px;
   padding-top: 32px;
 }
@@ -41,7 +41,7 @@
   top: 40px;
   bottom: 8px;
   width: 2px;
-  background: var(--line);
+  background: var(--color-divider);
 }
 
 .list {
@@ -72,7 +72,7 @@
   font-weight: 600;
   font-size: 19px;
   letter-spacing: -0.01em;
-  color: var(--text);
+  color: var(--color-text);
 }
 
 .metaLine {
@@ -85,22 +85,22 @@
 }
 
 .meta {
-  color: var(--dim);
+  color: var(--color-text-muted);
 }
 
 .separator {
-  color: var(--faint);
+  color: var(--color-text-subtle);
 }
 
 .period {
-  color: var(--faint);
+  color: var(--color-text-subtle);
 }
 
 .description {
   font-family: var(--font-sans);
   font-size: 15px;
   line-height: 1.6;
-  color: var(--dim);
+  color: var(--color-text-muted);
   max-width: 560px;
   margin: 0;
 }

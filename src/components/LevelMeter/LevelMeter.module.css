@@ -11,11 +11,11 @@
 }
 
 .on {
-  background: var(--accent);
+  background: var(--color-accent);
 }
 
 .off {
-  background: var(--line);
+  background: var(--color-divider);
 }
 
 @media print {

@@ -13,7 +13,7 @@
 
 .hash {
   font-family: var(--font-mono);
-  color: var(--accent);
+  color: var(--color-accent);
   font-weight: 600;
   font-size: 15px;
 }
@@ -24,12 +24,12 @@
   font-weight: 600;
   font-size: 24px;
   letter-spacing: -0.015em;
-  color: var(--text);
+  color: var(--color-text);
   white-space: nowrap;
 }
 
 .groups {
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .list {
@@ -41,7 +41,7 @@
 }
 
 .list > li:first-child {
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--color-divider);
 }
 
 .list > li:last-child {
