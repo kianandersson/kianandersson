@@ -8,7 +8,7 @@
 .label {
   font-family: var(--font-mono);
   font-size: var(--text-caption-size);
-  color: var(--color-text-subtle);
+  color: var(--color-text-muted);
   flex: 0 0 56px;
 }
 
@@ -34,14 +34,14 @@
 }
 
 .toggle:focus-visible {
-  color: var(--color-accent);
+  color: var(--color-accent-strong);
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
 
 @media (hover: hover) {
   .toggle:hover {
-    color: var(--color-accent);
+    color: var(--color-accent-strong);
   }
 }
 

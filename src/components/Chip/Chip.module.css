@@ -8,8 +8,8 @@
 }
 
 .chip[data-variant="stack"] {
-  color: var(--color-accent);
-  background: color-mix(in oklch, var(--color-accent) 10%, transparent);
+  color: var(--color-accent-strong);
+  background: var(--color-accent-subtle);
 }
 
 .chip[data-variant="methods"] {

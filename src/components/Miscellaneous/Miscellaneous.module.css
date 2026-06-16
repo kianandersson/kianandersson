@@ -39,7 +39,7 @@
   flex: 0 0 88px;
   font-family: var(--font-mono);
   font-size: var(--text-caption-size);
-  color: var(--color-text-subtle);
+  color: var(--color-text-muted);
 }
 
 .chips {

@@ -89,11 +89,11 @@
 }
 
 .separator {
-  color: var(--color-text-subtle);
+  color: var(--color-text-muted);
 }
 
 .period {
-  color: var(--color-text-subtle);
+  color: var(--color-text-muted);
 }
 
 .description {
