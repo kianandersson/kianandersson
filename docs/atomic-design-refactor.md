@@ -51,43 +51,44 @@ Green      0.013  0.025  0.05   0.081  0.106  0.125  0.125  0.1    0.075  0.056 
 Amber      0.013  0.025  0.05   0.081  0.106  0.125  0.111  0.091  0.075  0.056  0.044
 ```
 
-We declare **only the steps the semantic layer actually references** (15 primitives). New steps can be added later by computing `oklch(L% C H)` for the relevant `(family, weight)` — the ramp formula is the system's source of truth.
+Primitive **names follow the design's role tags**: where the design tagged a step with a role (e.g. *"Sand 200 = line"*), the matching primitive lives at that weight. Roles the design did not tag on the ramp (chip light, surface light, surface dark) get off-ramp half-step weights (e.g. `sand-150` between bg and line).
 
-Semantic samples sit at a separately-picked L ladder slightly off-ramp (e.g. `bg` is L 96.5 — between ramp steps 50 and 100); each primitive's L is therefore the **role's** lightness, not the canonical ramp step. The weight numbers are Tailwind-ish bucketing for legibility.
+Primitive **OKLCH values follow the design's explicit semantic table**, not the ramp formula. The two sources disagree by 1–2 % L for a handful of roles (the design's specific picks sit slightly off the canonical ramp); the semantic table is authoritative because it states the visual intent in concrete OKLCH. The ramp formula is informational — it documents the system, but the implementation reads from the semantic table.
+
+We declare **only the steps the semantic layer actually references** (16 primitives). New steps can be added later by computing `oklch(L% C H)` for the relevant `(family, weight)` against the ramp formula.
 
 ```css
 /* Sand — H 85, warm neutral (light-mode surfaces) */
---color-sand-50:        oklch(100%  0     85);   /* L100   — surface light */
---color-sand-100:       oklch(96.5% 0.006 85);   /* L96.5  — bg light */
---color-sand-200:       oklch(93.5% 0.008 85);   /* L93.5  — chip light */
---color-sand-300:       oklch(91%   0.008 85);   /* L91    — line light */
+--color-sand-50:        oklch(100%  0     85);   /* L100   — surface light (white) */
+--color-sand-100:       oklch(96.5% 0.006 85);   /* L96.5  — bg light [design tag] */
+--color-sand-150:       oklch(93.5% 0.008 85);   /* L93.5  — chip light (off-ramp) */
+--color-sand-200:       oklch(91%   0.008 85);   /* L91    — line light [design tag] */
 
 /* Slate — H 286, cool neutral (text, dark-mode surfaces) */
---color-slate-50:       oklch(96.5% 0.004 286);  /* L96.5  — text dark */
---color-slate-400:      oklch(70%   0.01  286);  /* L70    — faint light · dim dark */
---color-slate-600:      oklch(52%   0.01  286);  /* L52    — dim light · faint dark */
---color-slate-700:      oklch(29%   0.009 286);  /* L29    — chip dark */
---color-slate-750:      oklch(29.5% 0.009 286);  /* L29.5  — line dark */
---color-slate-800:      oklch(24%   0.008 286);  /* L24    — surface dark */
---color-slate-900:      oklch(23%   0.008 286);  /* L23    — text light */
---color-slate-950:      oklch(20.5% 0.006 286);  /* L20.5  — bg dark */
+--color-slate-50:       oklch(96.5% 0.004 286);  /* L96.5  — text dark [design tag] */
+--color-slate-400:      oklch(70%   0.01  286);  /* L70    — faint light · dim dark [design tag: faint] */
+--color-slate-600:      oklch(52%   0.01  286);  /* L52    — dim light · faint dark [design tag: dim] */
+--color-slate-700:      oklch(29%   0.009 286);  /* L29    — chip dark · line dark (off-ramp) */
+--color-slate-800:      oklch(24%   0.008 286);  /* L24    — surface dark (off-ramp) */
+--color-slate-900:      oklch(23%   0.008 286);  /* L23    — text light [design tag] */
+--color-slate-950:      oklch(20.5% 0.006 286);  /* L20.5  — bg dark [design tag] */
 
 /* Terracotta — H 34, brand */
---color-terracotta-500: oklch(69.5% 0.16  34);   /* L69.5  — accent dark */
---color-terracotta-600: oklch(52.5% 0.16  34);   /* L52.5  — accent light */
+--color-terracotta-500: oklch(69.5% 0.16  34);   /* L69.5  — accent dark [design tag] */
+--color-terracotta-600: oklch(52.5% 0.16  34);   /* L52.5  — accent light [design tag] */
 
 /* Green — H 149, status (success) */
---color-green-400:      oklch(73%   0.12  149);  /* L73    — ok dark */
---color-green-500:      oklch(65%   0.125 149);  /* L65    — ok light */
+--color-green-400:      oklch(73%   0.12  149);  /* L73    — ok dark [design tag] */
+--color-green-500:      oklch(65%   0.125 149);  /* L65    — ok light [design tag] */
 
 /* Amber — H 78, status (warning) */
---color-amber-300:      oklch(82.5% 0.081 78);   /* L82.5  — warn dark */
---color-amber-400:      oklch(72.5% 0.106 78);   /* L72.5  — warn light */
+--color-amber-300:      oklch(82.5% 0.081 78);   /* L82.5  — warn dark [design tag] */
+--color-amber-400:      oklch(72.5% 0.106 78);   /* L72.5  — warn light [design tag] */
 ```
 
 The `slate-400` / `slate-600` pair is intentionally re-used across modes: in light mode `slate-600` is `dim` and `slate-400` is `faint`; in dark mode the assignment flips so `slate-400` is `dim` and `slate-600` is `faint`. In both modes `dim` is more prominent than `faint` (closer in lightness to the text colour).
 
-`slate-700` (chip dark) and `slate-750` (line dark) differ by 0.5% L — barely perceptible, but the design intentionally preserves the split so chip and divider read as distinct surfaces. Kept.
+The design's "ladder" table treats `chip dark` and `line dark` as the same L (29); the semantic table separates them by 0.5 % L (29 vs 29.5) which is below the perception threshold. Consolidated into one primitive (`slate-700`) — both `--color-surface-muted` and `--color-border-subtle` reference it in dark mode.
 
 OKLCH has Baseline support (Safari 15.4+, Chrome 111+, Firefox 113+ — all 2023). No fallback required.
 
@@ -100,11 +101,11 @@ Light theme:
 ```css
 --color-bg-default:      var(--color-sand-100);
 --color-surface-default: var(--color-sand-50);                  /* white */
---color-surface-muted:   var(--color-sand-200);                 /* was --chip */
+--color-surface-muted:   var(--color-sand-150);                 /* was --chip */
 --color-text-default:    var(--color-slate-900);
 --color-text-muted:      var(--color-slate-600);                /* was --dim */
 --color-text-subtle:     var(--color-slate-400);                /* was --faint */
---color-border-subtle:   var(--color-sand-300);                 /* was --line */
+--color-border-subtle:   var(--color-sand-200);                 /* was --line */
 --color-accent-default:  var(--color-terracotta-600);
 --color-accent-soft:     color-mix(in srgb, var(--color-terracotta-600) 10%, transparent);
 --color-accent-line:     color-mix(in srgb, var(--color-terracotta-600) 30%, transparent);
@@ -122,7 +123,7 @@ Dark theme overrides:
 --color-text-default:    var(--color-slate-50);
 --color-text-muted:      var(--color-slate-400);                /* was --dim */
 --color-text-subtle:     var(--color-slate-600);                /* was --faint */
---color-border-subtle:   var(--color-slate-750);
+--color-border-subtle:   var(--color-slate-700);                /* same primitive as chip dark — design treats them as identical L */
 --color-accent-default:  var(--color-terracotta-500);
 --color-accent-soft:     color-mix(in srgb, var(--color-terracotta-500) 16%, transparent);
 --color-accent-line:     color-mix(in srgb, var(--color-terracotta-500) 38%, transparent);
