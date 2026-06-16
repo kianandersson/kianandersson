@@ -18,18 +18,20 @@ This principle governs every subsequent slice. It is not acted on in this slice.
 
 ### 2.1 Layers
 
-| Token category | Layers in this slice                                                    |
-| -------------- | ----------------------------------------------------------------------- |
-| Color          | Primitive (`--color-<hue>-<weight>`) + semantic (`--color-<role>-…`)    |
-| Typography     | Primitive (`--font-size-<px>`) + semantic (`--text-<role>`)             |
-| Spacing        | Primitive only (`--space-<n>`) — semantic aliases deferred              |
-| Radius         | Semantic only (`--radius-<size>`) — small scale, no primitive layer     |
+Every category gets both layers in this slice:
 
-Components reference semantic tokens where they exist, and primitive `--space-N` directly (no semantic spacing aliases in this slice — they can be layered in later if the codebase grows enough usage patterns to justify them).
+| Category    | Primitive layer                  | Semantic layer                                |
+| ----------- | -------------------------------- | --------------------------------------------- |
+| Color       | `--color-<hue>-<weight>`         | `--color-<role>-<variant>`                    |
+| Typography  | `--font-size-<n>`, `--line-height-<n>` | `--text-<role>-size`, `--text-<role>-leading` |
+| Spacing     | `--space-<n>`                    | `--space-<t-shirt>`                           |
+| Radius      | `--radius-<n>`                   | `--radius-<t-shirt>`                          |
+
+Components reference **only semantic tokens**. Primitives are referenced only inside `tokens.css` and inside the positioning escape hatch (`calc(var(--space-N) / 2)`).
 
 ### 2.2 Color primitives
 
-Three hue families (cream/warm-grey for warm light backgrounds, charcoal for text and cool dark backgrounds, terracotta for accent) plus green and amber for status. Weights follow Tailwind's 50–950 ramp, with half-step weights where the existing palette is finer-grained than the standard ramp.
+Three hue families plus status colors. Weights follow Tailwind's 50–950 ramp, with half-step weights where the existing palette is finer-grained than the standard ramp.
 
 ```css
 /* Cream / warm-grey */
@@ -64,22 +66,24 @@ The 600/650 split on charcoal is intentional: the current palette uses two near-
 
 ### 2.3 Color semantics
 
+Alpha-blended semantics use `color-mix(in srgb, …, transparent)` so they reference primitives instead of carrying raw hex.
+
 Light theme:
 
 ```css
---color-bg-default:      var(--color-cream-50);          /* was --bg */
---color-surface-default: var(--color-white);             /* was --surface */
---color-surface-muted:   var(--color-warm-grey-100);     /* was --chip */
---color-text-default:    var(--color-charcoal-900);      /* was --text */
---color-text-muted:      var(--color-charcoal-650);      /* was --dim */
---color-text-subtle:     var(--color-charcoal-600);      /* was --faint */
---color-border-subtle:   var(--color-warm-grey-200);     /* was --line */
---color-accent-default:  var(--color-terracotta-600);    /* was --accent */
---color-accent-soft:     rgba(192, 69, 42, 0.1);         /* was --accent-soft */
---color-accent-line:     rgba(192, 69, 42, 0.3);         /* was --accent-line */
---color-status-ok:       var(--color-green-500);         /* was --ok */
---color-status-warn:     var(--color-amber-500);         /* was --warn */
---color-shadow-default:  rgba(0, 0, 0, 0.08);            /* was --shadow */
+--color-bg-default:      var(--color-cream-50);
+--color-surface-default: var(--color-white);
+--color-surface-muted:   var(--color-warm-grey-100);   /* was --chip */
+--color-text-default:    var(--color-charcoal-900);
+--color-text-muted:      var(--color-charcoal-650);    /* was --dim */
+--color-text-subtle:     var(--color-charcoal-600);    /* was --faint */
+--color-border-subtle:   var(--color-warm-grey-200);   /* was --line */
+--color-accent-default:  var(--color-terracotta-600);
+--color-accent-soft:     color-mix(in srgb, var(--color-terracotta-600) 10%, transparent);
+--color-accent-line:     color-mix(in srgb, var(--color-terracotta-600) 30%, transparent);
+--color-status-ok:       var(--color-green-500);
+--color-status-warn:     var(--color-amber-500);
+--color-shadow-default:  color-mix(in srgb, black 8%, transparent);
 ```
 
 Dark theme overrides:
@@ -93,12 +97,14 @@ Dark theme overrides:
 --color-text-subtle:     var(--color-charcoal-500);
 --color-border-subtle:   var(--color-charcoal-700);
 --color-accent-default:  var(--color-terracotta-500);
---color-accent-soft:     rgba(239, 115, 81, 0.16);
---color-accent-line:     rgba(239, 115, 81, 0.38);
+--color-accent-soft:     color-mix(in srgb, var(--color-terracotta-500) 16%, transparent);
+--color-accent-line:     color-mix(in srgb, var(--color-terracotta-500) 38%, transparent);
 --color-status-ok:       var(--color-green-400);
 --color-status-warn:     var(--color-amber-500);
---color-shadow-default:  rgba(0, 0, 0, 0.5);
+--color-shadow-default:  color-mix(in srgb, black 50%, transparent);
 ```
+
+`color-mix` has Baseline support (Safari 16.4+, Chrome 111+, Firefox 113+ — all 2023). No fallback required.
 
 ### 2.4 Token renames (the four)
 
@@ -109,51 +115,83 @@ Dark theme overrides:
 | `--dim`    | `--color-text-muted`      | Used for secondary body text (slightly less prominent than default).   |
 | `--faint`  | `--color-text-subtle`     | Used for tertiary text — captions, timestamps, section labels.         |
 
-`--dim` is more visible than `--faint` in the current palette (hex `#65656b` vs `#6a6a78`); `muted` is conventionally more visible than `subtle`. The mapping preserves visual hierarchy.
-
-Existing semantically-clean tokens (`--bg`, `--surface`, `--text`, `--accent`, `--accent-soft`, `--accent-line`, `--ok`, `--warn`, `--shadow`) are renamed to fit the `--color-<role>-<variant>` pattern but their **values are unchanged**.
+`--dim` is visibly more prominent than `--faint` in the current palette (hex `#65656b` vs `#6a6a78`); `muted` is conventionally more prominent than `subtle`. The mapping preserves visual hierarchy.
 
 ### 2.5 Typography
 
-Primitives — Tailwind-aligned, 16 px body baseline (WCAG-aligned):
+#### Font-size primitives
+
+Tailwind-aligned scale, numeric tiers from `100` (smallest) upward in steps of `100`:
 
 ```css
---font-size-12:  12px;
---font-size-14:  14px;
---font-size-16:  16px;   /* body baseline */
---font-size-18:  18px;
---font-size-20:  20px;
---font-size-24:  24px;
---font-size-30:  30px;
---font-size-36:  36px;
---font-size-48:  48px;
---font-size-60:  60px;
---font-size-72:  72px;
---font-size-96:  96px;
---font-size-128: 128px;
+--font-size-100:  12px;
+--font-size-200:  14px;
+--font-size-300:  16px;   /* body baseline */
+--font-size-400:  18px;
+--font-size-500:  20px;
+--font-size-600:  24px;
+--font-size-700:  30px;
+--font-size-800:  36px;
+--font-size-900:  48px;
+--font-size-1000: 60px;
+--font-size-1100: 72px;
+--font-size-1200: 96px;
+--font-size-1300: 128px;
 ```
 
-Semantics — role-based, assigned per current usage:
+#### Line-height primitives
+
+Unitless multipliers (so they scale with the cascading font-size):
 
 ```css
---text-caption:  var(--font-size-12);  /* captions, eyebrows, dates, chip text */
---text-meta:     var(--font-size-14);  /* inline meta, secondary button text */
---text-body:     var(--font-size-16);  /* body baseline */
---text-subhead:  var(--font-size-18);  /* small subheadings */
---text-subtitle: var(--font-size-20);  /* role titles, hero subtitle */
---text-headline: var(--font-size-24);  /* section headlines */
---text-title:    var(--font-size-30);  /* page titles (404) */
---text-hero:     var(--font-size-36);  /* hero headline */
---text-display:  var(--font-size-60);  /* og-card display */
+--line-height-100: 1;       /* tight (display/hero) */
+--line-height-200: 1.25;    /* snug (titles, headlines) */
+--line-height-300: 1.375;   /* normal */
+--line-height-400: 1.5;     /* comfortable (captions, meta, subheads) */
+--line-height-500: 1.625;   /* relaxed (body, subtitles) */
+--line-height-600: 2;       /* spacious (loose summaries) */
 ```
 
-Primitives at 48 / 72 / 96 / 128 are defined but have no semantic alias yet — they exist on the scale for future use without requiring a token addition.
+#### Typography semantics
 
-`line-height` is **not** tokenised in this slice (no existing line-height literals on a coherent scale yet). Out of scope.
+Each role gets a `-size` and a `-leading` token:
+
+```css
+--text-caption-size:    var(--font-size-100);   /* 12 */
+--text-caption-leading: var(--line-height-400); /* 1.5 */
+
+--text-meta-size:       var(--font-size-200);   /* 14 */
+--text-meta-leading:    var(--line-height-400); /* 1.5 */
+
+--text-body-size:       var(--font-size-300);   /* 16 */
+--text-body-leading:    var(--line-height-500); /* 1.625 */
+
+--text-subhead-size:    var(--font-size-400);   /* 18 */
+--text-subhead-leading: var(--line-height-400); /* 1.5 */
+
+--text-subtitle-size:   var(--font-size-500);   /* 20 */
+--text-subtitle-leading:var(--line-height-500); /* 1.625 */
+
+--text-headline-size:   var(--font-size-600);   /* 24 */
+--text-headline-leading:var(--line-height-200); /* 1.25 */
+
+--text-title-size:      var(--font-size-700);   /* 30 */
+--text-title-leading:   var(--line-height-200); /* 1.25 */
+
+--text-hero-size:       var(--font-size-800);   /* 36 */
+--text-hero-leading:    var(--line-height-200); /* 1.25 */
+
+--text-display-size:    var(--font-size-1000);  /* 60 */
+--text-display-leading: var(--line-height-100); /* 1 */
+```
+
+Primitives at 48, 72, 96, 128 px are defined but have no semantic alias yet — they exist on the scale for future use without requiring a token addition.
 
 ### 2.6 Spacing
 
-Primitives — linear 4 px base, max 64 (`--space-16`):
+#### Primitives
+
+Linear 4 px base, max 64 (`--space-16`):
 
 ```css
 --space-1:  4px;
@@ -174,24 +212,53 @@ Primitives — linear 4 px base, max 64 (`--space-16`):
 --space-16: 64px;
 ```
 
-Currently-unused entries (9, 12, 13, 14, 15) are defined for completeness. A maintainer veto on any of these is straightforward to apply.
+#### Semantics (t-shirt)
 
-**Escape hatch** (positioning only — `top` / `left` / `transform`):
-`calc(var(--space-N) / 2)` allowed. Half-steps are 2, 6, 10, 14, 18, 22, 26, 30 px. Padding, margin, and gap must hit the scale directly.
+T-shirt sizes covering every spacing value currently used in the codebase (after snaps). Components reference these; primitives are referenced only inside this file and via the positioning escape hatch.
+
+```css
+--space-2xs: var(--space-1);   /* 4 */
+--space-xs:  var(--space-2);   /* 8 */
+--space-sm:  var(--space-3);   /* 12 */
+--space-md:  var(--space-4);   /* 16 */
+--space-lg:  var(--space-5);   /* 20 */
+--space-xl:  var(--space-6);   /* 24 */
+--space-2xl: var(--space-7);   /* 28 */
+--space-3xl: var(--space-8);   /* 32 */
+--space-4xl: var(--space-10);  /* 40 */
+--space-5xl: var(--space-11);  /* 44 */
+--space-6xl: var(--space-12);  /* 48 */
+--space-7xl: var(--space-16);  /* 64 */
+```
+
+Currently-unused primitives (`--space-9`, `--space-13`, `--space-14`, `--space-15`) are kept on the scale for completeness but have no semantic alias yet.
+
+#### Escape hatch
+
+`calc(var(--space-N) / 2)` allowed for **positioning only** (`top` / `left` / `transform`). Half-steps are 2, 6, 10, 14, 18, 22, 26, 30 px. Padding, margin, and gap must hit a semantic t-shirt token directly.
 
 ### 2.7 Radius
 
-Semantic-only (no primitive layer — the scale is small enough):
+#### Primitives
 
 ```css
---radius-sm:   4px;
---radius-md:   8px;
---radius-lg:   12px;
---radius-full: 50%;
---radius-pill: 980px;
+--radius-100: 4px;
+--radius-200: 8px;
+--radius-300: 12px;
 ```
 
-`--radius-pill` is a project-specific addition for fully rounded pill shapes (the CTA button, availability pill, send button) — `border-radius: 50%` only produces a circle on square boxes; pills need an effectively-infinite radius.
+#### Semantics
+
+```css
+--radius-sm:   var(--radius-100);  /* 4  — chips, small bullets */
+--radius-md:   var(--radius-200);  /* 8  — buttons, toggles */
+--radius-lg:   var(--radius-300);  /* 12 — surfaces, cards */
+--radius-full: 9999px;             /* fully rounded — circles + pills */
+```
+
+**`--radius-full` consolidates the previous `50%` and `980px` usages.** Every current `border-radius: 50%` lives on a square element (StatusDot 8×8, TimelineMarker 8×8, LevelMeter dot 8×8, ContactCta avatar 44×44, ContactForm dots 13×13/7×7), so `9999px` produces an identical circle. For non-square elements (AvailabilityPill, CtaButton, send button), `9999px` produces the pill the current `980px` was approximating. One token covers both cases — no `--radius-pill`.
+
+`--radius-full` has no primitive: it's the escape value for "as round as possible", not part of a graduated scale.
 
 ### 2.8 No shadow scale
 
@@ -211,75 +278,95 @@ Every off-scale value with the proposed target. The maintainer can veto any indi
 
 ### 3.1 Typography snaps
 
-Snap rules from the issue: `11 → 12`, `13 → 14`, `15 → 16`, `19 → 20`, `28 → 30`, `38 → 36`, `58 → 60`. Values already on the scale (`12, 14, 16, 18, 20, 24`) do not snap.
+Snap rules from the issue: `11 → 12`, `13 → 14`, `15 → 16`, `19 → 20`, `28 → 30`, `38 → 36`, `58 → 60`.
 
 | file:line                                          | current | snap to | semantic token  |
 | -------------------------------------------------- | ------- | ------- | --------------- |
-| `Experience/Experience.module.css:18`              | 15      | 16      | `--text-body`     |
-| `Experience/Experience.module.css:73`              | 19      | 20      | `--text-subtitle` |
-| `Experience/Experience.module.css:101`             | 15      | 16      | `--text-body`     |
-| `KeySkills/KeySkills.module.css:48`                | 15      | 16      | `--text-body`     |
-| `NotFound/NotFound.module.css:18`                  | 15      | 16      | `--text-body`     |
-| `NotFound/NotFound.module.css:32`                  | 28      | 30      | `--text-title`    |
-| `NotFound/NotFound.module.css:85`                  | 11      | 12      | `--text-caption`  |
-| `NotFound/NotFound.module.css:94`                  | 13      | 14      | `--text-meta`     |
-| `ContactForm/ContactForm.module.css:77`            | 13      | 14      | `--text-meta`     |
-| `ContactForm/ContactForm.module.css:92`            | 15      | 16      | `--text-body`     |
-| `ContactForm/ContactForm.module.css:162`           | 15      | 16      | `--text-body`     |
-| `Accordion/Accordion.module.css:44`                | 15      | 16      | `--text-body`     |
-| `OpenGraphCard/OpenGraphCard.module.css:28`        | 58      | 60      | `--text-display`  |
-| `AvailabilityPill/AvailabilityPill.module.css:12`  | 15      | 16      | `--text-body`     |
-| `AvailabilityPill/AvailabilityPill.module.css:25`  | 13      | 14      | `--text-meta`     |
-| `Miscellaneous/Miscellaneous.module.css:17`        | 15      | 16      | `--text-body`     |
-| `SkillGroups/SkillGroups.module.css:18`            | 15      | 16      | `--text-body`     |
-| `ContactCta/ContactCta.module.css:125`             | 15      | 16      | `--text-body`     |
-| `ContactCta/ContactCta.module.css:275`             | 15      | 16      | `--text-body`     |
-| `Hero/Hero.astro:40`                               | 38      | 36      | `--text-hero`     |
-| `Hero/Hero.astro:54`                               | 19      | 20      | `--text-subtitle` |
-| `SkillRow/SkillRow.module.css:13`                  | 15      | 16      | `--text-body`     |
-| `CtaButton/CtaButton.module.css:6`                 | 15      | 16      | `--text-body`     |
+| `Experience/Experience.module.css:18`              | 15      | 16      | `--text-body-size`     |
+| `Experience/Experience.module.css:73`              | 19      | 20      | `--text-subtitle-size` |
+| `Experience/Experience.module.css:101`             | 15      | 16      | `--text-body-size`     |
+| `KeySkills/KeySkills.module.css:48`                | 15      | 16      | `--text-body-size`     |
+| `NotFound/NotFound.module.css:18`                  | 15      | 16      | `--text-body-size`     |
+| `NotFound/NotFound.module.css:32`                  | 28      | 30      | `--text-title-size`    |
+| `NotFound/NotFound.module.css:85`                  | 11      | 12      | `--text-caption-size`  |
+| `NotFound/NotFound.module.css:94`                  | 13      | 14      | `--text-meta-size`     |
+| `ContactForm/ContactForm.module.css:77`            | 13      | 14      | `--text-meta-size`     |
+| `ContactForm/ContactForm.module.css:92`            | 15      | 16      | `--text-body-size`     |
+| `ContactForm/ContactForm.module.css:162`           | 15      | 16      | `--text-body-size`     |
+| `Accordion/Accordion.module.css:44`                | 15      | 16      | `--text-body-size`     |
+| `OpenGraphCard/OpenGraphCard.module.css:28`        | 58      | 60      | `--text-display-size`  |
+| `AvailabilityPill/AvailabilityPill.module.css:12`  | 15      | 16      | `--text-body-size`     |
+| `AvailabilityPill/AvailabilityPill.module.css:25`  | 13      | 14      | `--text-meta-size`     |
+| `Miscellaneous/Miscellaneous.module.css:17`        | 15      | 16      | `--text-body-size`     |
+| `SkillGroups/SkillGroups.module.css:18`            | 15      | 16      | `--text-body-size`     |
+| `ContactCta/ContactCta.module.css:125`             | 15      | 16      | `--text-body-size`     |
+| `ContactCta/ContactCta.module.css:275`             | 15      | 16      | `--text-body-size`     |
+| `Hero/Hero.astro:40`                               | 38      | 36      | `--text-hero-size`     |
+| `Hero/Hero.astro:54`                               | 19      | 20      | `--text-subtitle-size` |
+| `SkillRow/SkillRow.module.css:13`                  | 15      | 16      | `--text-body-size`     |
+| `CtaButton/CtaButton.module.css:6`                 | 15      | 16      | `--text-body-size`     |
 
-### 3.2 Spacing snaps
+### 3.2 Line-height snaps
+
+Off-scale line-heights snap to the nearest value on the `{1, 1.25, 1.375, 1.5, 1.625, 2}` scale. Each migrated declaration uses the semantic `--text-<role>-leading` for its role; outliers that don't match the role default fall back to the primitive `--line-height-N`.
+
+| file:line                                  | current | snap to | replacement                                    |
+| ------------------------------------------ | ------- | ------- | ---------------------------------------------- |
+| `BaseLayout.astro:93`                      | 1.65    | 1.625   | `--text-body-leading`                          |
+| `Experience/Experience.module.css:102`     | 1.6     | 1.625   | `--text-body-leading`                          |
+| `NotFound/NotFound.module.css:33`          | 1.15    | 1.25    | `--text-title-leading`                         |
+| `NotFound/NotFound.module.css:42`          | 1.6     | 1.625   | `--text-body-leading`                          |
+| `NotFound/NotFound.module.css:95`          | 1.9     | 2       | `--line-height-600` (loose summary — outlier)  |
+| `ContactForm/ContactForm.module.css:130`   | 1.6     | 1.625   | `--text-body-leading`                          |
+| `Chip/Chip.module.css:4`                   | 1.5     | 1.5     | `--text-caption-leading` (no snap)             |
+| `OpenGraphCard/OpenGraphCard.module.css:30`| 0.94    | 1       | `--text-display-leading`                       |
+| `OpenGraphCard/OpenGraphCard.module.css:38`| 1.3     | 1.25    | `--line-height-200` (tighter than body — outlier) |
+| `Hero/Hero.astro:41`                       | 1.12    | 1.25    | `--text-hero-leading` (visible drift +0.13)    |
+| `Hero/Hero.astro:55`                       | 1.6     | 1.625   | `--text-subtitle-leading`                      |
+
+Hero:41 has the largest drift (+0.13) — flagged for individual review.
+
+### 3.3 Spacing snaps
 
 Linear 4 px scale. Equidistant ties (e.g. 14 between 12 and 16) snap **up** by default to preserve visual breathing room.
 
-| file:line                                          | current        | snap to        | notes                                  |
-| -------------------------------------------------- | -------------- | -------------- | -------------------------------------- |
-| `Footer/Footer.module.css:24`                      | `gap: 6px`     | `gap: 8px`     | `--space-2`                            |
-| `NotFound/NotFound.module.css:59`                  | `gap: 9px`     | `gap: 8px`     | `--space-2`                            |
-| `NotFound/NotFound.module.css:60`                  | `padding: 11px 15px` | `padding: 12px 16px` | `--space-3 --space-4`         |
-| `NotFound/NotFound.module.css:83`                  | `margin-left: 6px` | `margin-left: 8px` | `--space-2`                       |
-| `ContactForm/ContactForm.module.css:15`            | `gap: 9px`     | `gap: 8px`     | `--space-2`                            |
-| `ContactForm/ContactForm.module.css:16`            | `padding: 11px 15px` | `padding: 12px 16px` | `--space-3 --space-4`         |
-| `ContactForm/ContactForm.module.css:46`            | `gap: 14px`    | `gap: 16px`    | `--space-4` (tie, rounds up)            |
-| `ContactForm/ContactForm.module.css:47`            | `padding: 11px 16px` | `padding: 12px 16px` | `--space-3 --space-4`         |
-| `ContactForm/ContactForm.module.css:56`            | `padding: 14px 16px` | `padding: 16px 16px` | `--space-4 --space-4` (tie, up) |
-| `ContactForm/ContactForm.module.css:72`            | `padding: 0 13px 0 11px` | `padding: 0 12px 0 12px` | `0 --space-3 0 --space-3` |
-| `ContactForm/ContactForm.module.css:102`           | `padding: 11px 0` | `padding: 12px 0` | `--space-3 0`                      |
-| `ContactForm/ContactForm.module.css:138`           | `gap: 14px`    | `gap: 16px`    | `--space-4` (tie, rounds up)            |
-| `ContactForm/ContactForm.module.css:153`           | `gap: 9px`     | `gap: 8px`     | `--space-2`                            |
-| `ContactForm/ContactForm.module.css:156`           | `padding: 0 22px` | `padding: 0 24px` | `0 --space-6` (tie, rounds up)     |
-| `Miscellaneous/Miscellaneous.module.css:35`        | `padding-top: 18px` | `padding-top: 20px` | `--space-5` (tie, rounds up)    |
-| `Miscellaneous/Miscellaneous.module.css:51`        | `gap: 10px`    | `gap: 12px`    | `--space-3` (tie, rounds up)            |
-| `Miscellaneous/Miscellaneous.module.css:58`        | `gap: 9px`     | `gap: 8px`     | `--space-2`                            |
-| `Miscellaneous/Miscellaneous.module.css:59`        | `padding: 7px 13px` | `padding: 8px 12px` | `--space-2 --space-3`           |
-| `AvailabilityPill/AvailabilityPill.module.css:4`   | `gap: 10px`    | `gap: 12px`    | `--space-3` (tie, rounds up)            |
-| `AvailabilityPill/AvailabilityPill.module.css:6`   | `padding: 0 18px` | `padding: 0 20px` | `0 --space-5` (tie, rounds up)     |
-| `AvailabilityPill/AvailabilityPill.module.css:19`  | `gap: 6px`     | `gap: 8px`     | `--space-2`                            |
-| `OpenGraphCard/OpenGraphCard.module.css:9`         | `padding: 38px 40px` | `padding: 40px 40px` | `--space-10 --space-10`       |
-| `OpenGraphCard/OpenGraphCard.module.css:24`        | `gap: 14px`    | `gap: 16px`    | `--space-4` (tie, rounds up)            |
-| `OpenGraphCard/OpenGraphCard.module.css:45`        | `gap: 6px`     | `gap: 8px`     | `--space-2`                            |
-| `ContactCta/ContactCta.module.css:119`             | `padding: 0 22px` | `padding: 0 24px` | `0 --space-6` (tie, rounds up)     |
+| file:line                                          | current        | snap to        | semantic                          |
+| -------------------------------------------------- | -------------- | -------------- | --------------------------------- |
+| `Footer/Footer.module.css:24`                      | `gap: 6px`     | `gap: 8px`     | `--space-xs`                      |
+| `NotFound/NotFound.module.css:59`                  | `gap: 9px`     | `gap: 8px`     | `--space-xs`                      |
+| `NotFound/NotFound.module.css:60`                  | `padding: 11px 15px` | `padding: 12px 16px` | `--space-sm --space-md`     |
+| `NotFound/NotFound.module.css:83`                  | `margin-left: 6px` | `margin-left: 8px` | `--space-xs`                  |
+| `ContactForm/ContactForm.module.css:15`            | `gap: 9px`     | `gap: 8px`     | `--space-xs`                      |
+| `ContactForm/ContactForm.module.css:16`            | `padding: 11px 15px` | `padding: 12px 16px` | `--space-sm --space-md`     |
+| `ContactForm/ContactForm.module.css:46`            | `gap: 14px`    | `gap: 16px`    | `--space-md` (tie, rounds up)     |
+| `ContactForm/ContactForm.module.css:47`            | `padding: 11px 16px` | `padding: 12px 16px` | `--space-sm --space-md`     |
+| `ContactForm/ContactForm.module.css:56`            | `padding: 14px 16px` | `padding: 16px 16px` | `--space-md --space-md` (tie, up) |
+| `ContactForm/ContactForm.module.css:72`            | `padding: 0 13px 0 11px` | `padding: 0 12px 0 12px` | `0 --space-sm 0 --space-sm` |
+| `ContactForm/ContactForm.module.css:102`           | `padding: 11px 0` | `padding: 12px 0` | `--space-sm 0`                 |
+| `ContactForm/ContactForm.module.css:138`           | `gap: 14px`    | `gap: 16px`    | `--space-md` (tie, rounds up)     |
+| `ContactForm/ContactForm.module.css:153`           | `gap: 9px`     | `gap: 8px`     | `--space-xs`                      |
+| `ContactForm/ContactForm.module.css:156`           | `padding: 0 22px` | `padding: 0 24px` | `0 --space-xl` (tie, up)       |
+| `Miscellaneous/Miscellaneous.module.css:35`        | `padding-top: 18px` | `padding-top: 20px` | `--space-lg` (tie, up)        |
+| `Miscellaneous/Miscellaneous.module.css:51`        | `gap: 10px`    | `gap: 12px`    | `--space-sm` (tie, up)            |
+| `Miscellaneous/Miscellaneous.module.css:58`        | `gap: 9px`     | `gap: 8px`     | `--space-xs`                      |
+| `Miscellaneous/Miscellaneous.module.css:59`        | `padding: 7px 13px` | `padding: 8px 12px` | `--space-xs --space-sm`       |
+| `AvailabilityPill/AvailabilityPill.module.css:4`   | `gap: 10px`    | `gap: 12px`    | `--space-sm` (tie, up)            |
+| `AvailabilityPill/AvailabilityPill.module.css:6`   | `padding: 0 18px` | `padding: 0 20px` | `0 --space-lg` (tie, up)       |
+| `AvailabilityPill/AvailabilityPill.module.css:19`  | `gap: 6px`     | `gap: 8px`     | `--space-xs`                      |
+| `OpenGraphCard/OpenGraphCard.module.css:9`         | `padding: 38px 40px` | `padding: 40px 40px` | `--space-4xl --space-4xl`     |
+| `OpenGraphCard/OpenGraphCard.module.css:24`        | `gap: 14px`    | `gap: 16px`    | `--space-md` (tie, up)            |
+| `OpenGraphCard/OpenGraphCard.module.css:45`        | `gap: 6px`     | `gap: 8px`     | `--space-xs`                      |
+| `ContactCta/ContactCta.module.css:119`             | `padding: 0 22px` | `padding: 0 24px` | `0 --space-xl` (tie, up)       |
 
-### 3.3 Radius snaps
+### 3.4 Radius snaps
 
 | file:line                          | current | snap to | semantic         |
 | ---------------------------------- | ------- | ------- | ---------------- |
 | `Footer/Footer.module.css:29`      | 2px     | 4px     | `--radius-sm`    |
 
-All other `border-radius` values (`4`, `8`, `12`, `50%`, `980px`) already map cleanly to a semantic token.
+All `border-radius: 50%` declarations migrate to `--radius-full` (= 9999px) — visually identical on the square elements they target. All `border-radius: 980px` declarations migrate to the same `--radius-full`.
 
-### 3.4 Positioning escape-hatch usages
+### 3.5 Positioning escape-hatch usages
 
 `top` / `left` / `transform` values that need the `calc(var(--space-N) / 2)` escape hatch (currently-used half-steps only):
 
@@ -305,7 +392,9 @@ Snapped-to-scale positioning values:
 | `ContactCta/ContactCta.module.css:286`             | `translateY(-12px)` | `translateY(calc(var(--space-3) * -1))`  |
 | `ContactCta/ContactCta.module.css:301`             | `translateY(-12px)` | `translateY(calc(var(--space-3) * -1))`  |
 
-### 3.5 Illustration-layer exceptions
+Positioning values that escape both rules reference primitive `--space-N` directly (this is allowed because positioning is the only category where the escape hatch is permitted, and the half-step variant uses the same primitive).
+
+### 3.6 Illustration-layer exceptions
 
 Decorative or micro-aligned values where snapping would visibly break intent. Stay as raw px, documented as exceptions in the migration commit.
 
@@ -320,13 +409,12 @@ Decorative or micro-aligned values where snapping would visibly break intent. St
 | `ContactForm/ContactForm.module.css:121`               | `-webkit-box-shadow: 0 0 0 1000px … inset`  | Autofill background-color mask (Safari).                                   |
 | `Footer/Footer.module.css:29`                          | `width: 2px; height: 2px`                   | Out of scope (width/height not in the snap rules); 2 px micro-bullet kept as-is. |
 
-### 3.6 Out of scope in this slice
+### 3.7 Out of scope in this slice
 
 - **`width` / `height` / `min-height` / `max-width`** literals (e.g. `width: 36px`, `min-height: 120px`, `max-width: 540px`). The issue scope is `font-size`, `padding`, `margin`, `gap`, `border-radius`, `top`, `left`, and `transform`. Width/height literals are flagged for a future slice — many are component-intrinsic sizes that may or may not benefit from tokenisation.
-- **Line-height tokens.** Not in current use as literals on a coherent scale.
 - **Component folder reorganisation.** All CSS Modules stay at `src/components/<Name>/<Name>.module.css`. The folder mapping below is informational for the next slice.
 
-### 3.7 Reported as bug candidates (no fix in this slice)
+### 3.8 Reported as bug candidates (no fix in this slice)
 
 None at this stage. The off-scale values found all fit the snap rules above.
 
@@ -379,12 +467,15 @@ Two changes, applied with the token migration commit:
 Before any commit beyond this document lands, the maintainer must:
 
 - [ ] Approve every typography snap in §3.1 (or veto specific lines).
-- [ ] Approve every spacing snap in §3.2 (or veto specific lines — equidistant ties round up by default; flag any where rounding down is preferred).
-- [ ] Approve the single radius snap in §3.3.
-- [ ] Approve the four token renames in §2.4 (`--dim` → `--color-text-muted`, `--faint` → `--color-text-subtle`).
-- [ ] Approve the color primitive palette in §2.2 (especially the charcoal 600/650 split).
-- [ ] Approve the typography semantic names in §2.5 (`--text-caption`, `--text-meta`, `--text-body`, `--text-subhead`, `--text-subtitle`, `--text-headline`, `--text-title`, `--text-hero`, `--text-display`).
-- [ ] Approve the illustration-layer exceptions in §3.5.
+- [ ] Approve every line-height snap in §3.2 (Hero:41 has the largest drift at +0.13).
+- [ ] Approve every spacing snap in §3.3 (or veto — equidistant ties round up by default; flag any where rounding down is preferred).
+- [ ] Approve the single radius snap in §3.4 and the `50%` + `980px` → `--radius-full` consolidation.
+- [ ] Approve the four token renames in §2.4.
+- [ ] Approve the color primitive palette in §2.2 (especially the charcoal 600/650 split) and the `color-mix` usage in §2.3.
+- [ ] Approve the typography semantic naming (`--text-<role>-size` / `-leading`) in §2.5.
+- [ ] Approve the spacing t-shirt scale in §2.6 (12 sizes covering current usage).
+- [ ] Approve the radius primitive + semantic split in §2.7.
+- [ ] Approve the illustration-layer exceptions in §3.6.
 
 After approval, subsequent commits on this branch implement the migration in this order:
 
