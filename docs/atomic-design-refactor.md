@@ -212,16 +212,44 @@ The two roles use the same pair of slate ramp steps (`slate-400`, `slate-600`) b
 
 Prominence is defined by the role's distance from its background, not the absolute L. The same two primitives, used inversely.
 
-### 2.4 Token renames (the four)
+### 2.4 Token renames
 
-| Old        | New                       | Reasoning                                                              |
-| ---------- | ------------------------- | ---------------------------------------------------------------------- |
-| `--chip`   | `--color-surface-muted`   | Locked by issue. The role is "muted surface", not "chip-specific".     |
-| `--line`   | `--color-border-subtle`   | Used for hairlines and dividers — `border-subtle` matches the role.    |
-| `--dim`    | `--color-text-muted`      | Used for secondary body text (slightly less prominent than default).   |
-| `--faint`  | `--color-text-subtle`     | Used for tertiary text — captions, timestamps, section labels.         |
+The full rename map for every CSS custom property in `src/styles/tokens.css`. The migration agent must apply every row across every file that references the old name. Four of the renames are explicitly issue-scoped (locked by #30); the rest follow automatically from the `--color-<role>-<variant>` naming convention.
 
-`--dim` is visibly more prominent than `--faint` in the current palette (hex `#65656b` vs `#6a6a78`); `muted` is conventionally more prominent than `subtle`. The mapping preserves visual hierarchy.
+#### Color tokens
+
+| Old             | New                       | Issue-scoped? | Reasoning                                                       |
+| --------------- | ------------------------- | :-----------: | --------------------------------------------------------------- |
+| `--bg`          | `--color-bg-default`      |               | Background; `default` is the standard variant.                  |
+| `--surface`     | `--color-surface-default` |               | Card/terminal surface.                                          |
+| `--chip`        | `--color-surface-muted`   |       ✓       | Role is "muted surface", not "chip-specific".                   |
+| `--text`        | `--color-text-default`    |               | Primary text.                                                   |
+| `--dim`         | `--color-text-muted`      |       ✓       | Secondary text — less prominent than `default`.                 |
+| `--faint`       | `--color-text-subtle`     |       ✓       | Tertiary text — captions, timestamps, section labels.           |
+| `--line`        | `--color-border-subtle`   |       ✓       | Hairlines and dividers.                                         |
+| `--accent`      | `--color-accent-default`  |               | Brand accent.                                                   |
+| `--accent-soft` | `--color-accent-soft`     |               | 10–16 % alpha accent (chip backgrounds, tag fills).             |
+| `--accent-line` | `--color-accent-line`     |               | 30–38 % alpha accent (tag borders).                             |
+| `--ok`          | `--color-status-ok`       |               | Status: available/success.                                      |
+| `--warn`        | `--color-status-warn`     |               | Status: warning.                                                |
+| `--shadow`      | `--color-shadow-default`  |               | Drop-shadow color (rgba black).                                 |
+
+For `--dim` and `--faint`: `--dim` is visibly more prominent than `--faint` in the current palette (hex `#65656b` vs `#6a6a78`); `muted` is conventionally more prominent than `subtle`. The mapping preserves visual hierarchy.
+
+#### Tokens kept as-is
+
+| Token              | Reason                                                                                          |
+| ------------------ | ----------------------------------------------------------------------------------------------- |
+| `--font-sans`      | Out of scope. Typography font-family tokens are not addressed in this slice; rename later if needed. |
+| `--font-mono`      | Same as above.                                                                                  |
+| `--container-max`  | Out of scope. Layout container tokens are not addressed in this slice.                          |
+| `--container-pad`  | Same as above. Value (`28px`) already lands on the spacing scale (`--space-7`), but the token semantics are layout, not generic spacing. Re-evaluate in the next slice. |
+
+#### Tokens.css structure
+
+The rewritten `src/styles/tokens.css` preserves the current selector structure: light tokens declared under `:root`, dark overrides under `[data-theme="dark"]`. The font-face declarations stay at the top of the file. Primitive blocks go under `:root` (primitives don't vary by theme); semantic blocks split into `:root` (light) and `[data-theme="dark"]` (dark overrides).
+
+The existing `@media print` block (current `tokens.css` lines 57–77) forces the light palette during printing. The migration preserves this behavior with the new token names: under `@media print`, redeclare every semantic to its light-theme primitive reference, so dark mode prints as light.
 
 ### 2.5 Typography
 
@@ -380,7 +408,23 @@ These do **not** form a coherent scale and stay component-local.
 
 ## 3. Snap list
 
-Every off-scale value with the proposed target. The maintainer can veto any individual snap before execution; vetoed snaps are excluded from the migration and the original value stays (escalating to a follow-up issue if structurally needed).
+The tables below list every **off-scale** value with the proposed target. The maintainer can veto any individual snap before execution; vetoed snaps are excluded from the migration and the original value stays (escalating to a follow-up issue if structurally needed).
+
+### 3.0 On-scale conversions (not enumerated, but in scope)
+
+In addition to the off-scale snaps tabulated below, the migration converts **every remaining raw-pixel declaration in scope** to its semantic token — even values already on the scale. Examples:
+
+- `font-size: 12px` → `font-size: var(--text-caption-size)` (13 instances in codebase today)
+- `font-size: 16px` → `font-size: var(--text-body-size)`
+- `font-size: 24px` → `font-size: var(--text-headline-size)` (4 instances)
+- `padding: 8px 16px` → `padding: var(--space-xs) var(--space-md)`
+- `border-radius: 8px` → `border-radius: var(--radius-md)` (4 instances)
+- `border-radius: 50%` → `border-radius: var(--radius-full)` (8 instances; per §3.4)
+- `border-radius: 980px` → `border-radius: var(--radius-full)` (5 instances; per §3.4)
+
+The migration agent must grep each component file for raw `px` declarations on the in-scope properties (`font-size`, `padding`, `margin`, `gap`, `border-radius`, `top`, `left`, `transform`) and substitute the semantic token whose value matches. Off-scale values get snapped per §3.1–§3.4; on-scale values get a direct 1:1 substitution.
+
+The post-migration invariant: **no raw `px` literal on any in-scope property anywhere in `src/`**, except where listed as an illustration-layer exception in §3.6.
 
 ### 3.1 Typography snaps
 
@@ -576,7 +620,9 @@ Before any commit beyond this document lands, the maintainer must:
 - [ ] Approve every line-height snap in §3.2 (Hero:41 has the largest drift at +0.13).
 - [ ] Approve every spacing snap in §3.3 (or veto — equidistant ties round up by default; flag any where rounding down is preferred).
 - [ ] Approve the single radius snap in §3.4 and the `50%` + `980px` → `--radius-full` consolidation.
-- [ ] Approve the four token renames in §2.4.
+- [ ] Approve the full 13-row color token rename map in §2.4 (4 issue-scoped + 9 follow from naming convention) and the "kept as-is" list (`--font-sans`, `--font-mono`, `--container-max`, `--container-pad`).
+- [ ] Approve the §2.4 `tokens.css` structure plan (`:root` / `[data-theme="dark"]` / `@media print` preserved).
+- [ ] Approve the §3.0 instruction that on-scale raw-px values get a direct 1:1 substitution to semantic tokens (not just off-scale snaps).
 - [ ] Approve the OKLCH primitive palette in §2.2 (5 hue families, full 55-step ramp).
 - [ ] Approve the canonical role-tag table in §2.3.
 - [ ] Approve the relative-color `oklch(from var(...) l c h / α)` syntax in §2.3 for `accent-soft` and `accent-line`.
@@ -589,8 +635,19 @@ Before any commit beyond this document lands, the maintainer must:
 
 After approval, subsequent commits on this branch implement the migration in this order:
 
-1. Rewrite `src/styles/tokens.css` with primitive + semantic layers (no component changes).
-2. Apply the four renames across every consuming CSS Module.
-3. Apply approved snaps + token references in component CSS, one component or small group per commit.
-4. Update `AGENTS.md` per §5.
-5. Run gates (`pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm test:bundle`, `pnpm test:e2e`) and request manual verification on `index.astro` + `404.astro`.
+1. **Rewrite `src/styles/tokens.css`** with primitive + semantic layers per §2.2 / §2.3 / §2.5 / §2.6 / §2.7. Preserve the existing structure: font-face → `:root` → `[data-theme="dark"]` → `@media print`. Keep `--font-sans`, `--font-mono`, `--container-max`, `--container-pad` as-is (§2.4). No component changes in this commit.
+
+2. **Apply the 13 color renames per §2.4** across every file that references the old token names. The consuming files (verified by grep at planning time):
+
+   - **Component CSS Modules:** Accordion, AvailabilityPill, Chip, ChipList, ContactCta, ContactForm, CtaButton, Experience, Footer, KeySkills, LevelMeter, Miscellaneous, NotFound, OpenGraphCard, PrintButton, SkillGroups, SkillRow, StatusDot, ThemeToggle, TimelineMarker, TopBar.
+   - **Astro files with inline color tokens:** `layouts/BaseLayout.astro`, `pages/og.astro`, `components/Hero/Hero.astro`.
+
+   `pages/404.astro` and `templates/IndexTemplate.astro` reference only `--container-max` / `--container-pad` (kept as-is per §2.4) and need no rename.
+
+   This is a mechanical search-and-replace (e.g. `var(--bg)` → `var(--color-bg-default)`). Components that don't appear in §3.1–§3.4 still need this pass — the snap tables enumerate only off-scale value changes, not the universal rename.
+
+3. **Convert raw-px declarations to semantic tokens** in component CSS, one component or small group per commit. Includes both off-scale snaps (§3.1–§3.4, requires the listed snap) and on-scale conversions (§3.0, direct 1:1 substitution). Positioning values per §3.5; illustration-layer exceptions per §3.6 stay untouched.
+
+4. **Update `AGENTS.md`** per §5.
+
+5. **Run gates** (`pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm test:bundle`, `pnpm test:e2e`) and request manual verification on `index.astro` + `404.astro` in both light and dark mode.
