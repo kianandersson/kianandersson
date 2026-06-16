@@ -121,85 +121,60 @@ The full 55 ramp primitives — declared whether used or not:
 --color-amber-950: oklch(20% 0.044 78);
 ```
 
-#### Off-ramp primitives
-
-Four roles in the design's ladder sit between ramp steps (the ramp's 4–10 % L gaps don't fit them). These exist as named primitives at the design's specific L values, alongside the ramp:
-
-```css
---color-white:     oklch(100%  0     0);    /* L100  — surface light (off-ramp top) */
---color-sand-150:  oklch(93.5% 0.008 85);   /* L93.5 — chip light (between sand-100/200) */
---color-slate-870: oklch(29%   0.009 286);  /* L29   — chip + line dark (between slate-800/900) */
---color-slate-920: oklch(24%   0.008 286);  /* L24   — surface dark (between slate-900/950) */
-```
-
-`slate-870` and `slate-920` use non-Tailwind weights because the design's L gap between ramp steps 900 and 950 is 8 (L 28 → L 20) and three semantic roles (text light, chip dark, line dark, surface dark, bg dark) need to sit in that window. The weight number tracks the L monotonically: `slate-900` (L 28) < `slate-920` (L 24) < `slate-950` (L 20).
-
-The design ladder treats chip dark (L 29) and line dark (L 29.5) as the same L; the semantic table separates them by 0.5 % L, which is below the perception threshold. One primitive (`slate-870`) covers both roles.
-
 OKLCH has Baseline support (Safari 15.4+, Chrome 111+, Firefox 113+ — all 2023). No fallback required.
 
 ### 2.3 Color semantics
 
-Alpha-blended semantics use `color-mix(in srgb, …, transparent)` so they reference primitives instead of carrying raw hex.
+The semantic OKLCH values are **copied verbatim from the design's reference CSS** (`Kian Andersson - systematic.dc.html`). They are mostly off-ramp picks — the design's role tags on the primitive ramp are approximate guides; the actual semantic values come from the systematic design and supersede any ramp-step interpolation. Don't recompute; just transcribe.
+
+Only one semantic — `--color-accent-default` (light) — lands exactly on a ramp step (`terracotta-600` at L 58). The rest sit between ramp steps. The primitive ramp in §2.2 documents the system; semantics state visual intent.
 
 Light theme:
 
 ```css
---color-bg-default:      var(--color-sand-100);
---color-surface-default: var(--color-sand-50);                  /* white */
---color-surface-muted:   var(--color-sand-150);                 /* was --chip */
---color-text-default:    var(--color-slate-900);
---color-text-muted:      var(--color-slate-600);                /* was --dim */
---color-text-subtle:     var(--color-slate-400);                /* was --faint */
---color-border-subtle:   var(--color-sand-200);                 /* was --line */
---color-accent-default:  var(--color-terracotta-600);
---color-accent-soft:     color-mix(in srgb, var(--color-terracotta-600) 10%, transparent);
---color-accent-line:     color-mix(in srgb, var(--color-terracotta-600) 30%, transparent);
---color-status-ok:       var(--color-green-500);
---color-status-warn:     var(--color-amber-400);
---color-shadow-default:  color-mix(in srgb, black 8%, transparent);
+--color-bg-default:      oklch(96.5% 0.002 85);          /* design --bg */
+--color-surface-default: oklch(100%  0     85);          /* design --surface (white) */
+--color-surface-muted:   oklch(93.5% 0.004 85);          /* was --chip */
+--color-text-default:    oklch(23%   0.005 286);
+--color-text-muted:      oklch(52%   0.014 286);         /* was --dim */
+--color-text-subtle:     oklch(70%   0.012 286);         /* was --faint */
+--color-border-subtle:   oklch(91%   0.006 85);          /* was --line */
+--color-accent-default:  oklch(58%   0.16  34);          /* = terracotta-600 */
+--color-accent-soft:     oklch(58%   0.16  34 / 0.10);
+--color-accent-line:     oklch(58%   0.16  34 / 0.30);
+--color-status-ok:       oklch(65%   0.125 149);
+--color-status-warn:     var(--color-amber-400);         /* not in design CSS; uses ramp step per role tag */
+--color-shadow-default:  rgba(0, 0, 0, 0.08);
 ```
 
 Dark theme overrides:
 
 ```css
---color-bg-default:      var(--color-slate-950);
---color-surface-default: var(--color-slate-800);
---color-surface-muted:   var(--color-slate-700);
---color-text-default:    var(--color-slate-50);
---color-text-muted:      var(--color-slate-400);                /* was --dim */
---color-text-subtle:     var(--color-slate-600);                /* was --faint */
---color-border-subtle:   var(--color-slate-700);                /* same primitive as chip dark — design treats them as identical L */
---color-accent-default:  var(--color-terracotta-500);
---color-accent-soft:     color-mix(in srgb, var(--color-terracotta-500) 16%, transparent);
---color-accent-line:     color-mix(in srgb, var(--color-terracotta-500) 38%, transparent);
---color-status-ok:       var(--color-green-400);
---color-status-warn:     var(--color-amber-300);
---color-shadow-default:  color-mix(in srgb, black 50%, transparent);
+--color-bg-default:      oklch(20.5% 0.005 286);
+--color-surface-default: oklch(24%   0.006 286);
+--color-surface-muted:   oklch(29%   0.006 286);         /* was --chip */
+--color-text-default:    oklch(96.5% 0.002 286);
+--color-text-muted:      oklch(70%   0.012 286);         /* was --dim */
+--color-text-subtle:     oklch(52%   0.014 286);         /* was --faint */
+--color-border-subtle:   oklch(29.5% 0.006 286);         /* was --line */
+--color-accent-default:  oklch(69.5% 0.16  34);
+--color-accent-soft:     oklch(69.5% 0.16  34 / 0.16);
+--color-accent-line:     oklch(69.5% 0.16  34 / 0.38);
+--color-status-ok:       oklch(73%   0.11  149);
+--color-status-warn:     var(--color-amber-300);         /* not in design CSS; uses ramp step per role tag */
+--color-shadow-default:  rgba(0, 0, 0, 0.5);
 ```
 
-#### Intentional visual drift
+`--color-status-warn` is the one role the design's reference CSS does not declare. The original `--warn` (`#cf9a3a`) sits between amber steps 300 and 400; this plan resolves it to the closest ramp step per family: `amber-400` for light, `amber-300` for dark.
 
-The OKLCH re-cast is not a pure round-trip of the existing hex tokens; the design adjusts several values on purpose. Drift larger than ~1% L is flagged below so the maintainer can veto any individual change:
+#### Why both `--dim` and `--faint` flip across modes
 
-| Token (mode)             | Current hex | New hex   | Change                                      |
-| ------------------------ | ----------- | --------- | ------------------------------------------- |
-| `--faint` (light)        | `#6a6a78`   | `#9e9ea5` | Much lighter — L 48 → L 70                  |
-| `--faint` (dark)         | `#828289`   | `#68686f` | Darker — L 56 → L 52                        |
-| `--ok` (light)           | `#34a853`   | `#52a464` | Less saturated, slightly cooler             |
-| `--ok` (dark)            | `#46c46e`   | `#6ebd7d` | Less saturated, slightly cooler             |
-| `--warn` (light)         | `#cf9a3a`   | `#cb9e54` | Slightly more yellow                        |
-| `--warn` (dark)          | `#cf9a3a`   | `#e3c089` | Pastel — light/dark now diverge             |
-| `--accent` (light)       | `#b03e24`   | `#b43c22` | A touch deeper — within design tolerance    |
-| Other roles              | various     | various   | < 1.5% L drift — imperceptible              |
+The same two L values (L 52, L 70) play opposite roles in light vs. dark:
 
-All other tokens (`bg`, `surface`, `chip`, `line`, `text`, `accent` dark) move by less than 1.5% L — visibly unchanged.
+- **Light mode:** `dim` is L 52 (darker, more prominent against the light bg), `faint` is L 70 (lighter, recedes).
+- **Dark mode:** `dim` is L 70 (lighter, more prominent against the dark bg), `faint` is L 52 (darker, recedes).
 
-The big drift on `--faint` matches the design's deliberate widening of the text hierarchy: `text` → `dim` (clear secondary) → `faint` (much subtler tertiary). In the current code `dim` and `faint` are nearly indistinguishable; in the new system they read as two distinct tiers in both modes.
-
-#### Why both `--faint` and `--dim` map to the same `--color-slate-*` pair across modes
-
-In light mode, `dim` = `slate-600` (L 52, darker, more prominent) and `faint` = `slate-400` (L 70, lighter, recedes into the bg). In dark mode the assignment flips: `dim` = `slate-400` (L 70, lighter against the dark bg, more prominent) and `faint` = `slate-600` (L 52, darker, recedes). Same two primitives, used inversely — the role's relationship to its bg is what defines prominence, not the absolute L.
+Prominence is defined by the role's distance from its background, not the absolute L. The chroma also flips (dim has C 0.014, faint has C 0.012 — slightly more saturated for the more prominent role).
 
 ### 2.4 Token renames (the four)
 
