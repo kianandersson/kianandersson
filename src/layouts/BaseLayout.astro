@@ -51,30 +51,51 @@ const currentYear = new Date().getFullYear();
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <link rel="preload" href="/fonts/Geist.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/GeistMono.woff2" as="font" type="font/woff2" crossorigin />
+    <link
+      rel="preload"
+      href="/fonts/Geist.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/GeistMono.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
 
     <script is:inline>
       (function () {
         try {
-          var stored = localStorage.getItem('theme');
-          if (stored === 'dark' || stored === 'light') {
+          var stored = localStorage.getItem("theme");
+          if (stored === "dark" || stored === "light") {
             document.documentElement.dataset.theme = stored;
             return;
           }
         } catch (e) {}
-        var prefersDark = window.matchMedia
-          && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        document.documentElement.dataset.theme = prefersDark ? 'dark' : 'light';
+        var prefersDark =
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = prefersDark ? "dark" : "light";
       })();
     </script>
 
     <script type="application/ld+json" is:inline set:html={jsonLdSerialized} />
   </head>
   <body>
-    <TopBar githubHref={siteConfig.links.github} showPrint={showPrint} client:load />
+    <TopBar
+      githubHref={siteConfig.links.github}
+      showPrint={showPrint}
+      client:load
+    />
     <slot />
-    <Footer name={siteConfig.name} year={currentYear} sourceHref={siteConfig.links.source} />
+    <Footer
+      name={siteConfig.name}
+      year={currentYear}
+      sourceHref={siteConfig.links.source}
+    />
   </body>
 </html>
 
@@ -98,7 +119,7 @@ const currentYear = new Date().getFullYear();
   }
 
   ::selection {
-    background: color-mix(in oklch, var(--color-accent) 10%, transparent);
+    background: var(--color-accent-subtle);
     color: var(--color-accent);
   }
 
