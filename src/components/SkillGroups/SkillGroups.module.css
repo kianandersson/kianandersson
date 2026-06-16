@@ -2,27 +2,27 @@
   container-type: inline-size;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--space-md);
 }
 
 .header {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-xs);
 }
 
 .hash {
   font-family: var(--font-mono);
   color: var(--color-accent);
   font-weight: 600;
-  font-size: 15px;
+  font-size: var(--text-body-size);
 }
 
 .heading {
   margin: 0;
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 24px;
+  font-size: var(--text-headline-size);
   letter-spacing: -0.015em;
   color: var(--color-text);
   white-space: nowrap;

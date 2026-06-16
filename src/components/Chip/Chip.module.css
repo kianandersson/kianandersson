@@ -1,9 +1,9 @@
 .chip {
   font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 1.5;
-  padding: 4px 12px;
-  border-radius: 4px;
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-leading);
+  padding: var(--space-2xs) var(--space-sm);
+  border-radius: var(--radius-sm);
   white-space: nowrap;
 }
 
@@ -24,7 +24,7 @@
 @media print {
   .chip[data-variant="stack"],
   .chip[data-variant="methods"] {
-    padding: 0 4px;
+    padding: 0 var(--space-2xs);
     background: transparent;
   }
 }

@@ -23,22 +23,22 @@ const PLACEHOLDER_BODY =
   .root {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: var(--space-xl);
     align-items: flex-start;
   }
 
   .text {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: var(--space-lg);
     align-items: flex-start;
   }
 
   .heading {
     font-family: var(--font-sans);
     font-weight: 600;
-    font-size: 38px;
-    line-height: 1.12;
+    font-size: var(--text-hero-size);
+    line-height: var(--text-hero-leading);
     letter-spacing: -0.025em;
     color: var(--color-text);
     margin: 0;
@@ -51,8 +51,8 @@ const PLACEHOLDER_BODY =
   .body {
     margin: 0;
     font-family: var(--font-sans);
-    font-size: 19px;
-    line-height: 1.6;
+    font-size: var(--text-subtitle-size);
+    line-height: var(--text-subtitle-leading);
     color: var(--color-text-muted);
     max-width: 540px;
   }

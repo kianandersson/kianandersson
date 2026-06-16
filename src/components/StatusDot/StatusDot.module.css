@@ -3,7 +3,7 @@
   display: inline-block;
   width: var(--status-dot-size, 8px);
   height: var(--status-dot-size, 8px);
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background: var(--color-status-success);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-status-success) 16%, transparent);
 }
@@ -17,7 +17,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background: var(--color-status-success);
   animation: dotRing 2.4s ease-out infinite;
 }

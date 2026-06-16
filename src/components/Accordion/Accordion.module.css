@@ -7,11 +7,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--space-sm);
   background: transparent;
   border: none;
   appearance: none;
-  padding: 16px 24px 16px 0;
+  padding: var(--space-md) var(--space-xl) var(--space-md) 0;
   margin: 0;
   cursor: pointer;
   text-align: left;
@@ -35,18 +35,18 @@
 .titleGroup {
   display: flex;
   align-items: baseline;
-  gap: 12px;
+  gap: var(--space-sm);
 }
 
 .title {
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 15px;
+  font-size: var(--text-body-size);
 }
 
 .count {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--text-caption-size);
   color: var(--color-text-subtle);
 }
 

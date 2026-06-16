@@ -1,10 +1,10 @@
 .marker {
   position: absolute;
-  left: -31px;
-  top: 8px;
+  left: calc(var(--space-8) * -1);
+  top: var(--space-2);
   width: 8px;
   height: 8px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background: var(--color-accent);
   box-shadow: 0 0 0 4px color-mix(in oklch, var(--color-accent) 10%, transparent);
 }

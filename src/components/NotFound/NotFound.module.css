@@ -2,25 +2,25 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 24px;
+  gap: var(--space-xl);
 }
 
 .eyebrow {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-xs);
 }
 
 .hashes {
   font-family: var(--font-mono);
   color: var(--color-accent);
   font-weight: 600;
-  font-size: 15px;
+  font-size: var(--text-body-size);
 }
 
 .eyebrowLabel {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--text-caption-size);
   letter-spacing: 0.08em;
   color: var(--color-text-muted);
 }
@@ -29,8 +29,8 @@
   margin: 0;
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 28px;
-  line-height: 1.15;
+  font-size: var(--text-title-size);
+  line-height: var(--text-title-leading);
   letter-spacing: -0.025em;
   color: var(--color-text);
 }
@@ -38,8 +38,8 @@
 .body {
   margin: 0;
   font-family: var(--font-sans);
-  font-size: 18px;
-  line-height: 1.6;
+  font-size: var(--text-subhead-size);
+  line-height: var(--text-body-leading);
   color: var(--color-text-muted);
 }
 
@@ -48,7 +48,7 @@
   flex-direction: column;
   width: 100%;
   border: 1px solid var(--color-divider);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   background: var(--color-surface-raised);
   overflow: hidden;
 }
@@ -56,15 +56,15 @@
 .terminalBar {
   display: flex;
   align-items: center;
-  gap: 9px;
-  padding: 11px 15px;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
   border-bottom: 1px solid var(--color-divider);
 }
 
 .dot {
   width: 13px;
   height: 13px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
 }
 
 .dotRed {
@@ -80,19 +80,19 @@
 }
 
 .terminalTitle {
-  margin-left: 6px;
+  margin-left: var(--space-xs);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--text-caption-size);
   color: var(--color-text-muted);
 }
 
 .terminalBody {
   display: flex;
   flex-direction: column;
-  padding: 16px;
+  padding: var(--space-md);
   font-family: var(--font-mono);
-  font-size: 13px;
-  line-height: 1.9;
+  font-size: var(--text-meta-size);
+  line-height: var(--line-height-600);
 }
 
 .line {
