@@ -166,7 +166,6 @@ Light theme:
 --color-accent-line:     oklch(from var(--color-terracotta-600) l c h / 0.30);
 --color-status-ok:       var(--color-green-500);       /* design-tagged: green-500 = ok */
 --color-status-warn:     var(--color-amber-400);       /* design-tagged: amber-400 = warn */
---color-shadow-default:  rgba(0, 0, 0, 0.08);
 ```
 
 Dark theme overrides:
@@ -184,12 +183,13 @@ Dark theme overrides:
 --color-accent-line:     oklch(from var(--color-terracotta-500) l c h / 0.38);
 --color-status-ok:       var(--color-green-400);       /* design-tagged: green-400 = dk ok */
 --color-status-warn:     var(--color-amber-300);       /* design-tagged: amber-300 = dk warn */
---color-shadow-default:  rgba(0, 0, 0, 0.5);
 ```
 
-`--color-shadow-default` is the only semantic that stays as a literal value: the design uses plain black at two alpha levels (8 % light, 50 % dark) for shadows, not a hue-family primitive.
+`--color-accent-soft` and `--color-accent-line` carry an alpha because two of their consumers — `TimelineMarker`'s `box-shadow: 0 0 0 4px …` halo, and the `::selection` highlight in `BaseLayout` — depend on transparency to blend with whatever sits behind. A solid primitive substitute would visibly break those cases. The remaining solid-fill consumers (chip background, tag border) accept the alpha without issue.
 
 `oklch(from var(...) l c h / α)` pulls the L, C, H from the referenced primitive and applies an alpha — `--color-accent-soft` and `--color-accent-line` automatically re-resolve if the primitive ever changes. Relative-color syntax is Baseline 2024 (Safari 16.4+, Chrome 119+, Firefox 128+).
+
+The previous `--shadow` token has no consumers and is **not** carried over to the new tokens.css. If shadow tokens are needed later, declare them then.
 
 #### Untagged role mappings
 
@@ -214,7 +214,7 @@ Prominence is defined by the role's distance from its background, not the absolu
 
 ### 2.4 Token renames
 
-The full rename map for every CSS custom property in `src/styles/tokens.css`. The migration agent must apply every row across every file that references the old name. Four of the renames are explicitly issue-scoped (locked by #30); the rest follow automatically from the `--color-<role>-<variant>` naming convention.
+The full rename map for every CSS custom property in `src/styles/tokens.css` that has a consumer. The migration agent must apply every row across every file that references the old name. Four of the renames are explicitly issue-scoped (locked by #30); the rest follow automatically from the `--color-<role>-<variant>` naming convention. Tokens with zero consumers are dropped, not renamed.
 
 #### Color tokens
 
@@ -232,9 +232,10 @@ The full rename map for every CSS custom property in `src/styles/tokens.css`. Th
 | `--accent-line` | `--color-accent-line`     |               | 30–38 % alpha accent (tag borders).                             |
 | `--ok`          | `--color-status-ok`       |               | Status: available/success.                                      |
 | `--warn`        | `--color-status-warn`     |               | Status: warning.                                                |
-| `--shadow`      | `--color-shadow-default`  |               | Drop-shadow color (rgba black).                                 |
 
 For `--dim` and `--faint`: `--dim` is visibly more prominent than `--faint` in the current palette (hex `#65656b` vs `#6a6a78`); `muted` is conventionally more prominent than `subtle`. The mapping preserves visual hierarchy.
+
+`--shadow` from the previous `tokens.css` has no consumers in `src/` and is dropped — neither renamed nor carried over.
 
 #### Tokens kept as-is
 
@@ -288,7 +289,7 @@ Unitless multipliers (so they scale with the cascading font-size):
 
 #### Typography semantics
 
-Each role gets a `-size` and a `-leading` token:
+Each role declares both a `-size` and a `-leading` token. A typography role is a size+leading pair: components that adopt `--text-<role>-size` implicitly take on the role, and any component that needs to override the inherited cascade line-height for that role uses the matching `-leading`. The migration applies `-leading` explicitly only where §3.2 lists a line-height change, but both tokens stay declared so the role is complete.
 
 ```css
 --text-caption-size:    var(--font-size-100);   /* 12 */
@@ -360,12 +361,10 @@ T-shirt sizes covering every spacing value currently used in the codebase (after
 --space-2xl: var(--space-7);   /* 28 */
 --space-3xl: var(--space-8);   /* 32 */
 --space-4xl: var(--space-10);  /* 40 */
---space-5xl: var(--space-11);  /* 44 */
---space-6xl: var(--space-12);  /* 48 */
 --space-7xl: var(--space-16);  /* 64 */
 ```
 
-Currently-unused primitives (`--space-9`, `--space-13`, `--space-14`, `--space-15`) are kept on the scale for completeness but have no semantic alias yet.
+The t-shirt scale skips `5xl` and `6xl` (44, 48 px) and the primitives at 36, 44, 48, 52, 56, 60 px (`--space-9`, `--space-11` through `--space-15`) carry no semantic alias — no in-scope declaration in the codebase needs them. `7xl` is kept for the gap so the name reflects the unaliased intermediate steps; add `5xl` / `6xl` (or the missing primitives) when a usage appears.
 
 #### Escape hatch
 
@@ -620,16 +619,16 @@ Before any commit beyond this document lands, the maintainer must:
 - [ ] Approve every line-height snap in §3.2 (Hero:41 has the largest drift at +0.13).
 - [ ] Approve every spacing snap in §3.3 (or veto — equidistant ties round up by default; flag any where rounding down is preferred).
 - [ ] Approve the single radius snap in §3.4 and the `50%` + `980px` → `--radius-full` consolidation.
-- [ ] Approve the full 13-row color token rename map in §2.4 (4 issue-scoped + 9 follow from naming convention) and the "kept as-is" list (`--font-sans`, `--font-mono`, `--container-max`, `--container-pad`).
+- [ ] Approve the 12-row color token rename map in §2.4 (4 issue-scoped + 8 follow from naming convention), the "kept as-is" list (`--font-sans`, `--font-mono`, `--container-max`, `--container-pad`), and the dropped-as-unused list (`--shadow`).
 - [ ] Approve the §2.4 `tokens.css` structure plan (`:root` / `[data-theme="dark"]` / `@media print` preserved).
 - [ ] Approve the §3.0 instruction that on-scale raw-px values get a direct 1:1 substitution to semantic tokens (not just off-scale snaps).
 - [ ] Approve the OKLCH primitive palette in §2.2 (5 hue families, full 55-step ramp).
 - [ ] Approve the canonical role-tag table in §2.3.
-- [ ] Approve the relative-color `oklch(from var(...) l c h / α)` syntax in §2.3 for `accent-soft` and `accent-line`.
+- [ ] Approve the relative-color `oklch(from var(...) l c h / α)` syntax in §2.3 for `accent-soft` and `accent-line`, and the rationale for keeping them alpha-based rather than referencing solid primitives.
 - [ ] Approve the five untagged-role snaps in §2.3 (`surface` light/dark, `surface-muted` light/dark, `line` dark) — vetoes can pick an alternative ramp step.
 - [ ] Approve that visible drift from the previous `tokens.css` is accepted: the new semantics resolve to ramp steps. Manual verification on `index.astro` + `404.astro` is the final gate.
-- [ ] Approve the typography semantic naming (`--text-<role>-size` / `-leading`) in §2.5.
-- [ ] Approve the spacing t-shirt scale in §2.6 (12 sizes covering current usage).
+- [ ] Approve the typography semantics in §2.5 — every role declares both `-size` and `-leading`; components reference the leading only when overriding the inherited cascade line-height (per §3.2).
+- [ ] Approve the spacing t-shirt scale in §2.6 (10 sizes; `5xl` / `6xl` skipped because no in-scope declaration needs 44 or 48 px).
 - [ ] Approve the radius primitive + semantic split in §2.7.
 - [ ] Approve the illustration-layer exceptions in §3.6.
 
@@ -637,7 +636,7 @@ After approval, subsequent commits on this branch implement the migration in thi
 
 1. **Rewrite `src/styles/tokens.css`** with primitive + semantic layers per §2.2 / §2.3 / §2.5 / §2.6 / §2.7. Preserve the existing structure: font-face → `:root` → `[data-theme="dark"]` → `@media print`. Keep `--font-sans`, `--font-mono`, `--container-max`, `--container-pad` as-is (§2.4). No component changes in this commit.
 
-2. **Apply the 13 color renames per §2.4** across every file that references the old token names. The consuming files (verified by grep at planning time):
+2. **Apply the 12 color renames per §2.4** across every file that references the old token names. The consuming files (verified by grep at planning time):
 
    - **Component CSS Modules:** Accordion, AvailabilityPill, Chip, ChipList, ContactCta, ContactForm, CtaButton, Experience, Footer, KeySkills, LevelMeter, Miscellaneous, NotFound, OpenGraphCard, PrintButton, SkillGroups, SkillRow, StatusDot, ThemeToggle, TimelineMarker, TopBar.
    - **Astro files with inline color tokens:** `layouts/BaseLayout.astro`, `pages/og.astro`, `components/Hero/Hero.astro`.
