@@ -5,11 +5,12 @@
   height: var(--status-dot-size, 8px);
   border-radius: 50%;
   background: var(--ok);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 16%, transparent);
 }
 
 .dot[data-tone="warn"] {
   background: var(--warn);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--warn) 16%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--warn) 16%, transparent);
 }
 
 .dot[data-tone="ok"]::before {
