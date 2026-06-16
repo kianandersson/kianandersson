@@ -154,40 +154,51 @@ This is a deliberate move away from eyeballed hex toward the systematic ramp. Vi
 Light theme:
 
 ```css
---color-bg-default:      var(--color-sand-100);        /* design-tagged: sand-100 = bg */
---color-surface-default: var(--color-sand-50);         /* untagged; snap to lightest sand */
+--color-surface:         var(--color-sand-100);        /* design-tagged: sand-100 = bg */
+--color-surface-raised:  var(--color-sand-50);         /* untagged; snap to lightest sand */
 --color-surface-muted:   var(--color-sand-200);        /* was --chip; snap to nearest ramp step */
---color-border-subtle:   var(--color-sand-200);        /* design-tagged: sand-200 = line; was --line */
---color-text-default:    var(--color-slate-900);       /* design-tagged: slate-900 = text */
+--color-divider:         var(--color-sand-200);        /* design-tagged: sand-200 = line; was --line */
+--color-text:            var(--color-slate-900);       /* design-tagged: slate-900 = text */
 --color-text-muted:      var(--color-slate-600);       /* design-tagged: slate-600 = dim; was --dim */
 --color-text-subtle:     var(--color-slate-400);       /* design-tagged: slate-400 = faint; was --faint */
---color-accent-default:  var(--color-terracotta-600);  /* design-tagged: terracotta-600 = accent */
---color-accent-soft:     oklch(from var(--color-terracotta-600) l c h / 0.10);
---color-accent-line:     oklch(from var(--color-terracotta-600) l c h / 0.30);
---color-status-ok:       var(--color-green-500);       /* design-tagged: green-500 = ok */
---color-status-warn:     var(--color-amber-400);       /* design-tagged: amber-400 = warn */
+--color-accent:          var(--color-terracotta-600);  /* design-tagged: terracotta-600 = accent */
+--color-status-success:  var(--color-green-500);       /* design-tagged: green-500 = ok */
+--color-status-warning:  var(--color-amber-400);       /* design-tagged: amber-400 = warn */
 ```
 
 Dark theme overrides:
 
 ```css
---color-bg-default:      var(--color-slate-950);       /* design-tagged: slate-950 = dk bg */
---color-surface-default: var(--color-slate-900);       /* untagged; one step above bg dark */
---color-surface-muted:   var(--color-slate-800);       /* was --chip; one step above surface */
---color-border-subtle:   var(--color-slate-800);       /* same step as chip in dark mode */
---color-text-default:    var(--color-slate-50);        /* design-tagged: slate-50 = dk text */
+--color-surface:         var(--color-slate-950);       /* design-tagged: slate-950 = dk bg */
+--color-surface-raised:  var(--color-slate-900);       /* untagged; one step above bg dark */
+--color-surface-muted:   var(--color-slate-800);       /* was --chip; one step above surface-raised */
+--color-divider:         var(--color-slate-800);       /* same step as surface-muted in dark mode */
+--color-text:            var(--color-slate-50);        /* design-tagged: slate-50 = dk text */
 --color-text-muted:      var(--color-slate-400);       /* dim flipped to lighter slot in dark */
 --color-text-subtle:     var(--color-slate-600);       /* faint flipped to darker slot in dark */
---color-accent-default:  var(--color-terracotta-500);  /* design-tagged: terracotta-500 = dk accent */
---color-accent-soft:     oklch(from var(--color-terracotta-500) l c h / 0.16);
---color-accent-line:     oklch(from var(--color-terracotta-500) l c h / 0.38);
---color-status-ok:       var(--color-green-400);       /* design-tagged: green-400 = dk ok */
---color-status-warn:     var(--color-amber-300);       /* design-tagged: amber-300 = dk warn */
+--color-accent:          var(--color-terracotta-500);  /* design-tagged: terracotta-500 = dk accent */
+--color-status-success:  var(--color-green-400);       /* design-tagged: green-400 = dk ok */
+--color-status-warning:  var(--color-amber-300);       /* design-tagged: amber-300 = dk warn */
 ```
 
-`--color-accent-soft` and `--color-accent-line` carry an alpha because two of their consumers — `TimelineMarker`'s `box-shadow: 0 0 0 4px …` halo, and the `::selection` highlight in `BaseLayout` — depend on transparency to blend with whatever sits behind. A solid primitive substitute would visibly break those cases. The remaining solid-fill consumers (chip background, tag border) accept the alpha without issue.
+#### Accent-alpha at consumer sites
 
-`oklch(from var(...) l c h / α)` pulls the L, C, H from the referenced primitive and applies an alpha — `--color-accent-soft` and `--color-accent-line` automatically re-resolve if the primitive ever changes. Relative-color syntax is Baseline 2024 (Safari 16.4+, Chrome 119+, Firefox 128+).
+`--color-accent-soft` and `--color-accent-line` are intentionally **not** tokens. There are only two distinct alpha levels and five consumer sites, and a token layer would mix two different naming axes (visual quality `soft` vs. usage `line`). Each consumer inlines `color-mix(in oklch, var(--color-accent) X%, transparent)` directly:
+
+- **10 %** for accent-tinted fills (chip background, button-hover background, `::selection`, decorative halo)
+- **30 %** for the accent-tinted tag border
+
+A single alpha per role across modes — `--color-accent` itself swaps primitive between light and dark, which produces enough mode-appropriate intensity. The previous mode-specific tuning (16 % / 38 % in dark) is intentionally dropped; manual verification on `index.astro` + `404.astro` gates whether the result holds.
+
+| file:line                                    | usage                | replacement                                                  |
+| -------------------------------------------- | -------------------- | ------------------------------------------------------------ |
+| `Chip/Chip.module.css:12`                    | `background`         | `color-mix(in oklch, var(--color-accent) 10%, transparent)`  |
+| `ContactForm/ContactForm.module.css:73`      | `background`         | `color-mix(in oklch, var(--color-accent) 10%, transparent)`  |
+| `ContactForm/ContactForm.module.css:74`      | `border` color       | `color-mix(in oklch, var(--color-accent) 30%, transparent)`  |
+| `TimelineMarker/TimelineMarker.module.css:9` | `box-shadow` color   | `color-mix(in oklch, var(--color-accent) 10%, transparent)`  |
+| `layouts/BaseLayout.astro:101`               | `::selection` `background` | `color-mix(in oklch, var(--color-accent) 10%, transparent)`  |
+
+`color-mix(in oklch, …)` is Baseline 2023 (Safari 16.2+, Chrome 111+, Firefox 113+) — same support window as the OKLCH primitives in §2.2.
 
 The previous `--shadow` token has no consumers and is **not** carried over to the new tokens.css. If shadow tokens are needed later, declare them then.
 
@@ -195,13 +206,13 @@ The previous `--shadow` token has no consumers and is **not** carried over to th
 
 Three roles in light mode and two in dark mode are not tagged on the design's ramp. Each is snapped to the nearest ramp step:
 
-| Role (mode)                          | Design ladder L | Snapped to    | Drift  | Note                                            |
-| ------------------------------------ | --------------: | ------------- | -----: | ----------------------------------------------- |
-| `surface` light (was `--surface`)    |             100 | `sand-50`     |  −2 L  | Sand-50 is the lightest ramp step (L 98).       |
-| `surface-muted` light (was `--chip`) |            93.5 | `sand-200`    |  −1.5  | Equidistant tie with `sand-100`; pick the darker step to keep `chip` distinct from `bg`. Collapses `chip` and `line` to the same ramp step in light mode. |
-| `surface` dark                       |              24 | `slate-900`   |  +4    | Equidistant tie between `slate-900` (L 28) and `slate-950` (L 20); pick the lighter step so surface stays above bg. |
-| `surface-muted` dark (was `--chip`)  |              29 | `slate-800`   |  +9    | Kept distinct from `surface` dark; drift is the cost of staying on the ramp. |
-| `line` dark                          |            29.5 | `slate-800`   |  +8.5  | Collapses with `chip` in dark mode — design ladder already lumps them at L 29. |
+| Role (mode)                                  | Design ladder L | Snapped to    | Drift  | Note                                            |
+| -------------------------------------------- | --------------: | ------------- | -----: | ----------------------------------------------- |
+| `surface-raised` light (was `--surface`)     |             100 | `sand-50`     |  −2 L  | Sand-50 is the lightest ramp step (L 98).       |
+| `surface-muted` light (was `--chip`)         |            93.5 | `sand-200`    |  −1.5  | Equidistant tie with `sand-100`; pick the darker step to keep `surface-muted` distinct from `surface`. Collapses `surface-muted` and `divider` to the same ramp step in light mode. |
+| `surface-raised` dark                        |              24 | `slate-900`   |  +4    | Equidistant tie between `slate-900` (L 28) and `slate-950` (L 20); pick the lighter step so `surface-raised` stays above `surface`. |
+| `surface-muted` dark (was `--chip`)          |              29 | `slate-800`   |  +9    | Kept distinct from `surface-raised` in dark; drift is the cost of staying on the ramp. |
+| `divider` dark                               |            29.5 | `slate-800`   |  +8.5  | Collapses with `surface-muted` in dark mode — design ladder already lumps them at L 29. |
 
 #### Why both `--dim` and `--faint` flip across modes
 
@@ -218,20 +229,22 @@ The full rename map for every CSS custom property in `src/styles/tokens.css` tha
 
 #### Color tokens
 
-| Old             | New                       | Issue-scoped? | Reasoning                                                       |
-| --------------- | ------------------------- | :-----------: | --------------------------------------------------------------- |
-| `--bg`          | `--color-bg-default`      |               | Background; `default` is the standard variant.                  |
-| `--surface`     | `--color-surface-default` |               | Card/terminal surface.                                          |
-| `--chip`        | `--color-surface-muted`   |       ✓       | Role is "muted surface", not "chip-specific".                   |
-| `--text`        | `--color-text-default`    |               | Primary text.                                                   |
-| `--dim`         | `--color-text-muted`      |       ✓       | Secondary text — less prominent than `default`.                 |
-| `--faint`       | `--color-text-subtle`     |       ✓       | Tertiary text — captions, timestamps, section labels.           |
-| `--line`        | `--color-border-subtle`   |       ✓       | Hairlines and dividers.                                         |
-| `--accent`      | `--color-accent-default`  |               | Brand accent.                                                   |
-| `--accent-soft` | `--color-accent-soft`     |               | 10–16 % alpha accent (chip backgrounds, tag fills).             |
-| `--accent-line` | `--color-accent-line`     |               | 30–38 % alpha accent (tag borders).                             |
-| `--ok`          | `--color-status-ok`       |               | Status: available/success.                                      |
-| `--warn`        | `--color-status-warn`     |               | Status: warning.                                                |
+| Old             | New                       | Issue-scoped? | Reasoning                                                                        |
+| --------------- | ------------------------- | :-----------: | -------------------------------------------------------------------------------- |
+| `--bg`          | `--color-surface`         |               | Page background — the base surface.                                              |
+| `--surface`     | `--color-surface-raised`  |               | Card/terminal surface; `raised` describes elevation above the page.              |
+| `--chip`        | `--color-surface-muted`   |       ✓       | Role is "muted surface", not "chip-specific".                                    |
+| `--text`        | `--color-text`            |               | Primary text; un-suffixed token is the default.                                  |
+| `--dim`         | `--color-text-muted`      |       ✓       | Secondary text — less prominent than the default.                                |
+| `--faint`       | `--color-text-subtle`     |       ✓       | Tertiary text — captions, timestamps, section labels.                            |
+| `--line`        | `--color-divider`         |       ✓       | Hairlines and dividers; `divider` names the role, not the CSS `border` property. |
+| `--accent`      | `--color-accent`          |               | Brand accent; un-suffixed token is the default.                                  |
+| `--accent-soft` | (removed)                 |               | Inlined per consumer as `color-mix(in oklch, var(--color-accent) 10%, transparent)`. See §2.3. |
+| `--accent-line` | (removed)                 |               | Inlined per consumer as `color-mix(in oklch, var(--color-accent) 30%, transparent)`. See §2.3. |
+| `--ok`          | `--color-status-success`  |               | Status: available/success.                                                       |
+| `--warn`        | `--color-status-warning`  |               | Status: warning.                                                                 |
+
+The `Issue-scoped?` column marks renames where #30 explicitly named both source and target. `--line` keeps its check because the source was issue-scoped; the target was retargeted from `--color-border-subtle` to `--color-divider` during PR review. The six unmarked renames (`--bg`, `--surface`, `--text`, `--accent`, `--ok`, `--warn`) plus the two dropped accent-alpha tokens were all negotiated in PR review.
 
 For `--dim` and `--faint`: `--dim` is visibly more prominent than `--faint` in the current palette (hex `#65656b` vs `#6a6a78`); `muted` is conventionally more prominent than `subtle`. The mapping preserves visual hierarchy.
 
@@ -401,7 +414,7 @@ The design is flat. Existing `box-shadow` usages remain inline in component CSS 
 
 - `StatusDot.module.css:8,13` — 3 px focus-ring-style soft glow around the dot
 - `TimelineMarker.module.css:9` — 4 px soft glow around the marker
-- `ContactForm.module.css:121` — `0 0 0 1000px var(--surface) inset` autofill mask
+- `ContactForm.module.css:121` — `0 0 0 1000px var(--color-surface-raised) inset` autofill mask
 
 These do **not** form a coherent scale and stay component-local.
 
@@ -621,13 +634,13 @@ Before any commit beyond this document lands, the maintainer must:
 - [ ] Approve every line-height snap in §3.2 (Hero:41 has the largest drift at +0.13).
 - [ ] Approve every spacing snap in §3.3 (or veto — equidistant ties round up by default; flag any where rounding down is preferred).
 - [ ] Approve the single radius snap in §3.4 and the `50%` + `980px` → `--radius-full` consolidation.
-- [ ] Approve the 12-row color token rename map in §2.4 (4 issue-scoped + 8 follow from naming convention), the "kept as-is" list (`--font-sans`, `--font-mono`, `--container-max`, `--container-pad`), and the dropped-as-unused list (`--shadow`).
+- [ ] Approve the 10-row color token rename map in §2.4 (4 issue-scoped + 6 negotiated in PR review) plus the two dropped accent-alpha tokens (`--accent-soft`, `--accent-line`), the "kept as-is" list (`--font-sans`, `--font-mono`, `--container-max`, `--container-pad`), and the dropped-as-unused list (`--shadow`).
 - [ ] Approve the §2.4 `tokens.css` structure plan (`:root` / `[data-theme="dark"]` / `@media print` preserved).
 - [ ] Approve the §3.0 instruction that on-scale raw-px values get a direct 1:1 substitution to semantic tokens (not just off-scale snaps).
 - [ ] Approve the OKLCH primitive palette in §2.2 (5 hue families, full 55-step ramp).
 - [ ] Approve the canonical role-tag table in §2.3.
-- [ ] Approve the relative-color `oklch(from var(...) l c h / α)` syntax in §2.3 for `accent-soft` and `accent-line`, and the rationale for keeping them alpha-based rather than referencing solid primitives.
-- [ ] Approve the five untagged-role snaps in §2.3 (`surface` light/dark, `surface-muted` light/dark, `line` dark) — vetoes can pick an alternative ramp step.
+- [ ] Approve dropping `--color-accent-soft` and `--color-accent-line` as tokens; the five consumers inline `color-mix(in oklch, var(--color-accent) X%, transparent)` per §2.3 (single alpha per role: 10 % for fills, 30 % for the tag border). Mode-specific dark-mode tuning (previously 16 % / 38 %) is intentionally dropped — verified manually on `index.astro` + `404.astro`.
+- [ ] Approve the five untagged-role snaps in §2.3 (`surface-raised` light/dark, `surface-muted` light/dark, `divider` dark) — vetoes can pick an alternative ramp step.
 - [ ] Approve that visible drift from the previous `tokens.css` is accepted: the new semantics resolve to ramp steps. Manual verification on `index.astro` + `404.astro` is the final gate.
 - [ ] Approve the typography semantics in §2.5 — every role declares both `-size` and `-leading`; components reference the leading only when overriding the inherited cascade line-height (per §3.2).
 - [ ] Approve the spacing t-shirt scale in §2.6 (12 sizes covering current usage and the immediate steps above).
@@ -638,14 +651,14 @@ After approval, subsequent commits on this branch implement the migration in thi
 
 1. **Rewrite `src/styles/tokens.css`** with primitive + semantic layers per §2.2 / §2.3 / §2.5 / §2.6 / §2.7. Preserve the existing structure: font-face → `:root` → `[data-theme="dark"]` → `@media print`. Keep `--font-sans`, `--font-mono`, `--container-max`, `--container-pad` as-is (§2.4). No component changes in this commit.
 
-2. **Apply the 12 color renames per §2.4** across every file that references the old token names. The consuming files (verified by grep at planning time):
+2. **Apply the 10 color renames per §2.4** across every file that references the old token names, **and inline the five accent-alpha consumers** per the table in §2.3 (each call site replaces `var(--accent-soft)` / `var(--accent-line)` with the listed `color-mix()` expression). The consuming files (verified by grep at planning time):
 
    - **Component CSS Modules:** Accordion, AvailabilityPill, Chip, ChipList, ContactCta, ContactForm, CtaButton, Experience, Footer, KeySkills, LevelMeter, Miscellaneous, NotFound, OpenGraphCard, PrintButton, SkillGroups, SkillRow, StatusDot, ThemeToggle, TimelineMarker, TopBar.
    - **Astro files with inline color tokens:** `layouts/BaseLayout.astro`, `pages/og.astro`, `components/Hero/Hero.astro`.
 
    `pages/404.astro` and `templates/IndexTemplate.astro` reference only `--container-max` / `--container-pad` (kept as-is per §2.4) and need no rename.
 
-   This is a mechanical search-and-replace (e.g. `var(--bg)` → `var(--color-bg-default)`). Components that don't appear in §3.1–§3.4 still need this pass — the snap tables enumerate only off-scale value changes, not the universal rename.
+   The renames are a mechanical search-and-replace (e.g. `var(--bg)` → `var(--color-surface)`). Components that don't appear in §3.1–§3.4 still need this pass — the snap tables enumerate only off-scale value changes, not the universal rename.
 
 3. **Convert raw-px declarations to semantic tokens** in component CSS, one component or small group per commit. Includes both off-scale snaps (§3.1–§3.4, requires the listed snap) and on-scale conversions (§3.0, direct 1:1 substitution). Positioning values per §3.5; illustration-layer exceptions per §3.6 stay untouched.
 
