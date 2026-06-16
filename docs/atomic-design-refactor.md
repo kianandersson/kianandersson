@@ -361,10 +361,12 @@ T-shirt sizes covering every spacing value currently used in the codebase (after
 --space-2xl: var(--space-7);   /* 28 */
 --space-3xl: var(--space-8);   /* 32 */
 --space-4xl: var(--space-10);  /* 40 */
+--space-5xl: var(--space-11);  /* 44 */
+--space-6xl: var(--space-12);  /* 48 */
 --space-7xl: var(--space-16);  /* 64 */
 ```
 
-The t-shirt scale skips `5xl` and `6xl` (44, 48 px) and the primitives at 36, 44, 48, 52, 56, 60 px (`--space-9`, `--space-11` through `--space-15`) carry no semantic alias — no in-scope declaration in the codebase needs them. `7xl` is kept for the gap so the name reflects the unaliased intermediate steps; add `5xl` / `6xl` (or the missing primitives) when a usage appears.
+Currently-unused primitives (`--space-9`, `--space-13`, `--space-14`, `--space-15`) are kept on the scale for completeness but have no semantic alias yet.
 
 #### Escape hatch
 
@@ -628,7 +630,7 @@ Before any commit beyond this document lands, the maintainer must:
 - [ ] Approve the five untagged-role snaps in §2.3 (`surface` light/dark, `surface-muted` light/dark, `line` dark) — vetoes can pick an alternative ramp step.
 - [ ] Approve that visible drift from the previous `tokens.css` is accepted: the new semantics resolve to ramp steps. Manual verification on `index.astro` + `404.astro` is the final gate.
 - [ ] Approve the typography semantics in §2.5 — every role declares both `-size` and `-leading`; components reference the leading only when overriding the inherited cascade line-height (per §3.2).
-- [ ] Approve the spacing t-shirt scale in §2.6 (10 sizes; `5xl` / `6xl` skipped because no in-scope declaration needs 44 or 48 px).
+- [ ] Approve the spacing t-shirt scale in §2.6 (12 sizes covering current usage and the immediate steps above).
 - [ ] Approve the radius primitive + semantic split in §2.7.
 - [ ] Approve the illustration-layer exceptions in §3.6.
 
