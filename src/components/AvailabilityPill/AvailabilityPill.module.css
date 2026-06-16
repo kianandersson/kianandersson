@@ -1,0 +1,27 @@
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 980px;
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  --status-dot-size: 9px;
+}
+
+.label {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.date {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--dim);
+}

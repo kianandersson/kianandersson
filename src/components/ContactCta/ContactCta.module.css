@@ -4,10 +4,6 @@
   gap: 0;
   align-items: flex-start;
   width: 100%;
-  /* Self-contained stacking context: keeps the tooltip's z-index ordering
-   * scoped to the CTA, so it reliably layers above the sibling reveal/form
-   * without needing arbitrary high z-index values. */
-  isolation: isolate;
   transition: gap 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -15,219 +11,201 @@
   gap: 24px;
 }
 
-/* Wraps the button and the tooltip together so the tooltip has a positioning
- * anchor that's sized like the pill (inline-flex shrinks to button width),
- * and so the trigger paints as a positioned sibling above the reveal/form
- * in DOM order — without needing arbitrary z-index values. */
-.trigger {
-  position: relative;
-  display: inline-flex;
-}
-
-.pill {
-  position: relative;
-  display: inline-flex;
+.triggerRow {
+  display: flex;
   align-items: center;
   gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* --------------------------------------------------------------------
+ * Icon-only round button (shown alongside the AvailabilityPill).
+ * 44px circle that swaps @ → arrow on hover and rotates a ✕ in when active.
+ * ------------------------------------------------------------------ */
+
+.iconButton {
+  display: grid;
+  place-items: center;
+  width: 44px;
   height: 44px;
-  padding: 0 6px 0 18px;
-  border-radius: 980px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  color: var(--text);
-  font-family: var(--font-sans);
-  font-size: 15px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--text);
+  color: var(--bg);
   cursor: pointer;
-  transition:
-    border-color 0.2s ease,
-    background 0.2s ease,
-    transform 0.12s ease;
-}
-
-.pill[data-availability="none"] {
-  background: var(--text);
-  color: var(--bg);
-  border-color: var(--text);
-  padding-left: 18px;
-}
-
-.pill:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
-.pill:active {
-  transform: scale(0.97);
-}
-
-.dot {
-  position: relative;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--ok);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 16%, transparent);
-}
-
-.dot[data-tone="warn"] {
-  background: var(--warn);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--warn) 16%, transparent);
-}
-
-.dot::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: inherit;
-  animation: pillDotPulse 2.2s ease-out infinite;
-}
-
-@keyframes pillDotPulse {
-  0% {
-    transform: scale(1);
-    opacity: 0.55;
-  }
-  70% {
-    transform: scale(2.8);
-    opacity: 0;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-.label {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 6px;
-  white-space: nowrap;
-}
-
-.date {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--dim);
-}
-
-.pill[data-availability="none"] .date {
-  color: var(--bg);
-}
-
-.circle {
-  position: relative;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--text);
-  color: var(--bg);
   overflow: hidden;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
   transition:
+    transform 0.12s ease,
     background 0.26s ease,
     color 0.26s ease;
 }
 
-.pill[data-availability="none"] .circle {
-  background: rgba(244, 243, 241, 0.14);
+.iconButton:active {
+  transform: scale(0.94);
 }
 
-.iconLayer {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.iconButton:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.iconStack {
+  display: grid;
+  place-items: center;
+}
+
+.iconStack > .icAt,
+.iconStack > .icArrow,
+.iconStack > .icX {
+  grid-area: 1 / 1;
   transition:
-    transform 0.26s ease,
-    opacity 0.26s ease;
+    opacity 0.2s ease,
+    transform 0.26s ease;
 }
 
-.iconLayer[data-icon="at"] {
-  transform: translateX(0);
-  opacity: 1;
-}
-
-.iconLayer[data-icon="arrow"] {
-  transform: translateX(-100%);
+.iconStack > .icArrow {
   opacity: 0;
+  transform: translateX(-12px);
 }
 
-.iconLayer[data-icon="close"] {
-  transform: scale(0.6);
+.iconStack > .icX {
   opacity: 0;
+  transform: rotate(-90deg) scale(0.55);
 }
 
-@media (hover: hover) {
-  .pill:not([data-open="true"]):hover .iconLayer[data-icon="at"] {
-    transform: translateX(100%);
+@media (hover: hover) and (pointer: fine) {
+  .iconButton:not([data-open="true"]):hover .iconStack > .icAt {
     opacity: 0;
+    transform: translateX(12px);
   }
-  .pill:not([data-open="true"]):hover .iconLayer[data-icon="arrow"] {
-    transform: translateX(0);
+  .iconButton:not([data-open="true"]):hover .iconStack > .icArrow {
     opacity: 1;
+    transform: translateX(0);
   }
 }
 
-.pill:not([data-open="true"]):focus-visible .iconLayer[data-icon="at"] {
-  transform: translateX(100%);
-  opacity: 0;
-}
-
-.pill:not([data-open="true"]):focus-visible .iconLayer[data-icon="arrow"] {
-  transform: translateX(0);
-  opacity: 1;
-}
-
-.pill[data-open="true"] .iconLayer[data-icon="at"],
-.pill[data-open="true"] .iconLayer[data-icon="arrow"] {
-  opacity: 0;
-}
-
-.pill[data-open="true"] .iconLayer[data-icon="close"] {
-  transform: scale(1);
-  opacity: 1;
-}
-
-.pill[data-open="true"] .circle {
+.iconButton[data-open="true"] {
   background: var(--accent);
   color: #ffffff;
 }
 
-.tooltip {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 22px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  padding: 5px 9px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  color: var(--text);
-  white-space: nowrap;
+.iconButton[data-open="true"] .iconStack > .icAt {
   opacity: 0;
-  pointer-events: none;
-  transform: translateX(50%) translateY(-2px);
-  transition:
-    opacity 0.18s ease,
-    transform 0.18s ease;
+  transform: translateX(12px);
 }
 
-@media (hover: hover) {
-  .trigger:not([data-open="true"]):hover .tooltip {
+/* Park the arrow on-axis (opacity 0) so close → hover fades it in without
+ * a slide; the ✕ rotates out at the same time, mirroring the labelled button. */
+.iconButton[data-open="true"] .iconStack > .icArrow {
+  opacity: 0;
+  transform: translateX(0);
+}
+
+.iconButton[data-open="true"] .iconStack > .icX {
+  opacity: 1;
+  transform: none;
+}
+
+/* --------------------------------------------------------------------
+ * Labelled pill button ("Get in touch") — shown when no AvailabilityPill.
+ * Arrow slides in from the left on hover; rotates to ✕ when active.
+ * ------------------------------------------------------------------ */
+
+.labelledButton {
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 22px;
+  border: none;
+  border-radius: 980px;
+  background: var(--text);
+  color: var(--bg);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    transform 0.12s ease,
+    background 0.26s ease,
+    color 0.26s ease;
+}
+
+.labelledButton:active {
+  transform: scale(0.97);
+}
+
+.labelledButton:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.labelText {
+  white-space: nowrap;
+}
+
+.arrowSlot {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  width: 0;
+  margin-left: 0;
+  opacity: 0;
+  transform: translateX(-12px);
+  transition:
+    width 0.26s ease,
+    margin-left 0.26s ease,
+    opacity 0.2s ease,
+    transform 0.26s ease;
+}
+
+.arrowSlot > .icArrow,
+.arrowSlot > .icX {
+  grid-area: 1 / 1;
+  margin-top: -1px;
+  transition:
+    opacity 0.2s ease,
+    transform 0.26s ease;
+}
+
+.arrowSlot > .icX {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.55);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .labelledButton:not([data-open="true"]):hover .arrowSlot {
+    width: 15px;
+    margin-left: 12px;
     opacity: 1;
-    transform: translateX(50%) translateY(0);
+    transform: translateX(0);
   }
 }
 
-.trigger:not([data-open="true"]) .pill:focus-visible ~ .tooltip {
-  opacity: 1;
-  transform: translateX(50%) translateY(0);
+.labelledButton[data-open="true"] {
+  background: var(--accent);
+  color: #ffffff;
 }
+
+.labelledButton[data-open="true"] .arrowSlot {
+  width: 15px;
+  margin-left: 12px;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.labelledButton[data-open="true"] .arrowSlot > .icArrow {
+  opacity: 0;
+}
+
+.labelledButton[data-open="true"] .arrowSlot > .icX {
+  opacity: 1;
+  transform: none;
+}
+
+/* --------------------------------------------------------------------
+ * Form reveal area below the trigger row.
+ * ------------------------------------------------------------------ */
 
 .reveal {
   width: 100%;
@@ -325,17 +303,20 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pill,
-  .iconLayer,
-  .circle,
+  .root,
+  .iconButton,
+  .iconStack > .icAt,
+  .iconStack > .icArrow,
+  .iconStack > .icX,
+  .labelledButton,
+  .arrowSlot,
+  .arrowSlot > .icArrow,
+  .arrowSlot > .icX,
   .reveal,
   .inner,
-  .tooltip,
-  .root,
   .formWrap {
     transition: none;
   }
-  .dot::before,
   .success {
     animation: none;
   }

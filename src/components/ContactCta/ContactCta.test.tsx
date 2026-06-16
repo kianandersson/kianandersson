@@ -11,30 +11,36 @@ const FUTURE = new Date('2099-09-01T00:00:00Z');
 const PAST = new Date('2000-01-01T00:00:00Z');
 
 describe('ContactCta', () => {
-  it('renders the "no status" solid button when availableFrom is missing', () => {
-    render(<ContactCta recipientName={RECIPIENT} />);
+  it('renders the labelled "Get in touch" pill when availableFrom is missing', () => {
+    const { container } = render(<ContactCta recipientName={RECIPIENT} />);
     const button = screen.getByRole('button', { name: /get in touch/i });
-    expect(button).toHaveAttribute('data-availability', 'none');
+    expect(button).toHaveAttribute('data-variant', 'labelled');
     expect(button).toHaveAttribute('aria-expanded', 'false');
+    // No availability pill should render in the no-status case.
+    expect(container.querySelector('[data-state="available"]')).toBeNull();
+    expect(container.querySelector('[data-state="future"]')).toBeNull();
   });
 
-  it('renders the "available" pill with an ok-toned dot for a past date', () => {
-    render(<ContactCta recipientName={RECIPIENT} availableFrom={PAST} />);
+  it('renders the icon-only round button alongside an "available" pill for a past date', () => {
+    const { container } = render(<ContactCta recipientName={RECIPIENT} availableFrom={PAST} />);
     const button = screen.getByRole('button', {
       name: /get in touch — available for work/i,
     });
-    expect(button).toHaveAttribute('data-availability', 'available');
-    expect(button.querySelector('[data-tone="ok"]')).not.toBeNull();
+    expect(button).toHaveAttribute('data-variant', 'icon');
+    expect(container.querySelector('[data-state="available"]')).not.toBeNull();
+    expect(container.querySelector('[data-tone="ok"]')).not.toBeNull();
+    expect(screen.getByText('Available for work')).toBeInTheDocument();
   });
 
-  it('renders the "future" pill with a warn-toned dot and a formatted start date', () => {
-    render(<ContactCta recipientName={RECIPIENT} availableFrom={FUTURE} />);
+  it('renders the icon-only round button alongside a "future" pill with formatted date', () => {
+    const { container } = render(<ContactCta recipientName={RECIPIENT} availableFrom={FUTURE} />);
     const button = screen.getByRole('button', {
       name: /get in touch — available from 1 sep/i,
     });
-    expect(button).toHaveAttribute('data-availability', 'future');
-    expect(button.querySelector('[data-tone="warn"]')).not.toBeNull();
-    expect(button.textContent).toContain('1 Sep');
+    expect(button).toHaveAttribute('data-variant', 'icon');
+    expect(container.querySelector('[data-state="future"]')).not.toBeNull();
+    expect(container.querySelector('[data-tone="warn"]')).not.toBeNull();
+    expect(screen.getByText('1 Sep')).toBeInTheDocument();
   });
 
   it('toggles the contact form open and closed on click', async () => {
@@ -43,7 +49,7 @@ describe('ContactCta', () => {
 
     const button = screen.getByRole('button', { name: /get in touch/i });
     expect(button).toHaveAttribute('aria-expanded', 'false');
-    expect(container.querySelector('[data-open="true"]')).toBeNull();
+    expect(container.querySelector('#contact-region[data-open="true"]')).toBeNull();
 
     await user.click(button);
     expect(button).toHaveAttribute('aria-expanded', 'true');

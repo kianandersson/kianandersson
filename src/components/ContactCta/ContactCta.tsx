@@ -1,6 +1,7 @@
 import { actions } from 'astro:actions';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { formatDate } from '../../lib/formatDate';
+import { AvailabilityPill } from '../AvailabilityPill/AvailabilityPill';
 import { ContactForm, type ContactPayload, type ContactStatus } from '../ContactForm/ContactForm';
 import styles from './ContactCta.module.css';
 
@@ -9,7 +10,6 @@ export type ContactCtaProps = {
   availableFrom?: Date;
 };
 
-type Variant = 'future' | 'available' | 'none';
 type CtaStatus = ContactStatus | 'success';
 
 const COLLAPSE_DELAY_MS = 3200;
@@ -25,17 +25,11 @@ function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function pickVariant(availableFrom: Date | undefined): Variant {
-  if (!availableFrom) return 'none';
-  return availableFrom.getTime() > Date.now() ? 'future' : 'available';
-}
-
-function pickAriaLabel(open: boolean, variant: Variant, formattedDate: string | null): string {
+function pickAriaLabel(open: boolean, availableFrom: Date | undefined): string {
   if (open) return 'Close contact form';
-  if (variant === 'available') return 'Get in touch — available for work';
-  if (variant === 'future' && formattedDate)
-    return `Get in touch — available from ${formattedDate}`;
-  return 'Get in touch';
+  if (!availableFrom) return 'Get in touch';
+  if (availableFrom.getTime() <= Date.now()) return 'Get in touch — available for work';
+  return `Get in touch — available from ${formatDate(availableFrom)}`;
 }
 
 export function ContactCta({ recipientName, availableFrom }: ContactCtaProps) {
@@ -128,54 +122,49 @@ export function ContactCta({ recipientName, availableFrom }: ContactCtaProps) {
     [],
   );
 
-  const variant = pickVariant(availableFrom);
-  const formattedDate = availableFrom ? formatDate(availableFrom) : null;
-  const ariaLabel = pickAriaLabel(open, variant, formattedDate);
+  const showAvailability = availableFrom !== undefined;
+  const ariaLabel = pickAriaLabel(open, availableFrom);
   const formStatus: ContactStatus = status === 'success' ? 'idle' : status;
 
   return (
     <div class={styles.root} data-open={open}>
-      <div class={styles.trigger} data-open={open}>
-        <button
-          type="button"
-          class={styles.pill}
-          data-availability={variant}
-          data-open={open}
-          aria-expanded={open}
-          aria-controls={REGION_ID}
-          aria-label={ariaLabel}
-          onClick={toggle}
-        >
-          {variant === 'available' && <span class={styles.dot} data-tone="ok" aria-hidden="true" />}
-          {variant === 'future' && <span class={styles.dot} data-tone="warn" aria-hidden="true" />}
+      <div class={styles.triggerRow}>
+        {showAvailability && <AvailabilityPill availableFrom={availableFrom} />}
 
-          <span class={styles.label}>
-            {variant === 'none' && 'Get in touch'}
-            {variant === 'available' && 'Available for work'}
-            {variant === 'future' && formattedDate && (
-              <>
-                Available from <span class={styles.date}>{formattedDate}</span>
-              </>
-            )}
-          </span>
-
-          <span class={styles.circle} aria-hidden="true">
-            <span class={styles.iconLayer} data-icon="at">
-              <AtIcon />
+        {showAvailability ? (
+          <button
+            type="button"
+            class={styles.iconButton}
+            data-variant="icon"
+            data-open={open}
+            aria-expanded={open}
+            aria-controls={REGION_ID}
+            aria-label={ariaLabel}
+            onClick={toggle}
+          >
+            <span class={styles.iconStack} aria-hidden="true">
+              <AtIcon class={styles.icAt} size={18} />
+              <ArrowIcon class={styles.icArrow} size={17} />
+              <CloseIcon class={styles.icX} size={16} />
             </span>
-            <span class={styles.iconLayer} data-icon="arrow">
-              <ArrowIcon />
+          </button>
+        ) : (
+          <button
+            type="button"
+            class={styles.labelledButton}
+            data-variant="labelled"
+            data-open={open}
+            aria-expanded={open}
+            aria-controls={REGION_ID}
+            aria-label={ariaLabel}
+            onClick={toggle}
+          >
+            <span class={styles.labelText}>Get in touch</span>
+            <span class={styles.arrowSlot} aria-hidden="true">
+              <ArrowIcon class={styles.icArrow} size={15} />
+              <CloseIcon class={styles.icX} size={15} />
             </span>
-            <span class={styles.iconLayer} data-icon="close">
-              <CloseIcon />
-            </span>
-          </span>
-        </button>
-
-        {variant !== 'none' && (
-          <span class={styles.tooltip} aria-hidden="true">
-            Get in touch
-          </span>
+          </button>
         )}
       </div>
 
@@ -207,31 +196,34 @@ export function ContactCta({ recipientName, availableFrom }: ContactCtaProps) {
   );
 }
 
-function AtIcon() {
+type IconProps = { class?: string; size: number };
+
+function AtIcon({ class: className, size }: IconProps) {
   return (
     <svg
-      width="16"
-      height="16"
+      class={className}
+      width={size}
+      height={size}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="1.8"
+      stroke-width="1.7"
       stroke-linecap="round"
       stroke-linejoin="round"
       aria-hidden="true"
     >
-      <title>at-sign</title>
       <circle cx="12" cy="12" r="4" />
-      <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8" />
+      <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.9 7.9" />
     </svg>
   );
 }
 
-function ArrowIcon() {
+function ArrowIcon({ class: className, size }: IconProps) {
   return (
     <svg
-      width="16"
-      height="16"
+      class={className}
+      width={size}
+      height={size}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -240,18 +232,18 @@ function ArrowIcon() {
       stroke-linejoin="round"
       aria-hidden="true"
     >
-      <title>arrow-right</title>
       <path d="M5 12h14" />
-      <path d="m13 6 6 6-6 6" />
+      <path d="M13 6l6 6-6 6" />
     </svg>
   );
 }
 
-function CloseIcon() {
+function CloseIcon({ class: className, size }: IconProps) {
   return (
     <svg
-      width="14"
-      height="14"
+      class={className}
+      width={size}
+      height={size}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -260,9 +252,8 @@ function CloseIcon() {
       stroke-linejoin="round"
       aria-hidden="true"
     >
-      <title>close</title>
+      <path d="M6 6l12 12" />
       <path d="M18 6 6 18" />
-      <path d="m6 6 12 12" />
     </svg>
   );
 }

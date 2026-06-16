@@ -86,14 +86,14 @@ test.describe('Print media', () => {
     );
     expect(bg).toBe('#ffffff');
 
-    const visibleChips = page.locator('[data-variant]:not([data-hidden])');
+    const visibleChips = page.locator('span[data-variant]:not([data-hidden])');
     const visibleCount = await visibleChips.count();
     expect(visibleCount).toBeGreaterThan(0);
     for (let i = 0; i < visibleCount; i++) {
       await expect(visibleChips.nth(i)).toBeVisible();
     }
 
-    const overflowChips = page.locator('[data-variant][data-hidden]');
+    const overflowChips = page.locator('span[data-variant][data-hidden]');
     const overflowCount = await overflowChips.count();
     expect(overflowCount).toBeGreaterThan(0);
     for (let i = 0; i < overflowCount; i++) {
