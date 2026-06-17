@@ -112,15 +112,13 @@ function RoleRow({
 }: Role) {
   return (
     <div class={styles.roleRow}>
-      <div class={styles.roleMeta}>
-        <span class={styles.tokenChip}>{name}</span>
-        <Text font="mono" size="caption-s" tone="subtle">
-          {sizePx} / {leadingValue}
-        </Text>
-        <Text font="mono" size="caption-s" tone="subtle">
-          fs {sizePrimitive} · lh {leadingPrimitive}
-        </Text>
-      </div>
+      <span class={styles.tokenChip}>{name}</span>
+      <Text font="mono" size="caption-s" tone="subtle">
+        {sizePx} / {leadingValue}
+      </Text>
+      <Text font="mono" size="caption-s" tone="subtle">
+        fs {sizePrimitive} · lh {leadingPrimitive}
+      </Text>
       <div class={styles.roleSample} data-role={name} data-font={font ?? 'sans'}>
         {sample}
       </div>
