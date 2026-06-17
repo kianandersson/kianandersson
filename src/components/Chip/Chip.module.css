@@ -1,7 +1,7 @@
 .chip {
   font-family: var(--font-mono);
-  font-size: var(--text-caption-size);
-  line-height: var(--text-caption-leading);
+  font-size: var(--text-caption-s-size);
+  line-height: var(--text-caption-s-leading);
   padding: var(--space-2xs) var(--space-sm);
   border-radius: var(--radius-sm);
   white-space: nowrap;

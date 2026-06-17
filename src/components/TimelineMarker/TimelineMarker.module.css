@@ -6,7 +6,7 @@
   height: 8px;
   border-radius: var(--radius-full);
   background: var(--color-accent);
-  box-shadow: 0 0 0 4px color-mix(in oklch, var(--color-accent) 10%, transparent);
+  box-shadow: 0 0 0 4px var(--color-accent-subtle);
 }
 
 @media print {

@@ -22,7 +22,7 @@
   margin: 0;
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: var(--text-headline-size);
+  font-size: var(--text-heading-m-size);
   letter-spacing: -0.015em;
   color: var(--color-text);
   white-space: nowrap;
@@ -70,7 +70,7 @@
   margin: 0;
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: var(--text-subtitle-size);
+  font-size: var(--text-heading-s-size);
   letter-spacing: -0.01em;
   color: var(--color-text);
 }
@@ -81,7 +81,7 @@
   align-items: baseline;
   gap: var(--space-xs);
   font-family: var(--font-mono);
-  font-size: var(--text-caption-size);
+  font-size: var(--text-caption-s-size);
 }
 
 .meta {

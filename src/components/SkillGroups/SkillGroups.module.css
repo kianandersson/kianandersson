@@ -22,7 +22,7 @@
   margin: 0;
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: var(--text-headline-size);
+  font-size: var(--text-heading-m-size);
   letter-spacing: -0.015em;
   color: var(--color-text);
   white-space: nowrap;

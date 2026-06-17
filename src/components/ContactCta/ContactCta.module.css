@@ -277,7 +277,8 @@
 
 .successText {
   color: var(--color-text);
-  font-size: var(--text-meta-size);
+  font-size: var(--text-caption-m-size);
+  line-height: var(--text-caption-m-leading);
 }
 
 @keyframes rise {

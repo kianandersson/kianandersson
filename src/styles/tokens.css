@@ -96,10 +96,6 @@
   --font-size-700: 30px;
   --font-size-800: 36px;
   --font-size-900: 48px;
-  --font-size-1000: 60px;
-  --font-size-1100: 72px;
-  --font-size-1200: 96px;
-  --font-size-1300: 128px;
 
   /* Line-height primitives */
   --line-height-100: 1;
@@ -142,30 +138,32 @@
   --color-text-subtle: var(--color-slate-400);
   --color-accent: var(--color-terracotta-500);
   --color-accent-strong: var(--color-terracotta-600);
-  --color-accent-muted: color-mix(in oklch, var(--color-accent) 30%, transparent);
-  --color-accent-subtle: color-mix(in oklch, var(--color-accent) 10%, transparent);
+  --color-accent-muted: color-mix(in oklch, var(--color-accent) 32%, transparent);
+  --color-accent-subtle: color-mix(in oklch, var(--color-accent) 16%, transparent);
   --color-status-success: var(--color-green-500);
   --color-status-warning: var(--color-amber-400);
 
   /* Typography semantics */
-  --text-caption-size: var(--font-size-100);
-  --text-caption-leading: var(--line-height-400);
-  --text-meta-size: var(--font-size-200);
-  --text-meta-leading: var(--line-height-400);
+  --text-label-size: var(--font-size-200);
+  --text-label-leading: var(--line-height-400);
+  --text-caption-s-size: var(--font-size-100);
+  --text-caption-s-leading: var(--line-height-400);
+  --text-caption-m-size: var(--font-size-200);
+  --text-caption-m-leading: var(--line-height-400);
   --text-body-size: var(--font-size-300);
   --text-body-leading: var(--line-height-500);
-  --text-subhead-size: var(--font-size-400);
-  --text-subhead-leading: var(--line-height-400);
-  --text-subtitle-size: var(--font-size-500);
-  --text-subtitle-leading: var(--line-height-500);
-  --text-headline-size: var(--font-size-600);
-  --text-headline-leading: var(--line-height-200);
-  --text-title-size: var(--font-size-700);
-  --text-title-leading: var(--line-height-200);
-  --text-hero-size: var(--font-size-800);
-  --text-hero-leading: var(--line-height-200);
-  --text-display-size: var(--font-size-1000);
-  --text-display-leading: var(--line-height-100);
+  --text-subheading-size: var(--font-size-400);
+  --text-subheading-leading: var(--line-height-400);
+  --text-heading-s-size: var(--font-size-400);
+  --text-heading-s-leading: var(--line-height-500);
+  --text-heading-m-size: var(--font-size-600);
+  --text-heading-m-leading: var(--line-height-200);
+  --text-heading-l-size: var(--font-size-700);
+  --text-heading-l-leading: var(--line-height-200);
+  --text-display-l-size: var(--font-size-800);
+  --text-display-l-leading: var(--line-height-200);
+  --text-display-xl-size: var(--font-size-900);
+  --text-display-xl-leading: var(--line-height-200);
 
   /* Space semantics */
   --space-2xs: var(--space-1);

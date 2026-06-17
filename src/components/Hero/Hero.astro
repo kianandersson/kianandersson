@@ -6,7 +6,7 @@ interface Props {
 const { name } = Astro.props;
 
 const PLACEHOLDER_BODY =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.';
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.";
 ---
 
 <div class="root">
@@ -37,8 +37,8 @@ const PLACEHOLDER_BODY =
   .heading {
     font-family: var(--font-sans);
     font-weight: 600;
-    font-size: var(--text-hero-size);
-    line-height: var(--text-hero-leading);
+    font-size: var(--text-display-xl-size);
+    line-height: var(--text-display-xl-leading);
     letter-spacing: -0.025em;
     color: var(--color-text);
     margin: 0;
@@ -51,8 +51,8 @@ const PLACEHOLDER_BODY =
   .body {
     margin: 0;
     font-family: var(--font-sans);
-    font-size: var(--text-subtitle-size);
-    line-height: var(--text-subtitle-leading);
+    font-size: var(--text-heading-s-size);
+    line-height: var(--text-heading-s-leading);
     color: var(--color-text-muted);
     max-width: 540px;
   }

@@ -46,7 +46,7 @@
 
 .count {
   font-family: var(--font-mono);
-  font-size: var(--text-caption-size);
+  font-size: var(--text-caption-s-size);
   color: var(--color-text-muted);
 }
 

@@ -21,7 +21,7 @@
   margin: 0;
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: var(--text-headline-size);
+  font-size: var(--text-heading-m-size);
   letter-spacing: -0.015em;
   color: var(--color-text);
 }
@@ -38,7 +38,8 @@
 .rowLabel {
   flex: 0 0 88px;
   font-family: var(--font-mono);
-  font-size: var(--text-caption-size);
+  font-size: var(--text-label-size);
+  line-height: var(--text-label-leading);
   color: var(--color-text-muted);
 }
 
@@ -64,13 +65,14 @@
 .chipName {
   font-family: var(--font-sans);
   font-weight: 500;
-  font-size: var(--text-meta-size);
+  font-size: var(--text-caption-m-size);
+  line-height: var(--text-caption-m-leading);
   color: var(--color-text);
 }
 
 .chipLevel {
   font-family: var(--font-mono);
-  font-size: var(--text-caption-size);
+  font-size: var(--text-caption-s-size);
   color: var(--color-text-muted);
 }
 

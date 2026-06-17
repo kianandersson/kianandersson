@@ -7,7 +7,7 @@
 
 .label {
   font-family: var(--font-mono);
-  font-size: var(--text-caption-size);
+  font-size: var(--text-caption-s-size);
   color: var(--color-text-muted);
   flex: 0 0 56px;
 }
@@ -22,7 +22,7 @@
 
 .toggle {
   font-family: var(--font-mono);
-  font-size: var(--text-caption-size);
+  font-size: var(--text-caption-s-size);
   padding: var(--space-2xs) var(--space-xs);
   cursor: pointer;
   align-self: center;

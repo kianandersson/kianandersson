@@ -22,6 +22,7 @@
 
 .date {
   font-family: var(--font-mono);
-  font-size: var(--text-meta-size);
+  font-size: var(--text-caption-m-size);
+  line-height: var(--text-caption-m-leading);
   color: var(--color-text-muted);
 }
