@@ -337,11 +337,17 @@
 
 .roleRow {
   display: grid;
-  grid-template-columns: 160px 100px 160px 1fr;
+  grid-template-columns: 160px 160px 1fr;
   gap: var(--space-l);
   align-items: center;
   padding-bottom: var(--space-m);
   border-bottom: 1px solid var(--color-divider);
+}
+
+.roleMeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
 }
 
 .roleSample {
