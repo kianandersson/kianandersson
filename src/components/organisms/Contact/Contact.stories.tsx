@@ -5,14 +5,15 @@ const ONE_DAY = 24 * 60 * 60 * 1000;
 
 type Args = {
   recipientName: string;
-  availableFrom?: number;
+  showAvailability: boolean;
+  availableFrom: number;
 };
 
-function ContactDemo({ recipientName, availableFrom }: Args) {
+function ContactDemo({ recipientName, showAvailability, availableFrom }: Args) {
   return (
     <Contact
       recipientName={recipientName}
-      availableFrom={availableFrom === undefined ? undefined : new Date(availableFrom)}
+      availableFrom={showAvailability ? new Date(availableFrom) : undefined}
     />
   );
 }
@@ -22,10 +23,15 @@ const meta: Meta<typeof ContactDemo> = {
   component: ContactDemo,
   argTypes: {
     recipientName: { control: 'text' },
-    availableFrom: { control: 'date' },
+    showAvailability: {
+      control: 'boolean',
+      description: 'Toggle off to render the labelled "Get in touch" pill instead.',
+    },
+    availableFrom: { control: 'date', if: { arg: 'showAvailability', truthy: true } },
   },
   args: {
     recipientName: 'Kian Andersson',
+    showAvailability: true,
     availableFrom: Date.now() - 30 * ONE_DAY,
   },
 };
@@ -34,14 +40,14 @@ export default meta;
 type Story = StoryObj<typeof ContactDemo>;
 
 export const AvailableNow: Story = {
-  args: { availableFrom: Date.now() - 30 * ONE_DAY },
+  args: { showAvailability: true, availableFrom: Date.now() - 30 * ONE_DAY },
 };
 
 export const AvailableFromFuture: Story = {
-  args: { availableFrom: Date.now() + 60 * ONE_DAY },
+  args: { showAvailability: true, availableFrom: Date.now() + 60 * ONE_DAY },
 };
 
 export const NoAvailability: Story = {
   name: 'No availability (labelled pill)',
-  args: { availableFrom: undefined },
+  args: { showAvailability: false },
 };
