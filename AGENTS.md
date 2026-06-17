@@ -10,12 +10,14 @@ Personal CV / freelance landing page. Engineering discipline is the demonstratio
 
 ## Architecture
 
-Atomic Design layers, flat folders.
+Atomic Design layers.
 
 - **Layouts** — chrome shell only.
 - **Templates** — compose organisms. Never fetch data, never wire handlers.
 - **Pages** — the only layer that calls `getCollection`, reads `site.config.ts`, binds handlers.
 - **Components** — pure props in, JSX out. No global state, no config imports.
+
+Preact components live under `src/components/{atoms,molecules,organisms}/` and are catalog-able in Storybook. Astro compositions (`templates/`, `layouts/`, `pages/`) are build-time and tested via Playwright on the rendered page.
 
 Start static (zero JS). Add `client:*` in the template only when state, handlers, or effects require it.
 
