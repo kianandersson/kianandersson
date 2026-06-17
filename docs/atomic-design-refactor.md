@@ -131,23 +131,23 @@ Semantic tokens reference primitives via `var()` — they never repeat OKLCH lit
 
 The design assigns a fixed role to a subset of ramp steps. These are the **canonical role tags**:
 
-| Family       | Step | Role                 |
-| ------------ | ---: | -------------------- |
-| `sand`       |   50 | `bg`                 |
-| `sand`       |  200 | `chip · line`        |
-| `slate`      |   50 | `dk text`            |
-| `slate`      |  400 | `faint · dk dim`     |
-| `slate`      |  500 | `dk faint`           |
-| `slate`      |  600 | `dim`                |
-| `slate`      |  700 | `dk chip/line`       |
-| `slate`      |  800 | `text · dk surf`     |
-| `slate`      |  950 | `dk bg`              |
-| `terracotta` |  400 | `dk accent`          |
-| `terracotta` |  500 | `accent`             |
-| `green`      |  400 | `dk ok`              |
-| `green`      |  500 | `ok`                 |
-| `amber`      |  300 | `dk warn`            |
-| `amber`      |  400 | `warn`               |
+| Family       | Step | Role             |
+| ------------ | ---: | ---------------- |
+| `sand`       |   50 | `bg`             |
+| `sand`       |  200 | `chip · line`    |
+| `slate`      |   50 | `dk text`        |
+| `slate`      |  400 | `faint · dk dim` |
+| `slate`      |  500 | `dk faint`       |
+| `slate`      |  600 | `dim`            |
+| `slate`      |  700 | `dk chip/line`   |
+| `slate`      |  800 | `text · dk surf` |
+| `slate`      |  950 | `dk bg`          |
+| `terracotta` |  400 | `dk accent`      |
+| `terracotta` |  500 | `accent`         |
+| `green`      |  400 | `dk ok`          |
+| `green`      |  500 | `ok`             |
+| `amber`      |  300 | `dk warn`        |
+| `amber`      |  400 | `warn`           |
 
 Every semantic role used in this slice has a design tag; the `surface-raised` light step (`white`) and the `surface-muted` darkening pair are the only consumer-chosen extensions.
 
@@ -158,33 +158,73 @@ Light theme:
 ```css
 --color-surface: var(--color-sand-50); /* design-tagged: sand-50 = bg */
 --color-surface-raised: var(--color-white); /* untagged; pure white card */
---color-surface-muted: var(--color-sand-200); /* design-tagged: sand-200 = chip */
---color-divider: var(--color-sand-200); /* design-tagged: sand-200 = line; was --line */
+--color-surface-muted: var(
+  --color-sand-200
+); /* design-tagged: sand-200 = chip */
+--color-divider: var(
+  --color-sand-200
+); /* design-tagged: sand-200 = line; was --line */
 --color-text: var(--color-slate-800); /* design-tagged: slate-800 = text */
---color-text-muted: var(--color-slate-600); /* design-tagged: slate-600 = dim; was --dim */
---color-text-subtle: var(--color-slate-400); /* design-tagged: slate-400 = faint; was --faint */
---color-accent: var(--color-terracotta-500); /* design-tagged: terracotta-500 = accent */
---color-accent-strong: var(--color-terracotta-600); /* darker than accent for hover/focus on light bg */
---color-accent-muted: color-mix(in oklch, var(--color-accent) 30%, transparent); /* tag/border tint, was --accent-line */
---color-accent-subtle: color-mix(in oklch, var(--color-accent) 10%, transparent); /* chip/halo tint, was --accent-soft */
---color-status-success: var(--color-green-500); /* design-tagged: green-500 = ok */
---color-status-warning: var(--color-amber-400); /* design-tagged: amber-400 = warn */
+--color-text-muted: var(
+  --color-slate-600
+); /* design-tagged: slate-600 = dim; was --dim */
+--color-text-subtle: var(
+  --color-slate-400
+); /* design-tagged: slate-400 = faint; was --faint */
+--color-accent: var(
+  --color-terracotta-500
+); /* design-tagged: terracotta-500 = accent */
+--color-accent-strong: var(
+  --color-terracotta-600
+); /* darker than accent for hover/focus on light bg */
+--color-accent-muted: color-mix(
+  in oklch,
+  var(--color-accent) 30%,
+  transparent
+); /* tag/border tint, was --accent-line */
+--color-accent-subtle: color-mix(
+  in oklch,
+  var(--color-accent) 10%,
+  transparent
+); /* chip/halo tint, was --accent-soft */
+--color-status-success: var(
+  --color-green-500
+); /* design-tagged: green-500 = ok */
+--color-status-warning: var(
+  --color-amber-400
+); /* design-tagged: amber-400 = warn */
 ```
 
 Dark theme overrides:
 
 ```css
 --color-surface: var(--color-slate-950); /* design-tagged: slate-950 = dk bg */
---color-surface-raised: var(--color-slate-800); /* design-tagged: slate-800 = dk surf */
---color-surface-muted: var(--color-slate-700); /* design-tagged: slate-700 = dk chip */
---color-divider: var(--color-slate-700); /* design-tagged: slate-700 = dk line */
+--color-surface-raised: var(
+  --color-slate-800
+); /* design-tagged: slate-800 = dk surf */
+--color-surface-muted: var(
+  --color-slate-700
+); /* design-tagged: slate-700 = dk chip */
+--color-divider: var(
+  --color-slate-700
+); /* design-tagged: slate-700 = dk line */
 --color-text: var(--color-slate-50); /* design-tagged: slate-50 = dk text */
---color-text-muted: var(--color-slate-400); /* design-tagged: slate-400 = dk dim */
---color-text-subtle: var(--color-slate-600); /* faint flipped darker for dark mode */
+--color-text-muted: var(
+  --color-slate-400
+); /* design-tagged: slate-400 = dk dim */
+--color-text-subtle: var(
+  --color-slate-600
+); /* faint flipped darker for dark mode */
 --color-accent: var(--color-terracotta-500); /* same accent step as light */
---color-accent-strong: var(--color-terracotta-400); /* lighter than accent for hover/focus on dark bg */
---color-status-success: var(--color-green-400); /* design-tagged: green-400 = dk ok */
---color-status-warning: var(--color-amber-300); /* design-tagged: amber-300 = dk warn */
+--color-accent-strong: var(
+  --color-terracotta-400
+); /* lighter than accent for hover/focus on dark bg */
+--color-status-success: var(
+  --color-green-400
+); /* design-tagged: green-400 = dk ok */
+--color-status-warning: var(
+  --color-amber-300
+); /* design-tagged: amber-300 = dk warn */
 ```
 
 `--color-accent-muted` and `--color-accent-subtle` are not redeclared under dark — they reference `var(--color-accent)` which already swaps appropriately, so the same `color-mix()` works in both modes.
@@ -197,17 +237,17 @@ Dark theme overrides:
 
 Consumer adoption:
 
-| file:line                                    | property                   | token                  |
-| -------------------------------------------- | -------------------------- | ---------------------- |
-| `Chip/Chip.module.css:12`                    | `background`               | `--color-accent-subtle` |
-| `ContactForm/ContactForm.module.css:73`      | `background`               | `--color-accent-subtle` |
-| `ContactForm/ContactForm.module.css:74`      | `border` color             | `--color-accent-muted` |
-| `TimelineMarker/TimelineMarker.module.css:9` | `box-shadow` color         | `--color-accent-subtle` |
-| `layouts/BaseLayout.astro:101`               | `::selection` `background` | `--color-accent-subtle` |
+| file:line                                    | property                     | token                   |
+| -------------------------------------------- | ---------------------------- | ----------------------- |
+| `Chip/Chip.module.css:12`                    | `background`                 | `--color-accent-subtle` |
+| `ContactForm/ContactForm.module.css:73`      | `background`                 | `--color-accent-subtle` |
+| `ContactForm/ContactForm.module.css:74`      | `border` color               | `--color-accent-muted`  |
+| `TimelineMarker/TimelineMarker.module.css:9` | `box-shadow` color           | `--color-accent-subtle` |
+| `layouts/BaseLayout.astro:101`               | `::selection` `background`   | `--color-accent-subtle` |
 | `Chip/Chip.module.css:11`                    | `color` (stack variant text) | `--color-accent-strong` |
 | `ChipList/ChipList.module.css:37,44`         | `color` (toggle hover/focus) | `--color-accent-strong` |
-| `Footer/Footer.module.css:35,42`             | `color` (link hover/focus) | `--color-accent-strong` |
-| `KeySkills/KeySkills.module.css:27,34`       | `color` (link hover/focus) | `--color-accent-strong` |
+| `Footer/Footer.module.css:35,42`             | `color` (link hover/focus)   | `--color-accent-strong` |
+| `KeySkills/KeySkills.module.css:27,34`       | `color` (link hover/focus)   | `--color-accent-strong` |
 
 `color-mix(in oklch, …)` is Baseline 2023 (Safari 16.2+, Chrome 111+, Firefox 113+) — same support window as the OKLCH primitives in §2.2.
 
@@ -217,11 +257,11 @@ The previous `--shadow` token has no consumers and is **not** carried over to th
 
 Three roles step outside the design's tagged steps:
 
-| Role (mode)                  | Step                   | Rationale                                                                                                          |
-| ---------------------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| `surface-raised` light       | `white` (L 100)        | Pure white above the sand bg; one step lighter than the lightest sand-50 so cards visibly lift off the background. |
-| `text-subtle` dark           | `slate-600` (L 44)     | Design tags `dk faint` as `slate-500`; we go one step darker so subtle text recedes further against `dk bg`.       |
-| `accent` dark                | `terracotta-500` (L 58) | Design tags `dk accent` as `terracotta-400`; we keep accent consistent across modes and let `accent-strong` carry the mode-specific direction (`terracotta-600` light / `terracotta-400` dark). |
+| Role (mode)            | Step                    | Rationale                                                                                                                                                                                       |
+| ---------------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `surface-raised` light | `white` (L 100)         | Pure white above the sand bg; one step lighter than the lightest sand-50 so cards visibly lift off the background.                                                                              |
+| `text-subtle` dark     | `slate-600` (L 44)      | Design tags `dk faint` as `slate-500`; we go one step darker so subtle text recedes further against `dk bg`.                                                                                    |
+| `accent` dark          | `terracotta-500` (L 58) | Design tags `dk accent` as `terracotta-400`; we keep accent consistent across modes and let `accent-strong` carry the mode-specific direction (`terracotta-600` light / `terracotta-400` dark). |
 
 #### Why both `--dim` and `--faint` flip across modes
 
@@ -238,20 +278,20 @@ The full rename map for every CSS custom property in `src/styles/tokens.css` tha
 
 #### Color tokens
 
-| Old             | New                      | Issue-scoped? | Reasoning                                                                                      |
-| --------------- | ------------------------ | :-----------: | ---------------------------------------------------------------------------------------------- |
-| `--bg`          | `--color-surface`        |               | Page background — the base surface.                                                            |
-| `--surface`     | `--color-surface-raised` |               | Card/terminal surface; `raised` describes elevation above the page.                            |
-| `--chip`        | `--color-surface-muted`  |       ✓       | Role is "muted surface", not "chip-specific".                                                  |
-| `--text`        | `--color-text`           |               | Primary text; un-suffixed token is the default.                                                |
-| `--dim`         | `--color-text-muted`     |       ✓       | Secondary text — less prominent than the default.                                              |
-| `--faint`       | `--color-text-subtle`    |       ✓       | Tertiary text — captions, timestamps, section labels.                                          |
-| `--line`        | `--color-divider`        |       ✓       | Hairlines and dividers; `divider` names the role, not the CSS `border` property.               |
-| `--accent`      | `--color-accent`         |               | Brand accent; un-suffixed token is the default.                                                |
+| Old             | New                      | Issue-scoped? | Reasoning                                                                                        |
+| --------------- | ------------------------ | :-----------: | ------------------------------------------------------------------------------------------------ |
+| `--bg`          | `--color-surface`        |               | Page background — the base surface.                                                              |
+| `--surface`     | `--color-surface-raised` |               | Card/terminal surface; `raised` describes elevation above the page.                              |
+| `--chip`        | `--color-surface-muted`  |       ✓       | Role is "muted surface", not "chip-specific".                                                    |
+| `--text`        | `--color-text`           |               | Primary text; un-suffixed token is the default.                                                  |
+| `--dim`         | `--color-text-muted`     |       ✓       | Secondary text — less prominent than the default.                                                |
+| `--faint`       | `--color-text-subtle`    |       ✓       | Tertiary text — captions, timestamps, section labels.                                            |
+| `--line`        | `--color-divider`        |       ✓       | Hairlines and dividers; `divider` names the role, not the CSS `border` property.                 |
+| `--accent`      | `--color-accent`         |               | Brand accent; un-suffixed token is the default.                                                  |
 | `--accent-soft` | `--color-accent-subtle`  |               | Semantic `color-mix(in oklch, var(--color-accent) 10%, transparent)` — chip/halo/selection tint. |
-| `--accent-line` | `--color-accent-muted`   |               | Semantic `color-mix(in oklch, var(--color-accent) 30%, transparent)` — tag border. |
-| `--ok`          | `--color-status-success` |               | Status: available/success.                                                                     |
-| `--warn`        | `--color-status-warning` |               | Status: warning.                                                                               |
+| `--accent-line` | `--color-accent-muted`   |               | Semantic `color-mix(in oklch, var(--color-accent) 30%, transparent)` — tag border.               |
+| `--ok`          | `--color-status-success` |               | Status: available/success.                                                                       |
+| `--warn`        | `--color-status-warning` |               | Status: warning.                                                                                 |
 
 In addition, **`--color-accent-strong` is added new** (no old equivalent): terracotta-600 in light, terracotta-400 in dark — used for accent text on hover/focus where the base `--color-accent` is too close to its background. See §2.3.
 
@@ -263,12 +303,12 @@ For `--dim` and `--faint`: `--dim` is visibly more prominent than `--faint` in t
 
 #### Tokens kept as-is
 
-| Token             | Reason                                                                                                                                                                  |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--font-sans`     | Out of scope. Typography font-family tokens are not addressed in this slice; rename later if needed.                                                                    |
-| `--font-mono`     | Same as above.                                                                                                                                                          |
-| `--container-max` | Out of scope. Layout container tokens are not addressed in this slice.                                                                                                  |
-| `--container-pad` | Same as above. Value (`28px`) already lands on the spacing scale (`--space-7`), but the token semantics are layout, not generic spacing. Re-evaluate in the next slice. |
+| Token                 | Reason                                                                                                                                                                  |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--font-sans`         | Out of scope. Typography font-family tokens are not addressed in this slice; rename later if needed.                                                                    |
+| `--font-mono`         | Same as above.                                                                                                                                                          |
+| `--container-max`     | Out of scope. Layout container tokens are not addressed in this slice.                                                                                                  |
+| `--container-padding` | Same as above. Value (`24px`) lands on the spacing scale (`--space-xl` / `--space-6`), but the token semantics are layout, not generic spacing. Re-evaluate in the next slice. |
 
 #### Tokens.css structure
 
@@ -455,48 +495,44 @@ The post-migration invariant: **no raw `px` literal on any in-scope property any
 
 Snap rules from the issue: `11 → 12`, `13 → 14`, `15 → 16`, `19 → 20`, `28 → 30`, `38 → 36`, `58 → 60`.
 
-| file:line                                         | current | snap to | semantic token          |
-| ------------------------------------------------- | ------- | ------- | ----------------------- |
-| `Experience/Experience.module.css:18`             | 15      | 16      | `--text-body-size`      |
-| `Experience/Experience.module.css:73`             | 19      | 20      | `--text-heading-s-size` |
-| `Experience/Experience.module.css:101`            | 15      | 16      | `--text-body-size`      |
-| `KeySkills/KeySkills.module.css:48`               | 15      | 16      | `--text-body-size`      |
-| `NotFound/NotFound.module.css:18`                 | 15      | 16      | `--text-body-size`      |
-| `NotFound/NotFound.module.css:32`                 | 28      | 30      | `--text-heading-l-size` |
-| `NotFound/NotFound.module.css:85`                 | 11      | 12      | `--text-caption-s-size` |
-| `NotFound/NotFound.module.css:94`                 | 13      | 14      | `--text-caption-m-size` |
-| `ContactForm/ContactForm.module.css:77`           | 13      | 14      | `--text-caption-m-size` |
-| `ContactForm/ContactForm.module.css:92`           | 15      | 16      | `--text-body-size`      |
-| `ContactForm/ContactForm.module.css:162`          | 15      | 16      | `--text-body-size`      |
-| `Accordion/Accordion.module.css:44`               | 15      | 16      | `--text-body-size`      |
-| `OpenGraphCard/OpenGraphCard.module.css:28`       | 58      | 60      | `--text-display-size`   |
-| `AvailabilityPill/AvailabilityPill.module.css:12` | 15      | 16      | `--text-body-size`      |
-| `AvailabilityPill/AvailabilityPill.module.css:25` | 13      | 14      | `--text-caption-m-size` |
-| `Miscellaneous/Miscellaneous.module.css:17`       | 15      | 16      | `--text-body-size`      |
-| `SkillGroups/SkillGroups.module.css:18`           | 15      | 16      | `--text-body-size`      |
-| `ContactCta/ContactCta.module.css:125`            | 15      | 16      | `--text-body-size`      |
-| `ContactCta/ContactCta.module.css:275`            | 15      | 16      | `--text-body-size`      |
+| file:line                                              | current | snap to | semantic token           |
+| ------------------------------------------------------ | ------- | ------- | ------------------------ |
+| `Experience/Experience.module.css:18`                  | 15      | 16      | `--text-body-size`       |
+| `Experience/Experience.module.css:73`                  | 19      | 20      | `--text-heading-s-size`  |
+| `Experience/Experience.module.css:101`                 | 15      | 16      | `--text-body-size`       |
+| `KeySkills/KeySkills.module.css:48`                    | 15      | 16      | `--text-body-size`       |
+| `NotFound/NotFound.module.css:18`                      | 15      | 16      | `--text-body-size`       |
+| `NotFound/NotFound.module.css:32`                      | 28      | 30      | `--text-heading-l-size`  |
+| `NotFound/NotFound.module.css:85`                      | 11      | 12      | `--text-caption-s-size`  |
+| `NotFound/NotFound.module.css:94`                      | 13      | 14      | `--text-caption-m-size`  |
+| `ContactForm/ContactForm.module.css:77`                | 13      | 14      | `--text-caption-m-size`  |
+| `ContactForm/ContactForm.module.css:92`                | 15      | 16      | `--text-body-size`       |
+| `ContactForm/ContactForm.module.css:162`               | 15      | 16      | `--text-body-size`       |
+| `Accordion/Accordion.module.css:44`                    | 15      | 16      | `--text-body-size`       |
+| `AvailabilityPill/AvailabilityPill.module.css:12`      | 15      | 16      | `--text-body-size`       |
+| `AvailabilityPill/AvailabilityPill.module.css:25`      | 13      | 14      | `--text-caption-m-size`  |
+| `Miscellaneous/Miscellaneous.module.css:17`            | 15      | 16      | `--text-body-size`       |
+| `SkillGroups/SkillGroups.module.css:18`                | 15      | 16      | `--text-body-size`       |
+| `ContactCta/ContactCta.module.css:125`                 | 15      | 16      | `--text-body-size`       |
+| `ContactCta/ContactCta.module.css:275`                 | 15      | 16      | `--text-body-size`       |
 | `Hero/Hero.module.css:16` (originally `Hero.astro:40`) | 38      | 36      | `--text-display-xl-size` |
-| `Hero/Hero.module.css:27` (originally `Hero.astro:54`) | 19      | 20      | `--text-heading-s-size` |
-| `SkillRow/SkillRow.module.css:13`                 | 15      | 16      | `--text-body-size`      |
-| `CtaButton/CtaButton.module.css:6`                | 15      | 16      | `--text-body-size`      |
+| `Hero/Hero.module.css:27` (originally `Hero.astro:54`) | 19      | 20      | `--text-heading-s-size`  |
+| `SkillRow/SkillRow.module.css:13`                      | 15      | 16      | `--text-body-size`       |
+| `CtaButton/CtaButton.module.css:6`                     | 15      | 16      | `--text-body-size`       |
 
 ### 3.2 Line-height snaps
 
 Off-scale line-heights snap to the nearest value on the `{1, 1.25, 1.375, 1.5, 1.625, 2}` scale. Each migrated declaration uses the semantic `--text-<role>-leading` for its role; outliers that don't match the role default fall back to the primitive `--line-height-N`.
 
-| file:line                                   | current | snap to | replacement                                       |
-| ------------------------------------------- | ------- | ------- | ------------------------------------------------- |
-| `BaseLayout.astro:93`                       | 1.65    | 1.625   | `--text-body-leading`                             |
-| `Experience/Experience.module.css:102`      | 1.6     | 1.625   | `--text-body-leading`                             |
-| `NotFound/NotFound.module.css:33`           | 1.15    | 1.25    | `--text-heading-l-leading`                        |
-| `NotFound/NotFound.module.css:42`           | 1.6     | 1.625   | `--text-body-leading`                             |
-| `NotFound/NotFound.module.css:95`           | 1.9     | 2       | `--line-height-600` (loose summary — outlier)     |
-| `ContactForm/ContactForm.module.css:130`    | 1.6     | 1.625   | `--text-body-leading`                             |
-| `Chip/Chip.module.css:4`                    | 1.5     | 1.5     | `--text-caption-s-leading` (no snap)              |
-| `OpenGraphCard/OpenGraphCard.module.css:30` | 0.94    | 1       | `--text-display-leading`                          |
-| `OpenGraphCard/OpenGraphCard.module.css:38` | 1.3     | 1.25    | `--line-height-200` (tighter than body — outlier) |
-| `Hero/Hero.module.css:17` (originally `Hero.astro:41`) | 1.12    | 1.25    | `--text-display-xl-leading` (visible drift +0.13)    |
+| file:line                                              | current | snap to | replacement                                       |
+| ------------------------------------------------------ | ------- | ------- | ------------------------------------------------- |
+| `BaseLayout.astro:93`                                  | 1.65    | 1.625   | `--text-body-leading`                             |
+| `Experience/Experience.module.css:102`                 | 1.6     | 1.625   | `--text-body-leading`                             |
+| `NotFound/NotFound.module.css:33`                      | 1.15    | 1.25    | `--text-heading-l-leading`                        |
+| `NotFound/NotFound.module.css:42`                      | 1.6     | 1.625   | `--text-body-leading`                             |
+| `ContactForm/ContactForm.module.css:130`               | 1.6     | 1.625   | `--text-body-leading`                             |
+| `Chip/Chip.module.css:4`                               | 1.5     | 1.5     | `--text-caption-s-leading` (no snap)              |
+| `Hero/Hero.module.css:17` (originally `Hero.astro:41`) | 1.12    | 1.25    | `--text-display-xl-leading` (visible drift +0.13) |
 | `Hero/Hero.module.css:28` (originally `Hero.astro:55`) | 1.6     | 1.625   | `--text-heading-s-leading`                        |
 
 Hero:41 has the largest drift (+0.13) — flagged for individual review.
@@ -552,37 +588,43 @@ All `border-radius: 50%` declarations migrate to `--radius-full` (= 9999px) — 
 
 Snapped-to-scale positioning values:
 
-| file:line                                    | current             | replacement                                        |
-| -------------------------------------------- | ------------------- | -------------------------------------------------- |
-| `Experience/Experience.module.css:40`        | `left: 4px`         | `left: var(--space-1)`                             |
-| `Experience/Experience.module.css:41`        | `top: 40px`         | `top: var(--space-10)`                             |
-| `Experience/Experience.module.css:42`        | `bottom: 8px`       | `bottom: var(--space-2)`                           |
-| `TimelineMarker/TimelineMarker.module.css:3` | `left: -31px`       | `left: calc(var(--space-8) * -1)` (snap −31 → −32) |
-| `TimelineMarker/TimelineMarker.module.css:4` | `top: 8px`          | `top: var(--space-2)`                              |
-| `ContactCta/ContactCta.module.css:69`        | `translateX(-12px)` | `translateX(calc(var(--space-3) * -1))`            |
-| `ContactCta/ContactCta.module.css:80`        | `translateX(12px)`  | `translateX(var(--space-3))`                       |
-| `ContactCta/ContactCta.module.css:95`        | `translateX(12px)`  | `translateX(var(--space-3))`                       |
-| `ContactCta/ContactCta.module.css:154`       | `translateX(-12px)` | `translateX(calc(var(--space-3) * -1))`            |
-| `ContactCta/ContactCta.module.css:255`       | `translateY(-8px)`  | `translateY(calc(var(--space-2) * -1))`            |
-| `ContactCta/ContactCta.module.css:286`       | `translateY(-12px)` | `translateY(calc(var(--space-3) * -1))`            |
-| `ContactCta/ContactCta.module.css:301`       | `translateY(-12px)` | `translateY(calc(var(--space-3) * -1))`            |
+| file:line                                    | current             | replacement                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| -------------------------------------------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Experience/Experience.module.css:40`        | `left: 4px`         | `left: var(--space-1)`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `Experience/Experience.module.css:41`        | `top: 40px`         | `top: var(--space-10)`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `Experience/Experience.module.css:42`        | `bottom: 8px`       | `bottom: var(--space-2)`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `TimelineMarker/TimelineMarker.module.css:3` | `left: -31px`       | `left: calc(1px - var(--space-xl))` — derived so the marker's centre lands on the rail's centre. The naive snap `−31 → calc(var(--space-8) * -1)` (= −32) introduced a 1 px misalignment on desktop and 9 px on mobile; pre-migration `−31px` only aligned on desktop because the mobile container query dropped `.timeline` padding to 24 px without updating the marker. Fixed by collapsing the container query (`.timeline` padding is now `--space-xl` at every breakpoint) and deriving marker offset from the same token. See §3.6 for the residual 1 px geometric constant. |
+| `TimelineMarker/TimelineMarker.module.css:4` | `top: 8px`          | `top: var(--space-2)`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `ContactCta/ContactCta.module.css:69`        | `translateX(-12px)` | `translateX(calc(var(--space-3) * -1))`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| `ContactCta/ContactCta.module.css:80`        | `translateX(12px)`  | `translateX(var(--space-3))`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `ContactCta/ContactCta.module.css:95`        | `translateX(12px)`  | `translateX(var(--space-3))`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `ContactCta/ContactCta.module.css:154`       | `translateX(-12px)` | `translateX(calc(var(--space-3) * -1))`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| `ContactCta/ContactCta.module.css:255`       | `translateY(-8px)`  | `translateY(calc(var(--space-2) * -1))`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| `ContactCta/ContactCta.module.css:286`       | `translateY(-12px)` | `translateY(calc(var(--space-3) * -1))`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| `ContactCta/ContactCta.module.css:301`       | `translateY(-12px)` | `translateY(calc(var(--space-3) * -1))`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 
 Positioning values that escape both rules reference primitive `--space-N` directly (this is allowed because positioning is the only category where the escape hatch is permitted, and the half-step variant uses the same primitive).
 
 ### 3.6 Illustration-layer exceptions
 
-Decorative or micro-aligned values where snapping would visibly break intent. Stay as raw px, documented as exceptions in the migration commit.
+Decorative or micro-aligned values where snapping would visibly break intent, or where the value belongs to a self-contained illustration that is composed independently of the role scale. Stay as raw literals, documented as exceptions in the migration commit.
 
-| file:line                                    | value                                            | reason                                                                                                                           |
-| -------------------------------------------- | ------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
-| `ContactCta/ContactCta.module.css:165`       | `margin-top: -1px`                               | 1 px optical alignment for stacked arrow/X icons; escape hatch is positioning-only and 1 px is below half-step.                  |
-| `ContactForm/ContactForm.module.css:190`     | `transform: translate(1px, -1px)`                | 1 px paper-plane hover micro-jiggle; below half-step.                                                                            |
-| `ContactForm/ContactForm.module.css:200`     | `transform: translate(26px, -26px) rotate(8deg)` | Paper-plane fly-off keyframe; rotation in degrees, translate is decorative motion. Snapping to 24 visibly changes the animation. |
-| `StatusDot/StatusDot.module.css:8`           | `box-shadow: 0 0 0 3px …`                        | Focus-ring-style glow; no shadow scale.                                                                                          |
-| `StatusDot/StatusDot.module.css:13`          | `box-shadow: 0 0 0 3px …`                        | As above.                                                                                                                        |
-| `TimelineMarker/TimelineMarker.module.css:9` | `box-shadow: 0 0 0 4px …`                        | Timeline-indicator glow; no shadow scale.                                                                                        |
-| `ContactForm/ContactForm.module.css:121`     | `-webkit-box-shadow: 0 0 0 1000px … inset`       | Autofill background-color mask (Safari).                                                                                         |
-| `Footer/Footer.module.css:29`                | `width: 2px; height: 2px`                        | Out of scope (width/height not in the snap rules); 2 px micro-bullet kept as-is.                                                 |
+| file:line                                    | value                                            | reason                                                                                                                                                                                                                                                                                                                |
+| -------------------------------------------- | ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ContactCta/ContactCta.module.css:166`       | `margin-top: -1px`                               | 1 px optical alignment for stacked arrow/X icons; escape hatch is positioning-only and 1 px is below half-step.                                                                                                                                                                                                       |
+| `ContactForm/ContactForm.module.css:190`     | `transform: translate(1px, -1px)`                | 1 px paper-plane hover micro-jiggle; below half-step.                                                                                                                                                                                                                                                                 |
+| `ContactForm/ContactForm.module.css:200`     | `transform: translate(26px, -26px) rotate(8deg)` | Paper-plane fly-off keyframe; rotation in degrees, translate is decorative motion. Snapping to 24 visibly changes the animation.                                                                                                                                                                                      |
+| `StatusDot/StatusDot.module.css:8`           | `box-shadow: 0 0 0 3px …`                        | Focus-ring-style glow; no shadow scale.                                                                                                                                                                                                                                                                               |
+| `StatusDot/StatusDot.module.css:13`          | `box-shadow: 0 0 0 3px …`                        | As above.                                                                                                                                                                                                                                                                                                             |
+| `TimelineMarker/TimelineMarker.module.css:9` | `box-shadow: 0 0 0 4px …`                        | Timeline-indicator glow; no shadow scale.                                                                                                                                                                                                                                                                             |
+| `ContactForm/ContactForm.module.css:121`     | `-webkit-box-shadow: 0 0 0 1000px … inset`       | Autofill background-color mask (Safari).                                                                                                                                                                                                                                                                              |
+| `Footer/Footer.module.css:29`                | `width: 2px; height: 2px`                        | Out of scope (width/height not in the snap rules); 2 px micro-bullet kept as-is.                                                                                                                                                                                                                                      |
+| `OpenGraphCard/OpenGraphCard.module.css:28`  | `font-size: 60px`                                | Whole-card exception: `OpenGraphCard` is rendered on a fixed 600 × 315 canvas that `og.astro` scales 2× to the 1200 × 630 OG image. Typography is composed for the canvas, not for the running role scale (which tops at 48 px). Spacing/radius tokens still apply because the 4 px grid carries over; type does not. |
+| `OpenGraphCard/OpenGraphCard.module.css:30`  | `line-height: 0.94`                              | Same canvas; tight display leading is part of the OG composition.                                                                                                                                                                                                                                                     |
+| `OpenGraphCard/OpenGraphCard.module.css:37`  | `font-size: 20px`                                | Same canvas; sized for the composition, not running type.                                                                                                                                                                                                                                                             |
+| `OpenGraphCard/OpenGraphCard.module.css:38`  | `line-height: 1.3`                               | Same canvas; outlier leading kept verbatim.                                                                                                                                                                                                                                                                           |
+| `NotFound/NotFound.module.css:98`            | `line-height: 2`                                 | `.terminalBody` mimics a CLI window; loose monospace leading is decorative styling rather than a body-text role.                                                                                                                                                                                                      |
+| `TimelineMarker/TimelineMarker.module.css:3` | `left: calc(1px − var(--space-xl))`              | 1 px is a geometric constant from `rail.left + rail.width/2 − marker.width/2 = 4 + 1 − 4`, not a design value. The semantic part is `var(--space-xl)` (the same token `.timeline` uses for `padding-left`), so the atom stays self-contained — no parent-defined variable.                                            |
 
 ### 3.7 Out of scope in this slice
 
@@ -645,7 +687,7 @@ Before any commit beyond this document lands, the maintainer must:
 - [ ] Approve every line-height snap in §3.2 (Hero:41 has the largest drift at +0.13).
 - [ ] Approve every spacing snap in §3.3 (or veto — equidistant ties round up by default; flag any where rounding down is preferred).
 - [ ] Approve the single radius snap in §3.4 and the `50%` + `980px` → `--radius-full` consolidation.
-- [ ] Approve the 10-row color token rename map in §2.4 (4 issue-scoped + 6 negotiated in PR review), the two renamed accent-alpha tokens (`--accent-soft → --color-accent-subtle`, `--accent-line → --color-accent-muted`), the new `--color-accent-strong`, the "kept as-is" list (`--font-sans`, `--font-mono`, `--container-max`, `--container-pad`), and the dropped-as-unused list (`--shadow`).
+- [ ] Approve the 10-row color token rename map in §2.4 (4 issue-scoped + 6 negotiated in PR review), the two renamed accent-alpha tokens (`--accent-soft → --color-accent-subtle`, `--accent-line → --color-accent-muted`), the new `--color-accent-strong`, the "kept as-is" list (`--font-sans`, `--font-mono`, `--container-max`, `--container-padding`), and the dropped-as-unused list (`--shadow`).
 - [ ] Approve the §2.4 `tokens.css` structure plan (`:root` / `[data-theme="dark"]` / `@media print` preserved).
 - [ ] Approve the §3.0 instruction that on-scale raw-px values get a direct 1:1 substitution to semantic tokens (not just off-scale snaps).
 - [ ] Approve the OKLCH primitive palette in §2.2 (5 hue families, full 55-step ramp).
@@ -660,13 +702,13 @@ Before any commit beyond this document lands, the maintainer must:
 
 After approval, subsequent commits on this branch implement the migration in this order:
 
-1. **Rewrite `src/styles/tokens.css`** with primitive + semantic layers per §2.2 / §2.3 / §2.5 / §2.6 / §2.7. Preserve the existing structure: font-face → `:root` → `[data-theme="dark"]` → `@media print`. Keep `--font-sans`, `--font-mono`, `--container-max`, `--container-pad` as-is (§2.4). No component changes in this commit.
+1. **Rewrite `src/styles/tokens.css`** with primitive + semantic layers per §2.2 / §2.3 / §2.5 / §2.6 / §2.7. Preserve the existing structure: font-face → `:root` → `[data-theme="dark"]` → `@media print`. Keep `--font-sans`, `--font-mono`, `--container-max`, `--container-padding` as-is (§2.4). No component changes in this commit.
 
 2. **Apply the 10 color renames per §2.4** across every file that references the old token names. The accent-alpha tokens are renamed and consumed via the new semantic layer (`--color-accent-subtle`, `--color-accent-muted`, plus the new `--color-accent-strong` per §2.3). The consuming files (verified by grep at planning time):
    - **Component CSS Modules:** Accordion, AvailabilityPill, Chip, ChipList, ContactCta, ContactForm, CtaButton, Experience, Footer, KeySkills, LevelMeter, Miscellaneous, NotFound, OpenGraphCard, PrintButton, SkillGroups, SkillRow, StatusDot, ThemeToggle, TimelineMarker, TopBar.
    - **Astro files with inline color tokens:** `layouts/BaseLayout.astro`, `pages/og.astro`. (Hero was originally `Hero.astro` with inline styles; it was converted to `Hero.tsx` + `Hero.module.css` mid-PR.)
 
-   `pages/404.astro` and `templates/IndexTemplate.astro` reference only `--container-max` / `--container-pad` (kept as-is per §2.4) and need no rename.
+   `pages/404.astro` and `templates/IndexTemplate.astro` reference only `--container-max` / `--container-padding` (kept as-is per §2.4) and need no rename.
 
    The renames are a mechanical search-and-replace (e.g. `var(--bg)` → `var(--color-surface)`). Components that don't appear in §3.1–§3.4 still need this pass — the snap tables enumerate only off-scale value changes, not the universal rename.
 
