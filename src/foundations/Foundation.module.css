@@ -59,6 +59,16 @@
   font-size: var(--text-caption-s-size);
   line-height: 1;
   color: var(--color-text);
+  /* Keep hyphenated tokens (`--color-text-subtle`, `display-xl`, etc.) on a
+     single line so they never break mid-word at the hyphen. */
+  white-space: nowrap;
+}
+
+/* Inline-token utility for hyphenated tokens rendered inside <Text> bodies
+   (e.g. `sand-50` in `sand-50 / slate-950`). Prevents a mid-word break while
+   leaving normal whitespace between adjacent tokens as a break opportunity. */
+.token {
+  white-space: nowrap;
 }
 
 /* -------------------------------------------------------------

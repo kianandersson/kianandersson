@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/preact-vite';
+import { Fragment } from 'preact';
 import { Divider } from '../components/atoms/Divider';
 import { Heading } from '../components/atoms/Heading';
 import { Text } from '../components/atoms/Text';
@@ -73,6 +74,7 @@ const STEPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const;
 
 function SemanticRow({ token, role, reference }: SemanticToken) {
   const dataToken = token.replace('--color-', '');
+  const referenceParts = reference.split(' / ');
   return (
     <div class={styles.semanticRow}>
       <span class={styles.semanticSwatch} data-token={dataToken} />
@@ -81,7 +83,12 @@ function SemanticRow({ token, role, reference }: SemanticToken) {
         {role}
       </Text>
       <Text font="mono" size="caption-s" tone="subtle">
-        {reference}
+        {referenceParts.map((part, index) => (
+          <Fragment key={part}>
+            {index > 0 && ' / '}
+            <span class={styles.token}>{part}</span>
+          </Fragment>
+        ))}
       </Text>
     </div>
   );

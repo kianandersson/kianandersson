@@ -34,7 +34,7 @@ function Row({
         {use}
       </Text>
       <Text font="mono" size="caption-s" tone="subtle">
-        {primitive}
+        <span class={styles.token}>{primitive}</span>
       </Text>
     </div>
   );

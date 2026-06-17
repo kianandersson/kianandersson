@@ -29,7 +29,7 @@ function Row({ token, primitive, px }: { token: string; primitive: string; px: n
       </Text>
       <div class={styles.spacingBar} data-size={token.replace('--space-', '')} />
       <Text font="mono" size="caption-s" tone="subtle">
-        {primitive}
+        <span class={styles.token}>{primitive}</span>
       </Text>
     </div>
   );
