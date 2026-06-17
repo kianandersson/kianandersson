@@ -1,6 +1,6 @@
 .marker {
   position: absolute;
-  left: calc(var(--space-8) * -1);
+  left: calc(1px - var(--space-xl));
   top: var(--space-2);
   width: 8px;
   height: 8px;
