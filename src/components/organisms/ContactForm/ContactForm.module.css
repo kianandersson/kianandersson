@@ -67,15 +67,6 @@
 
 .plane {
   display: inline-flex;
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
-}
-
-@media (hover: hover) {
-  .send:has(button:hover:not(:disabled)) .plane {
-    transform: translate(1px, -1px);
-  }
 }
 
 .send.flying .plane {
@@ -90,10 +81,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .plane,
-  .send {
-    transition: none;
-  }
   .send.flying .plane {
     animation: none;
     opacity: 0;
