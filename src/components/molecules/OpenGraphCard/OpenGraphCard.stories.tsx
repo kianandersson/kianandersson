@@ -1,4 +1,5 @@
 import type { Decorator, Meta, StoryObj } from '@storybook/preact-vite';
+import { expect, within } from 'storybook/test';
 import { OpenGraphCard } from './OpenGraphCard';
 
 const withForcedDarkTheme: Decorator = (Story) => (
@@ -30,7 +31,17 @@ const meta: Meta<typeof OpenGraphCard> = {
 export default meta;
 type Story = StoryObj<typeof OpenGraphCard>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    const heading = canvas.getByRole('heading', { level: 1 });
+    await expect(heading).toHaveTextContent(`${args.firstName}${args.lastName}`);
+    await expect(canvas.getByText(args.role as string)).toBeInTheDocument();
+    for (const label of args.skills as string[]) {
+      await expect(canvas.getByText(label)).toBeInTheDocument();
+    }
+  },
+};
 
 export const ManySkills: Story = {
   args: {
