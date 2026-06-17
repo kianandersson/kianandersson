@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/preact-vite';
 import { SkillGroups } from './SkillGroups';
 
 const meta: Meta<typeof SkillGroups> = {
-  title: 'Organisms/SkillGroups',
+  title: 'Organisms/Skills',
   component: SkillGroups,
   args: {
     groups: [

@@ -5,7 +5,10 @@ const meta: Meta<typeof ContactForm> = {
   title: 'Organisms/ContactForm',
   component: ContactForm,
   argTypes: {
-    status: { control: { type: 'inline-radio' }, options: ['idle', 'sending', 'error'] },
+    status: {
+      control: { type: 'inline-radio' },
+      options: ['idle', 'sending', 'sent', 'error'],
+    },
     recipientName: { control: 'text' },
   },
   args: {
@@ -22,6 +25,11 @@ type Story = StoryObj<typeof ContactForm>;
 export const Idle: Story = { args: { status: 'idle' } };
 
 export const Sending: Story = { args: { status: 'sending' } };
+
+export const Sent: Story = {
+  name: 'Sent (plane fly-off)',
+  args: { status: 'sent' },
+};
 
 export const ErrorState: Story = {
   name: 'Error',

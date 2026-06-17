@@ -1,5 +1,19 @@
-import type { Meta, StoryObj } from '@storybook/preact-vite';
+import type { Decorator, Meta, StoryObj } from '@storybook/preact-vite';
 import { OpenGraphCard } from './OpenGraphCard';
+
+const withForcedDarkTheme: Decorator = (Story) => (
+  <div
+    data-theme="dark"
+    style={{
+      padding: 'var(--space-3xl)',
+      background: 'var(--color-surface-muted)',
+      display: 'inline-block',
+      borderRadius: 'var(--radius-md)',
+    }}
+  >
+    <Story />
+  </div>
+);
 
 const meta: Meta<typeof OpenGraphCard> = {
   title: 'Molecules/OpenGraphCard',
@@ -7,6 +21,7 @@ const meta: Meta<typeof OpenGraphCard> = {
   parameters: {
     layout: 'centered',
   },
+  decorators: [withForcedDarkTheme],
   argTypes: {
     name: { control: 'text' },
     role: { control: 'text' },

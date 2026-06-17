@@ -1,4 +1,4 @@
-import { useId, useState } from 'preact/hooks';
+import { useEffect, useId, useState } from 'preact/hooks';
 import {
   CONTACT_EMAIL_REGEX,
   CONTACT_MESSAGE_MAX,
@@ -35,6 +35,11 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
 
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const trimmedEmail = email.trim();
   const trimmedSubject = subject.trim();
   const trimmedMessage = message.trim();
@@ -59,7 +64,12 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
   }
 
   return (
-    <form aria-label="Contact" onSubmit={handleSubmit} noValidate>
+    <form
+      aria-label="Contact"
+      onSubmit={handleSubmit}
+      noValidate
+      data-mounted={mounted ? 'true' : 'false'}
+    >
       <Window>
         <div class={styles.body}>
           <div class={styles.row}>

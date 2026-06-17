@@ -8,26 +8,27 @@ const meta: Meta<typeof TimelineMarker> = {
     <div
       style={{
         position: 'relative',
-        height: 40,
-        width: 200,
-        paddingLeft: 32,
-        display: 'flex',
-        alignItems: 'center',
+        borderTop: '1px solid var(--color-divider)',
+        paddingLeft: 'var(--space-xl)',
+        paddingTop: 'var(--space-3xl)',
+        paddingBottom: 'var(--space-2)',
       }}
     >
       <span
         aria-hidden="true"
         style={{
           position: 'absolute',
-          left: 28,
-          top: 0,
-          bottom: 0,
-          width: 1,
+          left: 'var(--space-1)',
+          top: 'var(--space-10)',
+          bottom: 'var(--space-2)',
+          width: '2px',
           background: 'var(--color-divider)',
         }}
       />
-      <TimelineMarker />
-      <span style={{ marginLeft: 16, color: 'var(--color-text-muted)' }}>Timeline entry</span>
+      <div style={{ position: 'relative' }}>
+        <TimelineMarker />
+        <div style={{ color: 'var(--color-text-muted)' }}>Timeline entry</div>
+      </div>
     </div>
   ),
 };

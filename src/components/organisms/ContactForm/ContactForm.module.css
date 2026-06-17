@@ -72,6 +72,14 @@
     opacity 0.2s ease;
 }
 
+/* Suppress the plane's hover/idle transition during the form's first paint —
+   if the cursor happens to land over the Send button as the form reveals,
+   the transform would otherwise animate from `none` to the hover offset and
+   look like a phantom interaction. */
+form[data-mounted="false"] .plane {
+  transition: none;
+}
+
 @media (hover: hover) {
   .send:has(button:hover:not(:disabled)) .plane {
     transform: translate(1px, -1px);

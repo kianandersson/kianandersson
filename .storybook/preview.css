@@ -1,7 +1,18 @@
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
 body {
+  margin: 0;
+  padding: var(--space-xl);
   background: var(--color-surface);
   color: var(--color-text);
   font-family: var(--font-sans);
-  margin: 0;
-  padding: var(--space-xl, 24px);
+  line-height: var(--text-body-leading);
+}
+
+::selection {
+  background: var(--color-accent-subtle);
+  color: var(--color-accent);
 }

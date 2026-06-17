@@ -7,14 +7,10 @@ const meta: Meta<typeof NotFound> = {
   argTypes: {
     requestedUrl: { control: 'text' },
   },
-  args: { requestedUrl: '/missing-page' },
+  args: { requestedUrl: 'https://kianandersson.dk/blog/article-that-moved' },
 };
 
 export default meta;
 type Story = StoryObj<typeof NotFound>;
 
 export const Default: Story = {};
-
-export const RootRequest: Story = {
-  args: { requestedUrl: '/' },
-};
