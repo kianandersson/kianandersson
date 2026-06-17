@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-6xl);
+  width: 100%;
   max-width: 880px;
 }
 
@@ -110,14 +111,21 @@
 
 @container (max-width: 600px) {
   .semanticTable {
-    grid-template-columns: auto 1fr;
+    /* Drop the subgrid contract — each row defines its own internal grid so
+       the token chip can sit on its own line as the row's primary identifier. */
+    grid-template-columns: 1fr;
+    row-gap: var(--space-l);
   }
   .semanticRow {
+    grid-template-columns: auto 1fr;
     grid-template-areas:
-      "swatch token"
+      "token  token"
       "swatch role"
       "swatch reference";
-    row-gap: var(--space-2xs);
+    align-items: start;
+    column-gap: var(--space-m);
+    row-gap: var(--space-s);
+    padding-bottom: var(--space-l);
   }
   .semanticRow > :nth-child(1) {
     grid-area: swatch;
@@ -188,14 +196,27 @@
 
 .rampHead {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: var(--space-s);
+  column-gap: var(--space-s);
+  row-gap: var(--space-2xs);
 }
 
 .rampGrid {
   display: grid;
-  grid-template-columns: repeat(11, 1fr);
+  /* minmax(0, 1fr) lets columns shrink past their content's min-width — without
+     it the 11-column ramp can overflow the container on narrow viewports. */
+  grid-template-columns: repeat(11, minmax(0, 1fr));
   gap: var(--space-s);
+}
+
+@container (max-width: 520px) {
+  .rampGrid {
+    /* Tighter gap reclaims width for the 11 swatches when the container is
+       narrow — the ladder is the point of this view, so we keep all 11 in one
+       row rather than dropping to a wrapped grid. */
+    gap: var(--space-2xs);
+  }
 }
 
 .rampStep {
@@ -410,17 +431,25 @@
 
 @container (max-width: 600px) {
   .roleTable {
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 1fr;
+    row-gap: var(--space-l);
   }
   .roleRow {
-    row-gap: var(--space-s);
-  }
-  .roleRow > .roleSample {
-    grid-column: 1 / -1;
+    /* Drop subgrid — the name chip stacks above the meta and sample as three
+       clear blocks rather than competing for one row's horizontal space. */
+    grid-template-columns: 1fr;
+    align-items: start;
+    row-gap: var(--space-m);
+    padding-bottom: var(--space-l);
   }
 }
 
 .roleSample {
+  /* min-width: 0 lets the 1fr column shrink below the sample's intrinsic width
+     — without it, display-xl / display-l samples push the grid wider than the
+     viewport. overflow-wrap covers the long unbroken token names in samples. */
+  min-width: 0;
+  overflow-wrap: anywhere;
   font-family: var(--font-sans);
   color: var(--color-text);
 }
@@ -490,15 +519,34 @@
   border-bottom: 1px solid var(--color-divider);
 }
 
-@container (max-width: 520px) {
+@container (max-width: 600px) {
   .spacingTable {
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 1fr;
+    row-gap: var(--space-l);
   }
   .spacingRow {
-    row-gap: var(--space-2xs);
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "token     px"
+      "bar       bar"
+      "primitive primitive";
+    align-items: center;
+    column-gap: var(--space-m);
+    row-gap: var(--space-s);
+    padding-bottom: var(--space-l);
   }
-  .spacingRow > .spacingBar {
-    grid-column: 1 / -1;
+  .spacingRow > :nth-child(1) {
+    grid-area: token;
+  }
+  .spacingRow > :nth-child(2) {
+    grid-area: px;
+    justify-self: end;
+  }
+  .spacingRow > :nth-child(3) {
+    grid-area: bar;
+  }
+  .spacingRow > :nth-child(4) {
+    grid-area: primitive;
   }
 }
 
@@ -567,15 +615,20 @@
 
 @container (max-width: 600px) {
   .radiusTable {
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 1fr;
+    row-gap: var(--space-l);
   }
   .radiusRow {
+    grid-template-columns: auto 1fr;
     grid-template-areas:
-      "sample token"
+      "token  token"
       "sample value"
       "sample use"
       "sample primitive";
-    row-gap: var(--space-2xs);
+    align-items: start;
+    column-gap: var(--space-m);
+    row-gap: var(--space-s);
+    padding-bottom: var(--space-l);
   }
   .radiusRow > :nth-child(1) {
     grid-area: sample;
@@ -598,7 +651,6 @@
   width: 60px;
   height: 60px;
   background: var(--color-accent-subtle);
-  border: 1px solid var(--color-accent-muted);
 }
 
 .radiusSample[data-size="s"] {
