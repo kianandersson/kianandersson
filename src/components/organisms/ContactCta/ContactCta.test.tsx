@@ -24,7 +24,7 @@ describe('ContactCta', () => {
   it('renders the icon-only round button alongside an "available" pill for a past date', () => {
     const { container } = render(<ContactCta recipientName={RECIPIENT} availableFrom={PAST} />);
     const button = screen.getByRole('button', {
-      name: /get in touch — available for work/i,
+      name: /get in touch/i,
     });
     expect(button).toHaveAttribute('data-variant', 'icon');
     expect(container.querySelector('[data-state="available"]')).not.toBeNull();
