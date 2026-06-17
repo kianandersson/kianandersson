@@ -24,25 +24,8 @@ function Row({
   use: string;
 }) {
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '80px 160px 80px 1fr 120px',
-        gap: 'var(--space-lg)',
-        alignItems: 'center',
-        paddingBottom: 'var(--space-md)',
-        borderBottom: '1px solid var(--color-divider)',
-      }}
-    >
-      <div
-        style={{
-          width: 60,
-          height: 60,
-          background: 'var(--color-accent-subtle)',
-          border: '1px solid var(--color-accent-muted)',
-          borderRadius: `var(${token})`,
-        }}
-      />
+    <div class={styles.radiusRow}>
+      <div class={styles.radiusSample} data-size={token.replace('--radius-', '')} />
       <span class={styles.tokenChip}>{token}</span>
       <Text font="mono" size="caption-s" tone="subtle">
         {value}
@@ -74,7 +57,7 @@ function Page() {
       <section class={styles.section}>
         <SectionHeader title="Scale" />
         <Divider />
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
+        <div class={styles.list}>
           {RADII.map((item) => (
             <Row key={item.token} {...item} />
           ))}

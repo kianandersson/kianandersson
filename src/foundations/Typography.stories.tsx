@@ -111,17 +111,8 @@ function RoleRow({
   sample,
 }: Role) {
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '180px 1fr',
-        gap: 'var(--space-xl)',
-        alignItems: 'baseline',
-        paddingBottom: 'var(--space-lg)',
-        borderBottom: '1px solid var(--color-divider)',
-      }}
-    >
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2xs)' }}>
+    <div class={styles.roleRow}>
+      <div class={styles.roleMeta}>
         <span class={styles.tokenChip}>{name}</span>
         <Text font="mono" size="caption-s" tone="subtle">
           {sizePx} / {leadingValue}
@@ -130,14 +121,7 @@ function RoleRow({
           fs {sizePrimitive} · lh {leadingPrimitive}
         </Text>
       </div>
-      <div
-        style={{
-          fontFamily: font === 'mono' ? 'var(--font-mono)' : 'var(--font-sans)',
-          fontSize: `var(--text-${name}-size)`,
-          lineHeight: `var(--text-${name}-leading)`,
-          color: 'var(--color-text)',
-        }}
-      >
+      <div class={styles.roleSample} data-role={name} data-font={font ?? 'sans'}>
         {sample}
       </div>
     </div>
@@ -163,7 +147,7 @@ function Page() {
       <section class={styles.section}>
         <SectionHeader title="Roles" />
         <Divider />
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-lg)' }}>
+        <div class={styles.listWide}>
           {ROLES.map((role) => (
             <RoleRow key={role.name} {...role} />
           ))}

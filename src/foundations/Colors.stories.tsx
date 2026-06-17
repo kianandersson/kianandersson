@@ -72,27 +72,10 @@ const RAMPS: Ramp[] = [
 const STEPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const;
 
 function SemanticRow({ token, role, reference }: SemanticToken) {
+  const dataToken = token.replace('--color-', '');
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '56px 220px 1fr auto',
-        columnGap: 'var(--space-lg)',
-        rowGap: 'var(--space-2xs)',
-        alignItems: 'center',
-        paddingBottom: 'var(--space-md)',
-        borderBottom: '1px solid var(--color-divider)',
-      }}
-    >
-      <span
-        style={{
-          width: 56,
-          height: 32,
-          borderRadius: 'var(--radius-md)',
-          border: '1px solid var(--color-divider)',
-          background: `var(${token})`,
-        }}
-      />
+    <div class={styles.semanticRow}>
+      <span class={styles.semanticSwatch} data-token={dataToken} />
       <span class={styles.tokenChip}>{token}</span>
       <Text size="caption-m" tone="muted">
         {role}
@@ -106,31 +89,17 @@ function SemanticRow({ token, role, reference }: SemanticToken) {
 
 function RampRow({ family, hue, role }: Ramp) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-sm)' }}>
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-sm)' }}>
+    <div class={styles.ramp}>
+      <div class={styles.rampHead}>
         <span class={styles.tokenChip}>{family}</span>
         <Text font="mono" size="caption-s" tone="subtle">
           H {hue} · {role}
         </Text>
       </div>
-      <div
-        style={{ display: 'grid', gridTemplateColumns: 'repeat(11, 1fr)', gap: 'var(--space-xs)' }}
-      >
+      <div class={styles.rampGrid}>
         {STEPS.map((step) => (
-          <div
-            key={step}
-            style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2xs)' }}
-          >
-            <span
-              style={{
-                display: 'block',
-                width: '100%',
-                aspectRatio: '1',
-                background: `var(--color-${family}-${step})`,
-                borderRadius: 'var(--radius-sm)',
-                border: '1px solid var(--color-divider)',
-              }}
-            />
+          <div key={step} class={styles.rampStep}>
+            <span class={styles.rampSwatch} data-family={family} data-step={step} />
             <Text font="mono" size="caption-s" tone="subtle">
               {step}
             </Text>
@@ -158,7 +127,7 @@ function Page() {
       <section class={styles.section}>
         <SectionHeader title="Semantic" />
         <Divider />
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
+        <div class={styles.list}>
           {SEMANTIC_TOKENS.map((row) => (
             <SemanticRow key={row.token} {...row} />
           ))}
@@ -168,7 +137,7 @@ function Page() {
       <section class={styles.section}>
         <SectionHeader title="Primitives" />
         <Divider />
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2xl)' }}>
+        <div class={styles.listLoose}>
           {RAMPS.map((ramp) => (
             <RampRow key={ramp.family} {...ramp} />
           ))}

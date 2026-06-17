@@ -22,28 +22,12 @@ const SCALE = [
 
 function Row({ token, primitive, px }: { token: string; primitive: string; px: number }) {
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '160px 64px 1fr 120px',
-        gap: 'var(--space-lg)',
-        alignItems: 'center',
-        paddingBottom: 'var(--space-md)',
-        borderBottom: '1px solid var(--color-divider)',
-      }}
-    >
+    <div class={styles.spacingRow}>
       <span class={styles.tokenChip}>{token}</span>
       <Text font="mono" size="caption-s" tone="subtle">
         {px} px
       </Text>
-      <div
-        style={{
-          height: 12,
-          width: `var(${token})`,
-          background: 'var(--color-accent)',
-          borderRadius: 'var(--radius-sm)',
-        }}
-      />
+      <div class={styles.spacingBar} data-size={token.replace('--space-', '')} />
       <Text font="mono" size="caption-s" tone="subtle">
         {primitive}
       </Text>
@@ -68,7 +52,7 @@ function Page() {
       <section class={styles.section}>
         <SectionHeader title="Scale" />
         <Divider />
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
+        <div class={styles.list}>
           {SCALE.map((item) => (
             <Row key={item.token} {...item} />
           ))}

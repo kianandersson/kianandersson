@@ -40,17 +40,9 @@ const LAYERS: Bullet[] = [
 
 function BulletList({ items }: { items: Bullet[] }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
+    <div class={styles.list}>
       {items.map((item) => (
-        <div
-          key={item.label}
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '140px 1fr',
-            gap: 'var(--space-lg)',
-            alignItems: 'baseline',
-          }}
-        >
+        <div key={item.label} class={styles.bulletRow}>
           <Text font="mono" size="caption-m" tone="accent-strong" weight="semibold">
             {item.label}
           </Text>
