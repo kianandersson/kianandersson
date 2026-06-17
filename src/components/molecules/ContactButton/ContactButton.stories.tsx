@@ -44,6 +44,17 @@ export const IconVariant: Story = {
   },
 };
 
+export const LabelledOpen: Story = {
+  args: { variant: 'labelled', isOpen: true },
+  // Same as Open — provide the aria-controls target so axe can resolve it.
+  render: (args) => (
+    <>
+      <ContactButton {...args} />
+      <div id={args.controlsId} hidden />
+    </>
+  ),
+};
+
 export const Open: Story = {
   args: { variant: 'icon', isOpen: true },
   // Provide the aria-controls target so axe can resolve it; in production

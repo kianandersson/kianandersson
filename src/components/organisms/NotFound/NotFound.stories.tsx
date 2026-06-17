@@ -38,8 +38,9 @@ export const Default: Story = {
   },
 };
 
-export const FallbackToHome: Story = {
+export const FallbackToHomeBehavior: Story = {
   args: { requestedUrl: undefined, homeHref: '/' },
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(canvas.getByTestId('requested-url')).toHaveTextContent('/');

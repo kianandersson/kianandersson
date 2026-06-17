@@ -53,8 +53,9 @@ export const MidLevel: Story = {
   },
 };
 
-export const SingleYear: Story = {
+export const SingleYearFormatBehavior: Story = {
   args: { years: 1 },
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(canvas.getByText('+1 yr')).toBeInTheDocument();

@@ -32,9 +32,12 @@ export const Default: Story = {};
 
 export const ExpandCollapseBehavior: Story = {
   tags: ['!dev', '!autodocs'],
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     const trigger = canvas.getByRole('button', { name: /frontend/i });
+
+    // Count badge renders from the prop.
+    await expect(canvas.getByText(String(args.count))).toBeInTheDocument();
 
     // Initial collapsed state.
     await expect(trigger).toHaveAttribute('aria-expanded', 'false');
@@ -56,13 +59,5 @@ export const ExpandCollapseBehavior: Story = {
     await userEvent.click(trigger);
     await expect(trigger).toHaveAttribute('aria-expanded', 'false');
     await expect(panel).toHaveAttribute('inert');
-  },
-};
-
-export const WithCount: Story = {
-  args: { count: 12 },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    await expect(canvas.getByText('12')).toBeInTheDocument();
   },
 };

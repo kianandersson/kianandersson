@@ -75,8 +75,9 @@ export const SingleOpenBehavior: Story = {
   },
 };
 
-export const Empty: Story = {
+export const EmptyBehavior: Story = {
   args: { groups: [] },
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(canvas.queryAllByRole('button')).toHaveLength(0);
