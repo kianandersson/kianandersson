@@ -18,7 +18,7 @@ function ContactDemo({ recipientName, availableFrom }: Args) {
 }
 
 const meta: Meta<typeof ContactDemo> = {
-  title: 'Organisms/ContactPanel',
+  title: 'Organisms/Contact',
   component: ContactDemo,
   argTypes: {
     recipientName: { control: 'text' },
