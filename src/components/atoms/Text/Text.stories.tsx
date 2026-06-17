@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/preact-vite';
+import { expect } from 'storybook/test';
 import { Text } from './Text';
 
 const meta: Meta<typeof Text> = {
@@ -31,7 +32,19 @@ const meta: Meta<typeof Text> = {
 export default meta;
 type Story = StoryObj<typeof Text>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  play: async ({ canvasElement, args }) => {
+    const el = canvasElement.firstElementChild as HTMLElement | null;
+    await expect(el?.tagName).toBe((args.as ?? 'span').toUpperCase());
+  },
+};
+
+export const Span: Story = {
+  args: { as: 'span' },
+  play: async ({ canvasElement }) => {
+    await expect(canvasElement.firstElementChild?.tagName).toBe('SPAN');
+  },
+};
 
 export const MonoCaption: Story = {
   name: 'Mono caption (e.g. timeline meta)',

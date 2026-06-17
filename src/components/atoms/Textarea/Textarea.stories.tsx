@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/preact-vite';
+import { expect, userEvent, within } from 'storybook/test';
 import { Textarea } from './Textarea';
 
 const meta: Meta<typeof Textarea> = {
@@ -19,8 +20,20 @@ const meta: Meta<typeof Textarea> = {
 export default meta;
 type Story = StoryObj<typeof Textarea>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const ta = canvas.getByPlaceholderText('Write your message…') as HTMLTextAreaElement;
+    await expect(ta.tagName).toBe('TEXTAREA');
+    await userEvent.type(ta, 'hi');
+    await expect(ta).toHaveValue('hi');
+  },
+};
 
 export const Disabled: Story = {
   args: { disabled: true, value: 'Cannot edit' },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByDisplayValue('Cannot edit')).toBeDisabled();
+  },
 };
