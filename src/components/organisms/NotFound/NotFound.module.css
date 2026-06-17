@@ -58,7 +58,9 @@
   align-items: center;
   overflow: hidden;
   width: 0;
-  margin-right: 0;
+  /* Cancel Button's gap-xs (8px) so the label stays centred in the
+   * pill when the arrow is collapsed. */
+  margin-right: calc(var(--space-xs) * -1);
   opacity: 0;
   transform: translateX(calc(var(--space-3) / 2));
   transition:
@@ -71,7 +73,7 @@
 .backButton:has(a:hover) .arrow,
 .backButton:has(a:focus-visible) .arrow {
   width: 16px;
-  margin-right: var(--space-sm);
+  margin-right: var(--space-2xs);
   opacity: 1;
   transform: translateX(0);
 }
