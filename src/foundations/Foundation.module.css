@@ -8,25 +8,29 @@
 .head {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: var(--space-l);
 }
 
 .section {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl);
+  /* Matches the row-to-row spacing inside each foundation table — the
+     padding-bottom + list-gap pair on each row is `var(--space-m)`
+     above and below the divider, so the section gap above and below
+     the SectionHeader's divider sits on the same rhythm. */
+  gap: var(--space-m);
 }
 
 .list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-m);
 }
 
 .listWide {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: var(--space-l);
 }
 
 .listLoose {
@@ -39,7 +43,7 @@
   display: inline-flex;
   align-items: center;
   padding: var(--space-2xs) var(--space-xs);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-s);
   background: var(--color-surface-muted);
   font-family: var(--font-mono);
   font-size: var(--text-caption-s-size);
@@ -54,7 +58,7 @@
 .bulletRow {
   display: grid;
   grid-template-columns: 140px 1fr;
-  gap: var(--space-lg);
+  gap: var(--space-l);
   align-items: baseline;
 }
 
@@ -65,17 +69,17 @@
 .semanticRow {
   display: grid;
   grid-template-columns: 56px 220px 1fr auto;
-  column-gap: var(--space-lg);
+  column-gap: var(--space-l);
   row-gap: var(--space-2xs);
   align-items: center;
-  padding-bottom: var(--space-md);
+  padding-bottom: var(--space-m);
   border-bottom: 1px solid var(--color-divider);
 }
 
 .semanticSwatch {
   width: 56px;
   height: 32px;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-m);
   border: 1px solid var(--color-divider);
 }
 
@@ -122,13 +126,13 @@
 .ramp {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--space-s);
 }
 
 .rampHead {
   display: flex;
   align-items: baseline;
-  gap: var(--space-sm);
+  gap: var(--space-s);
 }
 
 .rampGrid {
@@ -147,7 +151,7 @@
   display: block;
   width: 100%;
   aspect-ratio: 1;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-s);
   border: 1px solid var(--color-divider);
 }
 
@@ -329,8 +333,7 @@
   display: grid;
   grid-template-columns: 180px 1fr;
   gap: var(--space-xl);
-  align-items: baseline;
-  padding-bottom: var(--space-lg);
+  padding-bottom: var(--space-l);
   border-bottom: 1px solid var(--color-divider);
 }
 
@@ -397,16 +400,16 @@
 .spacingRow {
   display: grid;
   grid-template-columns: 160px 64px 1fr 120px;
-  gap: var(--space-lg);
+  gap: var(--space-l);
   align-items: center;
-  padding-bottom: var(--space-md);
+  padding-bottom: var(--space-m);
   border-bottom: 1px solid var(--color-divider);
 }
 
 .spacingBar {
   height: 12px;
   background: var(--color-accent);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-s);
 }
 
 .spacingBar[data-size="2xs"] {
@@ -415,14 +418,14 @@
 .spacingBar[data-size="xs"] {
   width: var(--space-xs);
 }
-.spacingBar[data-size="sm"] {
-  width: var(--space-sm);
+.spacingBar[data-size="s"] {
+  width: var(--space-s);
 }
-.spacingBar[data-size="md"] {
-  width: var(--space-md);
+.spacingBar[data-size="m"] {
+  width: var(--space-m);
 }
-.spacingBar[data-size="lg"] {
-  width: var(--space-lg);
+.spacingBar[data-size="l"] {
+  width: var(--space-l);
 }
 .spacingBar[data-size="xl"] {
   width: var(--space-xl);
@@ -453,9 +456,9 @@
 .radiusRow {
   display: grid;
   grid-template-columns: 80px 160px 80px 1fr 120px;
-  gap: var(--space-lg);
+  gap: var(--space-l);
   align-items: center;
-  padding-bottom: var(--space-md);
+  padding-bottom: var(--space-m);
   border-bottom: 1px solid var(--color-divider);
 }
 
@@ -466,14 +469,14 @@
   border: 1px solid var(--color-accent-muted);
 }
 
-.radiusSample[data-size="sm"] {
-  border-radius: var(--radius-sm);
+.radiusSample[data-size="s"] {
+  border-radius: var(--radius-s);
 }
-.radiusSample[data-size="md"] {
-  border-radius: var(--radius-md);
+.radiusSample[data-size="m"] {
+  border-radius: var(--radius-m);
 }
-.radiusSample[data-size="lg"] {
-  border-radius: var(--radius-lg);
+.radiusSample[data-size="l"] {
+  border-radius: var(--radius-l);
 }
 .radiusSample[data-size="full"] {
   border-radius: var(--radius-full);
