@@ -7,7 +7,7 @@ const meta: Meta<typeof Textarea> = {
   argTypes: {
     placeholder: { control: 'text' },
     disabled: { control: 'boolean' },
-    rows: { control: 'number' },
+    rows: { control: { type: 'number', min: 1, max: 20, step: 1 } },
   },
   args: {
     placeholder: 'Write your message…',
@@ -19,7 +19,7 @@ const meta: Meta<typeof Textarea> = {
 export default meta;
 type Story = StoryObj<typeof Textarea>;
 
-export const Empty: Story = {};
+export const Default: Story = {};
 
 export const Disabled: Story = {
   args: { disabled: true, value: 'Cannot edit' },

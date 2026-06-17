@@ -7,6 +7,7 @@ const meta: Meta<typeof ContactButton> = {
   argTypes: {
     variant: { control: { type: 'inline-radio' }, options: ['icon', 'labelled'] },
     isOpen: { control: 'boolean' },
+    ariaLabel: { control: 'text' },
   },
   args: {
     variant: 'labelled',
@@ -20,18 +21,9 @@ const meta: Meta<typeof ContactButton> = {
 export default meta;
 type Story = StoryObj<typeof ContactButton>;
 
-export const LabelledClosed: Story = {
-  args: { variant: 'labelled', isOpen: false },
-};
+export const Default: Story = {};
 
-export const LabelledOpen: Story = {
-  args: { variant: 'labelled', isOpen: true, ariaLabel: 'Close contact form' },
-};
-
-export const IconClosed: Story = {
-  args: { variant: 'icon', isOpen: false },
-};
-
-export const IconOpen: Story = {
-  args: { variant: 'icon', isOpen: true, ariaLabel: 'Close contact form' },
+export const IconVariant: Story = {
+  name: 'Icon variant',
+  args: { variant: 'icon' },
 };

@@ -10,7 +10,7 @@ const meta: Meta<typeof FieldLabel> = {
     children: { control: 'text' },
   },
   args: {
-    for: 'email',
+    for: 'demo-input',
     tone: 'subtle',
     children: 'From',
   },
@@ -25,5 +25,4 @@ const meta: Meta<typeof FieldLabel> = {
 export default meta;
 type Story = StoryObj<typeof FieldLabel>;
 
-export const Subtle: Story = { args: { tone: 'subtle' } };
-export const Muted: Story = { args: { tone: 'muted', children: 'Subject' } };
+export const Default: Story = {};

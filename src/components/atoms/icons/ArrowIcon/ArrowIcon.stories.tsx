@@ -14,7 +14,4 @@ const meta: Meta<typeof ArrowIcon> = {
 export default meta;
 type Story = StoryObj<typeof ArrowIcon>;
 
-export const Right: Story = { args: { direction: 'right' } };
-export const Down: Story = { args: { direction: 'down' } };
-export const Left: Story = { args: { direction: 'left' } };
-export const Up: Story = { args: { direction: 'up' } };
+export const Default: Story = {};

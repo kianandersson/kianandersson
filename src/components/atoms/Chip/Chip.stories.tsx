@@ -17,10 +17,4 @@ const meta: Meta<typeof Chip> = {
 export default meta;
 type Story = StoryObj<typeof Chip>;
 
-export const Stack: Story = {
-  args: { variant: 'stack', label: 'TypeScript' },
-};
-
-export const Methods: Story = {
-  args: { variant: 'methods', label: 'Test-driven development' },
-};
+export const Default: Story = {};

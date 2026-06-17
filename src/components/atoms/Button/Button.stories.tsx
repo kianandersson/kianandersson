@@ -5,12 +5,11 @@ const meta: Meta<typeof Button> = {
   title: 'Atoms/Button',
   component: Button,
   argTypes: {
-    size: { control: { type: 'inline-radio' }, options: ['md', 'lg'] },
     disabled: { control: 'boolean' },
     children: { control: 'text' },
+    href: { control: 'text' },
   },
   args: {
-    size: 'md',
     children: 'Send message',
   },
 };
@@ -18,17 +17,7 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-export const Medium: Story = {
-  args: { size: 'md' },
-};
-
-export const Large: Story = {
-  args: { size: 'lg', children: 'Back to home' },
-};
-
-export const Disabled: Story = {
-  args: { disabled: true, children: 'Disabled' },
-};
+export const Default: Story = {};
 
 export const AsLink: Story = {
   name: 'As link (href)',

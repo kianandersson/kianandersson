@@ -11,6 +11,7 @@ const meta: Meta<typeof TextInput> = {
     },
     placeholder: { control: 'text' },
     disabled: { control: 'boolean' },
+    required: { control: 'boolean' },
   },
   args: {
     type: 'text',
@@ -21,11 +22,7 @@ const meta: Meta<typeof TextInput> = {
 export default meta;
 type Story = StoryObj<typeof TextInput>;
 
-export const Text: Story = {};
-
-export const Email: Story = {
-  args: { type: 'email', placeholder: 'you@company.com' },
-};
+export const Default: Story = {};
 
 export const Disabled: Story = {
   args: { disabled: true, value: 'Cannot edit' },

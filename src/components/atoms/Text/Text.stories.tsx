@@ -11,7 +11,7 @@ const meta: Meta<typeof Text> = {
       options: ['caption-s', 'caption-m', 'label', 'body', 'subheading', 'heading-s'],
     },
     tone: {
-      control: { type: 'inline-radio' },
+      control: { type: 'select' },
       options: ['default', 'muted', 'subtle', 'accent', 'accent-strong'],
     },
     font: { control: { type: 'inline-radio' }, options: ['sans', 'mono'] },
@@ -31,28 +31,9 @@ const meta: Meta<typeof Text> = {
 export default meta;
 type Story = StoryObj<typeof Text>;
 
-export const Body: Story = {};
+export const Default: Story = {};
 
-export const Subheading: Story = {
-  args: { size: 'subheading', tone: 'muted' },
-};
-
-export const HeadingS: Story = {
-  args: { size: 'heading-s', tone: 'muted' },
-};
-
-export const CaptionMono: Story = {
+export const MonoCaption: Story = {
+  name: 'Mono caption (e.g. timeline meta)',
   args: { size: 'caption-s', font: 'mono', tone: 'muted', children: '#### TYPESCRIPT · 6Y' },
-};
-
-export const Accent: Story = {
-  args: { tone: 'accent', weight: 'semibold' },
-};
-
-export const AccentStrong: Story = {
-  args: { tone: 'accent-strong', weight: 'semibold' },
-};
-
-export const Subtle: Story = {
-  args: { tone: 'subtle' },
 };

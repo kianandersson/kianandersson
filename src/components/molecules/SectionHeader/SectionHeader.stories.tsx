@@ -9,7 +9,7 @@ const meta: Meta<typeof SectionHeader> = {
     title: { control: 'text' },
     level: { control: { type: 'inline-radio' }, options: [1, 2, 3] },
     size: {
-      control: { type: 'inline-radio' },
+      control: { type: 'select' },
       options: ['display-xl', 'display-l', 'l', 'm', 's'],
     },
   },
@@ -26,8 +26,4 @@ export const WithAction: Story = {
     title: 'Key skills',
     action: <TextLink href="#skills">All skills →</TextLink>,
   },
-};
-
-export const LargeDisplay: Story = {
-  args: { title: 'Skills', level: 1, size: 'l' },
 };

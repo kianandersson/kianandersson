@@ -7,6 +7,7 @@ const meta: Meta<typeof TextLink> = {
   argTypes: {
     tone: { control: { type: 'inline-radio' }, options: ['muted', 'default'] },
     children: { control: 'text' },
+    href: { control: 'text' },
   },
   args: {
     tone: 'muted',
@@ -17,13 +18,9 @@ const meta: Meta<typeof TextLink> = {
 export default meta;
 type Story = StoryObj<typeof TextLink>;
 
-export const Muted: Story = { args: { tone: 'muted' } };
+export const Default: Story = {};
 
-export const Default: Story = {
+export const AsAnchor: Story = {
+  name: 'As anchor (href)',
   args: { tone: 'default', children: 'open-source', href: '#' },
-};
-
-export const AsButton: Story = {
-  name: 'As button',
-  args: { children: 'Show less', 'aria-expanded': true },
 };

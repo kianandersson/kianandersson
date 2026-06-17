@@ -8,7 +8,6 @@ const meta: Meta<typeof Accordion> = {
   argTypes: {
     title: { control: 'text' },
     count: { control: 'number' },
-    isOpen: { control: 'boolean' },
   },
   args: {
     title: 'Frontend',
@@ -19,23 +18,13 @@ const meta: Meta<typeof Accordion> = {
       </p>
     ),
   },
+  render: (args) => {
+    const [open, setOpen] = useState(false);
+    return <Accordion {...args} isOpen={open} onToggle={() => setOpen((v) => !v)} />;
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof Accordion>;
 
-export const Closed: Story = {
-  args: { isOpen: false, onToggle: () => {} },
-};
-
-export const Open: Story = {
-  args: { isOpen: true, onToggle: () => {} },
-};
-
-export const Interactive: Story = {
-  args: { isOpen: false },
-  render: (args) => {
-    const [open, setOpen] = useState(args.isOpen ?? false);
-    return <Accordion {...args} isOpen={open} onToggle={() => setOpen((v) => !v)} />;
-  },
-};
+export const Default: Story = {};

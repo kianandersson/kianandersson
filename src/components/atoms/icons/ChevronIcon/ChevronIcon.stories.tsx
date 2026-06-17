@@ -14,7 +14,4 @@ const meta: Meta<typeof ChevronIcon> = {
 export default meta;
 type Story = StoryObj<typeof ChevronIcon>;
 
-export const Down: Story = { args: { direction: 'down' } };
-export const Up: Story = { args: { direction: 'up' } };
-export const Left: Story = { args: { direction: 'left' } };
-export const Right: Story = { args: { direction: 'right' } };
+export const Default: Story = {};
