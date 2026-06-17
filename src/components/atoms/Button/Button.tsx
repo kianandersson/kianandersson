@@ -6,7 +6,6 @@ export type ButtonSize = 'md' | 'lg';
 type SharedProps = {
   children?: ComponentChildren;
   size?: ButtonSize;
-  class?: string;
   id?: string;
   title?: string;
   'aria-label'?: string;
@@ -36,11 +35,9 @@ export type ButtonOnlyProps = SharedProps & {
 export type Props = AnchorProps | ButtonOnlyProps;
 
 export function Button(props: Props) {
-  const { children, class: className, size = 'md' } = props;
+  const { children, size = 'md' } = props;
   const sizeClass = size === 'lg' ? styles.lg : styles.md;
-  const combined = className
-    ? `${styles.button} ${sizeClass} ${className}`
-    : `${styles.button} ${sizeClass}`;
+  const combined = `${styles.button} ${sizeClass}`;
 
   const shared = {
     id: props.id,

@@ -3,7 +3,6 @@ import styles from './IconButton.module.css';
 
 type SharedProps = {
   children: ComponentChildren;
-  class?: string;
   id?: string;
   title?: string;
   'aria-label': string;
@@ -33,14 +32,13 @@ export type ButtonProps = SharedProps & {
 export type Props = AnchorProps | ButtonProps;
 
 export function IconButton(props: Props) {
-  const { children, class: className } = props;
-  const combined = className ? `${styles.button} ${className}` : styles.button;
+  const { children } = props;
 
   const shared = {
     id: props.id,
     title: props.title,
     inert: props.inert,
-    class: combined,
+    class: styles.button,
     'aria-label': props['aria-label'],
     'aria-expanded': props['aria-expanded'],
     'aria-controls': props['aria-controls'],

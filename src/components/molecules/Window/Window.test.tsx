@@ -19,9 +19,4 @@ describe('Window', () => {
     const dots = container.querySelectorAll('[aria-hidden="true"]');
     expect(dots.length).toBeGreaterThanOrEqual(3);
   });
-
-  it('merges a caller-provided class onto the root', () => {
-    const { container } = render(<Window class="custom">body</Window>);
-    expect(container.firstElementChild?.className).toMatch(/custom/);
-  });
 });

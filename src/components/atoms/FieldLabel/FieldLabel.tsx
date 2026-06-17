@@ -8,13 +8,11 @@ type Props = {
   for: string;
   tone?: FieldLabelTone;
   children: ComponentChildren;
-  class?: string;
 };
 
-export function FieldLabel({ for: htmlFor, tone = 'subtle', children, class: className }: Props) {
-  const combined = className ? `${styles.label} ${className}` : styles.label;
+export function FieldLabel({ for: htmlFor, tone = 'subtle', children }: Props) {
   return (
-    <label for={htmlFor} class={combined} data-tone={tone}>
+    <label for={htmlFor} class={styles.label} data-tone={tone}>
       {children}
     </label>
   );

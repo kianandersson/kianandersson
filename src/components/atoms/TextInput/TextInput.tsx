@@ -7,9 +7,9 @@ type OwnProps = {
   type?: TextInputType;
 };
 
-export type Props = Omit<JSX.IntrinsicElements['input'], 'type' | 'size'> & OwnProps;
+export type Props = Omit<JSX.IntrinsicElements['input'], 'type' | 'size' | 'class' | 'className'> &
+  OwnProps;
 
-export function TextInput({ class: className, type = 'text', ...rest }: Props) {
-  const combined = className ? `${styles.input} ${className}` : styles.input;
-  return <input {...rest} type={type} class={combined} />;
+export function TextInput({ type = 'text', ...rest }: Props) {
+  return <input {...rest} type={type} class={styles.input} />;
 }

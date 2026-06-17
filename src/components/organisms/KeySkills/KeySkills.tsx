@@ -22,9 +22,9 @@ export function KeySkills({ skills }: Props) {
         title="Key skills"
         id="key-skills-heading"
         action={
-          <TextLink href="#skills" class={styles.allSkillsLink}>
-            All skills →
-          </TextLink>
+          <span class={styles.allSkillsLink}>
+            <TextLink href="#skills">All skills →</TextLink>
+          </span>
         }
       />
       <ul className={styles.list}>

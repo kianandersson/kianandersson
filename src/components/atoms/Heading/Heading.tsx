@@ -8,17 +8,15 @@ type Props = {
   level: HeadingLevel;
   size: HeadingSize;
   children: ComponentChildren;
-  class?: string;
   id?: string;
 };
 
 const TAGS = { 1: 'h1', 2: 'h2', 3: 'h3' } as const;
 
-export function Heading({ level, size, children, class: className, id }: Props) {
+export function Heading({ level, size, children, id }: Props) {
   const Tag = TAGS[level];
-  const combined = className ? `${styles.heading} ${className}` : styles.heading;
   return (
-    <Tag id={id} class={combined} data-size={size}>
+    <Tag id={id} class={styles.heading} data-size={size}>
       {children}
     </Tag>
   );

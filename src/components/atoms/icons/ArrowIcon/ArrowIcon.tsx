@@ -13,12 +13,11 @@ const ROTATIONS: Record<ArrowDirection, number> = {
   up: 270,
 };
 
-export function ArrowIcon({ size = 16, class: className, direction }: Props) {
+export function ArrowIcon({ size = 16, direction }: Props) {
   const rotation = ROTATIONS[direction];
   const style = rotation === 0 ? undefined : { transform: `rotate(${rotation}deg)` };
   return (
     <svg
-      class={className}
       style={style}
       width={size}
       height={size}

@@ -16,19 +16,23 @@ export function NotFound({ requestedUrl = '/' }: Props) {
         <span className={styles.hashes} aria-hidden="true">
           ##
         </span>
-        <Text font="mono" size="caption-s" tone="muted" class={styles.eyebrowLabel}>
-          ERROR · 404 · NOT FOUND
-        </Text>
+        <span className={styles.eyebrowLabel}>
+          <Text font="mono" size="caption-s" tone="muted">
+            ERROR · 404 · NOT FOUND
+          </Text>
+        </span>
       </div>
 
       <Heading level={1} size="l">
         This page couldn't be found.
       </Heading>
 
-      <Text as="p" font="sans" size="subheading" tone="muted" class={styles.body}>
-        The page you're after couldn't be found. It was moved, renamed, or never shipped — let's get
-        you back to solid ground.
-      </Text>
+      <div className={styles.body}>
+        <Text as="p" font="sans" size="subheading" tone="muted">
+          The page you're after couldn't be found. It was moved, renamed, or never shipped — let's
+          get you back to solid ground.
+        </Text>
+      </div>
 
       <Window
         title={
@@ -49,8 +53,8 @@ export function NotFound({ requestedUrl = '/' }: Props) {
         </div>
       </Window>
 
-      <div>
-        <Button href="/" size="lg" class={styles.backButton}>
+      <div className={styles.backButton}>
+        <Button href="/" size="lg">
           <ArrowIcon direction="left" size={16} />
           Back to home
         </Button>

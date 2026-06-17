@@ -14,7 +14,6 @@ type Props = {
   font?: TextFont;
   weight?: TextWeight;
   children: ComponentChildren;
-  class?: string;
   id?: string;
   'aria-hidden'?: boolean;
   role?: 'status' | 'note';
@@ -27,18 +26,16 @@ export function Text({
   font = 'sans',
   weight = 'regular',
   children,
-  class: className,
   id,
   'aria-hidden': ariaHidden,
   role,
 }: Props) {
-  const combined = className ? `${styles.text} ${className}` : styles.text;
   return (
     <Tag
       id={id}
       role={role}
       aria-hidden={ariaHidden}
-      class={combined}
+      class={styles.text}
       data-size={size}
       data-tone={tone}
       data-font={font}

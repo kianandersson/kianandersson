@@ -16,9 +16,11 @@ export function Hero({ name, tagline, children }: Props) {
         <Heading level={1} size="display-xl">
           Hi, I'm <span className={styles.name}>{name}</span>.
         </Heading>
-        <Text as="p" size="heading-s" tone="muted" class={styles.body}>
-          {tagline}
-        </Text>
+        <div className={styles.body}>
+          <Text as="p" size="heading-s" tone="muted">
+            {tagline}
+          </Text>
+        </div>
       </div>
       {children}
     </div>

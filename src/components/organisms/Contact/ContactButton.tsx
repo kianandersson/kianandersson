@@ -1,4 +1,3 @@
-import { Button } from '../../atoms/Button';
 import { ArrowIcon, CloseIcon, ContactIcon } from '../../atoms/icons';
 import styles from './Contact.module.css';
 
@@ -15,10 +14,9 @@ type Props = {
 /**
  * Trigger button for the Contact section. Picks between the icon-only round
  * button (shown alongside an AvailabilityStatus) and the labelled pill
- * ("Get in touch").
- *
- * The icon-stack/arrow-slot animation lives in Contact.module.css — this
- * component just owns which shape renders and wires up the a11y.
+ * ("Get in touch"). Both variants render their own native <button> so all
+ * chrome (shape, color, animation, aria-expanded state flip) is fully owned
+ * here.
  */
 export function ContactButton({ variant, isOpen, ariaLabel, controlsId, onClick }: Props) {
   if (variant === 'icon') {
@@ -32,18 +30,23 @@ export function ContactButton({ variant, isOpen, ariaLabel, controlsId, onClick 
         onClick={onClick}
       >
         <span class={styles.iconStack} aria-hidden="true">
-          <ContactIcon class={styles.icAt} size={18} />
-          <ArrowIcon class={styles.icArrow} size={17} direction="right" />
-          <CloseIcon class={styles.icX} size={16} />
+          <span class={styles.icAt}>
+            <ContactIcon size={18} />
+          </span>
+          <span class={styles.icArrow}>
+            <ArrowIcon size={17} direction="right" />
+          </span>
+          <span class={styles.icX}>
+            <CloseIcon size={16} />
+          </span>
         </span>
       </button>
     );
   }
 
   return (
-    <Button
+    <button
       type="button"
-      size="lg"
       class={styles.labelledButton}
       aria-expanded={isOpen}
       aria-controls={controlsId}
@@ -52,9 +55,13 @@ export function ContactButton({ variant, isOpen, ariaLabel, controlsId, onClick 
     >
       <span class={styles.labelText}>Get in touch</span>
       <span class={styles.arrowSlot} aria-hidden="true">
-        <ArrowIcon class={styles.icArrow} size={15} direction="right" />
-        <CloseIcon class={styles.icX} size={15} />
+        <span class={styles.icArrow}>
+          <ArrowIcon size={15} direction="right" />
+        </span>
+        <span class={styles.icX}>
+          <CloseIcon size={15} />
+        </span>
       </span>
-    </Button>
+    </button>
   );
 }

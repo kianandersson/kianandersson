@@ -16,9 +16,11 @@ export function Miscellaneous({ languages }: Props) {
     <div className={styles.root}>
       <SectionHeader title="Miscellaneous" id="miscellaneous-heading" />
       <div className={styles.row}>
-        <Text font="mono" size="label" tone="muted" id={languagesLabelId} class={styles.rowLabel}>
-          Languages
-        </Text>
+        <span class={styles.rowLabel}>
+          <Text font="mono" size="label" tone="muted" id={languagesLabelId}>
+            Languages
+          </Text>
+        </span>
         <ul className={styles.chips} aria-labelledby={languagesLabelId}>
           {languages.map((lang) => (
             <li key={lang.name} className={styles.chip}>

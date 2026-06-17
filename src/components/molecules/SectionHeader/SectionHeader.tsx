@@ -17,7 +17,7 @@ export function SectionHeader({ title, level = 2, size = 'm', id, action }: Prop
       <span class={styles.hash} aria-hidden="true">
         ##
       </span>
-      <Heading level={level} size={size} id={id} class={styles.heading}>
+      <Heading level={level} size={size} id={id}>
         {title}
       </Heading>
       {action !== undefined ? <span class={styles.action}>{action}</span> : null}

@@ -111,15 +111,41 @@
 
 /* --------------------------------------------------------------------
  * Labelled pill button ("Get in touch") — shown when no AvailabilityStatus.
- * Built on top of the Button atom — adds the arrow-slot animation and
- * open-state color flip.
+ * Renders a bare <button> so the aria-expanded color flip lives directly
+ * on the element.
  * ------------------------------------------------------------------ */
 
 .labelledButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  height: 44px;
+  padding: 0 var(--space-xl);
+  margin: 0;
+  border: none;
+  border-radius: var(--radius-full);
+  appearance: none;
+  background: var(--color-text);
+  color: var(--color-surface);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
   transition:
     transform 0.12s ease,
     background 0.26s ease,
     color 0.26s ease;
+}
+
+.labelledButton:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.labelledButton:active {
+  transform: scale(0.97);
 }
 
 .labelText {

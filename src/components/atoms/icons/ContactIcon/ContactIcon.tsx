@@ -1,9 +1,8 @@
 import type { IconProps } from '../types';
 
-export function ContactIcon({ size = 18, class: className }: IconProps) {
+export function ContactIcon({ size = 18 }: IconProps) {
   return (
     <svg
-      class={className}
       width={size}
       height={size}
       viewBox="0 0 24 24"

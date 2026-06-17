@@ -61,9 +61,11 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
       <Window>
         <div class={styles.body}>
           <div class={styles.row}>
-            <Text font="mono" size="label" tone="subtle" class={styles.fieldLabel}>
-              To
-            </Text>
+            <span class={styles.fieldLabel}>
+              <Text font="mono" size="label" tone="subtle">
+                To
+              </Text>
+            </span>
             <span class={styles.recipient}>
               <span class={styles.recipientDot} aria-hidden="true" />
               {recipientName}
@@ -71,9 +73,9 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
           </div>
 
           <div class={`${styles.row} ${styles.inputRow}`}>
-            <FieldLabel for={emailId} class={styles.fieldLabel}>
-              From
-            </FieldLabel>
+            <span class={styles.fieldLabel}>
+              <FieldLabel for={emailId}>From</FieldLabel>
+            </span>
             <TextInput
               id={emailId}
               type="email"
@@ -88,9 +90,9 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
           </div>
 
           <div class={`${styles.row} ${styles.inputRow}`}>
-            <FieldLabel for={subjectId} class={styles.fieldLabel}>
-              Subject
-            </FieldLabel>
+            <span class={styles.fieldLabel}>
+              <FieldLabel for={subjectId}>Subject</FieldLabel>
+            </span>
             <TextInput
               id={subjectId}
               type="text"
@@ -119,19 +121,20 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
 
           <div class={styles.toolbar}>
             {status === 'error' && errorMessage ? (
-              <Text font="mono" size="caption-s" tone="muted" role="status" class={styles.error}>
-                ↳ {errorMessage}
-              </Text>
+              <span class={styles.error} role="status">
+                <Text font="mono" size="caption-s" tone="muted">
+                  ↳ {errorMessage}
+                </Text>
+              </span>
             ) : null}
-            <Button
-              type="submit"
-              size="md"
-              disabled={!valid || sending}
-              class={sending ? `${styles.send} ${styles.sending}` : styles.send}
-            >
-              {sending ? 'Sending…' : 'Send message'}
-              <SendIcon class={styles.plane} />
-            </Button>
+            <span class={sending ? `${styles.send} ${styles.sending}` : styles.send}>
+              <Button type="submit" size="md" disabled={!valid || sending}>
+                {sending ? 'Sending…' : 'Send message'}
+                <span class={styles.plane} aria-hidden="true">
+                  <SendIcon />
+                </span>
+              </Button>
+            </span>
           </div>
         </div>
       </Window>

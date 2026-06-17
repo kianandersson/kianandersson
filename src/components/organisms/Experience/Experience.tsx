@@ -47,9 +47,11 @@ export function Experience({ entries }: Props) {
                   </Text>
                 </div>
               </div>
-              <Text as="p" size="body" tone="muted" class={styles.description}>
-                {entry.description}
-              </Text>
+              <div class={styles.description}>
+                <Text as="p" size="body" tone="muted">
+                  {entry.description}
+                </Text>
+              </div>
               <div className={styles.chipGroups}>
                 <ChipList label="Stack" items={entry.stack} limit={CHIP_LIMIT} variant="stack" />
                 <ChipList

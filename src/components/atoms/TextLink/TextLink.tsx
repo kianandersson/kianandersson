@@ -6,7 +6,6 @@ export type TextLinkTone = 'muted' | 'default';
 type SharedProps = {
   children?: ComponentChildren;
   tone?: TextLinkTone;
-  class?: string;
   id?: string;
   title?: string;
   'aria-label'?: string;
@@ -36,11 +35,9 @@ export type ButtonProps = SharedProps & {
 export type Props = AnchorProps | ButtonProps;
 
 export function TextLink(props: Props) {
-  const { children, class: className, tone = 'muted' } = props;
+  const { children, tone = 'muted' } = props;
   const toneClass = tone === 'default' ? styles.default : styles.muted;
-  const combined = className
-    ? `${styles.link} ${toneClass} ${className}`
-    : `${styles.link} ${toneClass}`;
+  const combined = `${styles.link} ${toneClass}`;
 
   const shared = {
     id: props.id,

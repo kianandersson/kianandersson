@@ -13,12 +13,11 @@ const ROTATIONS: Record<ChevronDirection, number> = {
   right: 270,
 };
 
-export function ChevronIcon({ size = 15, class: className, direction }: Props) {
+export function ChevronIcon({ size = 15, direction }: Props) {
   const rotation = ROTATIONS[direction];
   const style = rotation === 0 ? undefined : { transform: `rotate(${rotation}deg)` };
   return (
     <svg
-      class={className}
       style={style}
       width={size}
       height={size}

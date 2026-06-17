@@ -1,9 +1,8 @@
 import type { IconProps } from '../types';
 
-export function LightModeIcon({ size = 17, class: className }: IconProps) {
+export function LightModeIcon({ size = 17 }: IconProps) {
   return (
     <svg
-      class={className}
       width={size}
       height={size}
       viewBox="0 0 24 24"
