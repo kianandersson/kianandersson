@@ -228,10 +228,18 @@
     align-items: flex-start;
   }
   .rampGrid {
-    /* Drop from 11 columns to 6 — the swatches wrap to two rows (6 + 5) and
-       each swatch keeps a usable tap-target size on narrow viewports. */
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    /* Keep all 11 swatches on one row as the ladder visual — let them spill
+       past the container with horizontal scroll instead of wrapping or
+       shrinking. Fixed column width gives each swatch a usable tap target. */
+    grid-template-columns: repeat(11, 48px);
     gap: var(--space-xs);
+    overflow-x: auto;
+    /* Hide the scrollbar across browsers; the gesture is direct, not a
+       scoped scroll region — the visible swatches are the affordance. */
+    scrollbar-width: none;
+  }
+  .rampGrid::-webkit-scrollbar {
+    display: none;
   }
 }
 
