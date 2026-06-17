@@ -12,6 +12,9 @@ const meta: Meta<typeof KeySkills> = {
       { id: 'astro', name: 'Astro', level: 4, years: 2 },
       { id: 'vite', name: 'Vite', level: 4, years: 3 },
     ],
+    /* Inert in Storybook — the production caller wires this to the actual
+       page anchor (#skills on the index page). */
+    allSkillsHref: '#',
   },
 };
 

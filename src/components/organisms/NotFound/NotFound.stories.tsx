@@ -6,8 +6,13 @@ const meta: Meta<typeof NotFound> = {
   component: NotFound,
   argTypes: {
     requestedUrl: { control: 'text' },
+    homeHref: { control: 'text' },
   },
-  args: { requestedUrl: 'https://example.com/blog/article-that-moved' },
+  args: {
+    requestedUrl: 'https://example.com/blog/article-that-moved',
+    /* Inert in Storybook — production callers pass the real site root. */
+    homeHref: '#',
+  },
 };
 
 export default meta;
