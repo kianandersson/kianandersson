@@ -1,0 +1,17 @@
+.header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-xs);
+}
+
+.hash {
+  font-family: var(--font-mono);
+  color: var(--color-accent);
+  font-weight: 600;
+  font-size: var(--text-body-size);
+  transform: translateY(-2px);
+}
+
+.action {
+  margin-left: auto;
+}

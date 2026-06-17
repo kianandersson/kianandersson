@@ -1,4 +1,8 @@
-import { CtaButton } from '../../atoms/CtaButton';
+import { Button } from '../../atoms/Button';
+import { Heading } from '../../atoms/Heading';
+import { ArrowIcon } from '../../atoms/icons';
+import { Text } from '../../atoms/Text';
+import { Window } from '../../molecules/Window';
 import styles from './NotFound.module.css';
 
 type Props = {
@@ -12,23 +16,31 @@ export function NotFound({ requestedUrl = '/' }: Props) {
         <span className={styles.hashes} aria-hidden="true">
           ##
         </span>
-        <span className={styles.eyebrowLabel}>ERROR · 404 · NOT FOUND</span>
+        <span className={styles.eyebrowLabel}>
+          <Text font="mono" size="caption-s" tone="muted">
+            ERROR · 404 · NOT FOUND
+          </Text>
+        </span>
       </div>
 
-      <h1 className={styles.heading}>This page couldn't be found.</h1>
+      <Heading level={1} size="l">
+        This page couldn't be found.
+      </Heading>
 
-      <p className={styles.body}>
-        The page you're after couldn't be found. It was moved, renamed, or never shipped — let's get
-        you back to solid ground.
-      </p>
+      <div className={styles.body}>
+        <Text as="p" font="sans" size="subheading" tone="muted">
+          The page you're after couldn't be found. It was moved, renamed, or never shipped — let's
+          get you back to solid ground.
+        </Text>
+      </div>
 
-      <div className={styles.terminal} role="presentation">
-        <div className={styles.terminalBar}>
-          <span className={`${styles.dot} ${styles.dotRed}`} aria-hidden="true" />
-          <span className={`${styles.dot} ${styles.dotAmber}`} aria-hidden="true" />
-          <span className={`${styles.dot} ${styles.dotGreen}`} aria-hidden="true" />
-          <span className={styles.terminalTitle}>zsh</span>
-        </div>
+      <Window
+        title={
+          <Text font="mono" size="caption-s" tone="muted">
+            zsh
+          </Text>
+        }
+      >
         <div className={styles.terminalBody}>
           <div className={styles.line}>
             <span className={styles.prompt}>$</span> curl -I{' '}
@@ -39,12 +51,15 @@ export function NotFound({ requestedUrl = '/' }: Props) {
           <div className={styles.response}>HTTP/2 404 Not Found</div>
           <div className={styles.response}>content-type: text/html; charset=utf-8</div>
         </div>
-      </div>
+      </Window>
 
-      <div>
-        <CtaButton href="/" direction="back">
+      <div className={styles.backButton}>
+        <Button href="/">
+          <span className={styles.arrow} aria-hidden="true">
+            <ArrowIcon direction="left" size={16} />
+          </span>
           Back to home
-        </CtaButton>
+        </Button>
       </div>
     </div>
   );

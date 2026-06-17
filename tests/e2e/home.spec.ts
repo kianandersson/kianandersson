@@ -19,8 +19,9 @@ test.describe('Home page', () => {
     await page.goto('/');
 
     // The accessible name flips between "Get in touch …" and "Close contact form"
-    // as the form toggles open, so anchor on the stable aria-controls attribute.
-    const cta = page.locator('button[aria-controls="contact-region"]');
+    // as the form toggles open, so anchor on the aria-controls *presence* instead
+    // of its value (the id is generated per-render via useId).
+    const cta = page.locator('button[aria-controls]').first();
     await cta.click();
 
     await expect(cta).toHaveAttribute('aria-expanded', 'true');

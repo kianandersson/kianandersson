@@ -86,14 +86,16 @@ test.describe('Print media', () => {
     );
     expect(surface).toBe('oklch(100% 0 0)');
 
-    const visibleChips = page.locator('span[data-variant]:not([data-hidden])');
+    // Overflow chips live inside a [data-shown="false"] wrapper that's
+    // display: none when collapsed; visible chips are everything else.
+    const visibleChips = page.locator('span[data-variant]:not([data-shown="false"] *)');
     const visibleCount = await visibleChips.count();
     expect(visibleCount).toBeGreaterThan(0);
     for (let i = 0; i < visibleCount; i++) {
       await expect(visibleChips.nth(i)).toBeVisible();
     }
 
-    const overflowChips = page.locator('span[data-variant][data-hidden]');
+    const overflowChips = page.locator('[data-shown="false"] span[data-variant]');
     const overflowCount = await overflowChips.count();
     expect(overflowCount).toBeGreaterThan(0);
     for (let i = 0; i < overflowCount; i++) {

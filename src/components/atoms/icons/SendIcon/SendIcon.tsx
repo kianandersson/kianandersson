@@ -1,9 +1,8 @@
 import type { IconProps } from '../types';
 
-export function SendIcon({ size = 15, class: className }: IconProps) {
+export function SendIcon({ size = 15 }: IconProps) {
   return (
     <svg
-      class={className}
       width={size}
       height={size}
       viewBox="0 0 24 24"

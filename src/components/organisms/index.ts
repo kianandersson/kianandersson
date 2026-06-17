@@ -1,4 +1,4 @@
-export * from './ContactCta';
+export * from './Contact';
 export * from './ContactForm';
 export * from './Experience';
 export * from './Footer';
@@ -6,5 +6,5 @@ export * from './Hero';
 export * from './KeySkills';
 export * from './Miscellaneous';
 export * from './NotFound';
+export * from './SiteHeader';
 export * from './SkillGroups';
-export * from './TopBar';

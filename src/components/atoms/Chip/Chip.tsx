@@ -5,16 +5,11 @@ export type ChipVariant = 'stack' | 'methods';
 type Props = {
   label: string;
   variant: ChipVariant;
-  isHidden?: boolean;
 };
 
-export function Chip({ label, variant, isHidden }: Props) {
+export function Chip({ label, variant }: Props) {
   return (
-    <span
-      className={styles.chip}
-      data-variant={variant}
-      {...(isHidden && { 'data-hidden': 'true' })}
-    >
+    <span className={styles.chip} data-variant={variant}>
       {label}
     </span>
   );

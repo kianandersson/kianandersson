@@ -1,0 +1,40 @@
+.window {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-raised);
+  overflow: hidden;
+}
+
+.titleBar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.trafficDot {
+  width: 13px;
+  height: 13px;
+  border-radius: var(--radius-full);
+}
+
+.dotRed {
+  background: #e0654f;
+}
+
+.dotAmber {
+  background: #e3b341;
+}
+
+.dotGreen {
+  background: #46c46e;
+}
+
+.title {
+  margin-left: var(--space-xs);
+}

@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react';
-import { useId } from 'react';
+import type { ComponentChildren } from 'preact';
+import { useId } from 'preact/hooks';
 import { ChevronIcon } from '../../atoms/icons';
 import styles from './Accordion.module.css';
 
@@ -8,7 +8,7 @@ type Props = {
   count?: number;
   isOpen: boolean;
   onToggle: () => void;
-  children: ReactNode;
+  children: ComponentChildren;
 };
 
 export function Accordion({ title, count, isOpen, onToggle, children }: Props) {

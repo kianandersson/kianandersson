@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState } from 'preact/hooks';
 import type { SkillLevel } from '../../../lib/skill';
 import { Accordion } from '../../molecules/Accordion';
+import { SectionHeader } from '../../molecules/SectionHeader';
 import { SkillRow } from '../../molecules/SkillRow';
 import styles from './SkillGroups.module.css';
 
@@ -25,14 +26,7 @@ export function SkillGroups({ groups }: Props) {
 
   return (
     <div className={styles.root}>
-      <header className={styles.header}>
-        <span className={styles.hash} aria-hidden="true">
-          ##
-        </span>
-        <h2 id="skills-heading" className={styles.heading}>
-          Skills
-        </h2>
-      </header>
+      <SectionHeader title="Skills" id="skills-heading" />
       <div className={styles.groups}>
         {groups.map((group) => (
           <Accordion
@@ -44,12 +38,9 @@ export function SkillGroups({ groups }: Props) {
           >
             <ul className={styles.list}>
               {group.skills.map((skill) => (
-                <SkillRow
-                  key={skill.id}
-                  name={skill.name}
-                  level={skill.level}
-                  years={skill.years}
-                />
+                <li key={skill.id} className={styles.item}>
+                  <SkillRow name={skill.name} level={skill.level} years={skill.years} />
+                </li>
               ))}
             </ul>
           </Accordion>

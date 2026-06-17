@@ -1,10 +1,16 @@
-import { useState } from 'preact/hooks';
+import { useId, useState } from 'preact/hooks';
 import {
   CONTACT_EMAIL_REGEX,
   CONTACT_MESSAGE_MAX,
   CONTACT_SUBJECT_MAX,
 } from '../../../lib/contact-validation';
+import { Button } from '../../atoms/Button';
+import { FieldLabel } from '../../atoms/FieldLabel';
 import { SendIcon } from '../../atoms/icons';
+import { Text } from '../../atoms/Text';
+import { Textarea } from '../../atoms/Textarea';
+import { TextInput } from '../../atoms/TextInput';
+import { Window } from '../../molecules/Window';
 import styles from './ContactForm.module.css';
 
 export type ContactPayload = {
@@ -12,7 +18,7 @@ export type ContactPayload = {
   subject: string;
   message: string;
 };
-export type ContactStatus = 'idle' | 'sending' | 'error';
+export type ContactStatus = 'idle' | 'sending' | 'sent' | 'error';
 
 type Props = {
   recipientName: string;
@@ -22,6 +28,9 @@ type Props = {
 };
 
 export function ContactForm({ recipientName, status, errorMessage, onSubmit }: Props) {
+  const emailId = useId();
+  const subjectId = useId();
+  const messageId = useId();
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
@@ -36,10 +45,12 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
     trimmedMessage.length > 0 &&
     trimmedMessage.length <= CONTACT_MESSAGE_MAX;
   const sending = status === 'sending';
+  const sent = status === 'sent';
+  const locked = sending || sent;
 
   function handleSubmit(event: Event) {
     event.preventDefault();
-    if (!valid || sending) return;
+    if (!valid || locked) return;
     onSubmit({
       email: trimmedEmail,
       subject: trimmedSubject,
@@ -48,89 +59,87 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
   }
 
   return (
-    <form class={styles.window} aria-label="Contact" onSubmit={handleSubmit} noValidate>
-      <div class={styles.titleBar}>
-        <span class={`${styles.trafficDot} ${styles.dotRed}`} aria-hidden="true" />
-        <span class={`${styles.trafficDot} ${styles.dotAmber}`} aria-hidden="true" />
-        <span class={`${styles.trafficDot} ${styles.dotGreen}`} aria-hidden="true" />
-      </div>
-
-      <div class={styles.body}>
-        <div class={styles.row}>
-          <span class={styles.fieldLabel}>To</span>
-          <span class={styles.recipient}>
-            <span class={styles.recipientDot} aria-hidden="true" />
-            {recipientName}
-          </span>
-        </div>
-
-        <div class={`${styles.row} ${styles.inputRow}`}>
-          <label class={styles.fieldLabel} for="contact-from">
-            From
-          </label>
-          <input
-            id="contact-from"
-            class={styles.input}
-            type="email"
-            inputMode="email"
-            placeholder="you@company.com"
-            autocomplete="email"
-            value={email}
-            onInput={(event) => setEmail((event.target as HTMLInputElement).value)}
-            disabled={sending}
-            required
-          />
-        </div>
-
-        <div class={`${styles.row} ${styles.inputRow}`}>
-          <label class={styles.fieldLabel} for="contact-subject">
-            Subject
-          </label>
-          <input
-            id="contact-subject"
-            class={styles.input}
-            type="text"
-            placeholder="What's on your mind?"
-            autocomplete="off"
-            value={subject}
-            onInput={(event) => setSubject((event.target as HTMLInputElement).value)}
-            disabled={sending}
-            maxLength={CONTACT_SUBJECT_MAX}
-            required
-          />
-        </div>
-
-        <div class={`${styles.row} ${styles.messageRow}`}>
-          <textarea
-            id="contact-message"
-            class={styles.textarea}
-            placeholder="Write your message…"
-            aria-label="Message"
-            value={message}
-            onInput={(event) => setMessage((event.target as HTMLTextAreaElement).value)}
-            disabled={sending}
-            maxLength={CONTACT_MESSAGE_MAX}
-            required
-          />
-        </div>
-
-        <div class={styles.toolbar}>
-          {status === 'error' && errorMessage ? (
-            <span class={styles.error} role="status">
-              ↳ {errorMessage}
+    <form aria-label="Contact" onSubmit={handleSubmit} noValidate>
+      <Window>
+        <div class={styles.body}>
+          <div class={styles.row}>
+            <span class={styles.fieldLabel}>
+              <Text font="mono" size="label" tone="subtle">
+                To
+              </Text>
             </span>
-          ) : null}
-          <button
-            type="submit"
-            class={styles.send}
-            data-sending={sending}
-            disabled={!valid || sending}
-          >
-            {sending ? 'Sending…' : 'Send message'}
-            <SendIcon class={styles.plane} />
-          </button>
+            <span class={styles.recipient}>
+              <span class={styles.recipientDot} aria-hidden="true" />
+              {recipientName}
+            </span>
+          </div>
+
+          <div class={`${styles.row} ${styles.inputRow}`}>
+            <span class={styles.fieldLabel}>
+              <FieldLabel for={emailId}>From</FieldLabel>
+            </span>
+            <TextInput
+              id={emailId}
+              type="email"
+              inputMode="email"
+              placeholder="you@company.com"
+              autocomplete="email"
+              value={email}
+              onInput={(event) => setEmail((event.target as HTMLInputElement).value)}
+              disabled={locked}
+              required
+            />
+          </div>
+
+          <div class={`${styles.row} ${styles.inputRow}`}>
+            <span class={styles.fieldLabel}>
+              <FieldLabel for={subjectId}>Subject</FieldLabel>
+            </span>
+            <TextInput
+              id={subjectId}
+              type="text"
+              placeholder="What's on your mind?"
+              autocomplete="off"
+              value={subject}
+              onInput={(event) => setSubject((event.target as HTMLInputElement).value)}
+              disabled={locked}
+              maxLength={CONTACT_SUBJECT_MAX}
+              required
+            />
+          </div>
+
+          <div class={`${styles.row} ${styles.messageRow}`}>
+            <Textarea
+              id={messageId}
+              placeholder="Write your message…"
+              aria-label="Message"
+              value={message}
+              onInput={(event) => setMessage((event.target as HTMLTextAreaElement).value)}
+              disabled={locked}
+              maxLength={CONTACT_MESSAGE_MAX}
+              required
+            />
+          </div>
+
+          <div class={styles.toolbar}>
+            {status === 'error' && errorMessage ? (
+              <span class={styles.error} role="status">
+                <Text font="mono" size="caption-s" tone="muted">
+                  ↳ {errorMessage}
+                </Text>
+              </span>
+            ) : null}
+            <span class={sent ? `${styles.send} ${styles.flying}` : styles.send}>
+              <Button type="submit" disabled={!valid || locked}>
+                {locked ? 'Sending…' : 'Send message'}
+                <span class={styles.plane} aria-hidden="true">
+                  <SendIcon />
+                </span>
+              </Button>
+            </span>
+          </div>
         </div>
-      </div>
+      </Window>
     </form>
   );
 }

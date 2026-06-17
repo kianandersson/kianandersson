@@ -17,10 +17,6 @@
   background: var(--color-surface-muted);
 }
 
-.chip[data-hidden="true"] {
-  display: none;
-}
-
 @media print {
   .chip[data-variant="stack"],
   .chip[data-variant="methods"] {

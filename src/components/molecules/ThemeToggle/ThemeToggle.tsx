@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'preact/hooks';
+import { IconButton } from '../../atoms/IconButton';
 import { DarkModeIcon, LightModeIcon } from '../../atoms/icons';
 import styles from './ThemeToggle.module.css';
 
@@ -32,20 +33,18 @@ export function ThemeToggle() {
   }, []);
 
   const isDark = theme === 'dark';
-  const iconClass = hasInteracted ? `${styles.icon} ${styles.iconAnimate}` : styles.icon;
 
   return (
-    <button
+    <IconButton
       type="button"
       onClick={toggle}
       aria-pressed={isDark}
       aria-label="Toggle theme"
       title="Toggle theme"
-      className={styles.button}
     >
-      <span key={theme ?? 'initial'} className={iconClass} aria-hidden="true">
+      <span key={theme ?? 'initial'} class={hasInteracted ? styles.iconAnimate : undefined}>
         {isDark ? <LightModeIcon /> : <DarkModeIcon />}
       </span>
-    </button>
+    </IconButton>
   );
 }

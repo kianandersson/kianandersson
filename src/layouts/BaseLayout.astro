@@ -1,6 +1,6 @@
 ---
 import { Footer } from '../components/organisms/Footer';
-import { TopBar } from '../components/organisms/TopBar';
+import { SiteHeader } from '../components/organisms/SiteHeader';
 import { buildPersonJsonLd, type PersonJsonLd } from '../lib/person-json-ld';
 import { siteConfig } from '../site.config';
 import '../styles/tokens.css';
@@ -85,7 +85,7 @@ const currentYear = new Date().getFullYear();
     <script type="application/ld+json" is:inline set:html={jsonLdSerialized} />
   </head>
   <body>
-    <TopBar
+    <SiteHeader
       githubHref={siteConfig.links.github}
       showPrint={showPrint}
       client:load

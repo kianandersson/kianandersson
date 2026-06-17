@@ -20,73 +20,11 @@
 }
 
 .eyebrowLabel {
-  font-family: var(--font-mono);
-  font-size: var(--text-caption-s-size);
-  line-height: var(--text-caption-s-leading);
   letter-spacing: 0.08em;
-  color: var(--color-text-muted);
-}
-
-.heading {
-  margin: 0;
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: var(--text-heading-l-size);
-  line-height: var(--text-heading-l-leading);
-  letter-spacing: -0.025em;
-  color: var(--color-text);
 }
 
 .body {
-  margin: 0;
-  font-family: var(--font-sans);
-  font-size: var(--text-subheading-size);
   line-height: var(--text-body-leading);
-  color: var(--color-text-muted);
-}
-
-.terminal {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  border: 1px solid var(--color-divider);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface-raised);
-  overflow: hidden;
-}
-
-.terminalBar {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  padding: var(--space-sm) var(--space-md);
-  border-bottom: 1px solid var(--color-divider);
-}
-
-.dot {
-  width: 13px;
-  height: 13px;
-  border-radius: var(--radius-full);
-}
-
-.dotRed {
-  background: #e0654f;
-}
-
-.dotAmber {
-  background: #e3b341;
-}
-
-.dotGreen {
-  background: #46c46e;
-}
-
-.terminalTitle {
-  margin-left: var(--space-xs);
-  font-family: var(--font-mono);
-  font-size: var(--text-caption-s-size);
-  line-height: var(--text-caption-s-leading);
-  color: var(--color-text-muted);
 }
 
 .terminalBody {
@@ -113,4 +51,41 @@
 
 .response {
   color: var(--color-text-muted);
+}
+
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  width: 0;
+  /* Cancel Button's gap-xs (8px) so the label stays centred in the
+   * pill when the arrow is collapsed. */
+  margin-right: calc(var(--space-xs) * -1);
+  opacity: 0;
+  transform: translateX(calc(var(--space-3) / 2));
+  transition:
+    width 0.25s ease,
+    margin-right 0.25s ease,
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.backButton:has(a:hover) .arrow,
+.backButton:has(a:focus-visible) .arrow {
+  width: 16px;
+  margin-right: var(--space-2xs);
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrow {
+    transition: none;
+  }
+}
+
+@media print {
+  .backButton {
+    display: none;
+  }
 }

@@ -1,0 +1,138 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  align-items: flex-start;
+  width: 100%;
+  transition: gap 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.root[data-open="true"] {
+  gap: var(--space-xl);
+}
+
+.triggerRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+/* --------------------------------------------------------------------
+ * Form reveal area below the trigger row.
+ * ------------------------------------------------------------------ */
+
+.reveal {
+  width: 100%;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+
+.inner {
+  min-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.34s ease;
+}
+
+.reveal[data-open="true"] .inner {
+  opacity: 1;
+}
+
+.formWrap {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition:
+    grid-template-rows 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.28s ease,
+    transform 0.28s ease;
+}
+
+.formWrap > * {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.formWrap[data-active="false"] {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.formWrap[data-leaving="true"] {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transform: translateY(calc(var(--space-2) * -1));
+  pointer-events: none;
+}
+
+.success {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  animation: rise 0.4s ease both;
+}
+
+.success[data-leaving="true"] {
+  animation: fall 0.4s ease forwards;
+}
+
+.successArrow {
+  color: var(--color-accent);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+}
+
+.successText {
+  color: var(--color-text);
+  font-size: var(--text-caption-m-size);
+  line-height: var(--text-caption-m-leading);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--space-3) * -1));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fall {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(calc(var(--space-3) * -1));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root,
+  .reveal,
+  .inner,
+  .formWrap {
+    transition: none;
+  }
+  .success {
+    animation: none;
+  }
+}
+
+@media print {
+  .root {
+    display: none;
+  }
+}

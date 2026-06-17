@@ -1,6 +1,7 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from 'preact/hooks';
 import { sliceList } from '../../../lib/chip-list';
 import { Chip, type ChipVariant } from '../../atoms/Chip';
+import { TextLink } from '../../atoms/TextLink';
 import styles from './ChipList.module.css';
 
 type Props = {
@@ -22,13 +23,17 @@ export function ChipList({ label, items, limit, variant }: Props) {
         {visible.map((item) => (
           <Chip key={item} label={item} variant={variant} />
         ))}
-        {hidden.map((item) => (
-          <Chip key={item} label={item} variant={variant} isHidden={!isOpen} />
-        ))}
         {hasMore && (
-          <button type="button" onClick={toggle} aria-expanded={isOpen} className={styles.toggle}>
+          <span className={styles.overflow} data-shown={isOpen}>
+            {hidden.map((item) => (
+              <Chip key={item} label={item} variant={variant} />
+            ))}
+          </span>
+        )}
+        {hasMore && (
+          <TextLink type="button" onClick={toggle} aria-expanded={isOpen}>
             {isOpen ? 'Show less' : `+${hiddenCount} more`}
-          </button>
+          </TextLink>
         )}
       </div>
     </div>
