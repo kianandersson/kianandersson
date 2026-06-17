@@ -43,10 +43,10 @@
   display: inline-flex;
   align-items: center;
   /* Grid/flex parents would otherwise stretch this chip to fill its
-     cell — pin horizontal to start + cap at content width, keep
-     vertical centred. */
+     cell — collapse to content width and pin to the cell's start
+     edge. Vertical centring is inherited from the row's
+     `align-items: center` where it matters. */
   justify-self: start;
-  align-self: center;
   width: fit-content;
   padding: var(--space-2xs) var(--space-xs);
   border-radius: var(--radius-s);
