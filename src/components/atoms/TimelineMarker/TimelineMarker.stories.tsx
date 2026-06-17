@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/preact-vite';
+import { expect } from 'storybook/test';
 import { TimelineMarker } from './TimelineMarker';
 
 const meta: Meta<typeof TimelineMarker> = {
@@ -37,3 +38,13 @@ export default meta;
 type Story = StoryObj<typeof TimelineMarker>;
 
 export const Default: Story = {};
+
+export const Bare: Story = {
+  tags: ['!autodocs'],
+  render: () => <TimelineMarker />,
+  play: async ({ canvasElement }) => {
+    const marker = canvasElement.firstElementChild;
+    await expect(marker).toBeInTheDocument();
+    await expect(marker).toHaveAttribute('aria-hidden', 'true');
+  },
+};
