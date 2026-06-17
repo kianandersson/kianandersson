@@ -13,6 +13,17 @@ const withTheme: Decorator = (Story, context) => {
 const preview: Preview = {
   parameters: {
     backgrounds: { disable: true },
+    options: {
+      storySort: {
+        order: [
+          'Foundations',
+          ['Introduction', 'Colors', 'Typography', 'Spacing', 'Radius'],
+          'Atoms',
+          'Molecules',
+          'Organisms',
+        ],
+      },
+    },
   },
   globalTypes: {
     theme: {

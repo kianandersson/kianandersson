@@ -2,7 +2,10 @@ import { fileURLToPath } from 'node:url';
 import type { StorybookConfig } from '@storybook/preact-vite';
 
 const config: StorybookConfig = {
-  stories: ['../src/components/**/*.stories.@(ts|tsx)'],
+  stories: [
+    '../src/foundations/**/*.stories.@(ts|tsx)',
+    '../src/components/**/*.stories.@(ts|tsx)',
+  ],
   addons: ['@storybook/addon-a11y'],
   staticDirs: ['../public'],
   framework: {
