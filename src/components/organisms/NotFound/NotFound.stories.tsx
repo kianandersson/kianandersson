@@ -38,9 +38,9 @@ export const Default: Story = {
   },
 };
 
-export const FallbackUrl: Story = {
-  name: 'Fallback to homeHref when no requestedUrl',
+export const FallbackToHomeBehavior: Story = {
   args: { requestedUrl: undefined, homeHref: '/' },
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(canvas.getByTestId('requested-url')).toHaveTextContent('/');

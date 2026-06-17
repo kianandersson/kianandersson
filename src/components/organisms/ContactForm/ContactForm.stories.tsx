@@ -25,6 +25,11 @@ type Story = StoryObj<typeof ContactForm>;
 
 export const Idle: Story = {
   args: { status: 'idle' },
+};
+
+export const ValidationAndSubmitBehavior: Story = {
+  args: { status: 'idle' },
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
 
@@ -70,7 +75,6 @@ export const Sending: Story = {
 };
 
 export const Sent: Story = {
-  name: 'Sent (plane fly-off)',
   args: { status: 'sent' },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -92,9 +96,9 @@ export const ErrorState: Story = {
   },
 };
 
-export const ErrorHidden: Story = {
-  name: 'Error message hidden while idle',
+export const ErrorSuppressedInIdleBehavior: Story = {
   args: { status: 'idle', errorMessage: 'Network hiccup' },
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(canvas.queryByText(/Network hiccup/i)).not.toBeInTheDocument();

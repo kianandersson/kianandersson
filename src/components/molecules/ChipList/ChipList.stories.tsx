@@ -21,7 +21,10 @@ const meta: Meta<typeof ChipList> = {
 export default meta;
 type Story = StoryObj<typeof ChipList>;
 
-export const WithOverflow: Story = {
+export const WithOverflow: Story = {};
+
+export const ExpandCollapseBehavior: Story = {
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     const overflowCount = (args.items as string[]).length - (args.limit as number);

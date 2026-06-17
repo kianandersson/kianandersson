@@ -34,8 +34,9 @@ export const Default: Story = {
   },
 };
 
-export const Empty: Story = {
+export const EmptyBehavior: Story = {
   args: { languages: [] },
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(canvas.queryAllByRole('listitem')).toHaveLength(0);

@@ -18,3 +18,7 @@ export default meta;
 type Story = StoryObj<typeof Chip>;
 
 export const Default: Story = {};
+
+export const Methods: Story = {
+  args: { label: 'Pair programming', variant: 'methods' },
+};

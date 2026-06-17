@@ -22,7 +22,10 @@ const meta: Meta<typeof IconButton> = {
 export default meta;
 type Story = StoryObj<typeof IconButton>;
 
-export const Default: Story = {
+export const Default: Story = {};
+
+export const ClickBehavior: Story = {
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByRole('button', { name: /github/i });
@@ -32,12 +35,16 @@ export const Default: Story = {
   },
 };
 
-export const AsLink: Story = {
-  name: 'As link (href)',
+export const Disabled: Story = {
+  args: { disabled: true },
+};
+
+export const AsLinkBehavior: Story = {
   args: {
     href: 'https://github.com',
     target: '_blank',
   },
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const link = canvas.getByRole('link', { name: /github/i });

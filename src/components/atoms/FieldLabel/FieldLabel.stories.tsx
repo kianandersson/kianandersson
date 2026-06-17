@@ -24,7 +24,10 @@ const meta: Meta<typeof FieldLabel> = {
 export default meta;
 type Story = StoryObj<typeof FieldLabel>;
 
-export const Default: Story = {
+export const Default: Story = {};
+
+export const ClickToFocusBehavior: Story = {
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     const label = canvas.getByText(args.children as string);

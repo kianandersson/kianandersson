@@ -40,7 +40,7 @@ type Story = StoryObj<typeof TimelineMarker>;
 export const Default: Story = {};
 
 export const Bare: Story = {
-  tags: ['!autodocs'],
+  tags: ['!dev', '!autodocs'],
   render: () => <TimelineMarker />,
   play: async ({ canvasElement }) => {
     const marker = canvasElement.firstElementChild;

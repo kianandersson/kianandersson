@@ -19,7 +19,10 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-export const Default: Story = {
+export const Default: Story = {};
+
+export const ClickBehavior: Story = {
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByRole('button', { name: /send message/i });
@@ -30,8 +33,13 @@ export const Default: Story = {
   },
 };
 
-export const Submit: Story = {
+export const Disabled: Story = {
+  args: { disabled: true, children: 'Off' },
+};
+
+export const SubmitTypeBehavior: Story = {
   args: { type: 'submit', children: 'Submit form' },
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(canvas.getByRole('button', { name: /submit form/i })).toHaveAttribute(
@@ -41,8 +49,9 @@ export const Submit: Story = {
   },
 };
 
-export const Disabled: Story = {
+export const DisabledIgnoresClickBehavior: Story = {
   args: { disabled: true, children: 'Off' },
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByRole('button', { name: /off/i });
@@ -52,9 +61,9 @@ export const Disabled: Story = {
   },
 };
 
-export const AsLink: Story = {
-  name: 'As link (href)',
+export const AsLinkBehavior: Story = {
   args: { href: '/path', children: 'Anchor button' },
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const link = canvas.getByRole('link', { name: /anchor button/i });
@@ -63,9 +72,9 @@ export const AsLink: Story = {
   },
 };
 
-export const ExternalLink: Story = {
-  name: 'External link (target=_blank auto-injects rel)',
+export const ExternalLinkBehavior: Story = {
   args: { href: 'https://example.com', target: '_blank', children: 'External' },
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const link = canvas.getByRole('link', { name: /external/i });
@@ -74,9 +83,9 @@ export const ExternalLink: Story = {
   },
 };
 
-export const ExternalLinkExplicitRel: Story = {
-  name: 'External link with explicit rel',
+export const ExternalLinkWithCustomRelBehavior: Story = {
   args: { href: 'https://example.com', target: '_blank', rel: 'me', children: 'External' },
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(canvas.getByRole('link', { name: /external/i })).toHaveAttribute('rel', 'me');

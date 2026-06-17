@@ -20,7 +20,10 @@ const meta: Meta<typeof Textarea> = {
 export default meta;
 type Story = StoryObj<typeof Textarea>;
 
-export const Default: Story = {
+export const Default: Story = {};
+
+export const TypingBehavior: Story = {
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const ta = canvas.getByPlaceholderText('Write your message…') as HTMLTextAreaElement;

@@ -39,14 +39,14 @@ export const Default: Story = {
   },
 };
 
-export const Span: Story = {
+export const AsSpanBehavior: Story = {
   args: { as: 'span' },
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     await expect(canvasElement.firstElementChild?.tagName).toBe('SPAN');
   },
 };
 
 export const MonoCaption: Story = {
-  name: 'Mono caption (e.g. timeline meta)',
   args: { size: 'caption-s', font: 'mono', tone: 'muted', children: '#### TYPESCRIPT · 6Y' },
 };

@@ -22,7 +22,10 @@ const meta: Meta<typeof ContactButton> = {
 export default meta;
 type Story = StoryObj<typeof ContactButton>;
 
-export const Default: Story = {
+export const Default: Story = {};
+
+export const ClickBehavior: Story = {
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByRole('button', { name: /get in touch/i });
@@ -33,13 +36,23 @@ export const Default: Story = {
 };
 
 export const IconVariant: Story = {
-  name: 'Icon variant',
   args: { variant: 'icon' },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByRole('button', { name: /get in touch/i });
     await expect(button.textContent?.trim()).toBe('');
   },
+};
+
+export const LabelledOpen: Story = {
+  args: { variant: 'labelled', isOpen: true },
+  // Same as Open — provide the aria-controls target so axe can resolve it.
+  render: (args) => (
+    <>
+      <ContactButton {...args} />
+      <div id={args.controlsId} hidden />
+    </>
+  ),
 };
 
 export const Open: Story = {
