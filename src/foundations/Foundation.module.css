@@ -127,14 +127,13 @@
     row-gap: var(--space-l);
   }
   .semanticRow {
-    /* Stack text first, swatch at the bottom as the row's illustration. */
-    grid-template-columns: 1fr;
+    grid-template-columns: auto 1fr;
     grid-template-areas:
-      "token"
-      "role"
-      "reference"
-      "swatch";
+      "token  token"
+      "swatch role"
+      "swatch reference";
     align-items: start;
+    column-gap: var(--space-m);
     row-gap: var(--space-s);
     padding-bottom: var(--space-l);
   }
@@ -542,14 +541,13 @@
     row-gap: var(--space-l);
   }
   .spacingRow {
-    /* Stack text first, bar at the bottom as the row's illustration. */
-    grid-template-columns: 1fr;
+    grid-template-columns: auto 1fr;
     grid-template-areas:
-      "token"
-      "px"
-      "primitive"
-      "bar";
-    align-items: start;
+      "token     px"
+      "bar       bar"
+      "primitive primitive";
+    align-items: center;
+    column-gap: var(--space-m);
     row-gap: var(--space-s);
     padding-bottom: var(--space-l);
   }
@@ -558,6 +556,7 @@
   }
   .spacingRow > :nth-child(2) {
     grid-area: px;
+    justify-self: end;
   }
   .spacingRow > :nth-child(3) {
     grid-area: bar;
@@ -636,15 +635,14 @@
     row-gap: var(--space-l);
   }
   .radiusRow {
-    /* Stack text first, sample at the bottom as the row's illustration. */
-    grid-template-columns: 1fr;
+    grid-template-columns: auto 1fr;
     grid-template-areas:
-      "token"
-      "value"
-      "use"
-      "primitive"
-      "sample";
+      "token  token"
+      "sample value"
+      "sample use"
+      "sample primitive";
     align-items: start;
+    column-gap: var(--space-m);
     row-gap: var(--space-s);
     padding-bottom: var(--space-l);
   }
