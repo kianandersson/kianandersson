@@ -7,7 +7,7 @@
   box-sizing: border-box;
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: var(--space-xl) var(--container-pad);
+  padding: var(--space-xl) var(--container-padding);
   display: flex;
   align-items: center;
   justify-content: space-between;

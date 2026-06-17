@@ -189,7 +189,7 @@
   --font-sans: "Geist", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --container-max: 700px;
-  --container-pad: 28px;
+  --container-padding: var(--space-xl);
 }
 
 [data-theme="dark"] {
