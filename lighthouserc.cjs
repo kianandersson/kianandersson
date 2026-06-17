@@ -11,7 +11,9 @@ module.exports = {
       assertMatrix: [
         {
           // Skip /og — render-only canvas for the OG image, intentionally noindex.
-          matchingUrlPattern: '^(?!.*/og/).*$',
+          // Skip /design/ — Storybook catalog, scored on its own terms (not as a
+          // shipped page).
+          matchingUrlPattern: '^(?!.*/og/)(?!.*/design/).*$',
           assertions: {
             'categories:performance': ['error', { minScore: 1 }],
             'categories:accessibility': ['error', { minScore: 1 }],
