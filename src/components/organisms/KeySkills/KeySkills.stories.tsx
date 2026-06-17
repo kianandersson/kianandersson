@@ -13,8 +13,9 @@ const meta: Meta<typeof KeySkills> = {
       { id: 'vite', name: 'Vite', level: 4, years: 3 },
     ],
     /* Inert in Storybook — the production caller wires this to the actual
-       page anchor (#skills on the index page). */
-    allSkillsHref: '#',
+       page anchor (#skills on the index page). `javascript:void(0)` is
+       fully no-op (doesn't update the URL hash). */
+    allSkillsHref: 'javascript:void(0)',
   },
 };
 

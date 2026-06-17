@@ -10,8 +10,9 @@ const meta: Meta<typeof NotFound> = {
   },
   args: {
     requestedUrl: 'https://example.com/blog/article-that-moved',
-    /* Inert in Storybook — production callers pass the real site root. */
-    homeHref: '#',
+    /* Inert in Storybook — production callers pass the real site root.
+       `javascript:void(0)` is fully no-op (doesn't update the URL hash). */
+    homeHref: 'javascript:void(0)',
   },
 };
 
