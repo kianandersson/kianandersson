@@ -27,13 +27,13 @@ function Row({
     <div class={styles.radiusRow}>
       <div class={styles.radiusSample} data-size={token.replace('--radius-', '')} />
       <span class={styles.tokenChip}>{token}</span>
-      <Text font="mono" size="caption-s" tone="subtle">
+      <Text font="mono" size="caption-s" tone="muted">
         {value}
       </Text>
       <Text size="caption-m" tone="muted">
         {use}
       </Text>
-      <Text font="mono" size="caption-s" tone="subtle">
+      <Text font="mono" size="caption-s" tone="muted">
         <span class={styles.token}>{primitive}</span>
       </Text>
     </div>

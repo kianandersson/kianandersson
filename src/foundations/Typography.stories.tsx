@@ -114,10 +114,10 @@ function RoleRow({
     <div class={styles.roleRow}>
       <span class={styles.tokenChip}>{name}</span>
       <div class={styles.roleMeta}>
-        <Text font="mono" size="caption-s" tone="subtle">
+        <Text font="mono" size="caption-s" tone="muted">
           {sizePx} / {leadingValue}
         </Text>
-        <Text font="mono" size="caption-s" tone="subtle">
+        <Text font="mono" size="caption-s" tone="muted">
           fs {sizePrimitive} · lh {leadingPrimitive}
         </Text>
       </div>
@@ -139,7 +139,7 @@ function Page() {
           Tailwind-aligned size scale paired with a small line-height ladder. Each role declares
           both a size and a leading; components reference the role, never the primitive.
         </Text>
-        <Text as="p" size="caption-m" tone="subtle">
+        <Text as="p" size="caption-m" tone="muted">
           Geist for sans, Geist Mono for code, meta, and labels.
         </Text>
       </header>

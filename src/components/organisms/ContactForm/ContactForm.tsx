@@ -64,9 +64,7 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
         <div class={styles.body}>
           <div class={styles.row}>
             <span class={styles.fieldLabel}>
-              <Text font="mono" size="label" tone="subtle">
-                To
-              </Text>
+              <FieldLabel for={emailId}>To</FieldLabel>
             </span>
             <span class={styles.recipient}>
               <span class={styles.recipientDot} aria-hidden="true" />

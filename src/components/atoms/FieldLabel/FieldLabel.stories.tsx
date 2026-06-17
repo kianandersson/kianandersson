@@ -7,12 +7,10 @@ const meta: Meta<typeof FieldLabel> = {
   component: FieldLabel,
   argTypes: {
     for: { control: 'text' },
-    tone: { control: { type: 'inline-radio' }, options: ['subtle', 'muted'] },
     children: { control: 'text' },
   },
   args: {
     for: 'demo-input',
-    tone: 'subtle',
     children: 'From',
   },
   render: (args) => (
@@ -36,8 +34,4 @@ export const Default: Story = {
     await userEvent.click(label);
     await expect(input).toHaveFocus();
   },
-};
-
-export const Muted: Story = {
-  args: { tone: 'muted' },
 };

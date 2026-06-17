@@ -44,6 +44,14 @@ export const IconVariant: Story = {
 
 export const Open: Story = {
   args: { variant: 'icon', isOpen: true },
+  // Provide the aria-controls target so axe can resolve it; in production
+  // Contact composes the region.
+  render: (args) => (
+    <>
+      <ContactButton {...args} />
+      <div id={args.controlsId} hidden />
+    </>
+  ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByRole('button', { name: /get in touch/i });
