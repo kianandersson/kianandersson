@@ -4,6 +4,12 @@
   gap: var(--space-6xl);
   width: 100%;
   max-width: 880px;
+  /* Breathing room around the page content. Sits on top of Storybook's
+     `layout: padded` so the foundation pages don't feel pressed up against
+     the canvas edges. The ramp grid's full-bleed offset is derived from
+     `50% - 50vw`, so it stays aligned even when this padding changes. */
+  padding-inline: var(--space-xl);
+  padding-block: var(--space-2xl);
 }
 
 .head {
