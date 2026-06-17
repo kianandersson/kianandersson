@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/preact-vite';
 import { Heading } from '../components/atoms/Heading';
 import { Text } from '../components/atoms/Text';
+import { SectionHeader } from '../components/molecules/SectionHeader';
+import styles from './Foundation.module.css';
 
 const SCALE = [
   { token: '--space-2xs', primitive: '--space-1', px: 4 },
@@ -22,22 +24,22 @@ function Row({ token, primitive, px }: { token: string; primitive: string; px: n
     <div
       style={{
         display: 'grid',
-        gridTemplateColumns: '160px 80px 1fr 120px',
-        gap: 24,
+        gridTemplateColumns: '160px 64px 1fr 120px',
+        gap: 'var(--space-lg)',
         alignItems: 'center',
+        paddingBottom: 'var(--space-md)',
+        borderBottom: '1px solid var(--color-divider)',
       }}
     >
-      <Text font="mono" size="caption-m">
-        {token}
-      </Text>
+      <span class={styles.tokenChip}>{token}</span>
       <Text font="mono" size="caption-s" tone="subtle">
         {px} px
       </Text>
       <div
         style={{
-          height: 16,
+          height: 12,
           width: `var(${token})`,
-          background: 'var(--color-accent-muted)',
+          background: 'var(--color-accent)',
           borderRadius: 'var(--radius-sm)',
         }}
       />
@@ -50,24 +52,25 @@ function Row({ token, primitive, px }: { token: string; primitive: string; px: n
 
 function Page() {
   return (
-    <div style={{ maxWidth: 880, display: 'flex', flexDirection: 'column', gap: 32 }}>
-      <header style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+    <div class={styles.page}>
+      <header class={styles.head}>
         <Heading level={1} size="l">
           Spacing
         </Heading>
         <Text as="p" size="body" tone="muted">
           4 px linear scale up to 64 px, exposed as a t-shirt naming for component consumption.
-          Padding, margin, and gap reference t-shirt tokens. Positioning (`top`, `left`,
-          `transform`) is the only place the half-step escape hatch{' '}
-          <code style={{ fontFamily: 'var(--font-mono)' }}>calc(var(--space-N) / 2)</code> is
-          allowed.
+          Padding, margin, and gap reference t-shirt tokens. Positioning is the only place the
+          half-step escape hatch is allowed.
         </Text>
       </header>
 
-      <section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        {SCALE.map((item) => (
-          <Row key={item.token} {...item} />
-        ))}
+      <section class={styles.section}>
+        <SectionHeader title="Scale" />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
+          {SCALE.map((item) => (
+            <Row key={item.token} {...item} />
+          ))}
+        </div>
       </section>
     </div>
   );

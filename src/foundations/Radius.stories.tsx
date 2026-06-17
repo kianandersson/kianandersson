@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/preact-vite';
 import { Heading } from '../components/atoms/Heading';
 import { Text } from '../components/atoms/Text';
+import { SectionHeader } from '../components/molecules/SectionHeader';
+import styles from './Foundation.module.css';
 
 const RADII = [
   { token: '--radius-sm', primitive: '--radius-100', value: '4 px', use: 'Chips, small bullets' },
@@ -8,20 +10,6 @@ const RADII = [
   { token: '--radius-lg', primitive: '--radius-300', value: '12 px', use: 'Surfaces, cards' },
   { token: '--radius-full', primitive: '—', value: '9999 px', use: 'Pills, circles' },
 ];
-
-function Sample({ token }: { token: string }) {
-  return (
-    <div
-      style={{
-        width: 72,
-        height: 72,
-        background: 'var(--color-accent-subtle)',
-        border: '1px solid var(--color-accent-muted)',
-        borderRadius: `var(${token})`,
-      }}
-    />
-  );
-}
 
 function Row({
   token,
@@ -38,15 +26,23 @@ function Row({
     <div
       style={{
         display: 'grid',
-        gridTemplateColumns: '100px 160px 100px 1fr 100px',
-        gap: 24,
+        gridTemplateColumns: '80px 160px 80px 1fr 120px',
+        gap: 'var(--space-lg)',
         alignItems: 'center',
+        paddingBottom: 'var(--space-md)',
+        borderBottom: '1px solid var(--color-divider)',
       }}
     >
-      <Sample token={token} />
-      <Text font="mono" size="caption-m">
-        {token}
-      </Text>
+      <div
+        style={{
+          width: 60,
+          height: 60,
+          background: 'var(--color-accent-subtle)',
+          border: '1px solid var(--color-accent-muted)',
+          borderRadius: `var(${token})`,
+        }}
+      />
+      <span class={styles.tokenChip}>{token}</span>
       <Text font="mono" size="caption-s" tone="subtle">
         {value}
       </Text>
@@ -62,22 +58,25 @@ function Row({
 
 function Page() {
   return (
-    <div style={{ maxWidth: 880, display: 'flex', flexDirection: 'column', gap: 32 }}>
-      <header style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+    <div class={styles.page}>
+      <header class={styles.head}>
         <Heading level={1} size="l">
           Radius
         </Heading>
         <Text as="p" size="body" tone="muted">
-          Three steps for square corners plus a `--radius-full` escape value for pills and circles.
+          Three steps for square corners plus a --radius-full escape value for pills and circles.
           The full radius isn't part of the graduated scale — it's the "as round as possible"
           sentinel.
         </Text>
       </header>
 
-      <section style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-        {RADII.map((item) => (
-          <Row key={item.token} {...item} />
-        ))}
+      <section class={styles.section}>
+        <SectionHeader title="Scale" />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
+          {RADII.map((item) => (
+            <Row key={item.token} {...item} />
+          ))}
+        </div>
       </section>
     </div>
   );

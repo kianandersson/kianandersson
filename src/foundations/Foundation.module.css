@@ -1,0 +1,42 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6xl);
+  max-width: 880px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.subSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.tokenChip {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-2xs) var(--space-xs);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-caption-s-size);
+  line-height: 1;
+  color: var(--color-text);
+}
+
+.divider {
+  height: 1px;
+  background: var(--color-divider);
+  width: 100%;
+}
