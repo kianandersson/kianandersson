@@ -1,6 +1,5 @@
 import type { ComponentChildren } from 'preact';
 import { useId } from 'preact/hooks';
-import { Button } from '../../atoms/Button';
 import { ChevronIcon } from '../../atoms/icons';
 import styles from './Accordion.module.css';
 
@@ -17,12 +16,12 @@ export function Accordion({ title, count, isOpen, onToggle, children }: Props) {
 
   return (
     <div className={styles.group}>
-      <Button
+      <button
         type="button"
         onClick={onToggle}
         aria-expanded={isOpen}
         aria-controls={panelId}
-        class={styles.trigger}
+        className={styles.trigger}
       >
         <span className={styles.titleGroup}>
           <span className={styles.title}>{title}</span>
@@ -31,7 +30,7 @@ export function Accordion({ title, count, isOpen, onToggle, children }: Props) {
         <span aria-hidden="true" className={styles.chevron} data-open={isOpen}>
           <ChevronIcon direction="down" />
         </span>
-      </Button>
+      </button>
       <div
         id={panelId}
         className={styles.panel}

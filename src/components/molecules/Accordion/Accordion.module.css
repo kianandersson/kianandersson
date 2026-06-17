@@ -9,8 +9,15 @@
   justify-content: space-between;
   gap: var(--space-sm);
   padding: var(--space-md) var(--space-xl) var(--space-md) 0;
+  margin: 0;
+  border: none;
+  appearance: none;
+  background: transparent;
+  font: inherit;
   text-align: left;
+  text-decoration: none;
   color: var(--color-text);
+  cursor: pointer;
   transition: color 0.2s;
 }
 
