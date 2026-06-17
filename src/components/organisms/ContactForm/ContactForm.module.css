@@ -67,20 +67,13 @@
 
 .plane {
   display: inline-flex;
+  /* Promote to its own compositor layer so the SVG icon doesn't snap a
+     sub-pixel when the parent `grid-template-rows` reveal animation
+     finishes and the container rounds to the pixel grid. */
+  will-change: transform;
   transition:
     transform 0.2s ease,
     opacity 0.2s ease;
-}
-
-/* If the cursor happens to land over the Send button as the form reveals,
-   the plane's transform would otherwise animate from `none` to the hover
-   offset on the first paint and look like a phantom interaction. Disable
-   transitions on the element's first frame so the hover snaps without
-   animation. */
-@starting-style {
-  .plane {
-    transition: none;
-  }
 }
 
 @media (hover: hover) {
