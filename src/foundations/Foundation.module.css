@@ -68,7 +68,7 @@
 .bullets {
   display: grid;
   grid-template-columns: auto 1fr;
-  column-gap: var(--space-l);
+  column-gap: var(--space-2xl);
   row-gap: var(--space-m);
 }
 
@@ -96,7 +96,7 @@
 .semanticTable {
   display: grid;
   grid-template-columns: auto auto 1fr auto;
-  column-gap: var(--space-l);
+  column-gap: var(--space-2xl);
   row-gap: var(--space-m);
 }
 
@@ -410,7 +410,7 @@
 .roleTable {
   display: grid;
   grid-template-columns: auto auto 1fr;
-  column-gap: var(--space-l);
+  column-gap: var(--space-2xl);
   row-gap: var(--space-l);
 }
 
@@ -506,7 +506,7 @@
 .spacingTable {
   display: grid;
   grid-template-columns: auto auto 1fr auto;
-  column-gap: var(--space-l);
+  column-gap: var(--space-2xl);
   row-gap: var(--space-m);
 }
 
@@ -600,7 +600,7 @@
 .radiusTable {
   display: grid;
   grid-template-columns: auto auto auto 1fr auto;
-  column-gap: var(--space-l);
+  column-gap: var(--space-2xl);
   row-gap: var(--space-m);
 }
 
