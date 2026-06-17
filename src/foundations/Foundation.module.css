@@ -731,3 +731,40 @@
 .radiusSample[data-size="full"] {
   border-radius: var(--radius-full);
 }
+
+/* -------------------------------------------------------------
+ * Icons page: gallery tiles.
+ * ----------------------------------------------------------- */
+
+.iconGrid {
+  display: grid;
+  /* auto-fit lets the gallery reflow naturally from 4 → 1 columns as the
+     container shrinks, without us picking arbitrary breakpoints. */
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-l);
+}
+
+.iconTile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  padding: var(--space-l);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-l);
+  background: var(--color-surface-raised);
+}
+
+.iconSample {
+  display: grid;
+  place-items: center;
+  height: 56px;
+  border-radius: var(--radius-m);
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+}
+
+.iconMeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
