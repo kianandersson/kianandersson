@@ -7,25 +7,14 @@ type SendFn = (payload: ContactPayload) => Promise<{ error?: unknown }>;
 
 type Options = {
   send: SendFn;
-  /** Time the success line stays visible before collapsing the pill. */
-  collapseDelayMs?: number;
-  /** Delay after collapse before clearing internal state. */
-  resetDelayMs?: number;
-  /** How long the form takes to animate out before the success line enters. */
-  formLeaveMs?: number;
-  /** How long the success line takes to fade out. */
-  successLeaveMs?: number;
-  /** How long the send-icon plane stays in flight before the form leaves. */
-  planeFlightMs?: number;
 };
 
-const DEFAULTS = {
-  collapseDelayMs: 3200,
-  resetDelayMs: 560,
-  formLeaveMs: 280,
-  successLeaveMs: 400,
-  planeFlightMs: 500,
-};
+const COLLAPSE_DELAY_MS = 3200;
+const RESET_DELAY_MS = 560;
+const FORM_LEAVE_MS = 280;
+const SUCCESS_LEAVE_MS = 400;
+const SUCCESS_ENTER_AFTER_MS = FORM_LEAVE_MS / 2;
+const PLANE_FLIGHT_MS = 500;
 
 const delay = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
@@ -37,13 +26,6 @@ const delay = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve,
  * a second submit (or a close) cancels the prior flow's pending transitions.
  */
 export function useContactSubmission(options: Options) {
-  const collapseDelayMs = options.collapseDelayMs ?? DEFAULTS.collapseDelayMs;
-  const resetDelayMs = options.resetDelayMs ?? DEFAULTS.resetDelayMs;
-  const formLeaveMs = options.formLeaveMs ?? DEFAULTS.formLeaveMs;
-  const successLeaveMs = options.successLeaveMs ?? DEFAULTS.successLeaveMs;
-  const planeFlightMs = options.planeFlightMs ?? DEFAULTS.planeFlightMs;
-  const successEnterAfterMs = formLeaveMs / 2;
-
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<SubmissionStatus>('idle');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -80,7 +62,7 @@ export function useContactSubmission(options: Options) {
     if (status === 'success') {
       nextToken();
       cancelResetTimer();
-      resetTimer.current = setTimeout(resetState, resetDelayMs);
+      resetTimer.current = setTimeout(resetState, RESET_DELAY_MS);
     } else {
       resetState();
     }
@@ -111,24 +93,24 @@ export function useContactSubmission(options: Options) {
     // Plane flies while the form is still visible. The form only starts to
     // leave once the flight completes.
     setStatus('sent');
-    await delay(planeFlightMs);
+    await delay(PLANE_FLIGHT_MS);
     if (requestToken.current !== token) return;
 
     setFormLeaving(true);
-    await delay(successEnterAfterMs);
+    await delay(SUCCESS_ENTER_AFTER_MS);
     if (requestToken.current !== token) return;
     setStatus('success');
     setFormLeaving(false);
 
-    await delay(collapseDelayMs);
+    await delay(COLLAPSE_DELAY_MS);
     if (requestToken.current !== token) return;
     setSuccessLeaving(true);
 
-    await delay(successLeaveMs);
+    await delay(SUCCESS_LEAVE_MS);
     if (requestToken.current !== token) return;
     setOpen(false);
 
-    await delay(resetDelayMs);
+    await delay(RESET_DELAY_MS);
     if (requestToken.current !== token) return;
     resetState();
   }

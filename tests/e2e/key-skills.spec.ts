@@ -38,7 +38,7 @@ test.describe('Key Skills section', () => {
       .getByRole('region', { name: /Key skills/i })
       .getByRole('listitem')
       .first();
-    const cells = row.locator(':scope > span');
+    const cells = row.locator(':scope > div > span');
     const nameBox = await cells.nth(0).boundingBox();
     const levelBox = await cells.nth(1).boundingBox();
 
@@ -56,7 +56,7 @@ test.describe('Key Skills section', () => {
       .getByRole('region', { name: /Key skills/i })
       .getByRole('listitem')
       .first();
-    const cells = row.locator(':scope > span');
+    const cells = row.locator(':scope > div > span');
     const nameBox = await cells.nth(0).boundingBox();
     const levelBox = await cells.nth(1).boundingBox();
 

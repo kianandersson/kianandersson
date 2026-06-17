@@ -37,7 +37,9 @@ test.describe('Experience section', () => {
     await page.waitForFunction(() => !document.querySelector('astro-island')?.hasAttribute('ssr'));
 
     const entry = section.getByRole('listitem').first();
-    const visibleChips = entry.locator('[data-variant]:not([data-hidden])');
+    // Overflow chips live inside a [data-shown="false"] wrapper when collapsed;
+    // visible chips are everything not under that wrapper.
+    const visibleChips = entry.locator('[data-variant]:not([data-shown="false"] *)');
     const before = await visibleChips.count();
 
     await moreToggle.click();
