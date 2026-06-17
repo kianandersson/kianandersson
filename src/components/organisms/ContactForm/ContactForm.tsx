@@ -4,7 +4,12 @@ import {
   CONTACT_MESSAGE_MAX,
   CONTACT_SUBJECT_MAX,
 } from '../../../lib/contact-validation';
+import { FieldLabel } from '../../atoms/FieldLabel';
 import { SendIcon } from '../../atoms/icons';
+import { PillButton } from '../../atoms/PillButton';
+import { Text } from '../../atoms/Text';
+import { Textarea } from '../../atoms/Textarea';
+import { TextInput } from '../../atoms/TextInput';
 import styles from './ContactForm.module.css';
 
 export type ContactPayload = {
@@ -57,7 +62,7 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
 
       <div class={styles.body}>
         <div class={styles.row}>
-          <span class={styles.fieldLabel}>To</span>
+          <FieldLabel class={styles.fieldLabel}>To</FieldLabel>
           <span class={styles.recipient}>
             <span class={styles.recipientDot} aria-hidden="true" />
             {recipientName}
@@ -65,12 +70,11 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
         </div>
 
         <div class={`${styles.row} ${styles.inputRow}`}>
-          <label class={styles.fieldLabel} for="contact-from">
+          <FieldLabel for="contact-from" class={styles.fieldLabel}>
             From
-          </label>
-          <input
+          </FieldLabel>
+          <TextInput
             id="contact-from"
-            class={styles.input}
             type="email"
             inputMode="email"
             placeholder="you@company.com"
@@ -83,12 +87,11 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
         </div>
 
         <div class={`${styles.row} ${styles.inputRow}`}>
-          <label class={styles.fieldLabel} for="contact-subject">
+          <FieldLabel for="contact-subject" class={styles.fieldLabel}>
             Subject
-          </label>
-          <input
+          </FieldLabel>
+          <TextInput
             id="contact-subject"
-            class={styles.input}
             type="text"
             placeholder="What's on your mind?"
             autocomplete="off"
@@ -101,9 +104,8 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
         </div>
 
         <div class={`${styles.row} ${styles.messageRow}`}>
-          <textarea
+          <Textarea
             id="contact-message"
-            class={styles.textarea}
             placeholder="Write your message…"
             aria-label="Message"
             value={message}
@@ -116,19 +118,20 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
 
         <div class={styles.toolbar}>
           {status === 'error' && errorMessage ? (
-            <span class={styles.error} role="status">
+            <Text font="mono" size="caption-s" tone="muted" role="status" class={styles.error}>
               ↳ {errorMessage}
-            </span>
+            </Text>
           ) : null}
-          <button
+          <PillButton
             type="submit"
-            class={styles.send}
+            size="md"
             data-sending={sending}
             disabled={!valid || sending}
+            class={styles.send}
           >
             {sending ? 'Sending…' : 'Send message'}
             <SendIcon class={styles.plane} />
-          </button>
+          </PillButton>
         </div>
       </div>
     </form>

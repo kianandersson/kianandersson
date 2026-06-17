@@ -1,3 +1,4 @@
+import { TextLink } from '../../atoms/TextLink';
 import styles from './Footer.module.css';
 
 type Props = {
@@ -15,9 +16,9 @@ export function Footer({ name, year, sourceHref }: Props) {
         </span>
         <span className={styles.source}>
           This website is{' '}
-          <a href={sourceHref} className={styles.link} target="_blank" rel="noopener noreferrer">
+          <TextLink href={sourceHref} target="_blank" rel="noopener noreferrer" tone="default">
             open-source
-          </a>
+          </TextLink>
         </span>
       </div>
     </footer>

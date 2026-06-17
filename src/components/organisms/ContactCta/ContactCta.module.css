@@ -21,6 +21,7 @@
 /* --------------------------------------------------------------------
  * Icon-only round button (shown alongside the AvailabilityPill).
  * 44px circle that swaps @ → arrow on hover and rotates a ✕ in when active.
+ * Built on top of the Button atom (reset chrome) — adds shape/color/animation.
  * ------------------------------------------------------------------ */
 
 .iconButton {
@@ -28,12 +29,9 @@
   place-items: center;
   width: 44px;
   height: 44px;
-  padding: 0;
-  border: none;
   border-radius: var(--radius-full);
   background: var(--color-text);
   color: var(--color-surface);
-  cursor: pointer;
   overflow: hidden;
   transition:
     transform 0.12s ease,
@@ -95,8 +93,6 @@
   transform: translateX(var(--space-3));
 }
 
-/* Park the arrow on-axis (opacity 0) so close → hover fades it in without
- * a slide; the ✕ rotates out at the same time, mirroring the labelled button. */
 .iconButton[data-open="true"] .iconStack > .icArrow {
   opacity: 0;
   transform: translateX(0);
@@ -109,36 +105,15 @@
 
 /* --------------------------------------------------------------------
  * Labelled pill button ("Get in touch") — shown when no AvailabilityPill.
- * Arrow slides in from the left on hover; rotates to ✕ when active.
+ * Built on top of PillButton (chrome) — adds the arrow-slot animation
+ * and open-state color flip.
  * ------------------------------------------------------------------ */
 
 .labelledButton {
-  display: inline-flex;
-  align-items: center;
-  height: 44px;
-  padding: 0 var(--space-xl);
-  border: none;
-  border-radius: var(--radius-full);
-  background: var(--color-text);
-  color: var(--color-surface);
-  font-family: var(--font-sans);
-  font-size: var(--text-body-size);
-  line-height: var(--text-body-leading);
-  font-weight: 500;
-  cursor: pointer;
   transition:
     transform 0.12s ease,
     background 0.26s ease,
     color 0.26s ease;
-}
-
-.labelledButton:active {
-  transform: scale(0.97);
-}
-
-.labelledButton:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 3px;
 }
 
 .labelText {

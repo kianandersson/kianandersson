@@ -1,0 +1,30 @@
+.textarea {
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+  color: var(--color-text);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  caret-color: var(--color-accent);
+}
+
+.textarea:focus {
+  outline: 0;
+}
+
+.textarea::placeholder {
+  color: var(--color-text-subtle);
+}
+
+.textarea:-webkit-autofill,
+.textarea:-webkit-autofill:hover,
+.textarea:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--color-surface-raised) inset;
+  -webkit-text-fill-color: var(--color-text);
+  caret-color: var(--color-accent);
+  transition: background-color 5000s ease-in-out 0s;
+}

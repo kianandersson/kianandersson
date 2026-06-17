@@ -1,4 +1,6 @@
 import type { SkillLevel } from '../../../lib/skill';
+import { TextLink } from '../../atoms/TextLink';
+import { SectionHeader } from '../../molecules/SectionHeader';
 import { SkillRow } from '../../molecules/SkillRow';
 import styles from './KeySkills.module.css';
 
@@ -16,17 +18,15 @@ type Props = {
 export function KeySkills({ skills }: Props) {
   return (
     <div className={styles.root}>
-      <header className={styles.header}>
-        <span className={styles.hash} aria-hidden="true">
-          ##
-        </span>
-        <h2 id="key-skills-heading" className={styles.heading}>
-          Key skills
-        </h2>
-        <a href="#skills" className={styles.allSkillsLink}>
-          All skills →
-        </a>
-      </header>
+      <SectionHeader
+        title="Key skills"
+        id="key-skills-heading"
+        action={
+          <TextLink href="#skills" class={styles.allSkillsLink}>
+            All skills →
+          </TextLink>
+        }
+      />
       <ul className={styles.list}>
         {skills.map((skill) => (
           <SkillRow key={skill.id} name={skill.name} level={skill.level} years={skill.years} />

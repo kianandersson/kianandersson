@@ -25,25 +25,6 @@
   gap: var(--space-xs);
 }
 
-.link {
-  color: var(--color-text);
-  border-radius: var(--radius-sm);
-  transition: color 0.2s;
-  text-decoration: none;
-}
-
-.link:focus-visible {
-  color: var(--color-accent-strong);
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
-}
-
-@media (hover: hover) {
-  .link:hover {
-    color: var(--color-accent-strong);
-  }
-}
-
 @media print {
   .footer {
     display: none;

@@ -1,4 +1,7 @@
 import type { Language } from '../../../lib/language';
+import { FieldLabel } from '../../atoms/FieldLabel';
+import { Text } from '../../atoms/Text';
+import { SectionHeader } from '../../molecules/SectionHeader';
 import styles from './Miscellaneous.module.css';
 
 export type { Language };
@@ -10,21 +13,20 @@ type Props = {
 export function Miscellaneous({ languages }: Props) {
   return (
     <div className={styles.root}>
-      <header className={styles.header}>
-        <span className={styles.hash} aria-hidden="true">
-          ##
-        </span>
-        <h2 id="miscellaneous-heading" className={styles.heading}>
-          Miscellaneous
-        </h2>
-      </header>
+      <SectionHeader title="Miscellaneous" id="miscellaneous-heading" />
       <div className={styles.row}>
-        <span className={styles.rowLabel}>Languages</span>
+        <FieldLabel tone="muted" class={styles.rowLabel}>
+          Languages
+        </FieldLabel>
         <ul className={styles.chips}>
           {languages.map((lang) => (
             <li key={lang.name} className={styles.chip}>
-              <span className={styles.chipName}>{lang.name}</span>
-              <span className={styles.chipLevel}>{lang.level}</span>
+              <Text font="sans" size="caption-m" weight="medium">
+                {lang.name}
+              </Text>
+              <Text font="mono" size="caption-s" tone="muted">
+                {lang.level}
+              </Text>
             </li>
           ))}
         </ul>

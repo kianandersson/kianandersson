@@ -1,4 +1,6 @@
 import type { ComponentChildren } from 'preact';
+import { Heading } from '../../atoms/Heading';
+import { Text } from '../../atoms/Text';
 import styles from './Hero.module.css';
 
 type Props = {
@@ -13,10 +15,12 @@ export function Hero({ name, children }: Props) {
   return (
     <div className={styles.root}>
       <div className={styles.text}>
-        <h1 className={styles.heading}>
+        <Heading level={1} size="display-xl">
           Hi, I'm <span className={styles.name}>{name}</span>.
-        </h1>
-        <p className={styles.body}>{PLACEHOLDER_BODY}</p>
+        </Heading>
+        <Text as="p" size="heading-s" tone="muted" class={styles.body}>
+          {PLACEHOLDER_BODY}
+        </Text>
       </div>
       {children}
     </div>

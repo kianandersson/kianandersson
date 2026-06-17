@@ -20,29 +20,11 @@
 }
 
 .eyebrowLabel {
-  font-family: var(--font-mono);
-  font-size: var(--text-caption-s-size);
-  line-height: var(--text-caption-s-leading);
   letter-spacing: 0.08em;
-  color: var(--color-text-muted);
-}
-
-.heading {
-  margin: 0;
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: var(--text-heading-l-size);
-  line-height: var(--text-heading-l-leading);
-  letter-spacing: -0.025em;
-  color: var(--color-text);
 }
 
 .body {
-  margin: 0;
-  font-family: var(--font-sans);
-  font-size: var(--text-subheading-size);
   line-height: var(--text-body-leading);
-  color: var(--color-text-muted);
 }
 
 .terminal {
@@ -83,10 +65,6 @@
 
 .terminalTitle {
   margin-left: var(--space-xs);
-  font-family: var(--font-mono);
-  font-size: var(--text-caption-s-size);
-  line-height: var(--text-caption-s-leading);
-  color: var(--color-text-muted);
 }
 
 .terminalBody {

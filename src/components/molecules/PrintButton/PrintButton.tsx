@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
+import { IconButton } from '../../atoms/IconButton';
 import { PrintIcon } from '../../atoms/icons';
-import styles from './PrintButton.module.css';
 
 export function PrintButton() {
   const onClick = useCallback(() => {
@@ -8,16 +8,8 @@ export function PrintButton() {
   }, []);
 
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label="Print"
-      title="Print"
-      className={styles.button}
-    >
-      <span aria-hidden="true" className={styles.icon}>
-        <PrintIcon />
-      </span>
-    </button>
+    <IconButton type="button" onClick={onClick} aria-label="Print" title="Print">
+      <PrintIcon />
+    </IconButton>
   );
 }

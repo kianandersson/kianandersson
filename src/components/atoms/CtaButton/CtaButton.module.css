@@ -10,7 +10,6 @@
   color: var(--color-surface);
   padding: 0 var(--space-xl);
   border-radius: var(--radius-full);
-  text-decoration: none;
   transition: transform 0.12s ease;
 }
 

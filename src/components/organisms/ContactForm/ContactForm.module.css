@@ -59,10 +59,6 @@
 
 .fieldLabel {
   flex: 0 0 52px;
-  font-family: var(--font-mono);
-  font-size: var(--text-label-size);
-  line-height: var(--text-label-leading);
-  color: var(--color-text-subtle);
 }
 
 .recipient {
@@ -88,52 +84,6 @@
   background: var(--color-accent);
 }
 
-.input,
-.textarea {
-  font-family: var(--font-sans);
-  font-size: var(--text-body-size);
-  line-height: var(--text-body-leading);
-  color: var(--color-text);
-  background: transparent;
-  border: 0;
-  width: 100%;
-  caret-color: var(--color-accent);
-}
-
-.input {
-  flex: 1;
-  padding: var(--space-sm) 0;
-}
-
-.input:focus,
-.textarea:focus {
-  outline: 0;
-}
-
-.input::placeholder,
-.textarea::placeholder {
-  color: var(--color-text-subtle);
-}
-
-.input:-webkit-autofill,
-.input:-webkit-autofill:hover,
-.input:-webkit-autofill:focus,
-.textarea:-webkit-autofill,
-.textarea:-webkit-autofill:hover,
-.textarea:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 1000px var(--color-surface-raised) inset;
-  -webkit-text-fill-color: var(--color-text);
-  caret-color: var(--color-accent);
-  transition: background-color 5000s ease-in-out 0s;
-}
-
-.textarea {
-  min-height: 120px;
-  resize: vertical;
-  line-height: var(--text-body-leading);
-  padding: 0;
-}
-
 .toolbar {
   display: flex;
   align-items: center;
@@ -144,44 +94,11 @@
 }
 
 .error {
-  font-family: var(--font-mono);
-  font-size: var(--text-caption-s-size);
-  line-height: var(--text-caption-s-leading);
-  color: var(--color-text-muted);
   margin-right: auto;
 }
 
 .send {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-xs);
   flex-shrink: 0;
-  height: 40px;
-  padding: 0 var(--space-xl);
-  border-radius: var(--radius-full);
-  border: 0;
-  background: var(--color-text);
-  color: var(--color-surface);
-  font-family: var(--font-sans);
-  font-size: var(--text-body-size);
-  line-height: var(--text-body-leading);
-  font-weight: 500;
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-}
-
-.send:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-.send:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 3px;
-}
-
-.send:active:not(:disabled) {
-  transform: scale(0.97);
 }
 
 .plane {

@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { useId } from 'react';
+import { Button } from '../../atoms/Button';
 import { ChevronIcon } from '../../atoms/icons';
 import styles from './Accordion.module.css';
 
@@ -16,12 +17,12 @@ export function Accordion({ title, count, isOpen, onToggle, children }: Props) {
 
   return (
     <div className={styles.group}>
-      <button
+      <Button
         type="button"
         onClick={onToggle}
         aria-expanded={isOpen}
         aria-controls={panelId}
-        className={styles.trigger}
+        class={styles.trigger}
       >
         <span className={styles.titleGroup}>
           <span className={styles.title}>{title}</span>
@@ -30,7 +31,7 @@ export function Accordion({ title, count, isOpen, onToggle, children }: Props) {
         <span aria-hidden="true" className={styles.chevron} data-open={isOpen}>
           <ChevronIcon direction="down" />
         </span>
-      </button>
+      </Button>
       <div
         id={panelId}
         className={styles.panel}

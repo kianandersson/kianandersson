@@ -1,4 +1,5 @@
 import type { ComponentChildren } from 'preact';
+import { Button } from '../Button';
 import { ArrowIcon } from '../icons';
 import styles from './CtaButton.module.css';
 
@@ -12,18 +13,18 @@ type Props = {
 
 export function CtaButton({ href, children, direction = 'forward' }: Props) {
   return (
-    <a className={styles.cta} data-direction={direction} href={href}>
+    <Button class={styles.cta} data-direction={direction} href={href}>
       {direction === 'back' ? (
-        <span aria-hidden="true" data-cta-arrow className={styles.arrow}>
+        <span aria-hidden="true" data-cta-arrow class={styles.arrow}>
           <ArrowIcon direction="left" />
         </span>
       ) : null}
-      <span className={styles.label}>{children}</span>
+      <span class={styles.label}>{children}</span>
       {direction === 'forward' ? (
-        <span aria-hidden="true" data-cta-arrow className={styles.arrow}>
+        <span aria-hidden="true" data-cta-arrow class={styles.arrow}>
           <ArrowIcon direction="right" />
         </span>
       ) : null}
-    </a>
+    </Button>
   );
 }

@@ -1,5 +1,8 @@
+import { Heading } from '../../atoms/Heading';
+import { Text } from '../../atoms/Text';
 import { TimelineMarker } from '../../atoms/TimelineMarker';
 import { ChipList } from '../../molecules/ChipList';
+import { SectionHeader } from '../../molecules/SectionHeader';
 import styles from './Experience.module.css';
 
 const CHIP_LIMIT = 6;
@@ -21,14 +24,7 @@ type Props = {
 export function Experience({ entries }: Props) {
   return (
     <div className={styles.root}>
-      <header className={styles.header}>
-        <span className={styles.hash} aria-hidden="true">
-          ##
-        </span>
-        <h2 id="experience-heading" className={styles.heading}>
-          Experience
-        </h2>
-      </header>
+      <SectionHeader title="Experience" id="experience-heading" />
       <div className={styles.timeline}>
         <span className={styles.rail} aria-hidden="true" />
         <ol className={styles.list}>
@@ -36,16 +32,24 @@ export function Experience({ entries }: Props) {
             <li key={entry.id} className={styles.entry}>
               <TimelineMarker />
               <div className={styles.titleBlock}>
-                <h3 className={styles.role}>{entry.role}</h3>
+                <Heading level={3} size="s">
+                  {entry.role}
+                </Heading>
                 <div className={styles.metaLine}>
-                  <span className={styles.meta}>{entry.meta}</span>
-                  <span aria-hidden="true" className={styles.separator}>
+                  <Text font="mono" size="caption-s" tone="muted">
+                    {entry.meta}
+                  </Text>
+                  <Text font="mono" size="caption-s" tone="muted" aria-hidden={true}>
                     ·
-                  </span>
-                  <span className={styles.period}>{entry.period}</span>
+                  </Text>
+                  <Text font="mono" size="caption-s" tone="muted">
+                    {entry.period}
+                  </Text>
                 </div>
               </div>
-              <p className={styles.description}>{entry.description}</p>
+              <Text as="p" size="body" tone="muted" class={styles.description}>
+                {entry.description}
+              </Text>
               <div className={styles.chipGroups}>
                 <ChipList label="Stack" items={entry.stack} limit={CHIP_LIMIT} variant="stack" />
                 <ChipList

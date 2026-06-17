@@ -1,0 +1,21 @@
+.header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-xs);
+}
+
+.hash {
+  font-family: var(--font-mono);
+  color: var(--color-accent);
+  font-weight: 600;
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+}
+
+.heading {
+  white-space: nowrap;
+}
+
+.action {
+  margin-left: auto;
+}

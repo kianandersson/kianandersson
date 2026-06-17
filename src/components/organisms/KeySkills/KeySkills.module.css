@@ -5,60 +5,14 @@
   gap: var(--space-md);
 }
 
-.header {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-xs);
-}
-
 .allSkillsLink {
-  margin-left: auto;
-  font-family: var(--font-mono);
-  font-size: var(--text-caption-s-size);
-  line-height: var(--text-caption-s-leading);
   white-space: nowrap;
-  color: var(--color-text-muted);
-  padding: var(--space-2xs) var(--space-xs);
-  border-radius: var(--radius-sm);
-  transition: color 0.2s;
-  text-decoration: none;
-}
-
-.allSkillsLink:focus-visible {
-  color: var(--color-accent-strong);
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
-}
-
-@media (hover: hover) {
-  .allSkillsLink:hover {
-    color: var(--color-accent-strong);
-  }
 }
 
 @media print {
   .allSkillsLink {
     display: none;
   }
-}
-
-.hash {
-  font-family: var(--font-mono);
-  color: var(--color-accent);
-  font-weight: 600;
-  font-size: var(--text-body-size);
-  line-height: var(--text-body-leading);
-}
-
-.heading {
-  margin: 0;
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: var(--text-heading-m-size);
-  line-height: var(--text-heading-m-leading);
-  letter-spacing: -0.015em;
-  color: var(--color-text);
-  white-space: nowrap;
 }
 
 .list {

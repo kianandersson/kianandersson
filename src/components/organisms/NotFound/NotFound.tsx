@@ -1,4 +1,6 @@
 import { CtaButton } from '../../atoms/CtaButton';
+import { Heading } from '../../atoms/Heading';
+import { Text } from '../../atoms/Text';
 import styles from './NotFound.module.css';
 
 type Props = {
@@ -12,22 +14,28 @@ export function NotFound({ requestedUrl = '/' }: Props) {
         <span className={styles.hashes} aria-hidden="true">
           ##
         </span>
-        <span className={styles.eyebrowLabel}>ERROR · 404 · NOT FOUND</span>
+        <Text font="mono" size="caption-s" tone="muted" class={styles.eyebrowLabel}>
+          ERROR · 404 · NOT FOUND
+        </Text>
       </div>
 
-      <h1 className={styles.heading}>This page couldn't be found.</h1>
+      <Heading level={1} size="l">
+        This page couldn't be found.
+      </Heading>
 
-      <p className={styles.body}>
+      <Text as="p" font="sans" size="subheading" tone="muted" class={styles.body}>
         The page you're after couldn't be found. It was moved, renamed, or never shipped — let's get
         you back to solid ground.
-      </p>
+      </Text>
 
       <div className={styles.terminal} role="presentation">
         <div className={styles.terminalBar}>
           <span className={`${styles.dot} ${styles.dotRed}`} aria-hidden="true" />
           <span className={`${styles.dot} ${styles.dotAmber}`} aria-hidden="true" />
           <span className={`${styles.dot} ${styles.dotGreen}`} aria-hidden="true" />
-          <span className={styles.terminalTitle}>zsh</span>
+          <Text font="mono" size="caption-s" tone="muted" class={styles.terminalTitle}>
+            zsh
+          </Text>
         </div>
         <div className={styles.terminalBody}>
           <div className={styles.line}>

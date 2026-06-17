@@ -2,7 +2,9 @@ import { actions } from 'astro:actions';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { formatDate } from '../../../lib/formatDate';
 import { AvailabilityPill } from '../../atoms/AvailabilityPill';
+import { Button } from '../../atoms/Button';
 import { ArrowIcon, CloseIcon, ContactIcon } from '../../atoms/icons';
+import { PillButton } from '../../atoms/PillButton';
 import { ContactForm, type ContactPayload, type ContactStatus } from '../ContactForm';
 import styles from './ContactCta.module.css';
 
@@ -17,7 +19,6 @@ const COLLAPSE_DELAY_MS = 3200;
 const RESET_DELAY_MS = 560;
 const FORM_LEAVE_MS = 280;
 const SUCCESS_LEAVE_MS = 400;
-// Cross-fade: success begins entering halfway through the form's leave animation.
 const SUCCESS_ENTER_AFTER_MS = FORM_LEAVE_MS / 2;
 
 const REGION_ID = 'contact-region';
@@ -64,8 +65,6 @@ export function ContactCta({ recipientName, availableFrom }: ContactCtaProps) {
   function close() {
     setOpen(false);
     if (status === 'success') {
-      // Stop any in-flight auto-collapse chain, then let the success line fade out
-      // before tearing it down.
       requestToken.current++;
       cancelResetTimer();
       resetTimer.current = setTimeout(resetState, RESET_DELAY_MS);
@@ -133,7 +132,7 @@ export function ContactCta({ recipientName, availableFrom }: ContactCtaProps) {
         {showAvailability && <AvailabilityPill availableFrom={availableFrom} />}
 
         {showAvailability ? (
-          <button
+          <Button
             type="button"
             class={styles.iconButton}
             data-variant="icon"
@@ -148,9 +147,9 @@ export function ContactCta({ recipientName, availableFrom }: ContactCtaProps) {
               <ArrowIcon class={styles.icArrow} size={17} direction="right" />
               <CloseIcon class={styles.icX} size={16} />
             </span>
-          </button>
+          </Button>
         ) : (
-          <button
+          <PillButton
             type="button"
             class={styles.labelledButton}
             data-variant="labelled"
@@ -165,7 +164,7 @@ export function ContactCta({ recipientName, availableFrom }: ContactCtaProps) {
               <ArrowIcon class={styles.icArrow} size={15} direction="right" />
               <CloseIcon class={styles.icX} size={15} />
             </span>
-          </button>
+          </PillButton>
         )}
       </div>
 

@@ -1,3 +1,4 @@
+import { IconButton } from '../../atoms/IconButton';
 import { GitHubIcon } from '../../atoms/icons';
 import { PrintButton } from '../../molecules/PrintButton';
 import { ThemeToggle } from '../../molecules/ThemeToggle';
@@ -12,16 +13,15 @@ export function TopBar({ githubHref, showPrint = true }: Props) {
   return (
     <header className={styles.bar}>
       <div className={styles.actions}>
-        <a
+        <IconButton
           href={githubHref}
-          aria-label="GitHub"
-          title="GitHub"
-          className={styles.link}
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="GitHub"
+          title="GitHub"
         >
           <GitHubIcon />
-        </a>
+        </IconButton>
         {showPrint ? <PrintButton /> : null}
         <ThemeToggle />
       </div>
