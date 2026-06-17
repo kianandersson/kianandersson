@@ -31,17 +31,17 @@ JS only sets `document.documentElement.dataset.theme`. Tokens drive everything e
 
 ## Testing
 
-- **Vitest** — pure logic and islands, behavior-level.
-- **Playwright** — flows + axe on `index.astro` and `404.astro`. No screenshot diff; visual regressions are caught by manual verification on those two pages.
+- **Vitest** — pure logic in `lib/`.
+- **Storybook + addon-vitest** — component contracts via `play()` in real Chromium. `addon-a11y` gates at `'error'`.
+- **Playwright** — multi-browser flows + page-level axe. Contact action mocked via `page.route()`.
+- **Lighthouse + bundle-size** — perf budgets.
 
-Strict red-green-refactor on the Vitest layer. Playwright/axe are gates, not test-first targets.
+Strict red-green-refactor on `lib/` and `play()`. Other layers are gates, not test-first targets.
 
 - No snapshot tests.
 - Tests describe behavior, not structure.
 - No coverage gate.
-- Storybook hosts the component catalog with the a11y addon enabled; it complements (does not replace) Vitest and Playwright/axe.
-
-Region/landmark assertions belong at the template or e2e layer, not in organism unit tests.
+- Region/landmark assertions belong at the template or e2e layer.
 
 ## Budget
 
