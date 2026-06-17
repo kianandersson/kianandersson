@@ -94,6 +94,31 @@ function SemanticRow({ token, role, reference }: SemanticToken) {
   );
 }
 
+const STANDALONE = ['white', 'black'] as const;
+
+function StandaloneRow() {
+  return (
+    <div class={styles.ramp}>
+      <div class={styles.rampHead}>
+        <span class={styles.tokenChip}>standalone</span>
+        <Text font="mono" size="caption-s" tone="subtle">
+          Theme-agnostic anchors referenced by surface tokens
+        </Text>
+      </div>
+      <div class={styles.standaloneGrid}>
+        {STANDALONE.map((name) => (
+          <div key={name} class={styles.rampStep}>
+            <span class={styles.rampSwatch} data-family={name} />
+            <Text font="mono" size="caption-s" tone="subtle">
+              {name}
+            </Text>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function RampRow({ family, hue, role }: Ramp) {
   return (
     <div class={styles.ramp}>
@@ -125,9 +150,9 @@ function Page() {
           Colors
         </Heading>
         <Text as="p" size="body" tone="muted">
-          Two layers — 55 OKLCH primitives across five hue families, and a small semantic surface
-          that components reference. The dark theme swaps the semantic layer; primitives are
-          theme-agnostic.
+          Two layers — 57 OKLCH primitives (white, black, and 55 steps across five hue families) and
+          a small semantic surface that components reference. The dark theme swaps the semantic
+          layer; primitives are theme-agnostic.
         </Text>
       </header>
 
@@ -145,6 +170,7 @@ function Page() {
         <SectionHeader title="Primitives" />
         <Divider />
         <div class={styles.listLoose}>
+          <StandaloneRow />
           {RAMPS.map((ramp) => (
             <RampRow key={ramp.family} {...ramp} />
           ))}

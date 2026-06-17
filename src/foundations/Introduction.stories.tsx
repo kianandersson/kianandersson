@@ -96,9 +96,6 @@ function Page() {
           Name by role, not appearance. A variant is a prop, not a new component. Components
           reference semantic tokens only.
         </Text>
-        <Text as="p" size="caption-m" font="mono" tone="subtle">
-          docs/naming-conventions.md
-        </Text>
       </section>
     </div>
   );
