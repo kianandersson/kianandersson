@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { useId } from 'react';
-import { ChevronDownIcon } from '../../atoms/Icon';
+import { ChevronDownIcon } from '../../atoms/icons';
 import styles from './Accordion.module.css';
 
 type Props = {

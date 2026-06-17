@@ -1,4 +1,4 @@
-import type { IconProps } from './types';
+import type { IconProps } from '../types';
 
 export function ChevronDownIcon({ size = 15, class: className }: IconProps) {
   return (

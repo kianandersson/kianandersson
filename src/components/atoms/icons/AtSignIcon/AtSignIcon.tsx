@@ -1,6 +1,6 @@
-import type { IconProps } from './types';
+import type { IconProps } from '../types';
 
-export function SendIcon({ size = 15, class: className }: IconProps) {
+export function AtSignIcon({ size = 18, class: className }: IconProps) {
   return (
     <svg
       class={className}
@@ -9,13 +9,13 @@ export function SendIcon({ size = 15, class: className }: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="1.8"
+      stroke-width="1.7"
       stroke-linecap="round"
       stroke-linejoin="round"
       aria-hidden="true"
     >
-      <path d="M22 2 11 13" />
-      <path d="M22 2 15 22l-4-9-9-4 20-7Z" />
+      <circle cx="12" cy="12" r="4" />
+      <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.9 7.9" />
     </svg>
   );
 }

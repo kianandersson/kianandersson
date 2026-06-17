@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { MoonIcon, SunIcon } from '../../atoms/Icon';
+import { MoonIcon, SunIcon } from '../../atoms/icons';
 import styles from './ThemeToggle.module.css';
 
 type Theme = 'light' | 'dark';

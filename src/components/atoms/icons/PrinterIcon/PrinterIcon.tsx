@@ -1,4 +1,4 @@
-import type { IconProps } from './types';
+import type { IconProps } from '../types';
 
 export function PrinterIcon({ size = 17, class: className }: IconProps) {
   return (

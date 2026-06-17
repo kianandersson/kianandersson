@@ -4,7 +4,7 @@ import {
   CONTACT_MESSAGE_MAX,
   CONTACT_SUBJECT_MAX,
 } from '../../../lib/contact-validation';
-import { SendIcon } from '../../atoms/Icon';
+import { SendIcon } from '../../atoms/icons';
 import styles from './ContactForm.module.css';
 
 export type ContactPayload = {

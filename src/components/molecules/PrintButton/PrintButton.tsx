@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { PrinterIcon } from '../../atoms/Icon';
+import { PrinterIcon } from '../../atoms/icons';
 import styles from './PrintButton.module.css';
 
 export function PrintButton() {

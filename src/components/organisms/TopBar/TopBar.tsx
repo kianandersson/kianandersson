@@ -1,4 +1,4 @@
-import { GitHubIcon } from '../../atoms/Icon';
+import { GitHubIcon } from '../../atoms/icons';
 import { PrintButton } from '../../molecules/PrintButton';
 import { ThemeToggle } from '../../molecules/ThemeToggle';
 import styles from './TopBar.module.css';

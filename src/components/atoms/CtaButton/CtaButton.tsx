@@ -1,5 +1,5 @@
 import type { ComponentChildren } from 'preact';
-import { ArrowLeftIcon, ArrowRightIcon } from '../Icon';
+import { ArrowLeftIcon, ArrowRightIcon } from '../icons';
 import styles from './CtaButton.module.css';
 
 export type CtaDirection = 'forward' | 'back';

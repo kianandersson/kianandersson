@@ -1,6 +1,6 @@
-import type { IconProps } from './types';
+import type { IconProps } from '../types';
 
-export function XIcon({ size = 16, class: className }: IconProps) {
+export function ArrowRightIcon({ size = 16, class: className }: IconProps) {
   return (
     <svg
       class={className}
@@ -9,13 +9,13 @@ export function XIcon({ size = 16, class: className }: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
+      stroke-width="1.8"
       stroke-linecap="round"
       stroke-linejoin="round"
       aria-hidden="true"
     >
-      <path d="M6 6l12 12" />
-      <path d="M18 6 6 18" />
+      <path d="M5 12h14" />
+      <path d="M13 6l6 6-6 6" />
     </svg>
   );
 }

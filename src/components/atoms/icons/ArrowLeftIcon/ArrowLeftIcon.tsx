@@ -1,4 +1,4 @@
-import type { IconProps } from './types';
+import type { IconProps } from '../types';
 
 export function ArrowLeftIcon({ size = 16, class: className }: IconProps) {
   return (

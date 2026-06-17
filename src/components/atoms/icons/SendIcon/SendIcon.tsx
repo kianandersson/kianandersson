@@ -1,6 +1,6 @@
-import type { IconProps } from './types';
+import type { IconProps } from '../types';
 
-export function MoonIcon({ size = 17, class: className }: IconProps) {
+export function SendIcon({ size = 15, class: className }: IconProps) {
   return (
     <svg
       class={className}
@@ -14,7 +14,8 @@ export function MoonIcon({ size = 17, class: className }: IconProps) {
       stroke-linejoin="round"
       aria-hidden="true"
     >
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+      <path d="M22 2 11 13" />
+      <path d="M22 2 15 22l-4-9-9-4 20-7Z" />
     </svg>
   );
 }

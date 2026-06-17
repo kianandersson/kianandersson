@@ -2,7 +2,7 @@ import { actions } from 'astro:actions';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { formatDate } from '../../../lib/formatDate';
 import { AvailabilityPill } from '../../atoms/AvailabilityPill';
-import { ArrowRightIcon, AtSignIcon, XIcon } from '../../atoms/Icon';
+import { ArrowRightIcon, AtSignIcon, XIcon } from '../../atoms/icons';
 import { ContactForm, type ContactPayload, type ContactStatus } from '../ContactForm';
 import styles from './ContactCta.module.css';
 
