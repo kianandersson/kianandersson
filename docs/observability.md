@@ -2,13 +2,13 @@
 
 The site runs three signals end-to-end:
 
-| Signal           | Source                                  | Scope                                  |
-| ---------------- | --------------------------------------- | -------------------------------------- |
-| Traces           | Cloudflare Workers Tracing              | Each request, handler, outbound fetch  |
-| Logs             | Cloudflare Workers Logs                 | Structured invocation logs             |
-| Core Web Vitals  | Cloudflare Web Analytics RUM beacon     | LCP, INP, CLS, FCP, TTFB from real browsers |
+| Signal           | Source                              | Scope                                       |
+| ---------------- | ----------------------------------- | ------------------------------------------- |
+| Traces           | Cloudflare Workers Tracing          | Each request, handler, outbound fetch       |
+| Logs             | Cloudflare Workers Logs             | Structured invocation logs                  |
+| Core Web Vitals  | Cloudflare Web Analytics (RUM)      | LCP, INP, CLS, FCP, TTFB from real browsers |
 
-The stack is intentionally lean: every signal comes from a Cloudflare-native source, costs nothing extra, and requires no application-side SDK. The goal is to demonstrate a production-shaped observability posture without paying for it in bundle size, vendor lock-in, or boilerplate.
+The stack is intentionally lean: every signal comes from a Cloudflare-native source, costs nothing extra, and requires no application-side SDK or snippet. The goal is to demonstrate a production-shaped observability posture without paying for it in bundle size, vendor lock-in, or boilerplate.
 
 ## Server side — Workers Tracing + Logs
 
@@ -28,11 +28,11 @@ Custom spans are not yet GA in the native tracer. If we want per-action attribut
 
 ## Client side — Cloudflare Web Analytics
 
-A small beacon (`beacon.min.js`) emits Core Web Vitals on every page view. It is loaded from `BaseLayout.astro` only when `CF_WEB_ANALYTICS_TOKEN` is set, so local dev stays beacon-free.
+Core Web Vitals are collected via Cloudflare's RUM beacon, which is **injected automatically** into HTML responses once Web Analytics is enabled for the site in the Cloudflare dashboard. There is no application snippet, no env var, and no opt-in token in this repo — the integration lives entirely on the edge.
 
 The beacon is privacy-first by design: no cookies, no `localStorage`, no IP storage. That matches the rest of the site's posture and keeps us out of consent-banner territory.
 
-We deliberately do **not** ship `@opentelemetry/sdk-trace-web` or a custom `web-vitals` beacon. The Cloudflare beacon already covers the same metrics with a smaller payload and zero application code.
+We deliberately do **not** ship `@opentelemetry/sdk-trace-web` or a hand-rolled `web-vitals` beacon. Cloudflare's edge-injected beacon already covers the same metrics with a smaller payload and zero application code.
 
 ## OTLP export (optional)
 
