@@ -20,7 +20,7 @@ export function TopBar({ githubHref, showPrint = true }: Props) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <GitHubIcon title="GitHub" />
+          <GitHubIcon />
         </a>
         {showPrint ? <PrintButton /> : null}
         <ThemeToggle />

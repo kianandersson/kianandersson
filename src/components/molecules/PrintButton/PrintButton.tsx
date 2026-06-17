@@ -16,7 +16,7 @@ export function PrintButton() {
       className={styles.button}
     >
       <span aria-hidden="true" className={styles.icon}>
-        <PrinterIcon title="printer" />
+        <PrinterIcon />
       </span>
     </button>
   );

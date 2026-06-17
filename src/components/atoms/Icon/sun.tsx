@@ -1,6 +1,6 @@
 import type { IconProps } from './types';
 
-export function SunIcon({ size = 17, class: className, title }: IconProps) {
+export function SunIcon({ size = 17, class: className }: IconProps) {
   return (
     <svg
       class={className}
@@ -14,7 +14,6 @@ export function SunIcon({ size = 17, class: className, title }: IconProps) {
       stroke-linejoin="round"
       aria-hidden="true"
     >
-      {title ? <title>{title}</title> : null}
       <circle cx="12" cy="12" r="4" />
       <path d="M12 2v2" />
       <path d="M12 20v2" />

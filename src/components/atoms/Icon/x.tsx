@@ -1,6 +1,6 @@
 import type { IconProps } from './types';
 
-export function XIcon({ size = 16, class: className, title }: IconProps) {
+export function XIcon({ size = 16, class: className }: IconProps) {
   return (
     <svg
       class={className}
@@ -14,7 +14,6 @@ export function XIcon({ size = 16, class: className, title }: IconProps) {
       stroke-linejoin="round"
       aria-hidden="true"
     >
-      {title ? <title>{title}</title> : null}
       <path d="M6 6l12 12" />
       <path d="M18 6 6 18" />
     </svg>

@@ -127,7 +127,7 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
             disabled={!valid || sending}
           >
             {sending ? 'Sending…' : 'Send message'}
-            <SendIcon class={styles.plane} title="send" />
+            <SendIcon class={styles.plane} />
           </button>
         </div>
       </div>

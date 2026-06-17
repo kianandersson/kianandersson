@@ -15,13 +15,13 @@ export function CtaButton({ href, children, direction = 'forward' }: Props) {
     <a className={styles.cta} data-direction={direction} href={href}>
       {direction === 'back' ? (
         <span aria-hidden="true" data-cta-arrow className={styles.arrow}>
-          <ArrowLeftIcon title="arrow-left" />
+          <ArrowLeftIcon />
         </span>
       ) : null}
       <span className={styles.label}>{children}</span>
       {direction === 'forward' ? (
         <span aria-hidden="true" data-cta-arrow className={styles.arrow}>
-          <ArrowRightIcon title="arrow-right" />
+          <ArrowRightIcon />
         </span>
       ) : null}
     </a>

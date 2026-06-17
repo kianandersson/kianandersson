@@ -44,7 +44,7 @@ export function ThemeToggle() {
       className={styles.button}
     >
       <span key={theme ?? 'initial'} className={iconClass} aria-hidden="true">
-        {isDark ? <SunIcon title="sun" /> : <MoonIcon title="moon" />}
+        {isDark ? <SunIcon /> : <MoonIcon />}
       </span>
     </button>
   );

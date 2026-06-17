@@ -28,7 +28,7 @@ export function Accordion({ title, count, isOpen, onToggle, children }: Props) {
           {count !== undefined && <span className={styles.count}>{count}</span>}
         </span>
         <span aria-hidden="true" className={styles.chevron} data-open={isOpen}>
-          <ChevronDownIcon title="chevron" />
+          <ChevronDownIcon />
         </span>
       </button>
       <div

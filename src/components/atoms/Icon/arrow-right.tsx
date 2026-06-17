@@ -1,6 +1,6 @@
 import type { IconProps } from './types';
 
-export function ArrowRightIcon({ size = 16, class: className, title }: IconProps) {
+export function ArrowRightIcon({ size = 16, class: className }: IconProps) {
   return (
     <svg
       class={className}
@@ -14,7 +14,6 @@ export function ArrowRightIcon({ size = 16, class: className, title }: IconProps
       stroke-linejoin="round"
       aria-hidden="true"
     >
-      {title ? <title>{title}</title> : null}
       <path d="M5 12h14" />
       <path d="M13 6l6 6-6 6" />
     </svg>

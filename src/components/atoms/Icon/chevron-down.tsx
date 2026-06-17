@@ -1,6 +1,6 @@
 import type { IconProps } from './types';
 
-export function ChevronDownIcon({ size = 15, class: className, title }: IconProps) {
+export function ChevronDownIcon({ size = 15, class: className }: IconProps) {
   return (
     <svg
       class={className}
@@ -11,7 +11,6 @@ export function ChevronDownIcon({ size = 15, class: className, title }: IconProp
       stroke="currentColor"
       aria-hidden="true"
     >
-      {title ? <title>{title}</title> : null}
       <path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
     </svg>
   );
