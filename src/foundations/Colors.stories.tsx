@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/preact-vite';
+import { Divider } from '../components/atoms/Divider';
 import { Heading } from '../components/atoms/Heading';
 import { Text } from '../components/atoms/Text';
 import { SectionHeader } from '../components/molecules/SectionHeader';
@@ -156,6 +157,7 @@ function Page() {
 
       <section class={styles.section}>
         <SectionHeader title="Semantic" />
+        <Divider />
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
           {SEMANTIC_TOKENS.map((row) => (
             <SemanticRow key={row.token} {...row} />
@@ -165,6 +167,7 @@ function Page() {
 
       <section class={styles.section}>
         <SectionHeader title="Primitives" />
+        <Divider />
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2xl)' }}>
           {RAMPS.map((ramp) => (
             <RampRow key={ramp.family} {...ramp} />

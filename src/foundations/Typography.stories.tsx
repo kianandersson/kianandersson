@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/preact-vite';
+import { Divider } from '../components/atoms/Divider';
 import { Heading } from '../components/atoms/Heading';
 import { Text } from '../components/atoms/Text';
 import { SectionHeader } from '../components/molecules/SectionHeader';
@@ -161,6 +162,7 @@ function Page() {
 
       <section class={styles.section}>
         <SectionHeader title="Roles" />
+        <Divider />
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-lg)' }}>
           {ROLES.map((role) => (
             <RoleRow key={role.name} {...role} />

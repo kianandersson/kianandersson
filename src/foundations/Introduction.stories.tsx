@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/preact-vite';
+import { Divider } from '../components/atoms/Divider';
 import { Heading } from '../components/atoms/Heading';
 import { Text } from '../components/atoms/Text';
 import { SectionHeader } from '../components/molecules/SectionHeader';
@@ -77,6 +78,7 @@ function Page() {
 
       <section class={styles.section}>
         <SectionHeader title="Foundations" />
+        <Divider />
         <Text as="p" size="body" tone="muted">
           Tokens come in two layers — primitives (raw OKLCH, pixels, line heights) and semantics
           (the roles components reference). Components see the semantic layer only, so re-theming
@@ -87,6 +89,7 @@ function Page() {
 
       <section class={styles.section}>
         <SectionHeader title="Components" />
+        <Divider />
         <Text as="p" size="body" tone="muted">
           Organised by Atomic Design layer. Astro files (templates, layouts, pages) are build-time
           compositions and don't have stories.
@@ -96,6 +99,7 @@ function Page() {
 
       <section class={styles.section}>
         <SectionHeader title="Conventions" />
+        <Divider />
         <Text as="p" size="body" tone="muted">
           Name by role, not appearance. A variant is a prop, not a new component. Components
           reference semantic tokens only.
