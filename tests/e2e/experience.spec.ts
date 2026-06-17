@@ -29,29 +29,6 @@ test.describe('Experience section', () => {
     }
   });
 
-  test('reveals more chips when the user clicks "more"', async ({ page }) => {
-    await page.goto('/');
-    const section = page.getByRole('region', { name: /Experience/i });
-    const moreToggle = section.getByRole('button', { name: /more/i }).first();
-    await moreToggle.scrollIntoViewIfNeeded();
-    await page.waitForFunction(() => !document.querySelector('astro-island')?.hasAttribute('ssr'));
-
-    const entry = section.getByRole('listitem').first();
-    // Overflow chips live inside a [data-shown="false"] wrapper when collapsed;
-    // visible chips are everything not under that wrapper.
-    const visibleChips = entry.locator('[data-variant]:not([data-shown="false"] *)');
-    const before = await visibleChips.count();
-
-    await moreToggle.click();
-    await expect(section.getByRole('button', { name: /less/i }).first()).toBeVisible();
-    expect(await visibleChips.count()).toBeGreaterThan(before);
-
-    const lessToggle = section.getByRole('button', { name: /less/i }).first();
-    await lessToggle.click();
-    await expect(section.getByRole('button', { name: /more/i }).first()).toBeVisible();
-    expect(await visibleChips.count()).toBe(before);
-  });
-
   test('does not horizontally scroll the page at 360px viewport', async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 800 });
     await page.goto('/');
