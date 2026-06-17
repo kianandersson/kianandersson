@@ -1,12 +1,11 @@
 import { Button } from '../../atoms/Button';
 import { ArrowIcon, CloseIcon, ContactIcon } from '../../atoms/icons';
-import { PillButton } from '../../atoms/PillButton';
-import styles from './ContactCta.module.css';
+import styles from './Contact.module.css';
 
-export type ContactTriggerVariant = 'icon' | 'labelled';
+export type ContactButtonVariant = 'icon' | 'labelled';
 
 type Props = {
-  variant: ContactTriggerVariant;
+  variant: ContactButtonVariant;
   isOpen: boolean;
   ariaLabel: string;
   controlsId: string;
@@ -14,16 +13,17 @@ type Props = {
 };
 
 /**
- * Trigger button for ContactCta. Picks between the icon-only round button
- * (shown alongside an AvailabilityPill) and the labelled pill ("Get in touch").
+ * Trigger button for the Contact section. Picks between the icon-only round
+ * button (shown alongside an AvailabilityStatus) and the labelled pill
+ * ("Get in touch").
  *
- * The icon-stack/arrow-slot animation lives in ContactCta.module.css —
- * this component just owns which shape renders and wires up the a11y.
+ * The icon-stack/arrow-slot animation lives in Contact.module.css — this
+ * component just owns which shape renders and wires up the a11y.
  */
-export function ContactTrigger({ variant, isOpen, ariaLabel, controlsId, onClick }: Props) {
+export function ContactButton({ variant, isOpen, ariaLabel, controlsId, onClick }: Props) {
   if (variant === 'icon') {
     return (
-      <Button
+      <button
         type="button"
         class={styles.iconButton}
         aria-expanded={isOpen}
@@ -36,13 +36,14 @@ export function ContactTrigger({ variant, isOpen, ariaLabel, controlsId, onClick
           <ArrowIcon class={styles.icArrow} size={17} direction="right" />
           <CloseIcon class={styles.icX} size={16} />
         </span>
-      </Button>
+      </button>
     );
   }
 
   return (
-    <PillButton
+    <Button
       type="button"
+      size="lg"
       class={styles.labelledButton}
       aria-expanded={isOpen}
       aria-controls={controlsId}
@@ -54,6 +55,6 @@ export function ContactTrigger({ variant, isOpen, ariaLabel, controlsId, onClick
         <ArrowIcon class={styles.icArrow} size={15} direction="right" />
         <CloseIcon class={styles.icX} size={15} />
       </span>
-    </PillButton>
+    </Button>
   );
 }

@@ -1,17 +1,17 @@
 import { formatDate } from '../../../lib/formatDate';
-import { StatusDot } from '../StatusDot';
-import styles from './AvailabilityPill.module.css';
+import { StatusIndicator } from '../StatusIndicator';
+import styles from './AvailabilityStatus.module.css';
 
-export type AvailabilityPillProps = {
+export type AvailabilityStatusProps = {
   availableFrom: Date;
 };
 
-export function AvailabilityPill({ availableFrom }: AvailabilityPillProps) {
+export function AvailabilityStatus({ availableFrom }: AvailabilityStatusProps) {
   const isAvailableNow = availableFrom.getTime() <= Date.now();
 
   return (
-    <span class={styles.pill} data-state={isAvailableNow ? 'available' : 'future'}>
-      <StatusDot tone={isAvailableNow ? 'success' : 'warning'} />
+    <span class={styles.root} data-state={isAvailableNow ? 'available' : 'future'}>
+      <StatusIndicator tone={isAvailableNow ? 'success' : 'warning'} />
       <span class={styles.label}>
         {isAvailableNow ? (
           'Available for work'

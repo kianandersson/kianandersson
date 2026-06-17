@@ -1,28 +1,28 @@
-.dot {
+.indicator {
   position: relative;
   display: inline-block;
-  width: var(--status-dot-size, 8px);
-  height: var(--status-dot-size, 8px);
+  width: var(--status-indicator-size, 8px);
+  height: var(--status-indicator-size, 8px);
   border-radius: var(--radius-full);
   background: var(--color-status-success);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-status-success) 16%, transparent);
 }
 
-.dot[data-tone="warning"] {
+.indicator[data-tone="warning"] {
   background: var(--color-status-warning);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-status-warning) 16%, transparent);
 }
 
-.dot[data-tone="success"]::before {
+.indicator[data-tone="success"]::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: var(--radius-full);
   background: var(--color-status-success);
-  animation: dotRing 2.4s ease-out infinite;
+  animation: pulse 2.4s ease-out infinite;
 }
 
-@keyframes dotRing {
+@keyframes pulse {
   0% {
     transform: scale(1);
     opacity: 0.55;
@@ -37,7 +37,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dot[data-tone="success"]::before {
+  .indicator[data-tone="success"]::before {
     animation: none;
   }
 }

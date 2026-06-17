@@ -52,3 +52,13 @@
 .response {
   color: var(--color-text-muted);
 }
+
+.backButton {
+  gap: var(--space-sm);
+}
+
+@media print {
+  .backButton {
+    display: none;
+  }
+}

@@ -1,5 +1,5 @@
 ---
-import { ContactCta } from '../components/organisms/ContactCta';
+import { Contact } from '../components/organisms/Contact';
 import { Experience, type ExperienceEntry } from '../components/organisms/Experience';
 import { Hero } from '../components/organisms/Hero';
 import { type KeySkill, KeySkills } from '../components/organisms/KeySkills';
@@ -25,7 +25,7 @@ const { hero, keySkills, experience, skillGroups, languages } = Astro.props;
 <main>
   <section>
     <Hero name={hero.name} tagline={hero.tagline}>
-      <ContactCta
+      <Contact
         recipientName={hero.recipientName}
         availableFrom={hero.availableFrom}
         client:load

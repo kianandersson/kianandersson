@@ -1,7 +1,8 @@
-import { CtaButton } from '../../atoms/CtaButton';
+import { Button } from '../../atoms/Button';
 import { Heading } from '../../atoms/Heading';
+import { ArrowIcon } from '../../atoms/icons';
 import { Text } from '../../atoms/Text';
-import { WindowFrame } from '../../molecules/WindowFrame';
+import { Window } from '../../molecules/Window';
 import styles from './NotFound.module.css';
 
 type Props = {
@@ -29,7 +30,7 @@ export function NotFound({ requestedUrl = '/' }: Props) {
         you back to solid ground.
       </Text>
 
-      <WindowFrame
+      <Window
         title={
           <Text font="mono" size="caption-s" tone="muted">
             zsh
@@ -46,12 +47,13 @@ export function NotFound({ requestedUrl = '/' }: Props) {
           <div className={styles.response}>HTTP/2 404 Not Found</div>
           <div className={styles.response}>content-type: text/html; charset=utf-8</div>
         </div>
-      </WindowFrame>
+      </Window>
 
       <div>
-        <CtaButton href="/" direction="back">
+        <Button href="/" size="lg" class={styles.backButton}>
+          <ArrowIcon direction="left" size={16} />
           Back to home
-        </CtaButton>
+        </Button>
       </div>
     </div>
   );

@@ -19,9 +19,9 @@
 }
 
 /* --------------------------------------------------------------------
- * Icon-only round button (shown alongside the AvailabilityPill).
+ * Icon-only round button (shown alongside the AvailabilityStatus).
  * 44px circle that swaps @ → arrow on hover and rotates a ✕ in when active.
- * Built on top of the Button atom (reset chrome) — adds shape/color/animation.
+ * Renders a bare <button> so chrome is fully owned here.
  * ------------------------------------------------------------------ */
 
 .iconButton {
@@ -29,10 +29,16 @@
   place-items: center;
   width: 44px;
   height: 44px;
+  padding: 0;
+  margin: 0;
+  border: none;
   border-radius: var(--radius-full);
+  appearance: none;
   background: var(--color-text);
   color: var(--color-surface);
+  font: inherit;
   overflow: hidden;
+  cursor: pointer;
   transition:
     transform 0.12s ease,
     background 0.26s ease,
@@ -104,9 +110,9 @@
 }
 
 /* --------------------------------------------------------------------
- * Labelled pill button ("Get in touch") — shown when no AvailabilityPill.
- * Built on top of PillButton (chrome) — adds the arrow-slot animation
- * and open-state color flip.
+ * Labelled pill button ("Get in touch") — shown when no AvailabilityStatus.
+ * Built on top of the Button atom — adds the arrow-slot animation and
+ * open-state color flip.
  * ------------------------------------------------------------------ */
 
 .labelledButton {

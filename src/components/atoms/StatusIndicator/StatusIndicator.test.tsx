@@ -1,18 +1,18 @@
 import { render } from '@testing-library/preact';
 import { describe, expect, it } from 'vitest';
-import { StatusDot } from './StatusDot';
+import { StatusIndicator } from './StatusIndicator';
 
-describe('StatusDot', () => {
+describe('StatusIndicator', () => {
   it('is decorative and hidden from assistive tech', () => {
-    const { container } = render(<StatusDot />);
+    const { container } = render(<StatusIndicator />);
     expect(container.firstElementChild).toHaveAttribute('aria-hidden', 'true');
   });
 
   it('exposes the tone via a data attribute', () => {
-    const { container, rerender } = render(<StatusDot />);
+    const { container, rerender } = render(<StatusIndicator />);
     expect(container.firstElementChild).toHaveAttribute('data-tone', 'success');
 
-    rerender(<StatusDot tone="warning" />);
+    rerender(<StatusIndicator tone="warning" />);
     expect(container.firstElementChild).toHaveAttribute('data-tone', 'warning');
   });
 });

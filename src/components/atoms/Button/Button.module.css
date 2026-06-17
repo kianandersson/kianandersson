@@ -1,15 +1,43 @@
-.reset {
-  background: transparent;
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 0 var(--space-xl);
   border: none;
+  border-radius: var(--radius-full);
   appearance: none;
-  padding: 0;
   margin: 0;
-  font: inherit;
-  color: inherit;
+  background: var(--color-text);
+  color: var(--color-surface);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+  font-weight: 500;
   text-decoration: none;
   cursor: pointer;
+  transition:
+    transform 0.12s ease,
+    opacity 0.2s ease;
 }
 
-.reset:disabled {
+.md {
+  height: 40px;
+}
+
+.lg {
+  height: 44px;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.button:disabled {
+  opacity: 0.45;
   cursor: not-allowed;
 }

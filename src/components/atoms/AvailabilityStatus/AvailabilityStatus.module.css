@@ -1,4 +1,4 @@
-.pill {
+.root {
   display: inline-flex;
   align-items: center;
   gap: var(--space-sm);
@@ -11,7 +11,7 @@
   font-family: var(--font-sans);
   font-size: var(--text-body-size);
   line-height: var(--text-body-leading);
-  --status-dot-size: 9px;
+  --status-indicator-size: 9px;
 }
 
 .label {

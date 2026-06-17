@@ -1,8 +1,11 @@
 import type { ComponentChildren, JSX, Ref } from 'preact';
 import styles from './Button.module.css';
 
+export type ButtonSize = 'md' | 'lg';
+
 type SharedProps = {
   children?: ComponentChildren;
+  size?: ButtonSize;
   class?: string;
   id?: string;
   title?: string;
@@ -33,8 +36,11 @@ export type ButtonOnlyProps = SharedProps & {
 export type Props = AnchorProps | ButtonOnlyProps;
 
 export function Button(props: Props) {
-  const { children, class: className } = props;
-  const combined = className ? `${styles.reset} ${className}` : styles.reset;
+  const { children, class: className, size = 'md' } = props;
+  const sizeClass = size === 'lg' ? styles.lg : styles.md;
+  const combined = className
+    ? `${styles.button} ${sizeClass} ${className}`
+    : `${styles.button} ${sizeClass}`;
 
   const shared = {
     id: props.id,

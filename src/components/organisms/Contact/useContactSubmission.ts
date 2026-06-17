@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import type { ContactPayload, ContactStatus } from '../ContactForm';
 
-export type CtaStatus = ContactStatus | 'success';
+export type SubmissionStatus = ContactStatus | 'success';
 
 type SendFn = (payload: ContactPayload) => Promise<{ error?: unknown }>;
 
@@ -40,7 +40,7 @@ export function useContactSubmission(options: Options) {
   const successEnterAfterMs = formLeaveMs / 2;
 
   const [open, setOpen] = useState(false);
-  const [status, setStatus] = useState<CtaStatus>('idle');
+  const [status, setStatus] = useState<SubmissionStatus>('idle');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formKey, setFormKey] = useState(0);
   const [formLeaving, setFormLeaving] = useState(false);

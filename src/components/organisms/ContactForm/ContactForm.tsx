@@ -4,13 +4,13 @@ import {
   CONTACT_MESSAGE_MAX,
   CONTACT_SUBJECT_MAX,
 } from '../../../lib/contact-validation';
+import { Button } from '../../atoms/Button';
 import { FieldLabel } from '../../atoms/FieldLabel';
 import { SendIcon } from '../../atoms/icons';
-import { PillButton } from '../../atoms/PillButton';
 import { Text } from '../../atoms/Text';
 import { Textarea } from '../../atoms/Textarea';
 import { TextInput } from '../../atoms/TextInput';
-import { WindowFrame } from '../../molecules/WindowFrame';
+import { Window } from '../../molecules/Window';
 import styles from './ContactForm.module.css';
 
 export type ContactPayload = {
@@ -58,7 +58,7 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
 
   return (
     <form aria-label="Contact" onSubmit={handleSubmit} noValidate>
-      <WindowFrame>
+      <Window>
         <div class={styles.body}>
           <div class={styles.row}>
             <Text font="mono" size="label" tone="subtle" class={styles.fieldLabel}>
@@ -123,7 +123,7 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
                 ↳ {errorMessage}
               </Text>
             ) : null}
-            <PillButton
+            <Button
               type="submit"
               size="md"
               disabled={!valid || sending}
@@ -131,10 +131,10 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
             >
               {sending ? 'Sending…' : 'Send message'}
               <SendIcon class={styles.plane} />
-            </PillButton>
+            </Button>
           </div>
         </div>
-      </WindowFrame>
+      </Window>
     </form>
   );
 }

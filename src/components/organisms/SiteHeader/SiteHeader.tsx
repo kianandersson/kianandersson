@@ -2,16 +2,16 @@ import { IconButton } from '../../atoms/IconButton';
 import { GitHubIcon } from '../../atoms/icons';
 import { PrintButton } from '../../molecules/PrintButton';
 import { ThemeToggle } from '../../molecules/ThemeToggle';
-import styles from './TopBar.module.css';
+import styles from './SiteHeader.module.css';
 
 type Props = {
   githubHref: string;
   showPrint?: boolean;
 };
 
-export function TopBar({ githubHref, showPrint = true }: Props) {
+export function SiteHeader({ githubHref, showPrint = true }: Props) {
   return (
-    <header className={styles.bar}>
+    <header className={styles.root}>
       <div className={styles.actions}>
         <IconButton
           href={githubHref}

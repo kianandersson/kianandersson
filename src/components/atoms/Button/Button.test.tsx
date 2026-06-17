@@ -5,8 +5,8 @@ import { Button } from './Button';
 
 describe('Button', () => {
   it('renders a button element by default', () => {
-    render(<Button>Click me</Button>);
-    const button = screen.getByRole('button', { name: /click me/i });
+    render(<Button>Send</Button>);
+    const button = screen.getByRole('button', { name: /send/i });
     expect(button.tagName).toBe('BUTTON');
     expect(button).toHaveAttribute('type', 'button');
   });
@@ -38,7 +38,17 @@ describe('Button', () => {
     expect(screen.getByRole('link')).toHaveAttribute('rel', 'me');
   });
 
-  it('invokes onClick when clicked', async () => {
+  it('respects type=submit', () => {
+    render(<Button type="submit">Send</Button>);
+    expect(screen.getByRole('button')).toHaveAttribute('type', 'submit');
+  });
+
+  it('forwards disabled to the underlying button', () => {
+    render(<Button disabled>Off</Button>);
+    expect(screen.getByRole('button')).toBeDisabled();
+  });
+
+  it('invokes onClick', async () => {
     const onClick = vi.fn();
     const user = userEvent.setup();
     render(<Button onClick={onClick}>Tap</Button>);
@@ -46,13 +56,25 @@ describe('Button', () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-  it('respects type=submit', () => {
-    render(<Button type="submit">Send</Button>);
-    expect(screen.getByRole('button')).toHaveAttribute('type', 'submit');
+  it('does not invoke onClick when disabled', async () => {
+    const onClick = vi.fn();
+    const user = userEvent.setup();
+    render(
+      <Button disabled onClick={onClick}>
+        Off
+      </Button>,
+    );
+    await user.click(screen.getByRole('button'));
+    expect(onClick).not.toHaveBeenCalled();
   });
 
-  it('forwards disabled to the button', () => {
-    render(<Button disabled>Off</Button>);
-    expect(screen.getByRole('button')).toBeDisabled();
+  it('applies the md size class by default', () => {
+    const { container } = render(<Button>Send</Button>);
+    expect(container.firstElementChild?.className).toMatch(/_md_/);
+  });
+
+  it('applies the lg size class when size="lg"', () => {
+    const { container } = render(<Button size="lg">Send</Button>);
+    expect(container.firstElementChild?.className).toMatch(/_lg_/);
   });
 });

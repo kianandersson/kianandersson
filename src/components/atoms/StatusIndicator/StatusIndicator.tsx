@@ -1,4 +1,4 @@
-import styles from './StatusDot.module.css';
+import styles from './StatusIndicator.module.css';
 
 export type StatusTone = 'success' | 'warning';
 
@@ -7,6 +7,6 @@ type Props = {
   tone?: StatusTone;
 };
 
-export function StatusDot({ tone = 'success' }: Props) {
-  return <span className={styles.dot} data-tone={tone} aria-hidden="true" />;
+export function StatusIndicator({ tone = 'success' }: Props) {
+  return <span className={styles.indicator} data-tone={tone} aria-hidden="true" />;
 }

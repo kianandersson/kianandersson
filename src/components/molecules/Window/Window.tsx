@@ -1,5 +1,5 @@
 import type { ComponentChildren } from 'preact';
-import styles from './WindowFrame.module.css';
+import styles from './Window.module.css';
 
 type Props = {
   /** Optional title shown next to the traffic lights (e.g. "zsh"). */
@@ -13,7 +13,7 @@ type Props = {
  * Stays div-only on purpose: wrap it externally with a `<form>` / `<dialog>` /
  * `<aside>` when you need element-specific semantics.
  */
-export function WindowFrame({ title, class: className, children }: Props) {
+export function Window({ title, class: className, children }: Props) {
   const combined = className ? `${styles.window} ${className}` : styles.window;
   return (
     <div class={combined}>
