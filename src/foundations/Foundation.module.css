@@ -42,6 +42,11 @@
 .tokenChip {
   display: inline-flex;
   align-items: center;
+  /* Without explicit start-alignment, grid/flex parents stretch this
+     chip to fill its cell — collapse it back to its content width. */
+  justify-self: start;
+  align-self: start;
+  width: fit-content;
   padding: var(--space-2xs) var(--space-xs);
   border-radius: var(--radius-s);
   background: var(--color-surface-muted);
