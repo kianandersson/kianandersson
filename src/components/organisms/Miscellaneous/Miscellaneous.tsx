@@ -1,3 +1,4 @@
+import { useId } from 'preact/hooks';
 import type { Language } from '../../../lib/language';
 import { Text } from '../../atoms/Text';
 import { SectionHeader } from '../../molecules/SectionHeader';
@@ -10,14 +11,15 @@ type Props = {
 };
 
 export function Miscellaneous({ languages }: Props) {
+  const languagesLabelId = useId();
   return (
     <div className={styles.root}>
       <SectionHeader title="Miscellaneous" id="miscellaneous-heading" />
       <div className={styles.row}>
-        <Text font="mono" size="label" tone="muted" id="languages-label" class={styles.rowLabel}>
+        <Text font="mono" size="label" tone="muted" id={languagesLabelId} class={styles.rowLabel}>
           Languages
         </Text>
-        <ul className={styles.chips} aria-labelledby="languages-label">
+        <ul className={styles.chips} aria-labelledby={languagesLabelId}>
           {languages.map((lang) => (
             <li key={lang.name} className={styles.chip}>
               <Text font="sans" size="caption-m" weight="medium">

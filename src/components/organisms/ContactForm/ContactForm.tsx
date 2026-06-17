@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks';
+import { useId, useState } from 'preact/hooks';
 import {
   CONTACT_EMAIL_REGEX,
   CONTACT_MESSAGE_MAX,
@@ -28,6 +28,9 @@ type Props = {
 };
 
 export function ContactForm({ recipientName, status, errorMessage, onSubmit }: Props) {
+  const emailId = useId();
+  const subjectId = useId();
+  const messageId = useId();
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
@@ -68,11 +71,11 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
           </div>
 
           <div class={`${styles.row} ${styles.inputRow}`}>
-            <FieldLabel for="contact-from" class={styles.fieldLabel}>
+            <FieldLabel for={emailId} class={styles.fieldLabel}>
               From
             </FieldLabel>
             <TextInput
-              id="contact-from"
+              id={emailId}
               type="email"
               inputMode="email"
               placeholder="you@company.com"
@@ -85,11 +88,11 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
           </div>
 
           <div class={`${styles.row} ${styles.inputRow}`}>
-            <FieldLabel for="contact-subject" class={styles.fieldLabel}>
+            <FieldLabel for={subjectId} class={styles.fieldLabel}>
               Subject
             </FieldLabel>
             <TextInput
-              id="contact-subject"
+              id={subjectId}
               type="text"
               placeholder="What's on your mind?"
               autocomplete="off"
@@ -103,7 +106,7 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
 
           <div class={`${styles.row} ${styles.messageRow}`}>
             <Textarea
-              id="contact-message"
+              id={messageId}
               placeholder="Write your message…"
               aria-label="Message"
               value={message}

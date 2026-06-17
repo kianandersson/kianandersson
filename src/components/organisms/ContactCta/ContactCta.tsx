@@ -1,4 +1,5 @@
 import { actions } from 'astro:actions';
+import { useId } from 'preact/hooks';
 import { formatDate } from '../../../lib/formatDate';
 import { AvailabilityPill } from '../../atoms/AvailabilityPill';
 import { ContactForm, type ContactStatus } from '../ContactForm';
@@ -11,8 +12,6 @@ export type ContactCtaProps = {
   availableFrom?: Date;
 };
 
-const REGION_ID = 'contact-region';
-
 function pickAriaLabel(open: boolean, availableFrom: Date | undefined): string {
   if (open) return 'Close contact form';
   if (!availableFrom) return 'Get in touch';
@@ -21,6 +20,7 @@ function pickAriaLabel(open: boolean, availableFrom: Date | undefined): string {
 }
 
 export function ContactCta({ recipientName, availableFrom }: ContactCtaProps) {
+  const regionId = useId();
   const { open, status, errorMessage, formKey, formLeaving, successLeaving, toggle, submit } =
     useContactSubmission({ send: actions.contact.send });
 
@@ -36,12 +36,12 @@ export function ContactCta({ recipientName, availableFrom }: ContactCtaProps) {
           variant={showAvailability ? 'icon' : 'labelled'}
           isOpen={open}
           ariaLabel={ariaLabel}
-          controlsId={REGION_ID}
+          controlsId={regionId}
           onClick={toggle}
         />
       </div>
 
-      <div id={REGION_ID} class={styles.reveal} data-open={open} {...(!open && { inert: true })}>
+      <div id={regionId} class={styles.reveal} data-open={open} {...(!open && { inert: true })}>
         <div class={styles.inner}>
           <div
             class={styles.formWrap}

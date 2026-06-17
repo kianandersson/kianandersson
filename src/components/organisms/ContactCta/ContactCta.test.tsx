@@ -50,13 +50,16 @@ describe('ContactCta', () => {
     const { container } = render(<ContactCta recipientName={RECIPIENT} availableFrom={PAST} />);
 
     const button = screen.getByRole('button', { name: /get in touch/i });
+    const regionId = button.getAttribute('aria-controls');
+    expect(regionId).not.toBeNull();
+    const regionSelector = `#${CSS.escape(regionId as string)}`;
     expect(button).toHaveAttribute('aria-expanded', 'false');
-    expect(container.querySelector('#contact-region[data-open="true"]')).toBeNull();
+    expect(container.querySelector(`${regionSelector}[data-open="true"]`)).toBeNull();
 
     await user.click(button);
     expect(button).toHaveAttribute('aria-expanded', 'true');
     expect(button).toHaveAttribute('aria-label', 'Close contact form');
-    expect(container.querySelector(`#contact-region[data-open="true"]`)).not.toBeNull();
+    expect(container.querySelector(`${regionSelector}[data-open="true"]`)).not.toBeNull();
 
     await user.click(button);
     expect(button).toHaveAttribute('aria-expanded', 'false');
