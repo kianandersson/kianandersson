@@ -1,6 +1,6 @@
+import { actions } from 'astro:actions';
 import { act, render, screen } from '@testing-library/preact';
 import userEvent from '@testing-library/user-event';
-import { actions } from 'astro:actions';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ContactCta } from './ContactCta';
 
