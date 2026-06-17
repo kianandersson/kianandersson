@@ -67,10 +67,6 @@
 
 .plane {
   display: inline-flex;
-  /* Promote to its own compositor layer so the SVG icon doesn't snap a
-     sub-pixel when the parent `grid-template-rows` reveal animation
-     finishes and the container rounds to the pixel grid. */
-  will-change: transform;
   transition:
     transform 0.2s ease,
     opacity 0.2s ease;

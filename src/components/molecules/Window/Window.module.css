@@ -7,6 +7,12 @@
   border-radius: var(--radius-lg);
   background: var(--color-surface-raised);
   overflow: hidden;
+  /* When this window is used inside an animated reveal (Contact's
+     `grid-template-rows: 0fr → 1fr`), the parent grid row's final
+     snap to the pixel grid can shift the window's children sub-pixel.
+     Promote the window to its own compositor layer so its contents
+     stay put when the parent snaps. */
+  transform: translateZ(0);
 }
 
 .titleBar {
