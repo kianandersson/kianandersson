@@ -54,80 +54,82 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
   }
 
   return (
-    <WindowFrame as="form" aria-label="Contact" onSubmit={handleSubmit} noValidate>
-      <div class={styles.body}>
-        <div class={styles.row}>
-          <FieldLabel class={styles.fieldLabel}>To</FieldLabel>
-          <span class={styles.recipient}>
-            <span class={styles.recipientDot} aria-hidden="true" />
-            {recipientName}
-          </span>
-        </div>
+    <form aria-label="Contact" onSubmit={handleSubmit} noValidate>
+      <WindowFrame>
+        <div class={styles.body}>
+          <div class={styles.row}>
+            <FieldLabel class={styles.fieldLabel}>To</FieldLabel>
+            <span class={styles.recipient}>
+              <span class={styles.recipientDot} aria-hidden="true" />
+              {recipientName}
+            </span>
+          </div>
 
-        <div class={`${styles.row} ${styles.inputRow}`}>
-          <FieldLabel for="contact-from" class={styles.fieldLabel}>
-            From
-          </FieldLabel>
-          <TextInput
-            id="contact-from"
-            type="email"
-            inputMode="email"
-            placeholder="you@company.com"
-            autocomplete="email"
-            value={email}
-            onInput={(event) => setEmail((event.target as HTMLInputElement).value)}
-            disabled={sending}
-            required
-          />
-        </div>
+          <div class={`${styles.row} ${styles.inputRow}`}>
+            <FieldLabel for="contact-from" class={styles.fieldLabel}>
+              From
+            </FieldLabel>
+            <TextInput
+              id="contact-from"
+              type="email"
+              inputMode="email"
+              placeholder="you@company.com"
+              autocomplete="email"
+              value={email}
+              onInput={(event) => setEmail((event.target as HTMLInputElement).value)}
+              disabled={sending}
+              required
+            />
+          </div>
 
-        <div class={`${styles.row} ${styles.inputRow}`}>
-          <FieldLabel for="contact-subject" class={styles.fieldLabel}>
-            Subject
-          </FieldLabel>
-          <TextInput
-            id="contact-subject"
-            type="text"
-            placeholder="What's on your mind?"
-            autocomplete="off"
-            value={subject}
-            onInput={(event) => setSubject((event.target as HTMLInputElement).value)}
-            disabled={sending}
-            maxLength={CONTACT_SUBJECT_MAX}
-            required
-          />
-        </div>
+          <div class={`${styles.row} ${styles.inputRow}`}>
+            <FieldLabel for="contact-subject" class={styles.fieldLabel}>
+              Subject
+            </FieldLabel>
+            <TextInput
+              id="contact-subject"
+              type="text"
+              placeholder="What's on your mind?"
+              autocomplete="off"
+              value={subject}
+              onInput={(event) => setSubject((event.target as HTMLInputElement).value)}
+              disabled={sending}
+              maxLength={CONTACT_SUBJECT_MAX}
+              required
+            />
+          </div>
 
-        <div class={`${styles.row} ${styles.messageRow}`}>
-          <Textarea
-            id="contact-message"
-            placeholder="Write your message…"
-            aria-label="Message"
-            value={message}
-            onInput={(event) => setMessage((event.target as HTMLTextAreaElement).value)}
-            disabled={sending}
-            maxLength={CONTACT_MESSAGE_MAX}
-            required
-          />
-        </div>
+          <div class={`${styles.row} ${styles.messageRow}`}>
+            <Textarea
+              id="contact-message"
+              placeholder="Write your message…"
+              aria-label="Message"
+              value={message}
+              onInput={(event) => setMessage((event.target as HTMLTextAreaElement).value)}
+              disabled={sending}
+              maxLength={CONTACT_MESSAGE_MAX}
+              required
+            />
+          </div>
 
-        <div class={styles.toolbar}>
-          {status === 'error' && errorMessage ? (
-            <Text font="mono" size="caption-s" tone="muted" role="status" class={styles.error}>
-              ↳ {errorMessage}
-            </Text>
-          ) : null}
-          <PillButton
-            type="submit"
-            size="md"
-            disabled={!valid || sending}
-            class={sending ? `${styles.send} ${styles.sending}` : styles.send}
-          >
-            {sending ? 'Sending…' : 'Send message'}
-            <SendIcon class={styles.plane} />
-          </PillButton>
+          <div class={styles.toolbar}>
+            {status === 'error' && errorMessage ? (
+              <Text font="mono" size="caption-s" tone="muted" role="status" class={styles.error}>
+                ↳ {errorMessage}
+              </Text>
+            ) : null}
+            <PillButton
+              type="submit"
+              size="md"
+              disabled={!valid || sending}
+              class={sending ? `${styles.send} ${styles.sending}` : styles.send}
+            >
+              {sending ? 'Sending…' : 'Send message'}
+              <SendIcon class={styles.plane} />
+            </PillButton>
+          </div>
         </div>
-      </div>
-    </WindowFrame>
+      </WindowFrame>
+    </form>
   );
 }
