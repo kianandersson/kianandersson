@@ -8,7 +8,6 @@ export const GET: APIRoute = ({ site }) => {
   const body = [
     'User-agent: *',
     'Allow: /',
-    'Disallow: /_storybook/',
     '',
     `Sitemap: ${new URL('sitemap-index.xml', site).toString()}`,
     '',

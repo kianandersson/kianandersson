@@ -17,7 +17,7 @@ Atomic Design layers.
 - **Pages** — the only layer that calls `getCollection`, reads `site.config.ts`, binds handlers.
 - **Components** — pure props in, JSX out. No global state, no config imports.
 
-Preact components live under `src/components/{atoms,molecules,organisms}/` and are cataloged in Storybook (`pnpm storybook` locally, or `<preview-url>/_storybook/` on each PR). `src/components/index.ts` is the public barrel — import from there. Astro compositions (`templates/`, `layouts/`, `pages/`) are build-time and tested via Playwright on the rendered page; they have no Storybook stories because the Preact-Vite framework cannot render them.
+Preact components live under `src/components/{atoms,molecules,organisms}/` and are cataloged in Storybook (`pnpm storybook` locally, or `<site>/design/` in production and on each PR preview). `src/components/index.ts` is the public barrel — import from there. Astro compositions (`templates/`, `layouts/`, `pages/`) are build-time and tested via Playwright on the rendered page; they have no Storybook stories because the Preact-Vite framework cannot render them.
 
 Before implementing a new component, check Storybook (and `src/components/index.ts`) for an existing atom/molecule/organism that already covers it — extend or reuse before adding.
 
