@@ -12,6 +12,16 @@
   padding-block: var(--space-2xl);
 }
 
+@media (max-width: 600px) {
+  .page {
+    /* Pull padding back on mobile — the desktop --space-xl inline shrinks the
+       content area too far on narrow viewports when combined with Storybook's
+       baseline padding. */
+    padding-inline: var(--space-xs);
+    padding-block: var(--space-l);
+  }
+}
+
 .head {
   display: flex;
   flex-direction: column;
