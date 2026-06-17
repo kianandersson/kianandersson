@@ -2,12 +2,5 @@
   font-family: var(--font-mono);
   font-size: var(--text-label-size);
   line-height: var(--text-label-leading);
-}
-
-.label[data-tone="subtle"] {
-  color: var(--color-text-subtle);
-}
-
-.label[data-tone="muted"] {
   color: var(--color-text-muted);
 }

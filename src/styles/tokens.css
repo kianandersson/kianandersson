@@ -17,74 +17,235 @@
 :root {
   color-scheme: light;
 
+  /* Ramp generation inputs.
+     Each step is oklch(lightness  chroma-peak × chroma-weight  hue).
+     Hue and chroma-peak vary per family; lightness and chroma-weight are
+     shared across all ramps so step N reads the same across hues. */
+  --hue-sand: 85;
+  --hue-slate: 286;
+  --hue-terracotta: 34;
+  --hue-green: 149;
+  --hue-amber: 78;
+
+  --chroma-peak-sand: 0.014;
+  --chroma-peak-slate: 0.014;
+  --chroma-peak-terracotta: 0.16;
+  --chroma-peak-green: 0.125;
+  --chroma-peak-amber: 0.125;
+
+  --lightness-50: 96%;
+  --lightness-100: 94%;
+  --lightness-200: 92%;
+  --lightness-300: 84%;
+  --lightness-400: 72%;
+  --lightness-500: 58%;
+  --lightness-600: 44%;
+  --lightness-700: 32%;
+  --lightness-800: 24%;
+  --lightness-900: 22%;
+  --lightness-950: 20%;
+
+  --chroma-weight-50: 0.1;
+  --chroma-weight-100: 0.2;
+  --chroma-weight-200: 0.4;
+  --chroma-weight-300: 0.65;
+  --chroma-weight-400: 0.85;
+  --chroma-weight-500: 1;
+  --chroma-weight-600: 1;
+  --chroma-weight-700: 0.8;
+  --chroma-weight-800: 0.6;
+  --chroma-weight-900: 0.45;
+  --chroma-weight-950: 0.35;
+
   /* Color primitives — standalone */
   --color-white: oklch(100% 0 0);
   --color-black: oklch(0% 0 0);
 
   /* Color primitives — sand (H 85, warm neutral) */
-  --color-sand-50: oklch(96% 0.001 85);
-  --color-sand-100: oklch(94% 0.003 85);
-  --color-sand-200: oklch(92% 0.006 85);
-  --color-sand-300: oklch(84% 0.009 85);
-  --color-sand-400: oklch(72% 0.012 85);
-  --color-sand-500: oklch(58% 0.014 85);
-  --color-sand-600: oklch(44% 0.014 85);
-  --color-sand-700: oklch(32% 0.011 85);
-  --color-sand-800: oklch(24% 0.008 85);
-  --color-sand-900: oklch(22% 0.006 85);
-  --color-sand-950: oklch(20% 0.005 85);
+  --color-sand-50: oklch(
+    var(--lightness-50) calc(var(--chroma-peak-sand) * var(--chroma-weight-50)) var(--hue-sand)
+  );
+  --color-sand-100: oklch(
+    var(--lightness-100) calc(var(--chroma-peak-sand) * var(--chroma-weight-100)) var(--hue-sand)
+  );
+  --color-sand-200: oklch(
+    var(--lightness-200) calc(var(--chroma-peak-sand) * var(--chroma-weight-200)) var(--hue-sand)
+  );
+  --color-sand-300: oklch(
+    var(--lightness-300) calc(var(--chroma-peak-sand) * var(--chroma-weight-300)) var(--hue-sand)
+  );
+  --color-sand-400: oklch(
+    var(--lightness-400) calc(var(--chroma-peak-sand) * var(--chroma-weight-400)) var(--hue-sand)
+  );
+  --color-sand-500: oklch(
+    var(--lightness-500) calc(var(--chroma-peak-sand) * var(--chroma-weight-500)) var(--hue-sand)
+  );
+  --color-sand-600: oklch(
+    var(--lightness-600) calc(var(--chroma-peak-sand) * var(--chroma-weight-600)) var(--hue-sand)
+  );
+  --color-sand-700: oklch(
+    var(--lightness-700) calc(var(--chroma-peak-sand) * var(--chroma-weight-700)) var(--hue-sand)
+  );
+  --color-sand-800: oklch(
+    var(--lightness-800) calc(var(--chroma-peak-sand) * var(--chroma-weight-800)) var(--hue-sand)
+  );
+  --color-sand-900: oklch(
+    var(--lightness-900) calc(var(--chroma-peak-sand) * var(--chroma-weight-900)) var(--hue-sand)
+  );
+  --color-sand-950: oklch(
+    var(--lightness-950) calc(var(--chroma-peak-sand) * var(--chroma-weight-950)) var(--hue-sand)
+  );
 
   /* Color primitives — slate (H 286, cool neutral) */
-  --color-slate-50: oklch(96% 0.001 286);
-  --color-slate-100: oklch(94% 0.003 286);
-  --color-slate-200: oklch(92% 0.006 286);
-  --color-slate-300: oklch(84% 0.009 286);
-  --color-slate-400: oklch(72% 0.012 286);
-  --color-slate-500: oklch(58% 0.014 286);
-  --color-slate-600: oklch(44% 0.014 286);
-  --color-slate-700: oklch(32% 0.011 286);
-  --color-slate-800: oklch(24% 0.008 286);
-  --color-slate-900: oklch(22% 0.006 286);
-  --color-slate-950: oklch(20% 0.005 286);
+  --color-slate-50: oklch(
+    var(--lightness-50) calc(var(--chroma-peak-slate) * var(--chroma-weight-50)) var(--hue-slate)
+  );
+  --color-slate-100: oklch(
+    var(--lightness-100) calc(var(--chroma-peak-slate) * var(--chroma-weight-100)) var(--hue-slate)
+  );
+  --color-slate-200: oklch(
+    var(--lightness-200) calc(var(--chroma-peak-slate) * var(--chroma-weight-200)) var(--hue-slate)
+  );
+  --color-slate-300: oklch(
+    var(--lightness-300) calc(var(--chroma-peak-slate) * var(--chroma-weight-300)) var(--hue-slate)
+  );
+  --color-slate-400: oklch(
+    var(--lightness-400) calc(var(--chroma-peak-slate) * var(--chroma-weight-400)) var(--hue-slate)
+  );
+  --color-slate-500: oklch(
+    var(--lightness-500) calc(var(--chroma-peak-slate) * var(--chroma-weight-500)) var(--hue-slate)
+  );
+  --color-slate-600: oklch(
+    var(--lightness-600) calc(var(--chroma-peak-slate) * var(--chroma-weight-600)) var(--hue-slate)
+  );
+  --color-slate-700: oklch(
+    var(--lightness-700) calc(var(--chroma-peak-slate) * var(--chroma-weight-700)) var(--hue-slate)
+  );
+  --color-slate-800: oklch(
+    var(--lightness-800) calc(var(--chroma-peak-slate) * var(--chroma-weight-800)) var(--hue-slate)
+  );
+  --color-slate-900: oklch(
+    var(--lightness-900) calc(var(--chroma-peak-slate) * var(--chroma-weight-900)) var(--hue-slate)
+  );
+  --color-slate-950: oklch(
+    var(--lightness-950) calc(var(--chroma-peak-slate) * var(--chroma-weight-950)) var(--hue-slate)
+  );
 
   /* Color primitives — terracotta (H 34, brand) */
-  --color-terracotta-50: oklch(96% 0.016 34);
-  --color-terracotta-100: oklch(94% 0.03 34);
-  --color-terracotta-200: oklch(92% 0.041 34);
-  --color-terracotta-300: oklch(84% 0.089 34);
-  --color-terracotta-400: oklch(72% 0.136 34);
-  --color-terracotta-500: oklch(58% 0.16 34);
-  --color-terracotta-600: oklch(44% 0.158 34);
-  --color-terracotta-700: oklch(32% 0.115 34);
-  --color-terracotta-800: oklch(24% 0.087 34);
-  --color-terracotta-900: oklch(22% 0.072 34);
-  --color-terracotta-950: oklch(20% 0.056 34);
+  --color-terracotta-50: oklch(
+    var(--lightness-50) calc(var(--chroma-peak-terracotta) * var(--chroma-weight-50))
+      var(--hue-terracotta)
+  );
+  --color-terracotta-100: oklch(
+    var(--lightness-100) calc(var(--chroma-peak-terracotta) * var(--chroma-weight-100))
+      var(--hue-terracotta)
+  );
+  --color-terracotta-200: oklch(
+    var(--lightness-200) calc(var(--chroma-peak-terracotta) * var(--chroma-weight-200))
+      var(--hue-terracotta)
+  );
+  --color-terracotta-300: oklch(
+    var(--lightness-300) calc(var(--chroma-peak-terracotta) * var(--chroma-weight-300))
+      var(--hue-terracotta)
+  );
+  --color-terracotta-400: oklch(
+    var(--lightness-400) calc(var(--chroma-peak-terracotta) * var(--chroma-weight-400))
+      var(--hue-terracotta)
+  );
+  --color-terracotta-500: oklch(
+    var(--lightness-500) calc(var(--chroma-peak-terracotta) * var(--chroma-weight-500))
+      var(--hue-terracotta)
+  );
+  --color-terracotta-600: oklch(
+    var(--lightness-600) calc(var(--chroma-peak-terracotta) * var(--chroma-weight-600))
+      var(--hue-terracotta)
+  );
+  --color-terracotta-700: oklch(
+    var(--lightness-700) calc(var(--chroma-peak-terracotta) * var(--chroma-weight-700))
+      var(--hue-terracotta)
+  );
+  --color-terracotta-800: oklch(
+    var(--lightness-800) calc(var(--chroma-peak-terracotta) * var(--chroma-weight-800))
+      var(--hue-terracotta)
+  );
+  --color-terracotta-900: oklch(
+    var(--lightness-900) calc(var(--chroma-peak-terracotta) * var(--chroma-weight-900))
+      var(--hue-terracotta)
+  );
+  --color-terracotta-950: oklch(
+    var(--lightness-950) calc(var(--chroma-peak-terracotta) * var(--chroma-weight-950))
+      var(--hue-terracotta)
+  );
 
   /* Color primitives — green (H 149, status success) */
-  --color-green-50: oklch(96% 0.013 149);
-  --color-green-100: oklch(94% 0.025 149);
-  --color-green-200: oklch(92% 0.05 149);
-  --color-green-300: oklch(84% 0.081 149);
-  --color-green-400: oklch(72% 0.106 149);
-  --color-green-500: oklch(58% 0.125 149);
-  --color-green-600: oklch(44% 0.124 149);
-  --color-green-700: oklch(32% 0.09 149);
-  --color-green-800: oklch(24% 0.068 149);
-  --color-green-900: oklch(22% 0.056 149);
-  --color-green-950: oklch(20% 0.044 149);
+  --color-green-50: oklch(
+    var(--lightness-50) calc(var(--chroma-peak-green) * var(--chroma-weight-50)) var(--hue-green)
+  );
+  --color-green-100: oklch(
+    var(--lightness-100) calc(var(--chroma-peak-green) * var(--chroma-weight-100)) var(--hue-green)
+  );
+  --color-green-200: oklch(
+    var(--lightness-200) calc(var(--chroma-peak-green) * var(--chroma-weight-200)) var(--hue-green)
+  );
+  --color-green-300: oklch(
+    var(--lightness-300) calc(var(--chroma-peak-green) * var(--chroma-weight-300)) var(--hue-green)
+  );
+  --color-green-400: oklch(
+    var(--lightness-400) calc(var(--chroma-peak-green) * var(--chroma-weight-400)) var(--hue-green)
+  );
+  --color-green-500: oklch(
+    var(--lightness-500) calc(var(--chroma-peak-green) * var(--chroma-weight-500)) var(--hue-green)
+  );
+  --color-green-600: oklch(
+    var(--lightness-600) calc(var(--chroma-peak-green) * var(--chroma-weight-600)) var(--hue-green)
+  );
+  --color-green-700: oklch(
+    var(--lightness-700) calc(var(--chroma-peak-green) * var(--chroma-weight-700)) var(--hue-green)
+  );
+  --color-green-800: oklch(
+    var(--lightness-800) calc(var(--chroma-peak-green) * var(--chroma-weight-800)) var(--hue-green)
+  );
+  --color-green-900: oklch(
+    var(--lightness-900) calc(var(--chroma-peak-green) * var(--chroma-weight-900)) var(--hue-green)
+  );
+  --color-green-950: oklch(
+    var(--lightness-950) calc(var(--chroma-peak-green) * var(--chroma-weight-950)) var(--hue-green)
+  );
 
   /* Color primitives — amber (H 78, status warning) */
-  --color-amber-50: oklch(96% 0.013 78);
-  --color-amber-100: oklch(94% 0.025 78);
-  --color-amber-200: oklch(92% 0.05 78);
-  --color-amber-300: oklch(84% 0.081 78);
-  --color-amber-400: oklch(72% 0.106 78);
-  --color-amber-500: oklch(58% 0.12 78);
-  --color-amber-600: oklch(44% 0.091 78);
-  --color-amber-700: oklch(32% 0.066 78);
-  --color-amber-800: oklch(24% 0.05 78);
-  --color-amber-900: oklch(22% 0.046 78);
-  --color-amber-950: oklch(20% 0.042 78);
+  --color-amber-50: oklch(
+    var(--lightness-50) calc(var(--chroma-peak-amber) * var(--chroma-weight-50)) var(--hue-amber)
+  );
+  --color-amber-100: oklch(
+    var(--lightness-100) calc(var(--chroma-peak-amber) * var(--chroma-weight-100)) var(--hue-amber)
+  );
+  --color-amber-200: oklch(
+    var(--lightness-200) calc(var(--chroma-peak-amber) * var(--chroma-weight-200)) var(--hue-amber)
+  );
+  --color-amber-300: oklch(
+    var(--lightness-300) calc(var(--chroma-peak-amber) * var(--chroma-weight-300)) var(--hue-amber)
+  );
+  --color-amber-400: oklch(
+    var(--lightness-400) calc(var(--chroma-peak-amber) * var(--chroma-weight-400)) var(--hue-amber)
+  );
+  --color-amber-500: oklch(
+    var(--lightness-500) calc(var(--chroma-peak-amber) * var(--chroma-weight-500)) var(--hue-amber)
+  );
+  --color-amber-600: oklch(
+    var(--lightness-600) calc(var(--chroma-peak-amber) * var(--chroma-weight-600)) var(--hue-amber)
+  );
+  --color-amber-700: oklch(
+    var(--lightness-700) calc(var(--chroma-peak-amber) * var(--chroma-weight-700)) var(--hue-amber)
+  );
+  --color-amber-800: oklch(
+    var(--lightness-800) calc(var(--chroma-peak-amber) * var(--chroma-weight-800)) var(--hue-amber)
+  );
+  --color-amber-900: oklch(
+    var(--lightness-900) calc(var(--chroma-peak-amber) * var(--chroma-weight-900)) var(--hue-amber)
+  );
+  --color-amber-950: oklch(
+    var(--lightness-950) calc(var(--chroma-peak-amber) * var(--chroma-weight-950)) var(--hue-amber)
+  );
 
   /* Font-size primitives */
   --font-size-100: 12px;
@@ -203,8 +364,8 @@
   --color-text: var(--color-slate-50);
   --color-text-muted: var(--color-slate-400);
   --color-text-subtle: var(--color-slate-600);
-  --color-accent: var(--color-terracotta-500);
-  --color-accent-strong: var(--color-terracotta-400);
+  --color-accent: var(--color-terracotta-400);
+  --color-accent-strong: var(--color-terracotta-300);
   --color-accent-muted: color-mix(in oklch, var(--color-accent) 32%, transparent);
   --color-accent-subtle: color-mix(in oklch, var(--color-accent) 16%, transparent);
   --color-status-success: var(--color-green-400);

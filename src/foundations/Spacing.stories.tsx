@@ -24,11 +24,11 @@ function Row({ token, primitive, px }: { token: string; primitive: string; px: n
   return (
     <div class={styles.spacingRow}>
       <span class={styles.tokenChip}>{token}</span>
-      <Text font="mono" size="caption-s" tone="subtle">
+      <Text font="mono" size="caption-s" tone="muted">
         {px} px
       </Text>
       <div class={styles.spacingBar} data-size={token.replace('--space-', '')} />
-      <Text font="mono" size="caption-s" tone="subtle">
+      <Text font="mono" size="caption-s" tone="muted">
         <span class={styles.token}>{primitive}</span>
       </Text>
     </div>

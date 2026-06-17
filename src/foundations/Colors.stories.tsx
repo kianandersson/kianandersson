@@ -82,7 +82,7 @@ function SemanticRow({ token, role, reference }: SemanticToken) {
       <Text size="caption-m" tone="muted">
         {role}
       </Text>
-      <Text font="mono" size="caption-s" tone="subtle">
+      <Text font="mono" size="caption-s" tone="muted">
         {referenceParts.map((part, index) => (
           <Fragment key={part}>
             {index > 0 && ' / '}
@@ -101,7 +101,7 @@ function StandaloneRow() {
     <div class={styles.ramp}>
       <div class={styles.rampHead}>
         <span class={styles.tokenChip}>standalone</span>
-        <Text font="mono" size="caption-s" tone="subtle">
+        <Text font="mono" size="caption-s" tone="muted">
           Theme-agnostic anchors referenced by surface tokens
         </Text>
       </div>
@@ -109,7 +109,7 @@ function StandaloneRow() {
         {STANDALONE.map((name) => (
           <div key={name} class={styles.rampStep}>
             <span class={styles.rampSwatch} data-family={name} />
-            <Text font="mono" size="caption-s" tone="subtle">
+            <Text font="mono" size="caption-s" tone="muted">
               {name}
             </Text>
           </div>
@@ -124,7 +124,7 @@ function RampRow({ family, hue, role }: Ramp) {
     <div class={styles.ramp}>
       <div class={styles.rampHead}>
         <span class={styles.tokenChip}>{family}</span>
-        <Text font="mono" size="caption-s" tone="subtle">
+        <Text font="mono" size="caption-s" tone="muted">
           H {hue} · {role}
         </Text>
       </div>
@@ -132,7 +132,7 @@ function RampRow({ family, hue, role }: Ramp) {
         {STEPS.map((step) => (
           <div key={step} class={styles.rampStep}>
             <span class={styles.rampSwatch} data-family={family} data-step={step} />
-            <Text font="mono" size="caption-s" tone="subtle">
+            <Text font="mono" size="caption-s" tone="muted">
               {step}
             </Text>
           </div>

@@ -53,7 +53,7 @@ function IconTile({ name, defaultSize, variant, render }: Entry) {
       <div class={styles.iconSample}>{render()}</div>
       <div class={styles.iconMeta}>
         <span class={styles.tokenChip}>{name}</span>
-        <Text font="mono" size="caption-s" tone="subtle">
+        <Text font="mono" size="caption-s" tone="muted">
           size {defaultSize}
           {variant && ` · ${variant}`}
         </Text>
@@ -74,7 +74,7 @@ function Page() {
           takes an optional <code>size</code> prop (px); a couple add a <code>direction</code>{' '}
           variant. Colour comes from the surrounding text colour via <code>currentColor</code>.
         </Text>
-        <Text as="p" size="caption-m" tone="subtle">
+        <Text as="p" size="caption-m" tone="muted">
           Individual stories cover the prop combinations — this page is the picker.
         </Text>
       </header>

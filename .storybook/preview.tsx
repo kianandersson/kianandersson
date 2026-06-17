@@ -13,6 +13,7 @@ const withTheme: Decorator = (Story, context) => {
 const preview: Preview = {
   parameters: {
     backgrounds: { disable: true },
+    a11y: { test: 'error' },
     options: {
       storySort: {
         order: [
