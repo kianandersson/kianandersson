@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/preact-vite';
+import { expect, userEvent, within } from 'storybook/test';
 import { SkillGroups } from './SkillGroups';
 
 const meta: Meta<typeof SkillGroups> = {
@@ -36,4 +37,45 @@ const meta: Meta<typeof SkillGroups> = {
 export default meta;
 type Story = StoryObj<typeof SkillGroups>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await expect(canvas.getByRole('heading', { level: 2, name: /^Skills$/i })).toBeInTheDocument();
+
+    const langTrigger = canvas.getByRole('button', { name: /Languages/i });
+    const fwTrigger = canvas.getByRole('button', { name: /Frameworks/i });
+    const toolTrigger = canvas.getByRole('button', { name: /Tooling/i });
+
+    // Counts on triggers.
+    await expect(langTrigger).toHaveTextContent('3');
+    await expect(fwTrigger).toHaveTextContent('3');
+    await expect(toolTrigger).toHaveTextContent('2');
+
+    // All start collapsed.
+    await expect(langTrigger).toHaveAttribute('aria-expanded', 'false');
+
+    // Opening a group reveals its skills.
+    await userEvent.click(langTrigger);
+    await expect(langTrigger).toHaveAttribute('aria-expanded', 'true');
+    await expect(canvas.getByText('TypeScript')).toBeInTheDocument();
+    await expect(canvas.getByText('Rust')).toBeInTheDocument();
+
+    // Opening another group closes the first (single-open).
+    await userEvent.click(fwTrigger);
+    await expect(langTrigger).toHaveAttribute('aria-expanded', 'false');
+    await expect(fwTrigger).toHaveAttribute('aria-expanded', 'true');
+
+    // Clicking the open trigger again collapses it.
+    await userEvent.click(fwTrigger);
+    await expect(fwTrigger).toHaveAttribute('aria-expanded', 'false');
+  },
+};
+
+export const Empty: Story = {
+  args: { groups: [] },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.queryAllByRole('button')).toHaveLength(0);
+  },
+};

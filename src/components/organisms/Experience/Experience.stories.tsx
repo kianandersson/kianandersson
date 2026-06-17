@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/preact-vite';
+import { expect, within } from 'storybook/test';
 import { Experience, type ExperienceEntry } from './Experience';
 
 const ENTRIES: ExperienceEntry[] = [
@@ -33,4 +34,32 @@ const meta: Meta<typeof Experience> = {
 export default meta;
 type Story = StoryObj<typeof Experience>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    await expect(
+      canvas.getByRole('heading', { level: 2, name: /Experience/i }),
+    ).toBeInTheDocument();
+    const entries = args.entries as ExperienceEntry[];
+    const items = canvas.getAllByRole('listitem');
+    await expect(items).toHaveLength(entries.length);
+    for (const entry of entries) {
+      await expect(canvas.getByText(entry.role)).toBeInTheDocument();
+      await expect(canvas.getByText(entry.meta)).toBeInTheDocument();
+      await expect(canvas.getByText(entry.period)).toBeInTheDocument();
+      await expect(canvas.getByText(entry.description)).toBeInTheDocument();
+    }
+    for (const item of items) {
+      await expect(within(item).getByText('Stack')).toBeInTheDocument();
+      await expect(within(item).getByText('Methods')).toBeInTheDocument();
+    }
+  },
+};
+
+export const Empty: Story = {
+  args: { entries: [] },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.queryAllByRole('listitem')).toHaveLength(0);
+  },
+};
