@@ -58,7 +58,9 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
       <WindowFrame>
         <div class={styles.body}>
           <div class={styles.row}>
-            <FieldLabel class={styles.fieldLabel}>To</FieldLabel>
+            <Text font="mono" size="label" tone="subtle" class={styles.fieldLabel}>
+              To
+            </Text>
             <span class={styles.recipient}>
               <span class={styles.recipientDot} aria-hidden="true" />
               {recipientName}

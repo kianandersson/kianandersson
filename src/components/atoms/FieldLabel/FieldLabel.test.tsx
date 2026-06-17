@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { FieldLabel } from './FieldLabel';
 
 describe('FieldLabel', () => {
-  it('renders a label with the for attribute when one is supplied', () => {
+  it('renders a label with the for attribute', () => {
     const { container } = render(<FieldLabel for="contact-from">From</FieldLabel>);
     const label = container.querySelector('label');
     expect(label).not.toBeNull();
@@ -11,13 +11,17 @@ describe('FieldLabel', () => {
     expect(label).toHaveTextContent('From');
   });
 
-  it('falls back to a span when no for is supplied', () => {
-    const { container } = render(<FieldLabel>To</FieldLabel>);
-    expect(container.firstElementChild?.tagName).toBe('SPAN');
+  it('defaults to the subtle tone and exposes it as a data attribute', () => {
+    const { container } = render(<FieldLabel for="x">Hi</FieldLabel>);
+    expect(container.firstElementChild).toHaveAttribute('data-tone', 'subtle');
   });
 
-  it('exposes the tone via a data attribute', () => {
-    const { container } = render(<FieldLabel tone="muted">Languages</FieldLabel>);
+  it('exposes an explicit tone via a data attribute', () => {
+    const { container } = render(
+      <FieldLabel for="x" tone="muted">
+        Hi
+      </FieldLabel>,
+    );
     expect(container.firstElementChild).toHaveAttribute('data-tone', 'muted');
   });
 });
