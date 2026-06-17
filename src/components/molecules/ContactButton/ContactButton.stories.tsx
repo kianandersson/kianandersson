@@ -33,7 +33,6 @@ export const Default: Story = {
 };
 
 export const IconVariant: Story = {
-  name: 'Icon variant',
   args: { variant: 'icon' },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

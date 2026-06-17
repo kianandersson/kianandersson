@@ -38,8 +38,7 @@ export const Default: Story = {
   },
 };
 
-export const FallbackUrl: Story = {
-  name: 'Fallback to homeHref when no requestedUrl',
+export const FallbackToHome: Story = {
   args: { requestedUrl: undefined, homeHref: '/' },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

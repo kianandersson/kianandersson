@@ -31,6 +31,8 @@ export const Default: Story = {
     await expect(input).toHaveAttribute('type', 'text');
     await userEvent.type(input, 'hello');
     await expect(input).toHaveValue('hello');
+    // Reset so the catalog view shows the empty input rather than test residue.
+    await userEvent.clear(input);
   },
 };
 

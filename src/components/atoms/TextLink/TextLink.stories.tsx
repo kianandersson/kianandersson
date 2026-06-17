@@ -31,7 +31,6 @@ export const Default: Story = {
 };
 
 export const AsAnchor: Story = {
-  name: 'As anchor (href)',
   args: { tone: 'default', children: 'open-source', href: '#' },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

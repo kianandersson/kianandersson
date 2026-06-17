@@ -55,6 +55,11 @@ export const Idle: Story = {
       subject: 'Project enquiry',
       message: 'Hi there',
     });
+
+    // Reset so the catalog view shows the empty form rather than test residue.
+    await userEvent.clear(canvas.getByLabelText(/from/i));
+    await userEvent.clear(canvas.getByLabelText(/subject/i));
+    await userEvent.clear(canvas.getByLabelText(/message/i));
   },
 };
 
@@ -70,7 +75,6 @@ export const Sending: Story = {
 };
 
 export const Sent: Story = {
-  name: 'Sent (plane fly-off)',
   args: { status: 'sent' },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -92,8 +96,7 @@ export const ErrorState: Story = {
   },
 };
 
-export const ErrorHidden: Story = {
-  name: 'Error message hidden while idle',
+export const ErrorHiddenWhileIdle: Story = {
   args: { status: 'idle', errorMessage: 'Network hiccup' },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

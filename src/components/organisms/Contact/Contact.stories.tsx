@@ -98,8 +98,7 @@ export const AvailableFromFuture: Story = {
   },
 };
 
-export const NoAvailability: Story = {
-  name: 'No availability (labelled pill)',
+export const WithoutAvailability: Story = {
   args: { showAvailability: false },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

@@ -33,5 +33,7 @@ export const Default: Story = {
     await expect(label).toHaveAttribute('for', args.for as string);
     await userEvent.click(label);
     await expect(input).toHaveFocus();
+    // Reset focus so the catalog view doesn't keep the test's focus ring.
+    (input as HTMLElement).blur();
   },
 };

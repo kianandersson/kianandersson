@@ -47,6 +47,5 @@ export const Span: Story = {
 };
 
 export const MonoCaption: Story = {
-  name: 'Mono caption (e.g. timeline meta)',
   args: { size: 'caption-s', font: 'mono', tone: 'muted', children: '#### TYPESCRIPT · 6Y' },
 };

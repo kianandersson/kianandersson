@@ -33,7 +33,6 @@ export const Default: Story = {
 };
 
 export const AsLink: Story = {
-  name: 'As link (href)',
   args: {
     href: 'https://github.com',
     target: '_blank',

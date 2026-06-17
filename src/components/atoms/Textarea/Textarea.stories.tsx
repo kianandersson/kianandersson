@@ -27,6 +27,8 @@ export const Default: Story = {
     await expect(ta.tagName).toBe('TEXTAREA');
     await userEvent.type(ta, 'hi');
     await expect(ta).toHaveValue('hi');
+    // Reset so the catalog view shows the empty textarea rather than test residue.
+    await userEvent.clear(ta);
   },
 };
 

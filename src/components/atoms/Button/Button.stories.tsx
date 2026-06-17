@@ -53,7 +53,6 @@ export const Disabled: Story = {
 };
 
 export const AsLink: Story = {
-  name: 'As link (href)',
   args: { href: '/path', children: 'Anchor button' },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -64,7 +63,6 @@ export const AsLink: Story = {
 };
 
 export const ExternalLink: Story = {
-  name: 'External link (target=_blank auto-injects rel)',
   args: { href: 'https://example.com', target: '_blank', children: 'External' },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -74,8 +72,7 @@ export const ExternalLink: Story = {
   },
 };
 
-export const ExternalLinkExplicitRel: Story = {
-  name: 'External link with explicit rel',
+export const ExternalLinkWithCustomRel: Story = {
   args: { href: 'https://example.com', target: '_blank', rel: 'me', children: 'External' },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
