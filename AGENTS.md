@@ -17,7 +17,9 @@ Atomic Design layers.
 - **Pages** — the only layer that calls `getCollection`, reads `site.config.ts`, binds handlers.
 - **Components** — pure props in, JSX out. No global state, no config imports.
 
-Preact components live under `src/components/{atoms,molecules,organisms}/` and are catalog-able in Storybook. Astro compositions (`templates/`, `layouts/`, `pages/`) are build-time and tested via Playwright on the rendered page.
+Preact components live under `src/components/{atoms,molecules,organisms}/` and are cataloged in Storybook (`pnpm storybook`). `src/components/index.ts` is the public barrel — import from there. Astro compositions (`templates/`, `layouts/`, `pages/`) are build-time and tested via Playwright on the rendered page; they have no Storybook stories because the Preact-Vite framework cannot render them.
+
+Before implementing a new component, check Storybook (and `src/components/index.ts`) for an existing atom/molecule/organism that already covers it — extend or reuse before adding.
 
 Start static (zero JS). Add `client:*` in the template only when state, handlers, or effects require it.
 
@@ -37,7 +39,7 @@ Strict red-green-refactor on the Vitest layer. Playwright/axe are gates, not tes
 - No snapshot tests.
 - Tests describe behavior, not structure.
 - No coverage gate.
-- No Storybook.
+- Storybook hosts the component catalog with the a11y addon enabled; it complements (does not replace) Vitest and Playwright/axe.
 
 Region/landmark assertions belong at the template or e2e layer, not in organism unit tests.
 

@@ -1,0 +1,7 @@
+body {
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  margin: 0;
+  padding: var(--space-xl, 24px);
+}

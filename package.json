@@ -19,7 +19,9 @@
     "test:bundle": "vitest run --config vitest.bundle.config.ts",
     "test:e2e": "playwright test",
     "test:lighthouse": "lhci autorun",
-    "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm test:bundle"
+    "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm test:bundle",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^13.7.0",
@@ -36,6 +38,8 @@
     "@biomejs/biome": "^2.4.16",
     "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.60.0",
+    "@storybook/addon-a11y": "^10.4.6",
+    "@storybook/preact-vite": "^10.4.6",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/preact": "^3.2.4",
     "@testing-library/user-event": "^14.6.1",
@@ -43,6 +47,7 @@
     "@types/node": "^25.9.3",
     "js-yaml": "^4.2.0",
     "jsdom": "^29.1.1",
+    "storybook": "^10.4.6",
     "typescript": "^6.0.3",
     "vitest": "^4.1.8",
     "wrangler": "^4.100.0"
