@@ -14,6 +14,9 @@
 .section {
   display: flex;
   flex-direction: column;
+  /* Container queries scope the table layouts below — narrow viewports
+     drop the multi-column grids back to a single stacked column. */
+  container-type: inline-size;
   /* Matches the row-to-row spacing inside each foundation table — the
      padding-bottom + list-gap pair on each row is `var(--space-m)`
      above and below the divider, so the section gap above and below
@@ -63,9 +66,16 @@
 
 .bulletRow {
   display: grid;
-  grid-template-columns: 140px 1fr;
+  grid-template-columns: auto 1fr;
   gap: var(--space-l);
   align-items: baseline;
+}
+
+@container (max-width: 520px) {
+  .bulletRow {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xs);
+  }
 }
 
 /* -------------------------------------------------------------
@@ -74,12 +84,35 @@
 
 .semanticRow {
   display: grid;
-  grid-template-columns: 56px 220px 1fr auto;
+  grid-template-columns: auto auto 1fr auto;
   column-gap: var(--space-l);
   row-gap: var(--space-2xs);
   align-items: center;
   padding-bottom: var(--space-m);
   border-bottom: 1px solid var(--color-divider);
+}
+
+@container (max-width: 600px) {
+  .semanticRow {
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "swatch token"
+      "swatch role"
+      "swatch reference";
+    row-gap: var(--space-2xs);
+  }
+  .semanticRow > :nth-child(1) {
+    grid-area: swatch;
+  }
+  .semanticRow > :nth-child(2) {
+    grid-area: token;
+  }
+  .semanticRow > :nth-child(3) {
+    grid-area: role;
+  }
+  .semanticRow > :nth-child(4) {
+    grid-area: reference;
+  }
 }
 
 .semanticSwatch {
@@ -144,7 +177,7 @@
 .rampGrid {
   display: grid;
   grid-template-columns: repeat(11, 1fr);
-  gap: var(--space-xs);
+  gap: var(--space-s);
 }
 
 .rampStep {
@@ -337,7 +370,7 @@
 
 .roleRow {
   display: grid;
-  grid-template-columns: 160px 160px 1fr;
+  grid-template-columns: auto auto 1fr;
   gap: var(--space-l);
   align-items: center;
   padding-bottom: var(--space-m);
@@ -348,6 +381,16 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-2xs);
+}
+
+@container (max-width: 600px) {
+  .roleRow {
+    grid-template-columns: auto 1fr;
+    row-gap: var(--space-s);
+  }
+  .roleRow > .roleSample {
+    grid-column: 1 / -1;
+  }
 }
 
 .roleSample {
@@ -406,11 +449,21 @@
 
 .spacingRow {
   display: grid;
-  grid-template-columns: 160px 64px 1fr 120px;
+  grid-template-columns: auto auto 1fr auto;
   gap: var(--space-l);
   align-items: center;
   padding-bottom: var(--space-m);
   border-bottom: 1px solid var(--color-divider);
+}
+
+@container (max-width: 520px) {
+  .spacingRow {
+    grid-template-columns: auto 1fr;
+    row-gap: var(--space-2xs);
+  }
+  .spacingRow > .spacingBar {
+    grid-column: 1 / -1;
+  }
 }
 
 .spacingBar {
@@ -462,11 +515,38 @@
 
 .radiusRow {
   display: grid;
-  grid-template-columns: 80px 160px 80px 1fr 120px;
+  grid-template-columns: auto auto auto 1fr auto;
   gap: var(--space-l);
   align-items: center;
   padding-bottom: var(--space-m);
   border-bottom: 1px solid var(--color-divider);
+}
+
+@container (max-width: 600px) {
+  .radiusRow {
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "sample token"
+      "sample value"
+      "sample use"
+      "sample primitive";
+    row-gap: var(--space-2xs);
+  }
+  .radiusRow > :nth-child(1) {
+    grid-area: sample;
+  }
+  .radiusRow > :nth-child(2) {
+    grid-area: token;
+  }
+  .radiusRow > :nth-child(3) {
+    grid-area: value;
+  }
+  .radiusRow > :nth-child(4) {
+    grid-area: use;
+  }
+  .radiusRow > :nth-child(5) {
+    grid-area: primitive;
+  }
 }
 
 .radiusSample {
