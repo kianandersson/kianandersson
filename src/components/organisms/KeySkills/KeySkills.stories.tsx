@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/preact-vite';
+import { expect, within } from 'storybook/test';
 import { KeySkills } from './KeySkills';
 
 const meta: Meta<typeof KeySkills> = {
@@ -22,4 +23,28 @@ const meta: Meta<typeof KeySkills> = {
 export default meta;
 type Story = StoryObj<typeof KeySkills>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    await expect(
+      canvas.getByRole('heading', { level: 2, name: /Key skills/i }),
+    ).toBeInTheDocument();
+    const items = canvas.getAllByRole('listitem');
+    await expect(items).toHaveLength((args.skills as { id: string }[]).length);
+    for (const skill of args.skills as { name: string }[]) {
+      await expect(canvas.getByText(skill.name)).toBeInTheDocument();
+    }
+    await expect(canvas.getByRole('link', { name: /All skills/i })).toHaveAttribute(
+      'href',
+      args.allSkillsHref as string,
+    );
+  },
+};
+
+export const Empty: Story = {
+  args: { skills: [] },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.queryAllByRole('listitem')).toHaveLength(0);
+  },
+};

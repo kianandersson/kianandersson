@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/preact-vite';
+import { expect, within } from 'storybook/test';
 import { NotFound } from './NotFound';
 
 const meta: Meta<typeof NotFound> = {
@@ -19,4 +20,29 @@ const meta: Meta<typeof NotFound> = {
 export default meta;
 type Story = StoryObj<typeof NotFound>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole('heading', { level: 1 })).toHaveTextContent(
+      "This page couldn't be found.",
+    );
+    await expect(canvas.getByRole('link', { name: /back to home/i })).toHaveAttribute(
+      'href',
+      args.homeHref as string,
+    );
+    await expect(canvas.getByTestId('requested-url')).toHaveTextContent(
+      args.requestedUrl as string,
+    );
+    await expect(canvas.getByText(/HTTP\/2 404 Not Found/)).toBeInTheDocument();
+    await expect(canvas.getByText(/content-type:/)).toBeInTheDocument();
+  },
+};
+
+export const FallbackUrl: Story = {
+  name: 'Fallback to homeHref when no requestedUrl',
+  args: { requestedUrl: undefined, homeHref: '/' },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByTestId('requested-url')).toHaveTextContent('/');
+  },
+};
