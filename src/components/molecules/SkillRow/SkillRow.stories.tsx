@@ -6,7 +6,7 @@ const withSkillsGrid: Decorator = (Story) => (
     style={{
       display: 'grid',
       gridTemplateColumns: '1fr auto auto auto',
-      columnGap: 'var(--space-md)',
+      columnGap: 'var(--space-m)',
       borderTop: '1px solid var(--color-divider)',
       maxWidth: 540,
     }}

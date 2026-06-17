@@ -2,8 +2,8 @@
   font-family: var(--font-mono);
   font-size: var(--text-caption-s-size);
   line-height: var(--text-caption-s-leading);
-  padding: var(--space-2xs) var(--space-sm);
-  border-radius: var(--radius-sm);
+  padding: var(--space-2xs) var(--space-s);
+  border-radius: var(--radius-s);
   white-space: nowrap;
 }
 

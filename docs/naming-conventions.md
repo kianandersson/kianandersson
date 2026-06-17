@@ -102,7 +102,7 @@ Separate the raw values from their meaning. This is the single most important mo
 color-blue-500
 color-gray-900
 space-4
-radius-md
+radius-m
 font-size-200
 ```
 
@@ -112,18 +112,18 @@ font-size-200
 color-text-default        →  color-gray-900
 color-bg-danger           →  color-red-500
 color-border-subtle       →  color-gray-200
-space-inset-md            →  space-4
-radius-interactive        →  radius-md
+space-inset-m            →  space-4
+radius-interactive        →  radius-m
 ```
 
 Components reference **only** semantic tokens. That way you can re-theme by moving a single semantic token, without touching the components.
 
 ### Conventions
 
-- Use `kebab-case` consistently: `color-bg-danger`, `space-inset-md`.
+- Use `kebab-case` consistently: `color-bg-danger`, `space-inset-m`.
 - Numeric scales run from light/small to dark/large: `50 → 900` for colors, `0 → 96` for spacing.
 - Spacing follows a linear 4px base unit (`space-1` = 4px, number × 4 = px).
-- Radius is a small semantic scale: `radius-sm` · `radius-md` · `radius-lg` · `radius-full`.
+- Radius is a small semantic scale: `radius-s` · `radius-m` · `radius-l` · `radius-full`.
 
 ---
 

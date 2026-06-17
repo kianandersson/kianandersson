@@ -1,9 +1,9 @@
 .root {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-s);
   height: 44px;
-  padding: 0 var(--space-lg);
+  padding: 0 var(--space-l);
   border: 1px solid var(--color-divider);
   background: var(--color-surface-raised);
   border-radius: var(--radius-full);

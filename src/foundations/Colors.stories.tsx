@@ -127,7 +127,7 @@ function Page() {
       <section class={styles.section}>
         <SectionHeader title="Semantic" />
         <Divider />
-        <div class={styles.list}>
+        <div class={styles.semanticTable}>
           {SEMANTIC_TOKENS.map((row) => (
             <SemanticRow key={row.token} {...row} />
           ))}

@@ -7,7 +7,7 @@
   color: var(--color-text);
   background: transparent;
   border: 0;
-  padding: var(--space-sm) 0;
+  padding: var(--space-s) 0;
   caret-color: var(--color-accent);
 }
 

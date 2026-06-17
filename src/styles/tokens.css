@@ -168,9 +168,9 @@
   /* Space semantics */
   --space-2xs: var(--space-1);
   --space-xs: var(--space-2);
-  --space-sm: var(--space-3);
-  --space-md: var(--space-4);
-  --space-lg: var(--space-5);
+  --space-s: var(--space-3);
+  --space-m: var(--space-4);
+  --space-l: var(--space-5);
   --space-xl: var(--space-6);
   --space-2xl: var(--space-7);
   --space-3xl: var(--space-8);
@@ -180,9 +180,9 @@
   --space-7xl: var(--space-16);
 
   /* Radius semantics */
-  --radius-sm: var(--radius-100);
-  --radius-md: var(--radius-200);
-  --radius-lg: var(--radius-300);
+  --radius-s: var(--radius-100);
+  --radius-m: var(--radius-200);
+  --radius-l: var(--radius-300);
   --radius-full: 9999px;
 
   /* Kept as-is — out of scope for this slice */

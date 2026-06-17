@@ -2,7 +2,7 @@
   container-type: inline-size;
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-m);
 }
 
 .timeline {
@@ -34,7 +34,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-m);
 }
 
 .titleBlock {
@@ -57,7 +57,7 @@
 .chipGroups {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--space-s);
 }
 
 @media print {

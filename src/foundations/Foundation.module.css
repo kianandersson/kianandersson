@@ -64,17 +64,27 @@
  * Introduction page: label + body bullet rows.
  * ----------------------------------------------------------- */
 
-.bulletRow {
+.bullets {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: var(--space-l);
+  column-gap: var(--space-l);
+  row-gap: var(--space-m);
+}
+
+.bulletRow {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
   align-items: baseline;
 }
 
 @container (max-width: 520px) {
-  .bulletRow {
+  .bullets {
     grid-template-columns: 1fr;
-    gap: var(--space-2xs);
+    row-gap: var(--space-l);
+  }
+  .bulletRow {
+    row-gap: var(--space-2xs);
   }
 }
 
@@ -82,19 +92,27 @@
  * Colors page: semantic table + primitive ramps.
  * ----------------------------------------------------------- */
 
-.semanticRow {
+.semanticTable {
   display: grid;
   grid-template-columns: auto auto 1fr auto;
   column-gap: var(--space-l);
-  row-gap: var(--space-2xs);
+  row-gap: var(--space-m);
+}
+
+.semanticRow {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
   align-items: center;
   padding-bottom: var(--space-m);
   border-bottom: 1px solid var(--color-divider);
 }
 
 @container (max-width: 600px) {
-  .semanticRow {
+  .semanticTable {
     grid-template-columns: auto 1fr;
+  }
+  .semanticRow {
     grid-template-areas:
       "swatch token"
       "swatch role"
@@ -368,10 +386,17 @@
  * Typography page: role rows.
  * ----------------------------------------------------------- */
 
-.roleRow {
+.roleTable {
   display: grid;
   grid-template-columns: auto auto 1fr;
-  gap: var(--space-l);
+  column-gap: var(--space-l);
+  row-gap: var(--space-l);
+}
+
+.roleRow {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
   align-items: center;
   padding-bottom: var(--space-m);
   border-bottom: 1px solid var(--color-divider);
@@ -384,8 +409,10 @@
 }
 
 @container (max-width: 600px) {
-  .roleRow {
+  .roleTable {
     grid-template-columns: auto 1fr;
+  }
+  .roleRow {
     row-gap: var(--space-s);
   }
   .roleRow > .roleSample {
@@ -447,18 +474,27 @@
  * Spacing page: scale rows.
  * ----------------------------------------------------------- */
 
-.spacingRow {
+.spacingTable {
   display: grid;
   grid-template-columns: auto auto 1fr auto;
-  gap: var(--space-l);
+  column-gap: var(--space-l);
+  row-gap: var(--space-m);
+}
+
+.spacingRow {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
   align-items: center;
   padding-bottom: var(--space-m);
   border-bottom: 1px solid var(--color-divider);
 }
 
 @container (max-width: 520px) {
-  .spacingRow {
+  .spacingTable {
     grid-template-columns: auto 1fr;
+  }
+  .spacingRow {
     row-gap: var(--space-2xs);
   }
   .spacingRow > .spacingBar {
@@ -513,18 +549,27 @@
  * Radius page: scale rows.
  * ----------------------------------------------------------- */
 
-.radiusRow {
+.radiusTable {
   display: grid;
   grid-template-columns: auto auto auto 1fr auto;
-  gap: var(--space-l);
+  column-gap: var(--space-l);
+  row-gap: var(--space-m);
+}
+
+.radiusRow {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
   align-items: center;
   padding-bottom: var(--space-m);
   border-bottom: 1px solid var(--color-divider);
 }
 
 @container (max-width: 600px) {
-  .radiusRow {
+  .radiusTable {
     grid-template-columns: auto 1fr;
+  }
+  .radiusRow {
     grid-template-areas:
       "sample token"
       "sample value"

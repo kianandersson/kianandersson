@@ -40,10 +40,10 @@ const LAYERS: Bullet[] = [
 
 function BulletList({ items }: { items: Bullet[] }) {
   return (
-    <div class={styles.list}>
+    <div class={styles.bullets}>
       {items.map((item) => (
         <div key={item.label} class={styles.bulletRow}>
-          <Text font="mono" size="caption-m" tone="accent-strong" weight="semibold">
+          <Text font="mono" size="caption-m" weight="semibold">
             {item.label}
           </Text>
           <Text size="body" tone="muted">

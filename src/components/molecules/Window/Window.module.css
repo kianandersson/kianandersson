@@ -4,7 +4,7 @@
   flex-direction: column;
   width: 100%;
   border: 1px solid var(--color-divider);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-l);
   background: var(--color-surface-raised);
   overflow: hidden;
   /* When this window is used inside an animated reveal (Contact's
@@ -19,7 +19,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-xs);
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--space-s) var(--space-m);
   border-bottom: 1px solid var(--color-divider);
 }
 

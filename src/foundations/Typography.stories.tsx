@@ -147,7 +147,7 @@ function Page() {
       <section class={styles.section}>
         <SectionHeader title="Roles" />
         <Divider />
-        <div class={styles.listWide}>
+        <div class={styles.roleTable}>
           {ROLES.map((role) => (
             <RoleRow key={role.name} {...role} />
           ))}

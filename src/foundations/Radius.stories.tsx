@@ -6,9 +6,9 @@ import { SectionHeader } from '../components/molecules/SectionHeader';
 import styles from './Foundation.module.css';
 
 const RADII = [
-  { token: '--radius-sm', primitive: '--radius-100', value: '4 px', use: 'Chips, small bullets' },
-  { token: '--radius-md', primitive: '--radius-200', value: '8 px', use: 'Buttons, toggles' },
-  { token: '--radius-lg', primitive: '--radius-300', value: '12 px', use: 'Surfaces, cards' },
+  { token: '--radius-s', primitive: '--radius-100', value: '4 px', use: 'Chips, small bullets' },
+  { token: '--radius-m', primitive: '--radius-200', value: '8 px', use: 'Buttons, toggles' },
+  { token: '--radius-l', primitive: '--radius-300', value: '12 px', use: 'Surfaces, cards' },
   { token: '--radius-full', primitive: '—', value: '9999 px', use: 'Pills, circles' },
 ];
 
@@ -57,7 +57,7 @@ function Page() {
       <section class={styles.section}>
         <SectionHeader title="Scale" />
         <Divider />
-        <div class={styles.list}>
+        <div class={styles.radiusTable}>
           {RADII.map((item) => (
             <Row key={item.token} {...item} />
           ))}
