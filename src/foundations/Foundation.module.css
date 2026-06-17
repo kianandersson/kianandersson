@@ -221,12 +221,18 @@
   gap: var(--space-s);
 }
 
-@container (max-width: 520px) {
+@container (max-width: 600px) {
+  .rampHead {
+    /* Stack the family chip above its descriptor so the long roles
+       ("Cool neutral · text, dark surfaces") get their own line. */
+    flex-direction: column;
+    align-items: flex-start;
+  }
   .rampGrid {
-    /* Tighter gap reclaims width for the 11 swatches when the container is
-       narrow — the ladder is the point of this view, so we keep all 11 in one
-       row rather than dropping to a wrapped grid. */
-    gap: var(--space-2xs);
+    /* Drop from 11 columns to 6 — the swatches wrap to two rows (6 + 5) and
+       each swatch keeps a usable tap-target size on narrow viewports. */
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--space-xs);
   }
 }
 
