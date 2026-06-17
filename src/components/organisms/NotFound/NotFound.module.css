@@ -30,7 +30,7 @@
 .terminalBody {
   display: flex;
   flex-direction: column;
-  padding: var(--space-md);
+  padding: var(--space-m);
   font-family: var(--font-mono);
   font-size: var(--text-caption-m-size);
   line-height: 2;

@@ -13,8 +13,8 @@ interface Props {
 }
 
 const {
-  title = `${siteConfig.name} — ${siteConfig.role}`,
-  description = `${siteConfig.name}, ${siteConfig.role} based in ${siteConfig.location}.`,
+  title = `${siteConfig.fullName} — ${siteConfig.role}`,
+  description = `${siteConfig.fullName}, ${siteConfig.role} based in ${siteConfig.location}.`,
   jsonLd,
   showPrint = true,
 } = Astro.props;
@@ -92,7 +92,7 @@ const currentYear = new Date().getFullYear();
     />
     <slot />
     <Footer
-      name={siteConfig.name}
+      name={siteConfig.fullName}
       year={currentYear}
       sourceHref={siteConfig.links.source}
     />
@@ -102,7 +102,7 @@ const currentYear = new Date().getFullYear();
 <style is:global>
   html {
     scroll-behavior: smooth;
-    -webkit-font-smoothing: antialiased;
+    -webkit-font-soothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 

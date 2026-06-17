@@ -1,6 +1,6 @@
 .row {
   display: flex;
-  gap: var(--space-md);
+  gap: var(--space-m);
   align-items: baseline;
   flex-wrap: wrap;
 }

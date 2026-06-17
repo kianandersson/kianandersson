@@ -1,6 +1,7 @@
 export * from './AvailabilityStatus';
 export * from './Button';
 export * from './Chip';
+export * from './Divider';
 export * from './FieldLabel';
 export * from './Heading';
 export * from './IconButton';

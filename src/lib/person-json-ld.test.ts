@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { buildPersonJsonLd } from './person-json-ld';
 
 const site = {
-  name: 'Test Person',
+  fullName: 'Test Person',
   role: 'Test Role',
   location: 'Testland',
   links: {

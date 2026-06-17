@@ -10,5 +10,13 @@
       "react/jsx-runtime": ["./node_modules/preact/jsx-runtime/"]
     }
   },
-  "exclude": ["dist", "node_modules", "design", "docs", "playwright-report", "test-results"]
+  "exclude": [
+    "dist",
+    "node_modules",
+    "design",
+    "docs",
+    "playwright-report",
+    "test-results",
+    "storybook-static"
+  ]
 }

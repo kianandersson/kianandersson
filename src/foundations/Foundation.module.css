@@ -1,0 +1,770 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6xl);
+  /* border-box keeps the padding inside the 100% width — without it, `width:
+     100%` + padding-inline pushes the page wider than its parent and the
+     overflow causes horizontal scroll. */
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 880px;
+  /* Breathing room around the page content. Sits on top of Storybook's
+     `layout: padded` so the foundation pages don't feel pressed up against
+     the canvas edges. The ramp grid's full-bleed offset is derived from
+     `50% - 50vw`, so it stays aligned even when this padding changes. */
+  padding-inline: var(--space-xl);
+  padding-block: var(--space-2xl);
+}
+
+@media (max-width: 600px) {
+  .page {
+    /* Pull padding back on mobile — the desktop --space-xl inline shrinks the
+       content area too far on narrow viewports when combined with Storybook's
+       baseline padding. */
+    padding-inline: var(--space-xs);
+    padding-block: var(--space-l);
+  }
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  /* Container queries scope the table layouts below — narrow viewports
+     drop the multi-column grids back to a single stacked column. */
+  container-type: inline-size;
+  /* Matches the row-to-row spacing inside each foundation table — the
+     padding-bottom + list-gap pair on each row is `var(--space-m)`
+     above and below the divider, so the section gap above and below
+     the SectionHeader's divider sits on the same rhythm. */
+  gap: var(--space-m);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+}
+
+.listWide {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+}
+
+.listLoose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+}
+
+.tokenChip {
+  display: inline-flex;
+  align-items: center;
+  /* Grid/flex parents would otherwise stretch this chip to fill its
+     cell — collapse to content width and pin to the cell's start
+     edge. Vertical centring is inherited from the row's
+     `align-items: center` where it matters. */
+  justify-self: start;
+  width: fit-content;
+  padding: var(--space-2xs) var(--space-xs);
+  border-radius: var(--radius-s);
+  background: var(--color-surface-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-caption-s-size);
+  line-height: 1;
+  color: var(--color-text);
+  /* Keep hyphenated tokens (`--color-text-subtle`, `display-xl`, etc.) on a
+     single line so they never break mid-word at the hyphen. */
+  white-space: nowrap;
+}
+
+/* Inline-token utility for hyphenated tokens rendered inside <Text> bodies
+   (e.g. `sand-50` in `sand-50 / slate-950`). Prevents a mid-word break while
+   leaving normal whitespace between adjacent tokens as a break opportunity. */
+.token {
+  white-space: nowrap;
+}
+
+/* -------------------------------------------------------------
+ * Introduction page: label + body bullet rows.
+ * ----------------------------------------------------------- */
+
+.bullets {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--space-2xl);
+  row-gap: var(--space-m);
+}
+
+.bulletRow {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  align-items: baseline;
+}
+
+@container (max-width: 520px) {
+  .bullets {
+    grid-template-columns: 1fr;
+    row-gap: var(--space-l);
+  }
+  .bulletRow {
+    row-gap: var(--space-2xs);
+  }
+}
+
+/* -------------------------------------------------------------
+ * Colors page: semantic table + primitive ramps.
+ * ----------------------------------------------------------- */
+
+.semanticTable {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
+  column-gap: var(--space-2xl);
+  row-gap: var(--space-m);
+}
+
+.semanticRow {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  align-items: center;
+  padding-bottom: var(--space-m);
+  border-bottom: 1px solid var(--color-divider);
+}
+
+@container (max-width: 600px) {
+  .semanticTable {
+    /* Drop the subgrid contract — each row defines its own internal grid so
+       the token chip can sit on its own line as the row's primary identifier. */
+    grid-template-columns: 1fr;
+    row-gap: var(--space-l);
+  }
+  .semanticRow {
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "token  token"
+      "swatch role"
+      "swatch reference";
+    align-items: start;
+    column-gap: var(--space-m);
+    row-gap: var(--space-s);
+    padding-bottom: var(--space-l);
+  }
+  .semanticRow > :nth-child(1) {
+    grid-area: swatch;
+  }
+  .semanticRow > :nth-child(2) {
+    grid-area: token;
+  }
+  .semanticRow > :nth-child(3) {
+    grid-area: role;
+  }
+  .semanticRow > :nth-child(4) {
+    grid-area: reference;
+  }
+}
+
+.semanticSwatch {
+  width: 56px;
+  height: 32px;
+  border-radius: var(--radius-m);
+  border: 1px solid var(--color-divider);
+}
+
+.semanticSwatch[data-token="surface"] {
+  background: var(--color-surface);
+}
+.semanticSwatch[data-token="surface-raised"] {
+  background: var(--color-surface-raised);
+}
+.semanticSwatch[data-token="surface-muted"] {
+  background: var(--color-surface-muted);
+}
+.semanticSwatch[data-token="divider"] {
+  background: var(--color-divider);
+}
+.semanticSwatch[data-token="text"] {
+  background: var(--color-text);
+}
+.semanticSwatch[data-token="text-muted"] {
+  background: var(--color-text-muted);
+}
+.semanticSwatch[data-token="text-subtle"] {
+  background: var(--color-text-subtle);
+}
+.semanticSwatch[data-token="accent"] {
+  background: var(--color-accent);
+}
+.semanticSwatch[data-token="accent-strong"] {
+  background: var(--color-accent-strong);
+}
+.semanticSwatch[data-token="accent-muted"] {
+  background: var(--color-accent-muted);
+}
+.semanticSwatch[data-token="accent-subtle"] {
+  background: var(--color-accent-subtle);
+}
+.semanticSwatch[data-token="status-success"] {
+  background: var(--color-status-success);
+}
+.semanticSwatch[data-token="status-warning"] {
+  background: var(--color-status-warning);
+}
+
+.ramp {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+.rampHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: var(--space-s);
+  row-gap: var(--space-2xs);
+}
+
+.rampGrid {
+  display: grid;
+  /* minmax(0, 1fr) lets columns shrink past their content's min-width — without
+     it the 11-column ramp can overflow the container on narrow viewports. */
+  grid-template-columns: repeat(11, minmax(0, 1fr));
+  gap: var(--space-s);
+}
+
+@container (max-width: 600px) {
+  .rampHead {
+    /* Stack the family chip above its descriptor so the long roles
+       ("Cool neutral · text, dark surfaces") get their own line. */
+    flex-direction: column;
+    align-items: flex-start;
+    /* Override the inline row-gap — when stacked, the chip and descriptor
+       need clearer separation than the 4 px set for wrapped flex rows. */
+    row-gap: var(--space-xs);
+  }
+  .rampGrid {
+    /* Keep all 11 swatches on one row as the ladder visual — let them spill
+       past the container with horizontal scroll instead of wrapping or
+       shrinking. Fixed column width gives each swatch a usable tap target. */
+    grid-template-columns: repeat(11, 48px);
+    gap: var(--space-xs);
+    overflow-x: auto;
+    /* Hide the scrollbar across browsers; the gesture is direct, not a
+       scoped scroll region — the visible swatches are the affordance. */
+    scrollbar-width: none;
+    /* Full-bleed: stretch the scroll container to the viewport edges so
+       swatches scroll out at the literal edge instead of stopping at the
+       page's padded inset. `padding-inline` puts the first swatch back where
+       the page content starts visually. */
+    margin-inline: calc(50% - 50vw);
+    padding-inline: calc(50vw - 50%);
+  }
+  .rampGrid::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.rampStep {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.rampSwatch {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--color-divider);
+}
+
+.standaloneGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 56px);
+  gap: var(--space-s);
+}
+
+.rampSwatch[data-family="white"] {
+  background: var(--color-white);
+}
+.rampSwatch[data-family="black"] {
+  background: var(--color-black);
+}
+
+.rampSwatch[data-family="sand"][data-step="50"] {
+  background: var(--color-sand-50);
+}
+.rampSwatch[data-family="sand"][data-step="100"] {
+  background: var(--color-sand-100);
+}
+.rampSwatch[data-family="sand"][data-step="200"] {
+  background: var(--color-sand-200);
+}
+.rampSwatch[data-family="sand"][data-step="300"] {
+  background: var(--color-sand-300);
+}
+.rampSwatch[data-family="sand"][data-step="400"] {
+  background: var(--color-sand-400);
+}
+.rampSwatch[data-family="sand"][data-step="500"] {
+  background: var(--color-sand-500);
+}
+.rampSwatch[data-family="sand"][data-step="600"] {
+  background: var(--color-sand-600);
+}
+.rampSwatch[data-family="sand"][data-step="700"] {
+  background: var(--color-sand-700);
+}
+.rampSwatch[data-family="sand"][data-step="800"] {
+  background: var(--color-sand-800);
+}
+.rampSwatch[data-family="sand"][data-step="900"] {
+  background: var(--color-sand-900);
+}
+.rampSwatch[data-family="sand"][data-step="950"] {
+  background: var(--color-sand-950);
+}
+
+.rampSwatch[data-family="slate"][data-step="50"] {
+  background: var(--color-slate-50);
+}
+.rampSwatch[data-family="slate"][data-step="100"] {
+  background: var(--color-slate-100);
+}
+.rampSwatch[data-family="slate"][data-step="200"] {
+  background: var(--color-slate-200);
+}
+.rampSwatch[data-family="slate"][data-step="300"] {
+  background: var(--color-slate-300);
+}
+.rampSwatch[data-family="slate"][data-step="400"] {
+  background: var(--color-slate-400);
+}
+.rampSwatch[data-family="slate"][data-step="500"] {
+  background: var(--color-slate-500);
+}
+.rampSwatch[data-family="slate"][data-step="600"] {
+  background: var(--color-slate-600);
+}
+.rampSwatch[data-family="slate"][data-step="700"] {
+  background: var(--color-slate-700);
+}
+.rampSwatch[data-family="slate"][data-step="800"] {
+  background: var(--color-slate-800);
+}
+.rampSwatch[data-family="slate"][data-step="900"] {
+  background: var(--color-slate-900);
+}
+.rampSwatch[data-family="slate"][data-step="950"] {
+  background: var(--color-slate-950);
+}
+
+.rampSwatch[data-family="terracotta"][data-step="50"] {
+  background: var(--color-terracotta-50);
+}
+.rampSwatch[data-family="terracotta"][data-step="100"] {
+  background: var(--color-terracotta-100);
+}
+.rampSwatch[data-family="terracotta"][data-step="200"] {
+  background: var(--color-terracotta-200);
+}
+.rampSwatch[data-family="terracotta"][data-step="300"] {
+  background: var(--color-terracotta-300);
+}
+.rampSwatch[data-family="terracotta"][data-step="400"] {
+  background: var(--color-terracotta-400);
+}
+.rampSwatch[data-family="terracotta"][data-step="500"] {
+  background: var(--color-terracotta-500);
+}
+.rampSwatch[data-family="terracotta"][data-step="600"] {
+  background: var(--color-terracotta-600);
+}
+.rampSwatch[data-family="terracotta"][data-step="700"] {
+  background: var(--color-terracotta-700);
+}
+.rampSwatch[data-family="terracotta"][data-step="800"] {
+  background: var(--color-terracotta-800);
+}
+.rampSwatch[data-family="terracotta"][data-step="900"] {
+  background: var(--color-terracotta-900);
+}
+.rampSwatch[data-family="terracotta"][data-step="950"] {
+  background: var(--color-terracotta-950);
+}
+
+.rampSwatch[data-family="green"][data-step="50"] {
+  background: var(--color-green-50);
+}
+.rampSwatch[data-family="green"][data-step="100"] {
+  background: var(--color-green-100);
+}
+.rampSwatch[data-family="green"][data-step="200"] {
+  background: var(--color-green-200);
+}
+.rampSwatch[data-family="green"][data-step="300"] {
+  background: var(--color-green-300);
+}
+.rampSwatch[data-family="green"][data-step="400"] {
+  background: var(--color-green-400);
+}
+.rampSwatch[data-family="green"][data-step="500"] {
+  background: var(--color-green-500);
+}
+.rampSwatch[data-family="green"][data-step="600"] {
+  background: var(--color-green-600);
+}
+.rampSwatch[data-family="green"][data-step="700"] {
+  background: var(--color-green-700);
+}
+.rampSwatch[data-family="green"][data-step="800"] {
+  background: var(--color-green-800);
+}
+.rampSwatch[data-family="green"][data-step="900"] {
+  background: var(--color-green-900);
+}
+.rampSwatch[data-family="green"][data-step="950"] {
+  background: var(--color-green-950);
+}
+
+.rampSwatch[data-family="amber"][data-step="50"] {
+  background: var(--color-amber-50);
+}
+.rampSwatch[data-family="amber"][data-step="100"] {
+  background: var(--color-amber-100);
+}
+.rampSwatch[data-family="amber"][data-step="200"] {
+  background: var(--color-amber-200);
+}
+.rampSwatch[data-family="amber"][data-step="300"] {
+  background: var(--color-amber-300);
+}
+.rampSwatch[data-family="amber"][data-step="400"] {
+  background: var(--color-amber-400);
+}
+.rampSwatch[data-family="amber"][data-step="500"] {
+  background: var(--color-amber-500);
+}
+.rampSwatch[data-family="amber"][data-step="600"] {
+  background: var(--color-amber-600);
+}
+.rampSwatch[data-family="amber"][data-step="700"] {
+  background: var(--color-amber-700);
+}
+.rampSwatch[data-family="amber"][data-step="800"] {
+  background: var(--color-amber-800);
+}
+.rampSwatch[data-family="amber"][data-step="900"] {
+  background: var(--color-amber-900);
+}
+.rampSwatch[data-family="amber"][data-step="950"] {
+  background: var(--color-amber-950);
+}
+
+/* -------------------------------------------------------------
+ * Typography page: role rows.
+ * ----------------------------------------------------------- */
+
+.roleTable {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  column-gap: var(--space-2xl);
+  row-gap: var(--space-l);
+}
+
+.roleRow {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  align-items: center;
+  padding-bottom: var(--space-m);
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.roleMeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+@container (max-width: 600px) {
+  .roleTable {
+    grid-template-columns: 1fr;
+    row-gap: var(--space-l);
+  }
+  .roleRow {
+    /* Drop subgrid — the name chip stacks above the meta and sample as three
+       clear blocks rather than competing for one row's horizontal space. */
+    grid-template-columns: 1fr;
+    align-items: start;
+    row-gap: var(--space-m);
+    padding-bottom: var(--space-l);
+  }
+}
+
+.roleSample {
+  /* min-width: 0 lets the 1fr column shrink below the sample's intrinsic width
+     — without it, display-xl / display-l samples push the grid wider than the
+     viewport. overflow-wrap covers the long unbroken token names in samples. */
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-family: var(--font-sans);
+  color: var(--color-text);
+}
+
+.roleSample[data-font="mono"] {
+  font-family: var(--font-mono);
+}
+
+.roleSample[data-role="display-xl"] {
+  font-size: var(--text-display-xl-size);
+  line-height: var(--text-display-xl-leading);
+}
+.roleSample[data-role="display-l"] {
+  font-size: var(--text-display-l-size);
+  line-height: var(--text-display-l-leading);
+}
+.roleSample[data-role="heading-l"] {
+  font-size: var(--text-heading-l-size);
+  line-height: var(--text-heading-l-leading);
+}
+.roleSample[data-role="heading-m"] {
+  font-size: var(--text-heading-m-size);
+  line-height: var(--text-heading-m-leading);
+}
+.roleSample[data-role="heading-s"] {
+  font-size: var(--text-heading-s-size);
+  line-height: var(--text-heading-s-leading);
+}
+.roleSample[data-role="subheading"] {
+  font-size: var(--text-subheading-size);
+  line-height: var(--text-subheading-leading);
+}
+.roleSample[data-role="body"] {
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+}
+.roleSample[data-role="label"] {
+  font-size: var(--text-label-size);
+  line-height: var(--text-label-leading);
+}
+.roleSample[data-role="caption-m"] {
+  font-size: var(--text-caption-m-size);
+  line-height: var(--text-caption-m-leading);
+}
+.roleSample[data-role="caption-s"] {
+  font-size: var(--text-caption-s-size);
+  line-height: var(--text-caption-s-leading);
+}
+
+/* -------------------------------------------------------------
+ * Spacing page: scale rows.
+ * ----------------------------------------------------------- */
+
+.spacingTable {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
+  column-gap: var(--space-2xl);
+  row-gap: var(--space-m);
+}
+
+.spacingRow {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  align-items: center;
+  padding-bottom: var(--space-m);
+  border-bottom: 1px solid var(--color-divider);
+}
+
+@container (max-width: 600px) {
+  .spacingTable {
+    grid-template-columns: 1fr;
+    row-gap: var(--space-l);
+  }
+  .spacingRow {
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "token     px"
+      "bar       bar"
+      "primitive primitive";
+    align-items: center;
+    column-gap: var(--space-m);
+    row-gap: var(--space-s);
+    padding-bottom: var(--space-l);
+  }
+  .spacingRow > :nth-child(1) {
+    grid-area: token;
+  }
+  .spacingRow > :nth-child(2) {
+    grid-area: px;
+    justify-self: end;
+  }
+  .spacingRow > :nth-child(3) {
+    grid-area: bar;
+  }
+  .spacingRow > :nth-child(4) {
+    grid-area: primitive;
+  }
+}
+
+.spacingBar {
+  height: 12px;
+  background: var(--color-accent);
+  border-radius: var(--radius-s);
+}
+
+.spacingBar[data-size="2xs"] {
+  width: var(--space-2xs);
+}
+.spacingBar[data-size="xs"] {
+  width: var(--space-xs);
+}
+.spacingBar[data-size="s"] {
+  width: var(--space-s);
+}
+.spacingBar[data-size="m"] {
+  width: var(--space-m);
+}
+.spacingBar[data-size="l"] {
+  width: var(--space-l);
+}
+.spacingBar[data-size="xl"] {
+  width: var(--space-xl);
+}
+.spacingBar[data-size="2xl"] {
+  width: var(--space-2xl);
+}
+.spacingBar[data-size="3xl"] {
+  width: var(--space-3xl);
+}
+.spacingBar[data-size="4xl"] {
+  width: var(--space-4xl);
+}
+.spacingBar[data-size="5xl"] {
+  width: var(--space-5xl);
+}
+.spacingBar[data-size="6xl"] {
+  width: var(--space-6xl);
+}
+.spacingBar[data-size="7xl"] {
+  width: var(--space-7xl);
+}
+
+/* -------------------------------------------------------------
+ * Radius page: scale rows.
+ * ----------------------------------------------------------- */
+
+.radiusTable {
+  display: grid;
+  grid-template-columns: auto auto auto 1fr auto;
+  column-gap: var(--space-2xl);
+  row-gap: var(--space-m);
+}
+
+.radiusRow {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  align-items: center;
+  padding-bottom: var(--space-m);
+  border-bottom: 1px solid var(--color-divider);
+}
+
+@container (max-width: 600px) {
+  .radiusTable {
+    grid-template-columns: 1fr;
+    row-gap: var(--space-l);
+  }
+  .radiusRow {
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "token  token"
+      "sample value"
+      "sample use"
+      "sample primitive";
+    align-items: start;
+    column-gap: var(--space-m);
+    row-gap: var(--space-s);
+    padding-bottom: var(--space-l);
+  }
+  .radiusRow > :nth-child(1) {
+    grid-area: sample;
+  }
+  .radiusRow > :nth-child(2) {
+    grid-area: token;
+  }
+  .radiusRow > :nth-child(3) {
+    grid-area: value;
+  }
+  .radiusRow > :nth-child(4) {
+    grid-area: use;
+  }
+  .radiusRow > :nth-child(5) {
+    grid-area: primitive;
+  }
+}
+
+.radiusSample {
+  width: 60px;
+  height: 60px;
+  background: var(--color-accent-subtle);
+}
+
+.radiusSample[data-size="s"] {
+  border-radius: var(--radius-s);
+}
+.radiusSample[data-size="m"] {
+  border-radius: var(--radius-m);
+}
+.radiusSample[data-size="l"] {
+  border-radius: var(--radius-l);
+}
+.radiusSample[data-size="full"] {
+  border-radius: var(--radius-full);
+}
+
+/* -------------------------------------------------------------
+ * Icons page: gallery tiles.
+ * ----------------------------------------------------------- */
+
+.iconGrid {
+  display: grid;
+  /* auto-fit lets the gallery reflow naturally from 4 → 1 columns as the
+     container shrinks, without us picking arbitrary breakpoints. */
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-l);
+}
+
+.iconTile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  padding: var(--space-l);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-l);
+  background: var(--color-surface-raised);
+}
+
+.iconSample {
+  display: grid;
+  place-items: center;
+  height: 56px;
+  border-radius: var(--radius-m);
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+}
+
+.iconMeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}

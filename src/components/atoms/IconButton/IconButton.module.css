@@ -6,7 +6,7 @@
   padding: 0;
   margin: 0;
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-m);
   appearance: none;
   background: transparent;
   color: var(--color-text-muted);

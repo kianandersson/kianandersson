@@ -6,17 +6,17 @@
 .row {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-sm) var(--space-md);
+  gap: var(--space-m);
+  padding: var(--space-s) var(--space-m);
   border-bottom: 1px solid var(--color-divider);
 }
 
 .inputRow {
-  padding: var(--space-2xs) var(--space-md);
+  padding: var(--space-2xs) var(--space-m);
 }
 
 .messageRow {
-  padding: var(--space-md) var(--space-md);
+  padding: var(--space-m) var(--space-m);
   border-bottom: 0;
 }
 
@@ -29,7 +29,7 @@
   align-items: center;
   gap: var(--space-xs);
   height: 28px;
-  padding: 0 var(--space-sm) 0 var(--space-sm);
+  padding: 0 var(--space-s) 0 var(--space-s);
   background: var(--color-accent-subtle);
   border: 1px solid var(--color-accent-muted);
   border-radius: var(--radius-full);
@@ -51,8 +51,8 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: var(--space-md);
-  padding: var(--space-sm) var(--space-md);
+  gap: var(--space-m);
+  padding: var(--space-s) var(--space-m);
   border-top: 1px solid var(--color-divider);
 }
 

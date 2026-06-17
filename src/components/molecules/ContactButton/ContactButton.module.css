@@ -163,7 +163,7 @@
 @media (hover: hover) and (pointer: fine) {
   .labelledButton:not([aria-expanded="true"]):hover .arrowSlot {
     width: 15px;
-    margin-left: var(--space-sm);
+    margin-left: var(--space-2xs);
     opacity: 1;
     transform: translateX(0);
   }
@@ -176,7 +176,7 @@
 
 .labelledButton[aria-expanded="true"] .arrowSlot {
   width: 15px;
-  margin-left: var(--space-sm);
+  margin-left: var(--space-s);
   opacity: 1;
   transform: translateX(0);
 }

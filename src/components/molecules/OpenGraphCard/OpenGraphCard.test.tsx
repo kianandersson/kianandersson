@@ -3,7 +3,8 @@ import { describe, expect, it } from 'vitest';
 import { OpenGraphCard } from './OpenGraphCard';
 
 const baseProps = {
-  name: 'Kian Andersson',
+  firstName: 'Kian',
+  lastName: 'Andersson',
   role: 'Senior Full-stack Engineer',
   skills: ['TypeScript', 'React', 'AWS'],
 };

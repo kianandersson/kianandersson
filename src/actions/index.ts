@@ -44,7 +44,7 @@ export const server = {
 
         const { error } = await new Resend(env.data.RESEND_API_KEY).emails.send({
           from: `${host} <${env.data.SENDER_EMAIL}>`,
-          to: `${siteConfig.name} <${env.data.RECIPIENT_EMAIL}>`,
+          to: `${siteConfig.fullName} <${env.data.RECIPIENT_EMAIL}>`,
           replyTo: input.email,
           subject: input.subject,
           text: input.message,

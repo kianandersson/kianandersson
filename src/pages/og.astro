@@ -24,7 +24,7 @@ const skills = (await getCollection('skills'))
   <head>
     <meta charset="utf-8" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>{siteConfig.name} — {siteConfig.role}</title>
+    <title>{siteConfig.fullName} — {siteConfig.role}</title>
     <style is:global>
       html,
       body {
@@ -47,7 +47,12 @@ const skills = (await getCollection('skills'))
   </head>
   <body>
     <div class="canvas">
-      <OpenGraphCard name={siteConfig.name} role={siteConfig.role} skills={skills} />
+      <OpenGraphCard
+        firstName={siteConfig.firstName}
+        lastName={siteConfig.lastName}
+        role={siteConfig.role}
+        skills={skills}
+      />
     </div>
   </body>
 </html>

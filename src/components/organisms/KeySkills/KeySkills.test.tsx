@@ -11,29 +11,29 @@ const sampleSkills = [
 
 describe('KeySkills', () => {
   it('announces the section with a "Key skills" heading', () => {
-    render(<KeySkills skills={sampleSkills} />);
+    render(<KeySkills skills={sampleSkills} allSkillsHref="#skills" />);
     expect(screen.getByRole('heading', { level: 2, name: /Key skills/i })).toBeInTheDocument();
   });
 
   it('renders one list item per skill it receives', () => {
-    render(<KeySkills skills={sampleSkills} />);
+    render(<KeySkills skills={sampleSkills} allSkillsHref="#skills" />);
     expect(screen.getAllByRole('listitem')).toHaveLength(3);
   });
 
   it('renders the name of each skill', () => {
-    render(<KeySkills skills={sampleSkills} />);
+    render(<KeySkills skills={sampleSkills} allSkillsHref="#skills" />);
     expect(screen.getByText('TypeScript')).toBeInTheDocument();
     expect(screen.getByText('React')).toBeInTheDocument();
     expect(screen.getByText('Go')).toBeInTheDocument();
   });
 
   it('renders no list items when no skills are provided', () => {
-    render(<KeySkills skills={[]} />);
+    render(<KeySkills skills={[]} allSkillsHref="#skills" />);
     expect(screen.queryAllByRole('listitem')).toHaveLength(0);
   });
 
   it('links to the full skills section', () => {
-    render(<KeySkills skills={sampleSkills} />);
+    render(<KeySkills skills={sampleSkills} allSkillsHref="#skills" />);
     expect(screen.getByRole('link', { name: /All skills/i })).toHaveAttribute('href', '#skills');
   });
 });

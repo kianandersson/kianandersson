@@ -13,7 +13,7 @@
   background: var(--color-surface);
   color: var(--color-text);
   font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
+  -webkit-font-soothing: antialiased;
 }
 
 .identity {
@@ -21,7 +21,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  gap: var(--space-md);
+  gap: var(--space-m);
 }
 
 .name {

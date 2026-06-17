@@ -7,9 +7,12 @@ import styles from './NotFound.module.css';
 
 type Props = {
   requestedUrl?: string;
+  /** Destination for the "Back to home" CTA. Required so the component
+   *  doesn't bake a concrete site path into itself. */
+  homeHref: string;
 };
 
-export function NotFound({ requestedUrl = '/' }: Props) {
+export function NotFound({ requestedUrl = '/', homeHref }: Props) {
   return (
     <div className={styles.root}>
       <div className={styles.eyebrow}>
@@ -54,7 +57,7 @@ export function NotFound({ requestedUrl = '/' }: Props) {
       </Window>
 
       <div className={styles.backButton}>
-        <Button href="/">
+        <Button href={homeHref}>
           <span className={styles.arrow} aria-hidden="true">
             <ArrowIcon direction="left" size={16} />
           </span>

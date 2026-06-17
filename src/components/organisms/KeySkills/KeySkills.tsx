@@ -13,9 +13,12 @@ export type KeySkill = {
 
 type Props = {
   skills: KeySkill[];
+  /** Destination for the "All skills" link in the section header. Required
+   *  so the component doesn't bake a concrete anchor target into itself. */
+  allSkillsHref: string;
 };
 
-export function KeySkills({ skills }: Props) {
+export function KeySkills({ skills, allSkillsHref }: Props) {
   return (
     <div className={styles.root}>
       <SectionHeader
@@ -23,7 +26,7 @@ export function KeySkills({ skills }: Props) {
         id="key-skills-heading"
         action={
           <span class={styles.allSkillsLink}>
-            <TextLink href="#skills">All skills →</TextLink>
+            <TextLink href={allSkillsHref}>All skills →</TextLink>
           </span>
         }
       />

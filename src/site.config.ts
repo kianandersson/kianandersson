@@ -2,8 +2,8 @@ import { z } from 'zod';
 import { LANGUAGE_LEVELS, LANGUAGE_NAMES } from './lib/language';
 
 const SiteConfigSchema = z.object({
-  name: z.string(),
   firstName: z.string(),
+  lastName: z.string(),
   role: z.string(),
   location: z.string(),
   tagline: z.string(),
@@ -21,11 +21,12 @@ const SiteConfigSchema = z.object({
   ),
 });
 
-export type SiteConfig = z.infer<typeof SiteConfigSchema>;
+type SiteConfigInput = z.infer<typeof SiteConfigSchema>;
+export type SiteConfig = SiteConfigInput & { fullName: string };
 
-export const siteConfig: SiteConfig = SiteConfigSchema.parse({
-  name: 'Kian Andersson',
+const parsed = SiteConfigSchema.parse({
   firstName: 'Kian',
+  lastName: 'Andersson',
   role: 'Senior Full-stack Engineer',
   location: 'Denmark',
   tagline:
@@ -41,3 +42,8 @@ export const siteConfig: SiteConfig = SiteConfigSchema.parse({
     { name: 'English', level: 'Fluent' },
   ],
 });
+
+export const siteConfig: SiteConfig = {
+  ...parsed,
+  fullName: `${parsed.firstName} ${parsed.lastName}`,
+};

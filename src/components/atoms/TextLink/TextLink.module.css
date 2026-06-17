@@ -4,7 +4,7 @@
   padding: var(--space-2xs) var(--space-xs);
   margin: 0;
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-s);
   appearance: none;
   background: transparent;
   font-family: var(--font-mono);

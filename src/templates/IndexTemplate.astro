@@ -33,7 +33,7 @@ const { hero, keySkills, experience, skillGroups, languages } = Astro.props;
     </Hero>
   </section>
   <section id="key-skills" aria-labelledby="key-skills-heading">
-    <KeySkills skills={keySkills} />
+    <KeySkills skills={keySkills} allSkillsHref="#skills" />
   </section>
   <section id="experience" aria-labelledby="experience-heading">
     <Experience entries={experience} client:visible />
