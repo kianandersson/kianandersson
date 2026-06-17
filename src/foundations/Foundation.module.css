@@ -240,6 +240,12 @@
     /* Hide the scrollbar across browsers; the gesture is direct, not a
        scoped scroll region — the visible swatches are the affordance. */
     scrollbar-width: none;
+    /* Full-bleed: stretch the scroll container to the viewport edges so
+       swatches scroll out at the literal edge instead of stopping at the
+       page's padded inset. `padding-inline` puts the first swatch back where
+       the page content starts visually. */
+    margin-inline: calc(50% - 50vw);
+    padding-inline: calc(50vw - 50%);
   }
   .rampGrid::-webkit-scrollbar {
     display: none;
