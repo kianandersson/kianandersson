@@ -89,8 +89,10 @@ describe('Contact', () => {
       await user.type(screen.getByLabelText(/message/i), 'Hello');
       await user.click(screen.getByRole('button', { name: /send message/i }));
 
+      // Past planeFlightMs (500) + successEnterAfterMs (formLeaveMs/2 = 140):
+      // the plane has flown, the form has animated out, the success line is in.
       await act(async () => {
-        await vi.advanceTimersByTimeAsync(280);
+        await vi.advanceTimersByTimeAsync(500 + 140);
       });
       expect(screen.getByText(/message sent/i)).toBeInTheDocument();
 

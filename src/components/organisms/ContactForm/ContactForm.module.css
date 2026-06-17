@@ -78,7 +78,7 @@
   }
 }
 
-.send.sending .plane {
+.send.flying .plane {
   animation: flyoff 0.5s ease-in forwards;
 }
 
@@ -94,7 +94,7 @@
   .send {
     transition: none;
   }
-  .send.sending .plane {
+  .send.flying .plane {
     animation: none;
     opacity: 0;
   }

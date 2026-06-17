@@ -15,6 +15,8 @@ type Options = {
   formLeaveMs?: number;
   /** How long the success line takes to fade out. */
   successLeaveMs?: number;
+  /** How long the send-icon plane stays in flight before the form leaves. */
+  planeFlightMs?: number;
 };
 
 const DEFAULTS = {
@@ -22,12 +24,14 @@ const DEFAULTS = {
   resetDelayMs: 560,
   formLeaveMs: 280,
   successLeaveMs: 400,
+  planeFlightMs: 500,
 };
 
 const delay = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
 /**
- * Drives the open/close + submit/success animation lifecycle for ContactCta.
+ * Drives the open/close + submit/success animation lifecycle for the Contact
+ * organism.
  *
  * Race-safety: every async checkpoint compares against a per-attempt token, so
  * a second submit (or a close) cancels the prior flow's pending transitions.
@@ -37,6 +41,7 @@ export function useContactSubmission(options: Options) {
   const resetDelayMs = options.resetDelayMs ?? DEFAULTS.resetDelayMs;
   const formLeaveMs = options.formLeaveMs ?? DEFAULTS.formLeaveMs;
   const successLeaveMs = options.successLeaveMs ?? DEFAULTS.successLeaveMs;
+  const planeFlightMs = options.planeFlightMs ?? DEFAULTS.planeFlightMs;
   const successEnterAfterMs = formLeaveMs / 2;
 
   const [open, setOpen] = useState(false);
@@ -102,6 +107,12 @@ export function useContactSubmission(options: Options) {
       setErrorMessage("Couldn't send — please try again in a moment.");
       return;
     }
+
+    // Plane flies while the form is still visible. The form only starts to
+    // leave once the flight completes.
+    setStatus('sent');
+    await delay(planeFlightMs);
+    if (requestToken.current !== token) return;
 
     setFormLeaving(true);
     await delay(successEnterAfterMs);

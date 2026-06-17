@@ -2,6 +2,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-xs);
+  height: 44px;
   padding: 0 var(--space-xl);
   border: none;
   border-radius: var(--radius-full);
@@ -18,14 +19,6 @@
   transition:
     transform 0.12s ease,
     opacity 0.2s ease;
-}
-
-.md {
-  height: 40px;
-}
-
-.lg {
-  height: 44px;
 }
 
 .button:focus-visible {

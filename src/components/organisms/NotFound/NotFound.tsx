@@ -54,8 +54,10 @@ export function NotFound({ requestedUrl = '/' }: Props) {
       </Window>
 
       <div className={styles.backButton}>
-        <Button href="/" size="lg">
-          <ArrowIcon direction="left" size={16} />
+        <Button href="/">
+          <span className={styles.arrow} aria-hidden="true">
+            <ArrowIcon direction="left" size={16} />
+          </span>
           Back to home
         </Button>
       </div>

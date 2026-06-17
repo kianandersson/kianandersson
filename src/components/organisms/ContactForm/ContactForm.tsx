@@ -18,7 +18,7 @@ export type ContactPayload = {
   subject: string;
   message: string;
 };
-export type ContactStatus = 'idle' | 'sending' | 'error';
+export type ContactStatus = 'idle' | 'sending' | 'sent' | 'error';
 
 type Props = {
   recipientName: string;
@@ -45,10 +45,12 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
     trimmedMessage.length > 0 &&
     trimmedMessage.length <= CONTACT_MESSAGE_MAX;
   const sending = status === 'sending';
+  const sent = status === 'sent';
+  const locked = sending || sent;
 
   function handleSubmit(event: Event) {
     event.preventDefault();
-    if (!valid || sending) return;
+    if (!valid || locked) return;
     onSubmit({
       email: trimmedEmail,
       subject: trimmedSubject,
@@ -84,7 +86,7 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
               autocomplete="email"
               value={email}
               onInput={(event) => setEmail((event.target as HTMLInputElement).value)}
-              disabled={sending}
+              disabled={locked}
               required
             />
           </div>
@@ -100,7 +102,7 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
               autocomplete="off"
               value={subject}
               onInput={(event) => setSubject((event.target as HTMLInputElement).value)}
-              disabled={sending}
+              disabled={locked}
               maxLength={CONTACT_SUBJECT_MAX}
               required
             />
@@ -113,7 +115,7 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
               aria-label="Message"
               value={message}
               onInput={(event) => setMessage((event.target as HTMLTextAreaElement).value)}
-              disabled={sending}
+              disabled={locked}
               maxLength={CONTACT_MESSAGE_MAX}
               required
             />
@@ -127,9 +129,9 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
                 </Text>
               </span>
             ) : null}
-            <span class={sending ? `${styles.send} ${styles.sending}` : styles.send}>
-              <Button type="submit" size="md" disabled={!valid || sending}>
-                {sending ? 'Sending…' : 'Send message'}
+            <span class={sent ? `${styles.send} ${styles.flying}` : styles.send}>
+              <Button type="submit" disabled={!valid || locked}>
+                {locked ? 'Sending…' : 'Send message'}
                 <span class={styles.plane} aria-hidden="true">
                   <SendIcon />
                 </span>

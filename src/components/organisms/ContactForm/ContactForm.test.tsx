@@ -58,8 +58,15 @@ describe('ContactForm', () => {
     render(<ContactForm {...baseProps} status="sending" onSubmit={vi.fn()} />);
     const send = screen.getByRole('button', { name: /sending/i });
     expect(send).toBeDisabled();
-    // The sending-state class lives on the wrapper span around the button.
-    expect(send.parentElement?.className).toMatch(/_sending_/);
+    // No plane flight during loading.
+    expect(send.parentElement?.className).not.toMatch(/_flying_/);
+  });
+
+  it('triggers the plane flight only once the send has succeeded', () => {
+    render(<ContactForm {...baseProps} status="sent" onSubmit={vi.fn()} />);
+    const send = screen.getByRole('button', { name: /sending/i });
+    expect(send).toBeDisabled();
+    expect(send.parentElement?.className).toMatch(/_flying_/);
   });
 
   it('hides the error line until status is "error"', () => {

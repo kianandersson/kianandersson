@@ -53,8 +53,33 @@
   color: var(--color-text-muted);
 }
 
-.backButton {
-  gap: var(--space-sm);
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  width: 0;
+  margin-right: 0;
+  opacity: 0;
+  transform: translateX(calc(var(--space-3) / 2));
+  transition:
+    width 0.25s ease,
+    margin-right 0.25s ease,
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.backButton:has(a:hover) .arrow,
+.backButton:has(a:focus-visible) .arrow {
+  width: 16px;
+  margin-right: var(--space-sm);
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrow {
+    transition: none;
+  }
 }
 
 @media print {

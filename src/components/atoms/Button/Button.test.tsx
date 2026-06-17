@@ -67,14 +67,4 @@ describe('Button', () => {
     await user.click(screen.getByRole('button'));
     expect(onClick).not.toHaveBeenCalled();
   });
-
-  it('applies the md size class by default', () => {
-    const { container } = render(<Button>Send</Button>);
-    expect(container.firstElementChild?.className).toMatch(/_md_/);
-  });
-
-  it('applies the lg size class when size="lg"', () => {
-    const { container } = render(<Button size="lg">Send</Button>);
-    expect(container.firstElementChild?.className).toMatch(/_lg_/);
-  });
 });
