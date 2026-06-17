@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/preact-vite';
+import { expect, userEvent, within } from 'storybook/test';
 import { FieldLabel } from './FieldLabel';
 
 const meta: Meta<typeof FieldLabel> = {
@@ -25,4 +26,18 @@ const meta: Meta<typeof FieldLabel> = {
 export default meta;
 type Story = StoryObj<typeof FieldLabel>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    const label = canvas.getByText(args.children as string);
+    const input = canvas.getByRole('textbox');
+    await expect(label.tagName).toBe('LABEL');
+    await expect(label).toHaveAttribute('for', args.for as string);
+    await userEvent.click(label);
+    await expect(input).toHaveFocus();
+  },
+};
+
+export const Muted: Story = {
+  args: { tone: 'muted' },
+};
