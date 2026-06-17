@@ -22,7 +22,10 @@ const meta: Meta<typeof ContactButton> = {
 export default meta;
 type Story = StoryObj<typeof ContactButton>;
 
-export const Default: Story = {
+export const Default: Story = {};
+
+export const ClickBehavior: Story = {
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByRole('button', { name: /get in touch/i });

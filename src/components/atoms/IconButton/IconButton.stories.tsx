@@ -22,7 +22,10 @@ const meta: Meta<typeof IconButton> = {
 export default meta;
 type Story = StoryObj<typeof IconButton>;
 
-export const Default: Story = {
+export const Default: Story = {};
+
+export const ClickBehavior: Story = {
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByRole('button', { name: /github/i });

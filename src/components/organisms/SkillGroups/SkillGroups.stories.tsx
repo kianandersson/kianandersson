@@ -37,7 +37,10 @@ const meta: Meta<typeof SkillGroups> = {
 export default meta;
 type Story = StoryObj<typeof SkillGroups>;
 
-export const Default: Story = {
+export const Default: Story = {};
+
+export const SingleOpenBehavior: Story = {
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 

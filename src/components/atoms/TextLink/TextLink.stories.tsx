@@ -20,7 +20,10 @@ const meta: Meta<typeof TextLink> = {
 export default meta;
 type Story = StoryObj<typeof TextLink>;
 
-export const Default: Story = {
+export const Default: Story = {};
+
+export const ClickBehavior: Story = {
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByRole('button', { name: /\+3 more/i });

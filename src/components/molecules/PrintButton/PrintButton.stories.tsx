@@ -10,7 +10,10 @@ const meta: Meta<typeof PrintButton> = {
 export default meta;
 type Story = StoryObj<typeof PrintButton>;
 
-export const Default: Story = {
+export const Default: Story = {};
+
+export const InvokesPrintBehavior: Story = {
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByRole('button', { name: /print/i });

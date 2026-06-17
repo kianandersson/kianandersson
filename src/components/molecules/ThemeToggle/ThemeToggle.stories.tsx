@@ -10,7 +10,10 @@ const meta: Meta<typeof ThemeToggle> = {
 export default meta;
 type Story = StoryObj<typeof ThemeToggle>;
 
-export const Default: Story = {
+export const Default: Story = {};
+
+export const RoundTripBehavior: Story = {
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     localStorage.removeItem('theme');
     document.documentElement.dataset.theme = 'light';
