@@ -3,23 +3,25 @@
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
   align-items: center;
-  column-gap: 16px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--line);
+  column-gap: var(--space-md);
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .name {
   font-family: var(--font-sans);
-  font-size: 15px;
-  color: var(--text);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+  color: var(--color-text);
   white-space: nowrap;
 }
 
 .level,
 .years {
   font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--dim);
+  font-size: var(--text-caption-s-size);
+  line-height: var(--text-caption-s-leading);
+  color: var(--color-text-muted);
   white-space: nowrap;
   text-align: right;
 }
@@ -34,7 +36,7 @@
     grid-template-areas:
       "name meter"
       "level years";
-    row-gap: 8px;
+    row-gap: var(--space-xs);
   }
 
   .name {

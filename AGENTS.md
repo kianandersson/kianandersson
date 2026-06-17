@@ -28,7 +28,7 @@ JS only sets `document.documentElement.dataset.theme`. Tokens drive everything e
 ## Testing
 
 - **Vitest** — pure logic and islands, behavior-level.
-- **Playwright** — flows, screenshot diff (one per breakpoint per page), axe in every e2e.
+- **Playwright** — flows + axe on `index.astro` and `404.astro`. No screenshot diff; visual regressions are caught by manual verification on those two pages.
 
 Strict red-green-refactor on the Vitest layer. Playwright/axe are gates, not test-first targets.
 
@@ -57,3 +57,4 @@ Region/landmark assertions belong at the template or e2e layer, not in organism 
 - Trust framework guarantees.
 - No comments unless the WHY is non-obvious.
 - English in all artifacts.
+- Naming conventions: see `docs/naming-conventions.md`. Follow them.

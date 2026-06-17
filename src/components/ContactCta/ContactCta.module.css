@@ -8,13 +8,13 @@
 }
 
 .root[data-open="true"] {
-  gap: 24px;
+  gap: var(--space-xl);
 }
 
 .triggerRow {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-sm);
   flex-wrap: wrap;
 }
 
@@ -30,9 +30,9 @@
   height: 44px;
   padding: 0;
   border: none;
-  border-radius: 50%;
-  background: var(--text);
-  color: var(--bg);
+  border-radius: var(--radius-full);
+  background: var(--color-text);
+  color: var(--color-surface);
   cursor: pointer;
   overflow: hidden;
   transition:
@@ -46,7 +46,7 @@
 }
 
 .iconButton:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--color-accent);
   outline-offset: 3px;
 }
 
@@ -66,7 +66,7 @@
 
 .iconStack > .icArrow {
   opacity: 0;
-  transform: translateX(-12px);
+  transform: translateX(calc(var(--space-3) * -1));
 }
 
 .iconStack > .icX {
@@ -77,7 +77,7 @@
 @media (hover: hover) and (pointer: fine) {
   .iconButton:not([data-open="true"]):hover .iconStack > .icAt {
     opacity: 0;
-    transform: translateX(12px);
+    transform: translateX(var(--space-3));
   }
   .iconButton:not([data-open="true"]):hover .iconStack > .icArrow {
     opacity: 1;
@@ -86,13 +86,13 @@
 }
 
 .iconButton[data-open="true"] {
-  background: var(--accent);
+  background: var(--color-accent);
   color: #ffffff;
 }
 
 .iconButton[data-open="true"] .iconStack > .icAt {
   opacity: 0;
-  transform: translateX(12px);
+  transform: translateX(var(--space-3));
 }
 
 /* Park the arrow on-axis (opacity 0) so close → hover fades it in without
@@ -116,13 +116,14 @@
   display: inline-flex;
   align-items: center;
   height: 44px;
-  padding: 0 22px;
+  padding: 0 var(--space-xl);
   border: none;
-  border-radius: 980px;
-  background: var(--text);
-  color: var(--bg);
+  border-radius: var(--radius-full);
+  background: var(--color-text);
+  color: var(--color-surface);
   font-family: var(--font-sans);
-  font-size: 15px;
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
   font-weight: 500;
   cursor: pointer;
   transition:
@@ -136,7 +137,7 @@
 }
 
 .labelledButton:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--color-accent);
   outline-offset: 3px;
 }
 
@@ -151,7 +152,7 @@
   width: 0;
   margin-left: 0;
   opacity: 0;
-  transform: translateX(-12px);
+  transform: translateX(calc(var(--space-3) * -1));
   transition:
     width 0.26s ease,
     margin-left 0.26s ease,
@@ -176,20 +177,20 @@
 @media (hover: hover) and (pointer: fine) {
   .labelledButton:not([data-open="true"]):hover .arrowSlot {
     width: 15px;
-    margin-left: 12px;
+    margin-left: var(--space-sm);
     opacity: 1;
     transform: translateX(0);
   }
 }
 
 .labelledButton[data-open="true"] {
-  background: var(--accent);
+  background: var(--color-accent);
   color: #ffffff;
 }
 
 .labelledButton[data-open="true"] .arrowSlot {
   width: 15px;
-  margin-left: 12px;
+  margin-left: var(--space-sm);
   opacity: 1;
   transform: translateX(0);
 }
@@ -252,7 +253,7 @@
 .formWrap[data-leaving="true"] {
   grid-template-rows: 0fr;
   opacity: 0;
-  transform: translateY(-8px);
+  transform: translateY(calc(var(--space-2) * -1));
   pointer-events: none;
 }
 
@@ -260,7 +261,7 @@
   margin: 0;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-sm);
   flex-wrap: wrap;
   font-family: var(--font-mono);
   animation: rise 0.4s ease both;
@@ -271,19 +272,21 @@
 }
 
 .successArrow {
-  color: var(--accent);
-  font-size: 15px;
+  color: var(--color-accent);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
 }
 
 .successText {
-  color: var(--text);
-  font-size: 14px;
+  color: var(--color-text);
+  font-size: var(--text-caption-m-size);
+  line-height: var(--text-caption-m-leading);
 }
 
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(-12px);
+    transform: translateY(calc(var(--space-3) * -1));
   }
   to {
     opacity: 1;
@@ -298,7 +301,7 @@
   }
   to {
     opacity: 0;
-    transform: translateY(-12px);
+    transform: translateY(calc(var(--space-3) * -1));
   }
 }
 

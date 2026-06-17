@@ -6,12 +6,12 @@
   box-sizing: border-box;
   width: 600px;
   aspect-ratio: 1200 / 630;
-  padding: 38px 40px;
+  padding: var(--space-4xl) var(--space-4xl);
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  background: var(--bg);
-  color: var(--text);
+  gap: var(--space-xl);
+  background: var(--color-surface);
+  color: var(--color-text);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
@@ -21,27 +21,27 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  gap: 14px;
+  gap: var(--space-md);
 }
 
 .name {
-  font-size: 58px;
+  font-size: 60px;
   font-weight: 600;
   line-height: 0.94;
   letter-spacing: -0.038em;
   margin: 0;
-  color: var(--text);
+  color: var(--color-text);
 }
 
 .role {
-  font-size: 16px;
+  font-size: 20px;
   line-height: 1.3;
   margin: 0;
-  color: var(--dim);
+  color: var(--color-text-muted);
 }
 
 .chips {
   display: flex;
-  gap: 6px;
+  gap: var(--space-xs);
   flex-wrap: wrap;
 }

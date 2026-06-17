@@ -2,36 +2,37 @@
   container-type: inline-size;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--space-md);
 }
 
 .header {
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  gap: var(--space-xs);
 }
 
 .allSkillsLink {
   margin-left: auto;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--text-caption-s-size);
+  line-height: var(--text-caption-s-leading);
   white-space: nowrap;
-  color: var(--faint);
-  padding: 4px 8px;
-  border-radius: 4px;
+  color: var(--color-text-muted);
+  padding: var(--space-2xs) var(--space-xs);
+  border-radius: var(--radius-sm);
   transition: color 0.2s;
   text-decoration: none;
 }
 
 .allSkillsLink:focus-visible {
-  color: var(--accent);
-  outline: 2px solid var(--accent);
+  color: var(--color-accent-strong);
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
 
 @media (hover: hover) {
   .allSkillsLink:hover {
-    color: var(--accent);
+    color: var(--color-accent-strong);
   }
 }
 
@@ -43,18 +44,20 @@
 
 .hash {
   font-family: var(--font-mono);
-  color: var(--accent);
+  color: var(--color-accent);
   font-weight: 600;
-  font-size: 15px;
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
 }
 
 .heading {
   margin: 0;
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 24px;
+  font-size: var(--text-heading-m-size);
+  line-height: var(--text-heading-m-leading);
   letter-spacing: -0.015em;
-  color: var(--text);
+  color: var(--color-text);
   white-space: nowrap;
 }
 
@@ -64,7 +67,7 @@
   padding: 0;
   display: grid;
   grid-template-columns: 1fr auto auto auto;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--color-divider);
 }
 
 @container (max-width: 480px) {

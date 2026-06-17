@@ -1,20 +1,20 @@
 .chip {
   font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 1.5;
-  padding: 4px 12px;
-  border-radius: 4px;
+  font-size: var(--text-caption-s-size);
+  line-height: var(--text-caption-s-leading);
+  padding: var(--space-2xs) var(--space-sm);
+  border-radius: var(--radius-sm);
   white-space: nowrap;
 }
 
 .chip[data-variant="stack"] {
-  color: var(--accent);
-  background: var(--accent-soft);
+  color: var(--color-accent-strong);
+  background: var(--color-accent-subtle);
 }
 
 .chip[data-variant="methods"] {
-  color: var(--dim);
-  background: var(--chip);
+  color: var(--color-text-muted);
+  background: var(--color-surface-muted);
 }
 
 .chip[data-hidden="true"] {
@@ -24,7 +24,7 @@
 @media print {
   .chip[data-variant="stack"],
   .chip[data-variant="methods"] {
-    padding: 0 4px;
+    padding: 0 var(--space-2xs);
     background: transparent;
   }
 }

@@ -3,24 +3,24 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--surface);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-raised);
   overflow: hidden;
 }
 
 .titleBar {
   display: flex;
   align-items: center;
-  gap: 9px;
-  padding: 11px 15px;
-  border-bottom: 1px solid var(--line);
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .trafficDot {
   width: 13px;
   height: 13px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
 }
 
 .dotRed {
@@ -43,63 +43,66 @@
 .row {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 11px 16px;
-  border-bottom: 1px solid var(--line);
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .inputRow {
-  padding: 4px 16px;
+  padding: var(--space-2xs) var(--space-md);
 }
 
 .messageRow {
-  padding: 14px 16px;
+  padding: var(--space-md) var(--space-md);
   border-bottom: 0;
 }
 
 .fieldLabel {
   flex: 0 0 52px;
   font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--faint);
+  font-size: var(--text-label-size);
+  line-height: var(--text-label-leading);
+  color: var(--color-text-subtle);
 }
 
 .recipient {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-xs);
   height: 28px;
-  padding: 0 13px 0 11px;
-  background: var(--accent-soft);
-  border: 1px solid var(--accent-line);
-  border-radius: 980px;
+  padding: 0 var(--space-sm) 0 var(--space-sm);
+  background: var(--color-accent-subtle);
+  border: 1px solid var(--color-accent-muted);
+  border-radius: var(--radius-full);
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: var(--text-caption-m-size);
+  line-height: var(--text-caption-m-leading);
   font-weight: 500;
-  color: var(--text);
+  color: var(--color-text);
 }
 
 .recipientDot {
   width: 7px;
   height: 7px;
-  border-radius: 50%;
-  background: var(--accent);
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
 }
 
 .input,
 .textarea {
   font-family: var(--font-sans);
-  font-size: 15px;
-  color: var(--text);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+  color: var(--color-text);
   background: transparent;
   border: 0;
   width: 100%;
-  caret-color: var(--accent);
+  caret-color: var(--color-accent);
 }
 
 .input {
   flex: 1;
-  padding: 11px 0;
+  padding: var(--space-sm) 0;
 }
 
 .input:focus,
@@ -109,7 +112,7 @@
 
 .input::placeholder,
 .textarea::placeholder {
-  color: var(--faint);
+  color: var(--color-text-subtle);
 }
 
 .input:-webkit-autofill,
@@ -118,16 +121,16 @@
 .textarea:-webkit-autofill,
 .textarea:-webkit-autofill:hover,
 .textarea:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 1000px var(--surface) inset;
-  -webkit-text-fill-color: var(--text);
-  caret-color: var(--accent);
+  -webkit-box-shadow: 0 0 0 1000px var(--color-surface-raised) inset;
+  -webkit-text-fill-color: var(--color-text);
+  caret-color: var(--color-accent);
   transition: background-color 5000s ease-in-out 0s;
 }
 
 .textarea {
   min-height: 120px;
   resize: vertical;
-  line-height: 1.6;
+  line-height: var(--text-body-leading);
   padding: 0;
 }
 
@@ -135,31 +138,33 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 14px;
-  padding: 12px 16px;
-  border-top: 1px solid var(--line);
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border-top: 1px solid var(--color-divider);
 }
 
 .error {
   font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--dim);
+  font-size: var(--text-caption-s-size);
+  line-height: var(--text-caption-s-leading);
+  color: var(--color-text-muted);
   margin-right: auto;
 }
 
 .send {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
+  gap: var(--space-xs);
   flex-shrink: 0;
   height: 40px;
-  padding: 0 22px;
-  border-radius: 980px;
+  padding: 0 var(--space-xl);
+  border-radius: var(--radius-full);
   border: 0;
-  background: var(--text);
-  color: var(--bg);
+  background: var(--color-text);
+  color: var(--color-surface);
   font-family: var(--font-sans);
-  font-size: 15px;
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
   font-weight: 500;
   cursor: pointer;
   transition: opacity 0.2s ease;
@@ -171,7 +176,7 @@
 }
 
 .send:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--color-accent);
   outline-offset: 3px;
 }
 

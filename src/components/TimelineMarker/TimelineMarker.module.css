@@ -1,12 +1,12 @@
 .marker {
   position: absolute;
-  left: -31px;
-  top: 8px;
+  left: calc(1px - var(--space-xl));
+  top: var(--space-2);
   width: 8px;
   height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 4px var(--accent-soft);
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
+  box-shadow: 0 0 0 4px var(--color-accent-subtle);
 }
 
 @media print {

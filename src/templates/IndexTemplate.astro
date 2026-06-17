@@ -1,7 +1,7 @@
 ---
 import { ContactCta } from '../components/ContactCta/ContactCta';
 import { Experience, type ExperienceEntry } from '../components/Experience/Experience';
-import Hero from '../components/Hero/Hero.astro';
+import { Hero } from '../components/Hero/Hero';
 import { type KeySkill, KeySkills } from '../components/KeySkills/KeySkills';
 import { type Language, Miscellaneous } from '../components/Miscellaneous/Miscellaneous';
 import { type SkillGroup, SkillGroups } from '../components/SkillGroups/SkillGroups';
@@ -34,7 +34,7 @@ const { hero, keySkills, experience, skillGroups, languages } = Astro.props;
   <section id="key-skills" aria-labelledby="key-skills-heading">
     <KeySkills skills={keySkills} />
   </section>
-  <section  id="experience" aria-labelledby="experience-heading">
+  <section id="experience" aria-labelledby="experience-heading">
     <Experience entries={experience} client:visible />
   </section>
   <section id="skills" aria-labelledby="skills-heading">
@@ -51,7 +51,7 @@ const { hero, keySkills, experience, skillGroups, languages } = Astro.props;
     box-sizing: border-box;
     max-width: var(--container-max);
     margin: 0 auto;
-    padding: 64px var(--container-pad) 100px;
+    padding: 64px var(--container-padding) 100px;
     display: flex;
     flex-direction: column;
     gap: 72px;

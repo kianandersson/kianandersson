@@ -2,69 +2,71 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 24px;
+  gap: var(--space-xl);
 }
 
 .eyebrow {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-xs);
 }
 
 .hashes {
   font-family: var(--font-mono);
-  color: var(--accent);
+  color: var(--color-accent);
   font-weight: 600;
-  font-size: 15px;
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
 }
 
 .eyebrowLabel {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--text-caption-s-size);
+  line-height: var(--text-caption-s-leading);
   letter-spacing: 0.08em;
-  color: var(--dim);
+  color: var(--color-text-muted);
 }
 
 .heading {
   margin: 0;
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 28px;
-  line-height: 1.15;
+  font-size: var(--text-heading-l-size);
+  line-height: var(--text-heading-l-leading);
   letter-spacing: -0.025em;
-  color: var(--text);
+  color: var(--color-text);
 }
 
 .body {
   margin: 0;
   font-family: var(--font-sans);
-  font-size: 18px;
-  line-height: 1.6;
-  color: var(--dim);
+  font-size: var(--text-subheading-size);
+  line-height: var(--text-body-leading);
+  color: var(--color-text-muted);
 }
 
 .terminal {
   display: flex;
   flex-direction: column;
   width: 100%;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--surface);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-raised);
   overflow: hidden;
 }
 
 .terminalBar {
   display: flex;
   align-items: center;
-  gap: 9px;
-  padding: 11px 15px;
-  border-bottom: 1px solid var(--line);
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .dot {
   width: 13px;
   height: 13px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
 }
 
 .dotRed {
@@ -80,34 +82,35 @@
 }
 
 .terminalTitle {
-  margin-left: 6px;
+  margin-left: var(--space-xs);
   font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--dim);
+  font-size: var(--text-caption-s-size);
+  line-height: var(--text-caption-s-leading);
+  color: var(--color-text-muted);
 }
 
 .terminalBody {
   display: flex;
   flex-direction: column;
-  padding: 16px;
+  padding: var(--space-md);
   font-family: var(--font-mono);
-  font-size: 13px;
-  line-height: 1.9;
+  font-size: var(--text-caption-m-size);
+  line-height: 2;
 }
 
 .line {
-  color: var(--text);
+  color: var(--color-text);
   word-break: break-all;
 }
 
 .prompt {
-  color: var(--accent);
+  color: var(--color-accent);
 }
 
 .url {
-  color: var(--text);
+  color: var(--color-text);
 }
 
 .response {
-  color: var(--dim);
+  color: var(--color-text-muted);
 }
