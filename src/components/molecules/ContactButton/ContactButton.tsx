@@ -1,5 +1,5 @@
 import { ArrowIcon, CloseIcon, ContactIcon } from '../../atoms/icons';
-import styles from './Contact.module.css';
+import styles from './ContactButton.module.css';
 
 export type ContactButtonVariant = 'icon' | 'labelled';
 
@@ -12,11 +12,10 @@ type Props = {
 };
 
 /**
- * Trigger button for the Contact section. Picks between the icon-only round
- * button (shown alongside an AvailabilityStatus) and the labelled pill
- * ("Get in touch"). Both variants render their own native <button> so all
- * chrome (shape, color, animation, aria-expanded state flip) is fully owned
- * here.
+ * Toggle button for an inline contact form. Picks between an icon-only round
+ * trigger (typically shown next to an availability indicator) and a labelled
+ * pill ("Get in touch"). Both variants render their own native <button> so all
+ * chrome (shape, color, animation, aria-expanded state flip) is fully owned.
  */
 export function ContactButton({ variant, isOpen, ariaLabel, controlsId, onClick }: Props) {
   if (variant === 'icon') {

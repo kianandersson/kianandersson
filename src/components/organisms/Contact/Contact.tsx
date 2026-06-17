@@ -2,9 +2,9 @@ import { actions } from 'astro:actions';
 import { useId } from 'preact/hooks';
 import { formatDate } from '../../../lib/formatDate';
 import { AvailabilityStatus } from '../../atoms/AvailabilityStatus';
+import { ContactButton } from '../../molecules/ContactButton';
 import { ContactForm, type ContactStatus } from '../ContactForm';
 import styles from './Contact.module.css';
-import { ContactButton } from './ContactButton';
 import { useContactSubmission } from './useContactSubmission';
 
 export type ContactProps = {
