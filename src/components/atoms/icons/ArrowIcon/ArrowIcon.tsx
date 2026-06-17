@@ -1,15 +1,25 @@
 import type { IconProps } from '../types';
 
-export type ArrowDirection = 'left' | 'right';
+export type ArrowDirection = 'up' | 'right' | 'down' | 'left';
 
 type Props = IconProps & {
   direction: ArrowDirection;
 };
 
+const ROTATIONS: Record<ArrowDirection, number> = {
+  right: 0,
+  down: 90,
+  left: 180,
+  up: 270,
+};
+
 export function ArrowIcon({ size = 16, class: className, direction }: Props) {
+  const rotation = ROTATIONS[direction];
+  const style = rotation === 0 ? undefined : { transform: `rotate(${rotation}deg)` };
   return (
     <svg
       class={className}
+      style={style}
       width={size}
       height={size}
       viewBox="0 0 24 24"
@@ -20,17 +30,8 @@ export function ArrowIcon({ size = 16, class: className, direction }: Props) {
       stroke-linejoin="round"
       aria-hidden="true"
     >
-      {direction === 'left' ? (
-        <>
-          <path d="M19 12H5" />
-          <path d="M11 6l-6 6 6 6" />
-        </>
-      ) : (
-        <>
-          <path d="M5 12h14" />
-          <path d="M13 6l6 6-6 6" />
-        </>
-      )}
+      <path d="M5 12h14" />
+      <path d="M13 6l6 6-6 6" />
     </svg>
   );
 }

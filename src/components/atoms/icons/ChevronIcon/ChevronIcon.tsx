@@ -1,6 +1,6 @@
 import type { IconProps } from '../types';
 
-export type ChevronDirection = 'down';
+export type ChevronDirection = 'up' | 'right' | 'down' | 'left';
 
 type Props = IconProps & {
   direction: ChevronDirection;
@@ -8,6 +8,9 @@ type Props = IconProps & {
 
 const ROTATIONS: Record<ChevronDirection, number> = {
   down: 0,
+  left: 90,
+  up: 180,
+  right: 270,
 };
 
 export function ChevronIcon({ size = 15, class: className, direction }: Props) {

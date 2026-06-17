@@ -162,21 +162,26 @@ src/components/
 
 ### Naming
 
-- **File name:** `kebab-case`, describing the _motif_, not the usage — `arrow-right.svg`, `chevron-down.svg`, `trash.svg`.
-- **Component (if SVGs are wrapped in React):** `PascalCase` with an `Icon` suffix — `ArrowRightIcon`, `ChevronDownIcon`.
+- **Raw SVG asset** (a static file dropped into `public/` or similar): `kebab-case`, describing the _motif_ — `arrow.svg`, `chevron.svg`, `trash.svg`.
+- **React-wrapper component:** PascalCase folder + file per §4, with an `Icon` suffix — `ArrowIcon.tsx`, `ChevronIcon.tsx`, `CloseIcon.tsx`.
 
-### Describe the motif, not the function
+### Motif vs. role
 
-An icon can be used in several places; name it by what it shows:
+Two valid axes; pick the one that reads clearest at the call site.
 
-- ✅ `trash.svg` (motif)
-- ❌ `delete-button-icon.svg` (function + context)
+1. **Motif** (default) — name by what the icon visually shows: `ArrowIcon`, `ChevronIcon`, `GitHubIcon`, `SendIcon` (paper plane).
+2. **Role** — name by the function the icon represents when the motif and role are 1:1 _and_ the role is universally understood at a glance: `CloseIcon` (X), `ContactIcon` (at-sign), `LightModeIcon` (sun), `DarkModeIcon` (moon), `PrintIcon` (printer).
 
-### Consistent pairs and directions
+Avoid context-leaking names (`DeleteButtonIcon`, `HeaderSearchIcon`). Avoid role names when the same shape carries multiple roles (a pencil could be edit / write / draw — keep it `PencilIcon`).
 
-- Direction as a suffix: `chevron-up`, `chevron-down`, `chevron-left`, `chevron-right`.
-- Filled vs. outline as a suffix when both exist: `heart-outline`, `heart-fill`.
-- Keep size out of the name — it's a prop (`<Icon size="md" />`), not `arrow-16.svg`.
+### Directions and pairs are props, not names
+
+The §0 rule — "a variant is a prop, not a new component" — applies to icons. Direction, fill-vs-outline, and any other paired variant lives as a prop on a single component:
+
+- ✅ `<ArrowIcon direction="left" />`, `<ChevronIcon direction="down" />`, `<HeartIcon variant="outline" />`
+- ❌ `<ArrowLeftIcon />`, `<ChevronDownIcon />`, `<HeartOutlineIcon />`
+
+Size is also a prop (`<Icon size={16} />`), never in the name (`arrow-16.svg`).
 
 ---
 
@@ -189,4 +194,4 @@ Before naming anything new, ask these questions:
 - Is this a **new component**, or just a **variant** of an existing one?
 - Am I using the **same prop names** (`variant`, `size`, `tone`) as the rest of the system?
 - Does the component reference only **semantic tokens**, not primitives?
-- Does the casing follow the rule for its type (`PascalCase` component, `camelCase` util, `kebab-case` icon/token)?
+- Does the casing follow the rule for its type (`PascalCase` component, `camelCase` util, `kebab-case` token / raw SVG asset)?
