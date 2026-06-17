@@ -1,6 +1,6 @@
 import { formatYears } from '../../../lib/formatYears';
 import { levelLabel, type SkillLevel } from '../../../lib/skill';
-import { LevelMeter } from '../../atoms/LevelMeter/LevelMeter';
+import { LevelMeter } from '../../atoms/LevelMeter';
 import styles from './SkillRow.module.css';
 
 export type SkillRowProps = {

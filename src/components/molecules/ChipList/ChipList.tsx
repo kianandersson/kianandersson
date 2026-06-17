@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { sliceList } from '../../../lib/chip-list';
-import { Chip, type ChipVariant } from '../../atoms/Chip/Chip';
+import { Chip, type ChipVariant } from '../../atoms/Chip';
 import styles from './ChipList.module.css';
 
 type Props = {

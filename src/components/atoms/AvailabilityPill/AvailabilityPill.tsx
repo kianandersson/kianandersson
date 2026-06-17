@@ -1,5 +1,5 @@
 import { formatDate } from '../../../lib/formatDate';
-import { StatusDot } from '../StatusDot/StatusDot';
+import { StatusDot } from '../StatusDot';
 import styles from './AvailabilityPill.module.css';
 
 export type AvailabilityPillProps = {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { SkillLevel } from '../../../lib/skill';
-import { Accordion } from '../../molecules/Accordion/Accordion';
-import { SkillRow } from '../../molecules/SkillRow/SkillRow';
+import { Accordion } from '../../molecules/Accordion';
+import { SkillRow } from '../../molecules/SkillRow';
 import styles from './SkillGroups.module.css';
 
 export type GroupedSkill = {

@@ -1,8 +1,8 @@
 import { actions } from 'astro:actions';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { formatDate } from '../../../lib/formatDate';
-import { AvailabilityPill } from '../../atoms/AvailabilityPill/AvailabilityPill';
-import { ContactForm, type ContactPayload, type ContactStatus } from '../ContactForm/ContactForm';
+import { AvailabilityPill } from '../../atoms/AvailabilityPill';
+import { ContactForm, type ContactPayload, type ContactStatus } from '../ContactForm';
 import styles from './ContactCta.module.css';
 
 export type ContactCtaProps = {

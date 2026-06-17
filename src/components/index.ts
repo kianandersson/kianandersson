@@ -1,27 +1,27 @@
 // Atoms
-export * from './atoms/AvailabilityPill/AvailabilityPill';
-export * from './atoms/Chip/Chip';
-export * from './atoms/CtaButton/CtaButton';
-export * from './atoms/LevelMeter/LevelMeter';
-export * from './atoms/StatusDot/StatusDot';
-export * from './atoms/TimelineMarker/TimelineMarker';
+export * from './atoms/AvailabilityPill';
+export * from './atoms/Chip';
+export * from './atoms/CtaButton';
+export * from './atoms/LevelMeter';
+export * from './atoms/StatusDot';
+export * from './atoms/TimelineMarker';
 
 // Molecules
-export * from './molecules/Accordion/Accordion';
-export * from './molecules/ChipList/ChipList';
-export * from './molecules/OpenGraphCard/OpenGraphCard';
-export * from './molecules/PrintButton/PrintButton';
-export * from './molecules/SkillRow/SkillRow';
-export * from './molecules/ThemeToggle/ThemeToggle';
+export * from './molecules/Accordion';
+export * from './molecules/ChipList';
+export * from './molecules/OpenGraphCard';
+export * from './molecules/PrintButton';
+export * from './molecules/SkillRow';
+export * from './molecules/ThemeToggle';
 
 // Organisms
-export * from './organisms/ContactCta/ContactCta';
-export * from './organisms/ContactForm/ContactForm';
-export * from './organisms/Experience/Experience';
-export * from './organisms/Footer/Footer';
-export * from './organisms/Hero/Hero';
-export * from './organisms/KeySkills/KeySkills';
-export * from './organisms/Miscellaneous/Miscellaneous';
-export * from './organisms/NotFound/NotFound';
-export * from './organisms/SkillGroups/SkillGroups';
-export * from './organisms/TopBar/TopBar';
+export * from './organisms/ContactCta';
+export * from './organisms/ContactForm';
+export * from './organisms/Experience';
+export * from './organisms/Footer';
+export * from './organisms/Hero';
+export * from './organisms/KeySkills';
+export * from './organisms/Miscellaneous';
+export * from './organisms/NotFound';
+export * from './organisms/SkillGroups';
+export * from './organisms/TopBar';

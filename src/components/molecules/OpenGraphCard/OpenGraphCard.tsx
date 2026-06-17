@@ -1,4 +1,4 @@
-import { Chip } from '../../atoms/Chip/Chip';
+import { Chip } from '../../atoms/Chip';
 import styles from './OpenGraphCard.module.css';
 
 type Props = {

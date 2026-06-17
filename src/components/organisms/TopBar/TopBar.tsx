@@ -1,5 +1,5 @@
-import { PrintButton } from '../../molecules/PrintButton/PrintButton';
-import { ThemeToggle } from '../../molecules/ThemeToggle/ThemeToggle';
+import { PrintButton } from '../../molecules/PrintButton';
+import { ThemeToggle } from '../../molecules/ThemeToggle';
 import styles from './TopBar.module.css';
 
 type Props = {
