@@ -1,4 +1,5 @@
 ---
+import { CF_WEB_ANALYTICS_TOKEN } from 'astro:env/client';
 import { Footer } from '../components/organisms/Footer';
 import { SiteHeader } from '../components/organisms/SiteHeader';
 import { buildPersonJsonLd, type PersonJsonLd } from '../lib/person-json-ld';
@@ -83,6 +84,17 @@ const currentYear = new Date().getFullYear();
     </script>
 
     <script type="application/ld+json" is:inline set:html={jsonLdSerialized} />
+
+    {
+      CF_WEB_ANALYTICS_TOKEN && (
+        <script
+          is:inline
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={JSON.stringify({ token: CF_WEB_ANALYTICS_TOKEN })}
+        />
+      )
+    }
   </head>
   <body>
     <SiteHeader

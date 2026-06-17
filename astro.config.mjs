@@ -42,6 +42,11 @@ export default defineConfig({
         access: 'secret',
         optional: true,
       }),
+      CF_WEB_ANALYTICS_TOKEN: envField.string({
+        context: 'client',
+        access: 'public',
+        optional: true,
+      }),
     },
   },
   vite: {

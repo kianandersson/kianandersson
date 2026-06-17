@@ -21,6 +21,7 @@ See `.env.example` for local development.
 - `RESEND_API_KEY` — Resend API key.
 - `SENDER_EMAIL` — verified sender address.
 - `RECIPIENT_EMAIL` — destination inbox.
+- `CF_WEB_ANALYTICS_TOKEN` — Cloudflare Web Analytics site token. Optional; skip locally to suppress the RUM beacon. See [docs/observability.md](./docs/observability.md).
 
 ## Common commands
 
