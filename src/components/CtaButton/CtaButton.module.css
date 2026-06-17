@@ -4,6 +4,7 @@
   height: 44px;
   font-family: var(--font-sans);
   font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
   font-weight: 500;
   background: var(--color-text);
   color: var(--color-surface);

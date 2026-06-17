@@ -42,11 +42,13 @@
   font-family: var(--font-sans);
   font-weight: 600;
   font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
 }
 
 .count {
   font-family: var(--font-mono);
   font-size: var(--text-caption-s-size);
+  line-height: var(--text-caption-s-leading);
   color: var(--color-text-muted);
 }
 

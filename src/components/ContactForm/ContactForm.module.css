@@ -92,6 +92,7 @@
 .textarea {
   font-family: var(--font-sans);
   font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
   color: var(--color-text);
   background: transparent;
   border: 0;
@@ -145,6 +146,7 @@
 .error {
   font-family: var(--font-mono);
   font-size: var(--text-caption-s-size);
+  line-height: var(--text-caption-s-leading);
   color: var(--color-text-muted);
   margin-right: auto;
 }
@@ -162,6 +164,7 @@
   color: var(--color-surface);
   font-family: var(--font-sans);
   font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
   font-weight: 500;
   cursor: pointer;
   transition: opacity 0.2s ease;

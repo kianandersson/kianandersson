@@ -10,6 +10,7 @@
   color: var(--color-text);
   font-family: var(--font-sans);
   font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
   --status-dot-size: 9px;
 }
 

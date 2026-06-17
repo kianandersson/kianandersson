@@ -15,6 +15,7 @@
   margin-left: auto;
   font-family: var(--font-mono);
   font-size: var(--text-caption-s-size);
+  line-height: var(--text-caption-s-leading);
   white-space: nowrap;
   color: var(--color-text-muted);
   padding: var(--space-2xs) var(--space-xs);
@@ -46,6 +47,7 @@
   color: var(--color-accent);
   font-weight: 600;
   font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
 }
 
 .heading {
@@ -53,6 +55,7 @@
   font-family: var(--font-sans);
   font-weight: 600;
   font-size: var(--text-heading-m-size);
+  line-height: var(--text-heading-m-leading);
   letter-spacing: -0.015em;
   color: var(--color-text);
   white-space: nowrap;
