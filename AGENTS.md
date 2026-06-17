@@ -31,22 +31,17 @@ JS only sets `document.documentElement.dataset.theme`. Tokens drive everything e
 
 ## Testing
 
-Layered. Each tool owns one job:
+- **Vitest** — pure logic in `lib/`.
+- **Storybook + addon-vitest** — component contracts via `play()` in real Chromium. `addon-a11y` gates at `'error'`.
+- **Playwright** — multi-browser flows + page-level axe. Contact action mocked via `page.route()`.
+- **Lighthouse + bundle-size** — perf budgets.
 
-- **Vitest (node)** — pure logic in `lib/`. Date/period/skill formatting, JSON-LD, validation.
-- **Storybook + addon-vitest (Chromium browser-mode)** — every component variant, in real CSS, in a real browser. Each story carries its contract via `play()`. `addon-a11y` gates the build at `'error'`; new stories must pass axe with no opt-outs.
-- **Playwright** — page flows on Chromium, Firefox, WebKit, and mobile-Chrome. Hydration smoke, page-level axe on `/` and `/404`, layout overflow at 360px, contact-form submit flow via `page.route()` mock (no live Resend).
-- **Lighthouse CI** — the four 100s.
-- **bundle-size guard** — JS < 10 KB gzipped on `_astro/<name>.js` files referenced from rendered HTML.
-
-The catalog ships at `/design/` on every preview and production deploy — reviewers point a browser there to scan variants the page-level axe gate can't see (e.g. the contact form region is `inert` until the user opens it).
-
-Strict red-green-refactor for new `lib/` logic and for component contracts going into stories' `play()`. Playwright + Lighthouse + bundle-size are gates, not test-first targets.
+Strict red-green-refactor on `lib/` and `play()`. Other layers are gates, not test-first targets.
 
 - No snapshot tests.
 - Tests describe behavior, not structure.
 - No coverage gate.
-- Region/landmark assertions belong at the template or e2e layer, not in component-level tests.
+- Region/landmark assertions belong at the template or e2e layer.
 
 ## Budget
 
