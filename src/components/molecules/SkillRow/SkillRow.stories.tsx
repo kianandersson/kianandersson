@@ -1,4 +1,5 @@
 import type { Decorator, Meta, StoryObj } from '@storybook/preact-vite';
+import { expect, within } from 'storybook/test';
 import { SkillRow } from './SkillRow';
 
 const withSkillsGrid: Decorator = (Story) => (
@@ -30,4 +31,32 @@ const meta: Meta<typeof SkillRow> = {
 export default meta;
 type Story = StoryObj<typeof SkillRow>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByText(args.name as string)).toBeInTheDocument();
+    await expect(canvas.getByText(/\+\d+ yrs?/)).toBeInTheDocument();
+    await expect(canvasElement.querySelectorAll('[data-state="on"]').length).toBe(args.level);
+    await expect(canvasElement.querySelectorAll('[data-state="off"]').length).toBe(
+      5 - (args.level as number),
+    );
+    // Level and years sit side-by-side without a "·" separator.
+    await expect(canvas.queryByText(/·/)).not.toBeInTheDocument();
+  },
+};
+
+export const MidLevel: Story = {
+  args: { level: 3, years: 4 },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByText('Experienced')).toBeInTheDocument();
+  },
+};
+
+export const SingleYear: Story = {
+  args: { years: 1 },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByText('+1 yr')).toBeInTheDocument();
+  },
+};
