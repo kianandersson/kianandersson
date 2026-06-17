@@ -1,6 +1,6 @@
 import type { IconProps } from '../types';
 
-export function ArrowLeftIcon({ size = 16, class: className }: IconProps) {
+export function PrintIcon({ size = 17, class: className }: IconProps) {
   return (
     <svg
       class={className}
@@ -14,8 +14,9 @@ export function ArrowLeftIcon({ size = 16, class: className }: IconProps) {
       stroke-linejoin="round"
       aria-hidden="true"
     >
-      <path d="M19 12H5" />
-      <path d="M11 6l-6 6 6 6" />
+      <path d="M6 9V2h12v7" />
+      <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+      <rect width="12" height="8" x="6" y="14" />
     </svg>
   );
 }

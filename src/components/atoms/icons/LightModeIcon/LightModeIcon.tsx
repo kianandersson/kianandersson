@@ -1,6 +1,6 @@
 import type { IconProps } from '../types';
 
-export function SunIcon({ size = 17, class: className }: IconProps) {
+export function LightModeIcon({ size = 17, class: className }: IconProps) {
   return (
     <svg
       class={className}

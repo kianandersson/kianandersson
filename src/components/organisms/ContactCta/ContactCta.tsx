@@ -2,7 +2,7 @@ import { actions } from 'astro:actions';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { formatDate } from '../../../lib/formatDate';
 import { AvailabilityPill } from '../../atoms/AvailabilityPill';
-import { ArrowRightIcon, AtSignIcon, XIcon } from '../../atoms/icons';
+import { ArrowIcon, CloseIcon, ContactIcon } from '../../atoms/icons';
 import { ContactForm, type ContactPayload, type ContactStatus } from '../ContactForm';
 import styles from './ContactCta.module.css';
 
@@ -144,9 +144,9 @@ export function ContactCta({ recipientName, availableFrom }: ContactCtaProps) {
             onClick={toggle}
           >
             <span class={styles.iconStack} aria-hidden="true">
-              <AtSignIcon class={styles.icAt} size={18} />
-              <ArrowRightIcon class={styles.icArrow} size={17} />
-              <XIcon class={styles.icX} size={16} />
+              <ContactIcon class={styles.icAt} size={18} />
+              <ArrowIcon class={styles.icArrow} size={17} direction="right" />
+              <CloseIcon class={styles.icX} size={16} />
             </span>
           </button>
         ) : (
@@ -162,8 +162,8 @@ export function ContactCta({ recipientName, availableFrom }: ContactCtaProps) {
           >
             <span class={styles.labelText}>Get in touch</span>
             <span class={styles.arrowSlot} aria-hidden="true">
-              <ArrowRightIcon class={styles.icArrow} size={15} />
-              <XIcon class={styles.icX} size={15} />
+              <ArrowIcon class={styles.icArrow} size={15} direction="right" />
+              <CloseIcon class={styles.icX} size={15} />
             </span>
           </button>
         )}

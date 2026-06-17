@@ -1,6 +1,6 @@
 import type { IconProps } from '../types';
 
-export function AtSignIcon({ size = 18, class: className }: IconProps) {
+export function ContactIcon({ size = 18, class: className }: IconProps) {
   return (
     <svg
       class={className}

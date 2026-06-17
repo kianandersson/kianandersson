@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { PrinterIcon } from '../../atoms/icons';
+import { PrintIcon } from '../../atoms/icons';
 import styles from './PrintButton.module.css';
 
 export function PrintButton() {
@@ -16,7 +16,7 @@ export function PrintButton() {
       className={styles.button}
     >
       <span aria-hidden="true" className={styles.icon}>
-        <PrinterIcon />
+        <PrintIcon />
       </span>
     </button>
   );

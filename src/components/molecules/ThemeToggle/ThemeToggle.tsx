@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { MoonIcon, SunIcon } from '../../atoms/icons';
+import { DarkModeIcon, LightModeIcon } from '../../atoms/icons';
 import styles from './ThemeToggle.module.css';
 
 type Theme = 'light' | 'dark';
@@ -44,7 +44,7 @@ export function ThemeToggle() {
       className={styles.button}
     >
       <span key={theme ?? 'initial'} className={iconClass} aria-hidden="true">
-        {isDark ? <SunIcon /> : <MoonIcon />}
+        {isDark ? <LightModeIcon /> : <DarkModeIcon />}
       </span>
     </button>
   );
