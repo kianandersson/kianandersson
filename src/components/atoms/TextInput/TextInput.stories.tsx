@@ -23,7 +23,10 @@ const meta: Meta<typeof TextInput> = {
 export default meta;
 type Story = StoryObj<typeof TextInput>;
 
-export const Default: Story = {
+export const Default: Story = {};
+
+export const TypingBehavior: Story = {
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const input = canvas.getByPlaceholderText('Type something…') as HTMLInputElement;
@@ -31,8 +34,6 @@ export const Default: Story = {
     await expect(input).toHaveAttribute('type', 'text');
     await userEvent.type(input, 'hello');
     await expect(input).toHaveValue('hello');
-    // Reset so the catalog view shows the empty input rather than test residue.
-    await userEvent.clear(input);
   },
 };
 

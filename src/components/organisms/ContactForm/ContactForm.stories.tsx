@@ -25,6 +25,11 @@ type Story = StoryObj<typeof ContactForm>;
 
 export const Idle: Story = {
   args: { status: 'idle' },
+};
+
+export const ValidationAndSubmitBehavior: Story = {
+  args: { status: 'idle' },
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
 
@@ -55,11 +60,6 @@ export const Idle: Story = {
       subject: 'Project enquiry',
       message: 'Hi there',
     });
-
-    // Reset so the catalog view shows the empty form rather than test residue.
-    await userEvent.clear(canvas.getByLabelText(/from/i));
-    await userEvent.clear(canvas.getByLabelText(/subject/i));
-    await userEvent.clear(canvas.getByLabelText(/message/i));
   },
 };
 

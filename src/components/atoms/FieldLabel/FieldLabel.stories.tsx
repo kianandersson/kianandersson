@@ -24,7 +24,10 @@ const meta: Meta<typeof FieldLabel> = {
 export default meta;
 type Story = StoryObj<typeof FieldLabel>;
 
-export const Default: Story = {
+export const Default: Story = {};
+
+export const ClickToFocusBehavior: Story = {
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     const label = canvas.getByText(args.children as string);
@@ -33,7 +36,5 @@ export const Default: Story = {
     await expect(label).toHaveAttribute('for', args.for as string);
     await userEvent.click(label);
     await expect(input).toHaveFocus();
-    // Reset focus so the catalog view doesn't keep the test's focus ring.
-    (input as HTMLElement).blur();
   },
 };

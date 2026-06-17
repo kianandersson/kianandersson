@@ -20,15 +20,16 @@ const meta: Meta<typeof Textarea> = {
 export default meta;
 type Story = StoryObj<typeof Textarea>;
 
-export const Default: Story = {
+export const Default: Story = {};
+
+export const TypingBehavior: Story = {
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const ta = canvas.getByPlaceholderText('Write your message…') as HTMLTextAreaElement;
     await expect(ta.tagName).toBe('TEXTAREA');
     await userEvent.type(ta, 'hi');
     await expect(ta).toHaveValue('hi');
-    // Reset so the catalog view shows the empty textarea rather than test residue.
-    await userEvent.clear(ta);
   },
 };
 
