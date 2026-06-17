@@ -2,6 +2,7 @@ import { actions } from 'astro:actions';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { formatDate } from '../../../lib/formatDate';
 import { AvailabilityPill } from '../../atoms/AvailabilityPill';
+import { ArrowRightIcon, AtSignIcon, XIcon } from '../../atoms/Icon';
 import { ContactForm, type ContactPayload, type ContactStatus } from '../ContactForm';
 import styles from './ContactCta.module.css';
 
@@ -143,9 +144,9 @@ export function ContactCta({ recipientName, availableFrom }: ContactCtaProps) {
             onClick={toggle}
           >
             <span class={styles.iconStack} aria-hidden="true">
-              <AtIcon class={styles.icAt} size={18} />
-              <ArrowIcon class={styles.icArrow} size={17} />
-              <CloseIcon class={styles.icX} size={16} />
+              <AtSignIcon class={styles.icAt} size={18} />
+              <ArrowRightIcon class={styles.icArrow} size={17} />
+              <XIcon class={styles.icX} size={16} />
             </span>
           </button>
         ) : (
@@ -161,8 +162,8 @@ export function ContactCta({ recipientName, availableFrom }: ContactCtaProps) {
           >
             <span class={styles.labelText}>Get in touch</span>
             <span class={styles.arrowSlot} aria-hidden="true">
-              <ArrowIcon class={styles.icArrow} size={15} />
-              <CloseIcon class={styles.icX} size={15} />
+              <ArrowRightIcon class={styles.icArrow} size={15} />
+              <XIcon class={styles.icX} size={15} />
             </span>
           </button>
         )}
@@ -193,67 +194,5 @@ export function ContactCta({ recipientName, availableFrom }: ContactCtaProps) {
         </div>
       </div>
     </div>
-  );
-}
-
-type IconProps = { class?: string; size: number };
-
-function AtIcon({ class: className, size }: IconProps) {
-  return (
-    <svg
-      class={className}
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="1.7"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      aria-hidden="true"
-    >
-      <circle cx="12" cy="12" r="4" />
-      <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.9 7.9" />
-    </svg>
-  );
-}
-
-function ArrowIcon({ class: className, size }: IconProps) {
-  return (
-    <svg
-      class={className}
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="1.8"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M5 12h14" />
-      <path d="M13 6l6 6-6 6" />
-    </svg>
-  );
-}
-
-function CloseIcon({ class: className, size }: IconProps) {
-  return (
-    <svg
-      class={className}
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M6 6l12 12" />
-      <path d="M18 6 6 18" />
-    </svg>
   );
 }

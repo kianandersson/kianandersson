@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { useId } from 'react';
+import { ChevronDownIcon } from '../../atoms/Icon';
 import styles from './Accordion.module.css';
 
 type Props = {
@@ -27,10 +28,7 @@ export function Accordion({ title, count, isOpen, onToggle, children }: Props) {
           {count !== undefined && <span className={styles.count}>{count}</span>}
         </span>
         <span aria-hidden="true" className={styles.chevron} data-open={isOpen}>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <title>chevron</title>
-            <path d="M6 9l6 6 6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <ChevronDownIcon title="chevron" />
         </span>
       </button>
       <div
