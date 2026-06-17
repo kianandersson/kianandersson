@@ -6,7 +6,7 @@ const config: StorybookConfig = {
     '../src/foundations/**/*.stories.@(ts|tsx)',
     '../src/components/**/*.stories.@(ts|tsx)',
   ],
-  addons: ['@storybook/addon-a11y'],
+  addons: ['@storybook/addon-a11y', '@storybook/addon-vitest'],
   staticDirs: ['../public'],
   framework: {
     name: '@storybook/preact-vite',
