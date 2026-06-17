@@ -63,6 +63,7 @@
 .iconStack > .icArrow,
 .iconStack > .icX {
   grid-area: 1 / 1;
+  display: inline-flex;
   transition:
     opacity 0.2s ease,
     transform 0.26s ease;
@@ -170,6 +171,7 @@
 .arrowSlot > .icArrow,
 .arrowSlot > .icX {
   grid-area: 1 / 1;
+  display: inline-flex;
   margin-top: -1px;
   transition:
     opacity 0.2s ease,
