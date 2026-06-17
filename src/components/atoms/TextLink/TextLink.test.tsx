@@ -16,13 +16,17 @@ describe('TextLink', () => {
     expect(button).toHaveAttribute('type', 'button');
   });
 
-  it('passes tone through as a data attribute', () => {
-    const { container } = render(
+  it('applies a tone-specific class', () => {
+    const { container, rerender } = render(<TextLink href="/">Link</TextLink>);
+    // muted is the default
+    expect(container.firstElementChild?.className).toMatch(/_muted_/);
+
+    rerender(
       <TextLink href="/" tone="default">
         Link
       </TextLink>,
     );
-    expect(container.firstElementChild).toHaveAttribute('data-tone', 'default');
+    expect(container.firstElementChild?.className).toMatch(/_default_/);
   });
 
   it('invokes onClick on activation', async () => {

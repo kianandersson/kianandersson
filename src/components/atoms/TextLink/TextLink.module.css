@@ -10,11 +10,11 @@
   white-space: nowrap;
 }
 
-.link[data-tone="muted"] {
+.muted {
   color: var(--color-text-muted);
 }
 
-.link[data-tone="default"] {
+.default {
   color: var(--color-text);
 }
 

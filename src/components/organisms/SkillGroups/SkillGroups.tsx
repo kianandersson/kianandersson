@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'preact/hooks';
 import type { SkillLevel } from '../../../lib/skill';
 import { Accordion } from '../../molecules/Accordion';
 import { SectionHeader } from '../../molecules/SectionHeader';

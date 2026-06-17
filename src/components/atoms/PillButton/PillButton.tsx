@@ -8,7 +8,10 @@ export type Props = ButtonProps & {
 };
 
 export function PillButton(props: Props) {
-  const { class: className, size = 'lg', ...rest } = props;
-  const combined = className ? `${styles.pill} ${className}` : styles.pill;
-  return <Button {...(rest as ButtonProps)} class={combined} data-size={size} />;
+  const { class: className, size = 'md', ...rest } = props;
+  const sizeClass = size === 'lg' ? styles.lg : styles.md;
+  const combined = className
+    ? `${styles.pill} ${sizeClass} ${className}`
+    : `${styles.pill} ${sizeClass}`;
+  return <Button {...(rest as ButtonProps)} class={combined} />;
 }

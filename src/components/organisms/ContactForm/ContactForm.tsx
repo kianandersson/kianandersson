@@ -10,6 +10,7 @@ import { PillButton } from '../../atoms/PillButton';
 import { Text } from '../../atoms/Text';
 import { Textarea } from '../../atoms/Textarea';
 import { TextInput } from '../../atoms/TextInput';
+import { WindowFrame } from '../../molecules/WindowFrame';
 import styles from './ContactForm.module.css';
 
 export type ContactPayload = {
@@ -53,13 +54,7 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
   }
 
   return (
-    <form class={styles.window} aria-label="Contact" onSubmit={handleSubmit} noValidate>
-      <div class={styles.titleBar}>
-        <span class={`${styles.trafficDot} ${styles.dotRed}`} aria-hidden="true" />
-        <span class={`${styles.trafficDot} ${styles.dotAmber}`} aria-hidden="true" />
-        <span class={`${styles.trafficDot} ${styles.dotGreen}`} aria-hidden="true" />
-      </div>
-
+    <WindowFrame as="form" aria-label="Contact" onSubmit={handleSubmit} noValidate>
       <div class={styles.body}>
         <div class={styles.row}>
           <FieldLabel class={styles.fieldLabel}>To</FieldLabel>
@@ -125,15 +120,14 @@ export function ContactForm({ recipientName, status, errorMessage, onSubmit }: P
           <PillButton
             type="submit"
             size="md"
-            data-sending={sending}
             disabled={!valid || sending}
-            class={styles.send}
+            class={sending ? `${styles.send} ${styles.sending}` : styles.send}
           >
             {sending ? 'Sending…' : 'Send message'}
             <SendIcon class={styles.plane} />
           </PillButton>
         </div>
       </div>
-    </form>
+    </WindowFrame>
   );
 }

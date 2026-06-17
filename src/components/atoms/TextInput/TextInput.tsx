@@ -3,22 +3,11 @@ import styles from './TextInput.module.css';
 
 export type TextInputType = 'text' | 'email' | 'tel' | 'url' | 'search';
 
-type Props = {
-  id?: string;
+type OwnProps = {
   type?: TextInputType;
-  value?: string;
-  placeholder?: string;
-  autocomplete?: string;
-  inputMode?: 'email' | 'text' | 'tel' | 'url' | 'numeric' | 'search';
-  required?: boolean;
-  disabled?: boolean;
-  maxLength?: number;
-  class?: string;
-  onInput?: JSX.GenericEventHandler<HTMLInputElement>;
-  onChange?: JSX.GenericEventHandler<HTMLInputElement>;
-  onBlur?: JSX.FocusEventHandler<HTMLInputElement>;
-  onFocus?: JSX.FocusEventHandler<HTMLInputElement>;
 };
+
+export type Props = Omit<JSX.IntrinsicElements['input'], 'type' | 'size'> & OwnProps;
 
 export function TextInput({ class: className, type = 'text', ...rest }: Props) {
   const combined = className ? `${styles.input} ${className}` : styles.input;

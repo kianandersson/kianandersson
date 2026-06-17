@@ -12,10 +12,14 @@ type Props = {
   id?: string;
 };
 
+const TAGS = { 1: 'h1', 2: 'h2', 3: 'h3' } as const;
+
 export function Heading({ level, size, children, class: className, id }: Props) {
+  const Tag = TAGS[level];
   const combined = className ? `${styles.heading} ${className}` : styles.heading;
-  const dataProps = { 'data-size': size, class: combined, id };
-  if (level === 1) return <h1 {...dataProps}>{children}</h1>;
-  if (level === 2) return <h2 {...dataProps}>{children}</h2>;
-  return <h3 {...dataProps}>{children}</h3>;
+  return (
+    <Tag id={id} class={combined} data-size={size}>
+      {children}
+    </Tag>
+  );
 }

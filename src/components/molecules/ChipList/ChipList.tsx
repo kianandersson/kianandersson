@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from 'preact/hooks';
 import { sliceList } from '../../../lib/chip-list';
 import { Chip, type ChipVariant } from '../../atoms/Chip';
 import { TextLink } from '../../atoms/TextLink';

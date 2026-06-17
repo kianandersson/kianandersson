@@ -10,9 +10,9 @@ describe('StatusDot', () => {
 
   it('exposes the tone via a data attribute', () => {
     const { container, rerender } = render(<StatusDot />);
-    expect(container.firstElementChild).toHaveAttribute('data-tone', 'ok');
+    expect(container.firstElementChild).toHaveAttribute('data-tone', 'success');
 
-    rerender(<StatusDot tone="warn" />);
-    expect(container.firstElementChild).toHaveAttribute('data-tone', 'warn');
+    rerender(<StatusDot tone="warning" />);
+    expect(container.firstElementChild).toHaveAttribute('data-tone', 'warning');
   });
 });

@@ -21,7 +21,7 @@ type Props = {
 };
 
 export function Text({
-  as = 'span',
+  as: Tag = 'span',
   size = 'body',
   tone = 'default',
   font = 'sans',
@@ -33,56 +33,18 @@ export function Text({
   role,
 }: Props) {
   const combined = className ? `${styles.text} ${className}` : styles.text;
-  if (as === 'p') {
-    return (
-      <p
-        id={id}
-        role={role}
-        aria-hidden={ariaHidden}
-        class={combined}
-        {...({
-          'data-size': size,
-          'data-tone': tone,
-          'data-font': font,
-          'data-weight': weight,
-        } as Record<string, string>)}
-      >
-        {children}
-      </p>
-    );
-  }
-  if (as === 'div') {
-    return (
-      <div
-        id={id}
-        role={role}
-        aria-hidden={ariaHidden}
-        class={combined}
-        {...({
-          'data-size': size,
-          'data-tone': tone,
-          'data-font': font,
-          'data-weight': weight,
-        } as Record<string, string>)}
-      >
-        {children}
-      </div>
-    );
-  }
   return (
-    <span
+    <Tag
       id={id}
       role={role}
       aria-hidden={ariaHidden}
       class={combined}
-      {...({
-        'data-size': size,
-        'data-tone': tone,
-        'data-font': font,
-        'data-weight': weight,
-      } as Record<string, string>)}
+      data-size={size}
+      data-tone={tone}
+      data-font={font}
+      data-weight={weight}
     >
       {children}
-    </span>
+    </Tag>
   );
 }

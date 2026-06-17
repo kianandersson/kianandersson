@@ -1,12 +1,12 @@
 import styles from './StatusDot.module.css';
 
-export type StatusTone = 'ok' | 'warn';
+export type StatusTone = 'success' | 'warning';
 
 type Props = {
-  /** Color tone — `ok` (green, pulses) for live availability, `warn` (orange, static) for pending. */
+  /** Color tone — `success` (green, pulses) for live availability, `warning` (orange, static) for pending. */
   tone?: StatusTone;
 };
 
-export function StatusDot({ tone = 'ok' }: Props) {
+export function StatusDot({ tone = 'success' }: Props) {
   return <span className={styles.dot} data-tone={tone} aria-hidden="true" />;
 }

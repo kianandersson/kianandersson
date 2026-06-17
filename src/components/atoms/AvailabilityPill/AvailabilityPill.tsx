@@ -11,7 +11,7 @@ export function AvailabilityPill({ availableFrom }: AvailabilityPillProps) {
 
   return (
     <span class={styles.pill} data-state={isAvailableNow ? 'available' : 'future'}>
-      <StatusDot tone={isAvailableNow ? 'ok' : 'warn'} />
+      <StatusDot tone={isAvailableNow ? 'success' : 'warning'} />
       <span class={styles.label}>
         {isAvailableNow ? (
           'Available for work'

@@ -15,11 +15,11 @@
     opacity 0.2s ease;
 }
 
-.pill[data-size="md"] {
+.md {
   height: 40px;
 }
 
-.pill[data-size="lg"] {
+.lg {
   height: 44px;
 }
 

@@ -9,12 +9,13 @@ describe('PillButton', () => {
     expect(screen.getByRole('button', { name: /send message/i })).toBeInTheDocument();
   });
 
-  it('exposes the size on a data attribute', () => {
+  it('applies a size-specific class', () => {
     const { container, rerender } = render(<PillButton>Send</PillButton>);
-    expect(container.firstElementChild).toHaveAttribute('data-size', 'lg');
+    // md is the default
+    expect(container.firstElementChild?.className).toMatch(/_md_/);
 
-    rerender(<PillButton size="md">Send</PillButton>);
-    expect(container.firstElementChild).toHaveAttribute('data-size', 'md');
+    rerender(<PillButton size="lg">Send</PillButton>);
+    expect(container.firstElementChild?.className).toMatch(/_lg_/);
   });
 
   it('respects type=submit for use inside forms', () => {

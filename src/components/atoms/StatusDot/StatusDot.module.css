@@ -8,12 +8,12 @@
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-status-success) 16%, transparent);
 }
 
-.dot[data-tone="warn"] {
+.dot[data-tone="warning"] {
   background: var(--color-status-warning);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-status-warning) 16%, transparent);
 }
 
-.dot[data-tone="ok"]::before {
+.dot[data-tone="success"]::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -37,7 +37,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dot[data-tone="ok"]::before {
+  .dot[data-tone="success"]::before {
     animation: none;
   }
 }

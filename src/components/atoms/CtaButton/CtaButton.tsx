@@ -12,19 +12,18 @@ type Props = {
 };
 
 export function CtaButton({ href, children, direction = 'forward' }: Props) {
+  const isBack = direction === 'back';
+  const ctaClass = `${styles.cta} ${isBack ? styles.back : styles.forward}`;
+  const arrow = (
+    <span aria-hidden="true" data-cta-arrow class={styles.arrow}>
+      <ArrowIcon direction={isBack ? 'left' : 'right'} />
+    </span>
+  );
   return (
-    <Button class={styles.cta} data-direction={direction} href={href}>
-      {direction === 'back' ? (
-        <span aria-hidden="true" data-cta-arrow class={styles.arrow}>
-          <ArrowIcon direction="left" />
-        </span>
-      ) : null}
+    <Button class={ctaClass} href={href}>
+      {isBack ? arrow : null}
       <span class={styles.label}>{children}</span>
-      {direction === 'forward' ? (
-        <span aria-hidden="true" data-cta-arrow class={styles.arrow}>
-          <ArrowIcon direction="right" />
-        </span>
-      ) : null}
+      {isBack ? null : arrow}
     </Button>
   );
 }

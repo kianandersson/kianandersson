@@ -9,6 +9,7 @@ import { type SkillGroup, SkillGroups } from '../components/organisms/SkillGroup
 interface Props {
   hero: {
     name: string;
+    tagline: string;
     recipientName: string;
     availableFrom?: Date;
   };
@@ -23,7 +24,7 @@ const { hero, keySkills, experience, skillGroups, languages } = Astro.props;
 
 <main>
   <section>
-    <Hero name={hero.name}>
+    <Hero name={hero.name} tagline={hero.tagline}>
       <ContactCta
         recipientName={hero.recipientName}
         availableFrom={hero.availableFrom}

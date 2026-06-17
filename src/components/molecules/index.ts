@@ -5,3 +5,4 @@ export * from './PrintButton';
 export * from './SectionHeader';
 export * from './SkillRow';
 export * from './ThemeToggle';
+export * from './WindowFrame';

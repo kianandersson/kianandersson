@@ -14,7 +14,8 @@ describe('ContactCta', () => {
   it('renders the labelled "Get in touch" pill when availableFrom is missing', () => {
     const { container } = render(<ContactCta recipientName={RECIPIENT} />);
     const button = screen.getByRole('button', { name: /get in touch/i });
-    expect(button).toHaveAttribute('data-variant', 'labelled');
+    // Labelled variant has visible "Get in touch" text inside the button.
+    expect(button.textContent).toContain('Get in touch');
     expect(button).toHaveAttribute('aria-expanded', 'false');
     // No availability pill should render in the no-status case.
     expect(container.querySelector('[data-state="available"]')).toBeNull();
@@ -26,9 +27,10 @@ describe('ContactCta', () => {
     const button = screen.getByRole('button', {
       name: /get in touch/i,
     });
-    expect(button).toHaveAttribute('data-variant', 'icon');
+    // Icon variant has no visible text — only icons.
+    expect(button.textContent?.trim()).toBe('');
     expect(container.querySelector('[data-state="available"]')).not.toBeNull();
-    expect(container.querySelector('[data-tone="ok"]')).not.toBeNull();
+    expect(container.querySelector('[data-tone="success"]')).not.toBeNull();
     expect(screen.getByText('Available for work')).toBeInTheDocument();
   });
 
@@ -37,9 +39,9 @@ describe('ContactCta', () => {
     const button = screen.getByRole('button', {
       name: /get in touch — available from 1 sep/i,
     });
-    expect(button).toHaveAttribute('data-variant', 'icon');
+    expect(button.textContent?.trim()).toBe('');
     expect(container.querySelector('[data-state="future"]')).not.toBeNull();
-    expect(container.querySelector('[data-tone="warn"]')).not.toBeNull();
+    expect(container.querySelector('[data-tone="warning"]')).not.toBeNull();
     expect(screen.getByText('1 Sep')).toBeInTheDocument();
   });
 

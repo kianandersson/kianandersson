@@ -5,13 +5,11 @@ import styles from './Hero.module.css';
 
 type Props = {
   name: string;
+  tagline: string;
   children?: ComponentChildren;
 };
 
-const PLACEHOLDER_BODY =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.';
-
-export function Hero({ name, children }: Props) {
+export function Hero({ name, tagline, children }: Props) {
   return (
     <div className={styles.root}>
       <div className={styles.text}>
@@ -19,7 +17,7 @@ export function Hero({ name, children }: Props) {
           Hi, I'm <span className={styles.name}>{name}</span>.
         </Heading>
         <Text as="p" size="heading-s" tone="muted" class={styles.body}>
-          {PLACEHOLDER_BODY}
+          {tagline}
         </Text>
       </div>
       {children}

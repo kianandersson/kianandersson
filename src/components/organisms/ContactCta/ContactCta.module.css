@@ -73,32 +73,32 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .iconButton:not([data-open="true"]):hover .iconStack > .icAt {
+  .iconButton:not([aria-expanded="true"]):hover .iconStack > .icAt {
     opacity: 0;
     transform: translateX(var(--space-3));
   }
-  .iconButton:not([data-open="true"]):hover .iconStack > .icArrow {
+  .iconButton:not([aria-expanded="true"]):hover .iconStack > .icArrow {
     opacity: 1;
     transform: translateX(0);
   }
 }
 
-.iconButton[data-open="true"] {
+.iconButton[aria-expanded="true"] {
   background: var(--color-accent);
   color: #ffffff;
 }
 
-.iconButton[data-open="true"] .iconStack > .icAt {
+.iconButton[aria-expanded="true"] .iconStack > .icAt {
   opacity: 0;
   transform: translateX(var(--space-3));
 }
 
-.iconButton[data-open="true"] .iconStack > .icArrow {
+.iconButton[aria-expanded="true"] .iconStack > .icArrow {
   opacity: 0;
   transform: translateX(0);
 }
 
-.iconButton[data-open="true"] .iconStack > .icX {
+.iconButton[aria-expanded="true"] .iconStack > .icX {
   opacity: 1;
   transform: none;
 }
@@ -150,7 +150,7 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .labelledButton:not([data-open="true"]):hover .arrowSlot {
+  .labelledButton:not([aria-expanded="true"]):hover .arrowSlot {
     width: 15px;
     margin-left: var(--space-sm);
     opacity: 1;
@@ -158,23 +158,23 @@
   }
 }
 
-.labelledButton[data-open="true"] {
+.labelledButton[aria-expanded="true"] {
   background: var(--color-accent);
   color: #ffffff;
 }
 
-.labelledButton[data-open="true"] .arrowSlot {
+.labelledButton[aria-expanded="true"] .arrowSlot {
   width: 15px;
   margin-left: var(--space-sm);
   opacity: 1;
   transform: translateX(0);
 }
 
-.labelledButton[data-open="true"] .arrowSlot > .icArrow {
+.labelledButton[aria-expanded="true"] .arrowSlot > .icArrow {
   opacity: 0;
 }
 
-.labelledButton[data-open="true"] .arrowSlot > .icX {
+.labelledButton[aria-expanded="true"] .arrowSlot > .icX {
   opacity: 1;
   transform: none;
 }

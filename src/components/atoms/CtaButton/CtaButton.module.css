@@ -39,38 +39,38 @@
     transform 0.25s ease;
 }
 
-.cta[data-direction="forward"] .arrow {
+.forward .arrow {
   transform: translateX(calc(var(--space-3) * -0.5));
 }
 
-.cta[data-direction="back"] .arrow {
+.back .arrow {
   transform: translateX(calc(var(--space-3) / 2));
 }
 
 .cta:focus-visible .arrow,
-.cta[data-direction="forward"]:focus-visible .arrow {
+.forward:focus-visible .arrow {
   width: 16px;
   opacity: 1;
   transform: translateX(0);
 }
 
-.cta[data-direction="forward"]:focus-visible .arrow {
+.forward:focus-visible .arrow {
   margin-left: var(--space-xl);
 }
 
-.cta[data-direction="back"]:focus-visible .arrow {
+.back:focus-visible .arrow {
   margin-right: var(--space-xl);
 }
 
 @media (hover: hover) {
-  .cta[data-direction="forward"]:hover .arrow {
+  .forward:hover .arrow {
     width: 16px;
     margin-left: var(--space-sm);
     opacity: 1;
     transform: translateX(0);
   }
 
-  .cta[data-direction="back"]:hover .arrow {
+  .back:hover .arrow {
     width: 16px;
     margin-right: var(--space-sm);
     opacity: 1;

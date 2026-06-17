@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'preact/hooks';
 import { IconButton } from '../../atoms/IconButton';
 import { DarkModeIcon, LightModeIcon } from '../../atoms/icons';
 import styles from './ThemeToggle.module.css';

@@ -1,6 +1,7 @@
 import { CtaButton } from '../../atoms/CtaButton';
 import { Heading } from '../../atoms/Heading';
 import { Text } from '../../atoms/Text';
+import { WindowFrame } from '../../molecules/WindowFrame';
 import styles from './NotFound.module.css';
 
 type Props = {
@@ -28,15 +29,13 @@ export function NotFound({ requestedUrl = '/' }: Props) {
         you back to solid ground.
       </Text>
 
-      <div className={styles.terminal} role="presentation">
-        <div className={styles.terminalBar}>
-          <span className={`${styles.dot} ${styles.dotRed}`} aria-hidden="true" />
-          <span className={`${styles.dot} ${styles.dotAmber}`} aria-hidden="true" />
-          <span className={`${styles.dot} ${styles.dotGreen}`} aria-hidden="true" />
-          <Text font="mono" size="caption-s" tone="muted" class={styles.terminalTitle}>
+      <WindowFrame
+        title={
+          <Text font="mono" size="caption-s" tone="muted">
             zsh
           </Text>
-        </div>
+        }
+      >
         <div className={styles.terminalBody}>
           <div className={styles.line}>
             <span className={styles.prompt}>$</span> curl -I{' '}
@@ -47,7 +46,7 @@ export function NotFound({ requestedUrl = '/' }: Props) {
           <div className={styles.response}>HTTP/2 404 Not Found</div>
           <div className={styles.response}>content-type: text/html; charset=utf-8</div>
         </div>
-      </div>
+      </WindowFrame>
 
       <div>
         <CtaButton href="/" direction="back">

@@ -58,7 +58,7 @@ describe('ContactForm', () => {
     render(<ContactForm {...baseProps} status="sending" onSubmit={vi.fn()} />);
     const send = screen.getByRole('button', { name: /sending/i });
     expect(send).toBeDisabled();
-    expect(send).toHaveAttribute('data-sending', 'true');
+    expect(send.className).toMatch(/_sending_/);
   });
 
   it('hides the error line until status is "error"', () => {

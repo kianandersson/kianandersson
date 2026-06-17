@@ -9,6 +9,9 @@ export type Props = ButtonProps & {
 
 export function TextLink(props: Props) {
   const { class: className, tone = 'muted', ...rest } = props;
-  const combined = className ? `${styles.link} ${className}` : styles.link;
-  return <Button {...(rest as ButtonProps)} class={combined} data-tone={tone} />;
+  const toneClass = tone === 'default' ? styles.default : styles.muted;
+  const combined = className
+    ? `${styles.link} ${toneClass} ${className}`
+    : `${styles.link} ${toneClass}`;
+  return <Button {...(rest as ButtonProps)} class={combined} />;
 }

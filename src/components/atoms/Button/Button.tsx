@@ -1,4 +1,4 @@
-import type { ComponentChildren, JSX } from 'preact';
+import type { ComponentChildren, JSX, Ref } from 'preact';
 import styles from './Button.module.css';
 
 type SharedProps = {
@@ -10,28 +10,25 @@ type SharedProps = {
   'aria-expanded'?: boolean;
   'aria-controls'?: string;
   'aria-pressed'?: boolean;
+  'data-testid'?: string;
   inert?: boolean;
 };
 
-type DataAttrs = {
-  [key: `data-${string}`]: string | boolean | undefined;
+export type AnchorProps = SharedProps & {
+  href: string;
+  target?: string;
+  rel?: string;
+  onClick?: JSX.MouseEventHandler<HTMLAnchorElement>;
+  ref?: Ref<HTMLAnchorElement>;
 };
 
-export type AnchorProps = SharedProps &
-  DataAttrs & {
-    href: string;
-    target?: string;
-    rel?: string;
-    onClick?: JSX.MouseEventHandler<HTMLAnchorElement>;
-  };
-
-export type ButtonOnlyProps = SharedProps &
-  DataAttrs & {
-    href?: undefined;
-    type?: 'button' | 'submit' | 'reset';
-    disabled?: boolean;
-    onClick?: JSX.MouseEventHandler<HTMLButtonElement>;
-  };
+export type ButtonOnlyProps = SharedProps & {
+  href?: undefined;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+  onClick?: JSX.MouseEventHandler<HTMLButtonElement>;
+  ref?: Ref<HTMLButtonElement>;
+};
 
 export type Props = AnchorProps | ButtonOnlyProps;
 
@@ -39,40 +36,43 @@ export function Button(props: Props) {
   const { children, class: className } = props;
   const combined = className ? `${styles.reset} ${className}` : styles.reset;
 
+  const shared = {
+    id: props.id,
+    title: props.title,
+    inert: props.inert,
+    class: combined,
+    'aria-label': props['aria-label'],
+    'aria-expanded': props['aria-expanded'],
+    'aria-controls': props['aria-controls'],
+    'aria-pressed': props['aria-pressed'],
+    'data-testid': props['data-testid'],
+  } as const;
+
   if ('href' in props && props.href !== undefined) {
-    const { href, target, rel, onClick, ...passthrough } = props;
-    const safeRel = target === '_blank' ? (rel ?? 'noopener noreferrer') : rel;
+    const safeRel = props.target === '_blank' ? (props.rel ?? 'noopener noreferrer') : props.rel;
     return (
       <a
-        {...stripCommon(passthrough)}
-        href={href}
-        target={target}
+        ref={props.ref}
+        href={props.href}
+        target={props.target}
         rel={safeRel}
-        onClick={onClick}
-        class={combined}
+        onClick={props.onClick}
+        {...shared}
       >
         {children}
       </a>
     );
   }
 
-  const { type = 'button', disabled, onClick, ...passthrough } = props as ButtonOnlyProps;
   return (
     <button
-      {...stripCommon(passthrough)}
-      type={type}
-      disabled={disabled}
-      onClick={onClick}
-      class={combined}
+      ref={props.ref}
+      type={props.type ?? 'button'}
+      disabled={props.disabled}
+      onClick={props.onClick}
+      {...shared}
     >
       {children}
     </button>
   );
-}
-
-function stripCommon<T extends { children?: ComponentChildren; class?: string }>(
-  props: T,
-): Omit<T, 'children' | 'class'> {
-  const { children: _c, class: _cn, ...rest } = props;
-  return rest;
 }
