@@ -17,10 +17,16 @@
   grid-template-columns: 1fr auto auto auto;
 }
 
-.list > li:first-child {
+/* The list-item is purely semantic; SkillRow's root <div> participates in the
+ * parent grid (subgrid) directly. */
+.item {
+  display: contents;
+}
+
+.list > .item:first-child > * {
   border-top: 1px solid var(--color-divider);
 }
 
-.list > li:last-child {
+.list > .item:last-child > * {
   border-bottom: 0;
 }

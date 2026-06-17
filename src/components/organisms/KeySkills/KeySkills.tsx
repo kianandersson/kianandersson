@@ -29,7 +29,9 @@ export function KeySkills({ skills }: Props) {
       />
       <ul className={styles.list}>
         {skills.map((skill) => (
-          <SkillRow key={skill.id} name={skill.name} level={skill.level} years={skill.years} />
+          <li key={skill.id} className={styles.item}>
+            <SkillRow name={skill.name} level={skill.level} years={skill.years} />
+          </li>
         ))}
       </ul>
     </div>

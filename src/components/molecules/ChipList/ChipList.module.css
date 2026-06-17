@@ -20,3 +20,14 @@
   gap: var(--space-xs);
   flex: 1;
 }
+
+/* Overflow bucket — stays in the DOM (SEO/crawler-friendly) and joins the
+ * flex layout via `display: contents` when expanded. Collapsed state hides
+ * the bucket entirely so its children don't take part in layout either. */
+.overflow {
+  display: contents;
+}
+
+.overflow[data-shown="false"] {
+  display: none;
+}

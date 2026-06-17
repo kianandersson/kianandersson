@@ -23,9 +23,13 @@ export function ChipList({ label, items, limit, variant }: Props) {
         {visible.map((item) => (
           <Chip key={item} label={item} variant={variant} />
         ))}
-        {hidden.map((item) => (
-          <Chip key={item} label={item} variant={variant} isHidden={!isOpen} />
-        ))}
+        {hasMore && (
+          <span className={styles.overflow} data-shown={isOpen}>
+            {hidden.map((item) => (
+              <Chip key={item} label={item} variant={variant} />
+            ))}
+          </span>
+        )}
         {hasMore && (
           <TextLink type="button" onClick={toggle} aria-expanded={isOpen}>
             {isOpen ? 'Show less' : `+${hiddenCount} more`}
