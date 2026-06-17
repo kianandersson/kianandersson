@@ -3,7 +3,7 @@ import {
   CONTACT_EMAIL_REGEX,
   CONTACT_MESSAGE_MAX,
   CONTACT_SUBJECT_MAX,
-} from '../../lib/contact-validation';
+} from '../../../lib/contact-validation';
 import styles from './ContactForm.module.css';
 
 export type ContactPayload = {

@@ -1,4 +1,4 @@
-import { CtaButton } from '../CtaButton/CtaButton';
+import { CtaButton } from '../../atoms/CtaButton/CtaButton';
 import styles from './NotFound.module.css';
 
 type Props = {

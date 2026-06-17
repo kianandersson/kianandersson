@@ -1,4 +1,4 @@
-import { dotArray, type SkillLevel } from '../../lib/skill';
+import { dotArray, type SkillLevel } from '../../../lib/skill';
 import styles from './LevelMeter.module.css';
 
 const POSITIONS = [1, 2, 3, 4, 5] as const;

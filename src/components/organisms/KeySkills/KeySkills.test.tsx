@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/preact';
 import { describe, expect, it } from 'vitest';
-import type { SkillLevel } from '../../lib/skill';
+import type { SkillLevel } from '../../../lib/skill';
 import { KeySkills } from './KeySkills';
 
 const sampleSkills = [

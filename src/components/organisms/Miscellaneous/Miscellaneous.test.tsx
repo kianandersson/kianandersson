@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/preact';
 import { describe, expect, it } from 'vitest';
-import type { Language } from '../../lib/language';
+import type { Language } from '../../../lib/language';
 import { Miscellaneous } from './Miscellaneous';
 
 const sampleLanguages: Language[] = [

@@ -1,5 +1,5 @@
-import { ChipList } from '../ChipList/ChipList';
-import { TimelineMarker } from '../TimelineMarker/TimelineMarker';
+import { TimelineMarker } from '../../atoms/TimelineMarker/TimelineMarker';
+import { ChipList } from '../../molecules/ChipList/ChipList';
 import styles from './Experience.module.css';
 
 const CHIP_LIMIT = 6;

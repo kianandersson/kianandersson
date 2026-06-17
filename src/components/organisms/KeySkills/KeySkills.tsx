@@ -1,5 +1,5 @@
-import type { SkillLevel } from '../../lib/skill';
-import { SkillRow } from '../SkillRow/SkillRow';
+import type { SkillLevel } from '../../../lib/skill';
+import { SkillRow } from '../../molecules/SkillRow/SkillRow';
 import styles from './KeySkills.module.css';
 
 export type KeySkill = {

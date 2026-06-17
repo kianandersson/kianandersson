@@ -1,7 +1,7 @@
 import { actions } from 'astro:actions';
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { formatDate } from '../../lib/formatDate';
-import { AvailabilityPill } from '../AvailabilityPill/AvailabilityPill';
+import { formatDate } from '../../../lib/formatDate';
+import { AvailabilityPill } from '../../atoms/AvailabilityPill/AvailabilityPill';
 import { ContactForm, type ContactPayload, type ContactStatus } from '../ContactForm/ContactForm';
 import styles from './ContactCta.module.css';
 
