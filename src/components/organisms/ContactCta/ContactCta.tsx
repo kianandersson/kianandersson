@@ -29,7 +29,7 @@ function delay(ms: number): Promise<void> {
 function pickAriaLabel(open: boolean, availableFrom: Date | undefined): string {
   if (open) return 'Close contact form';
   if (!availableFrom) return 'Get in touch';
-  if (availableFrom.getTime() <= Date.now()) return 'Get in touch — available for work';
+  if (availableFrom.getTime() <= Date.now()) return 'Get in touch';
   return `Get in touch — available from ${formatDate(availableFrom)}`;
 }
 
