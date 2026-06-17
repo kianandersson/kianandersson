@@ -44,9 +44,6 @@ jobs:
           URL: ${{ inputs.url }}
         run: pnpm build
 
-      - name: Build Storybook
-        run: pnpm storybook:build
-
       # `.wrangler/deploy/config.json` is the pointer `astro preview` (used
       # by e2e) follows to locate the worker config; include-hidden-files
       # is needed to ship it and `dist/.assetsignore`. The `.dev.vars`

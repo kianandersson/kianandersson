@@ -4,6 +4,7 @@ import preact from '@astrojs/preact';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig, envField, sessionDrivers } from 'astro/config';
 import { ogImage } from './src/integrations/og-image.ts';
+import { storybook } from './src/integrations/storybook.ts';
 
 const site = process.env.URL ?? 'http://localhost:4321';
 
@@ -22,6 +23,7 @@ export default defineConfig({
     // `/og` is a render-only canvas for the OG image, not a real page.
     sitemap({ filter: (page) => !page.endsWith('/og/') }),
     ogImage(),
+    storybook(),
   ],
   env: {
     schema: {
