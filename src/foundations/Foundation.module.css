@@ -226,6 +226,9 @@
        ("Cool neutral · text, dark surfaces") get their own line. */
     flex-direction: column;
     align-items: flex-start;
+    /* Override the inline row-gap — when stacked, the chip and descriptor
+       need clearer separation than the 4 px set for wrapped flex rows. */
+    row-gap: var(--space-xs);
   }
   .rampGrid {
     /* Keep all 11 swatches on one row as the ladder visual — let them spill
