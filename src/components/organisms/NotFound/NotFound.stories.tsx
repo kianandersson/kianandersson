@@ -7,7 +7,7 @@ const meta: Meta<typeof NotFound> = {
   argTypes: {
     requestedUrl: { control: 'text' },
   },
-  args: { requestedUrl: 'https://kianandersson.dk/blog/article-that-moved' },
+  args: { requestedUrl: 'https://example.com/blog/article-that-moved' },
 };
 
 export default meta;

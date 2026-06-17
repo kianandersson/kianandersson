@@ -27,7 +27,7 @@ test.describe('Footer', () => {
     await page.goto('/');
     const footer = page.getByRole('contentinfo');
     await expect(footer).toBeVisible();
-    await expect(footer.getByText(siteConfig.name)).toBeVisible();
+    await expect(footer.getByText(siteConfig.fullName)).toBeVisible();
     const sourceLink = footer.getByRole('link', { name: /open-source/i });
     await expect(sourceLink).toBeVisible();
     await expect(sourceLink).toHaveAttribute('href', /github/i);

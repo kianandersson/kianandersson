@@ -12,7 +12,7 @@ const meta: Meta<typeof Footer> = {
   args: {
     name: 'Kian Andersson',
     year: new Date().getFullYear(),
-    sourceHref: 'https://github.com/kianandersson/kianandersson',
+    sourceHref: 'https://github.com/example/example',
   },
 };
 

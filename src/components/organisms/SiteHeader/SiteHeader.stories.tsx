@@ -9,7 +9,7 @@ const meta: Meta<typeof SiteHeader> = {
     showPrint: { control: 'boolean' },
   },
   args: {
-    githubHref: 'https://github.com/kianandersson/kianandersson',
+    githubHref: 'https://github.com/example/example',
     showPrint: true,
   },
 };

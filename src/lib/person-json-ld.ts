@@ -1,5 +1,5 @@
 interface PersonSource {
-  name: string;
+  fullName: string;
   role: string;
   location: string;
   links: {
@@ -80,7 +80,7 @@ export function buildPersonJsonLd(
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    name: site.name,
+    name: site.fullName,
     url,
     jobTitle: site.role,
     address: { '@type': 'PostalAddress', addressCountry: site.location },
