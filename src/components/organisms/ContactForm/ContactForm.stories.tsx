@@ -96,8 +96,9 @@ export const ErrorState: Story = {
   },
 };
 
-export const ErrorHiddenWhileIdle: Story = {
+export const ErrorSuppressedInIdleBehavior: Story = {
   args: { status: 'idle', errorMessage: 'Network hiccup' },
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(canvas.queryByText(/Network hiccup/i)).not.toBeInTheDocument();

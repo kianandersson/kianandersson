@@ -39,8 +39,9 @@ export const Default: Story = {
   },
 };
 
-export const Span: Story = {
+export const AsSpanBehavior: Story = {
   args: { as: 'span' },
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     await expect(canvasElement.firstElementChild?.tagName).toBe('SPAN');
   },

@@ -14,3 +14,7 @@ export default meta;
 type Story = StoryObj<typeof StatusIndicator>;
 
 export const Default: Story = {};
+
+export const Warning: Story = {
+  args: { tone: 'warning' },
+};

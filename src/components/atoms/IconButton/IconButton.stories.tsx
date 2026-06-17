@@ -35,11 +35,16 @@ export const ClickBehavior: Story = {
   },
 };
 
-export const AsLink: Story = {
+export const Disabled: Story = {
+  args: { disabled: true },
+};
+
+export const AsLinkBehavior: Story = {
   args: {
     href: 'https://github.com',
     target: '_blank',
   },
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const link = canvas.getByRole('link', { name: /github/i });
