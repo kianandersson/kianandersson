@@ -4,5 +4,5 @@
 // invalid values use `vi.mock('astro:env/server', …)` to override
 // per suite.
 export const RESEND_API_KEY = 're_test_key';
-export const SENDER_EMAIL = 'sender@kianandersson.dk';
-export const RECIPIENT_EMAIL = 'mail@kianandersson.dk';
+export const SENDER_EMAIL = 'sender@example.com';
+export const RECIPIENT_EMAIL = 'recipient@example.com';

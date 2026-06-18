@@ -35,8 +35,8 @@ describe('sendContactMessageHandler', () => {
     expect(result).toEqual({ ok: true });
     expect(vi.mocked(Resend)).toHaveBeenCalledWith('re_test_key');
     expect(sendMock).toHaveBeenCalledWith({
-      from: 'kianandersson.dk <sender@kianandersson.dk>',
-      to: expect.stringContaining('<mail@kianandersson.dk>'),
+      from: 'kianandersson.dk <sender@example.com>',
+      to: expect.stringContaining('<recipient@example.com>'),
       replyTo: validInput.email,
       subject: validInput.subject,
       text: validInput.message,
