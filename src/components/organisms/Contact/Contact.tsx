@@ -22,7 +22,7 @@ function pickAriaLabel(open: boolean, availableFrom: Date | undefined): string {
 export function Contact({ recipientName, availableFrom }: ContactProps) {
   const regionId = useId();
   const { open, status, errorMessage, formKey, formLeaving, successLeaving, toggle, submit } =
-    useContactSubmission({ send: actions.contact.send });
+    useContactSubmission({ send: actions.sendContactMessage });
 
   const showAvailability = availableFrom !== undefined;
   const ariaLabel = pickAriaLabel(open, availableFrom);
