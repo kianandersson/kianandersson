@@ -3,8 +3,11 @@ import { join } from 'node:path';
 import yaml from 'js-yaml';
 import { describe, expect, it } from 'vitest';
 
+type SkillType = 'stack' | 'method';
+
 type SkillItem = {
   name: string;
+  type: SkillType;
   level?: number;
   years?: number;
   lastUsed?: number;
@@ -108,6 +111,15 @@ describe('skills.yaml internal consistency', () => {
     }
   });
 
+  it('every item has a type of "stack" or "method"', () => {
+    for (const item of skills.items) {
+      expect(
+        item.type === 'stack' || item.type === 'method',
+        `Skill "${item.name}" has invalid type "${item.type}" — must be "stack" or "method"`,
+      ).toBe(true);
+    }
+  });
+
   it('featured entries are unique', () => {
     const counts = new Map<string, number>();
     for (const name of skills.featured) {
@@ -123,31 +135,43 @@ describe('experience vs skills consistency', () => {
   const skills = loadSkills();
   const experience = loadExperience();
 
-  const validNames = (() => {
-    const set = new Set<string>(skills.items.map((s) => s.name));
+  // Effective type per referenceable name: standalone items expose their own
+  // type; cover names inherit the parent's type (a cover represents a
+  // sub-aspect of the same kind as its paraply).
+  const nameType = (() => {
+    const map = new Map<string, SkillType>();
     for (const item of skills.items) {
-      if (item.covers) for (const c of item.covers) set.add(c);
+      map.set(item.name, item.type);
+      if (item.covers) {
+        for (const c of item.covers) map.set(c, item.type);
+      }
     }
-    return set;
+    return map;
   })();
 
-  function check(field: 'stack' | 'methods') {
+  function check(field: 'stack' | 'methods', expectedType: SkillType) {
     for (const role of experience) {
       for (const name of role[field]) {
+        const actualType = nameType.get(name);
         expect(
-          validNames.has(name),
+          actualType !== undefined,
           `"${role.role} @ ${role.meta}" ${field} includes "${name}" — not a skill, cover, or hidden historical entry. ` +
             `Either rename it to match skills.yaml, mark it covered under a paraply, or add it to skills.yaml with hide: true.`,
         ).toBe(true);
+        expect(
+          actualType,
+          `"${role.role} @ ${role.meta}" lists "${name}" under ${field}, but it is typed as "${actualType}" in skills.yaml. ` +
+            `Either move it to the other field, or fix the type in skills.yaml.`,
+        ).toBe(expectedType);
       }
     }
   }
 
-  it('every stack item matches a skill, cover, or allowlisted historical name', () => {
-    check('stack');
+  it('every stack item matches a skill or cover of type "stack"', () => {
+    check('stack', 'stack');
   });
 
-  it('every methods item matches a skill, cover, or allowlisted historical name', () => {
-    check('methods');
+  it('every methods item matches a skill or cover of type "method"', () => {
+    check('methods', 'method');
   });
 });
