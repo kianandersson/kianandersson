@@ -28,12 +28,8 @@
  * link reads as part of the surrounding text; the underline keeps it
  * legible as a link without relying on colour alone. */
 .inline {
-  display: inline;
-  padding: 0;
-  font: inherit;
-  white-space: normal;
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
+  display: inline-block;
+  margin: calc(var(--space-2xs) * -1) calc(var(--space-xs) * -1);
 }
 
 .link:focus-visible {
