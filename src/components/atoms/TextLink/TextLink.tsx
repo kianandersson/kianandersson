@@ -6,6 +6,10 @@ export type TextLinkTone = 'muted' | 'default';
 type SharedProps = {
   children?: ComponentChildren;
   tone?: TextLinkTone;
+  /** Inline variant: drops padding, inherits font + nowrap from the
+   *  surrounding text. Use inside a sentence; the default chip styling
+   *  is for standalone affordances. */
+  inline?: boolean;
   id?: string;
   title?: string;
   'aria-label'?: string;
@@ -35,9 +39,9 @@ export type ButtonProps = SharedProps & {
 export type Props = AnchorProps | ButtonProps;
 
 export function TextLink(props: Props) {
-  const { children, tone = 'muted' } = props;
+  const { children, tone = 'muted', inline = false } = props;
   const toneClass = tone === 'default' ? styles.default : styles.muted;
-  const combined = `${styles.link} ${toneClass}`;
+  const combined = `${styles.link} ${toneClass}${inline ? ` ${styles.inline}` : ''}`;
 
   const shared = {
     id: props.id,

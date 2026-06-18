@@ -14,9 +14,15 @@ export function Footer({ name, year, sourceHref }: Props) {
         <span>
           © {year} {name}
         </span>
-        <span className={styles.source}>
+        <span>
           This website is{' '}
-          <TextLink href={sourceHref} target="_blank" rel="noopener noreferrer" tone="default">
+          <TextLink
+            href={sourceHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            tone="default"
+            inline
+          >
             open-source
           </TextLink>
         </span>

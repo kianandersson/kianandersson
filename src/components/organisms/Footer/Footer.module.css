@@ -19,12 +19,6 @@
   color: var(--color-text-muted);
 }
 
-.source {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-xs);
-}
-
 @media print {
   .footer {
     display: none;
