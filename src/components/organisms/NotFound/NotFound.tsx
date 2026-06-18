@@ -47,12 +47,12 @@ export function NotFound({ requestedUrl = '/', homeHref }: Props) {
         <div className={styles.terminalBody}>
           <div className={styles.line}>
             <span className={styles.prompt}>$</span> curl -I{' '}
-            <span className={styles.url} id="requested-url" data-testid="requested-url">
+            <span id="requested-url" data-testid="requested-url">
               {requestedUrl}
             </span>
           </div>
-          <div className={styles.response}>HTTP/2 404 Not Found</div>
-          <div className={styles.response}>content-type: text/html; charset=utf-8</div>
+          <div>HTTP/2 404 Not Found</div>
+          <div>content-type: text/html; charset=utf-8</div>
         </div>
       </Window>
 

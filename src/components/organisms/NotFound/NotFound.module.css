@@ -34,23 +34,15 @@
   font-family: var(--font-mono);
   font-size: var(--text-caption-m-size);
   line-height: 2;
+  color: var(--color-text-muted);
 }
 
 .line {
-  color: var(--color-text);
   word-break: break-all;
 }
 
 .prompt {
   color: var(--color-accent);
-}
-
-.url {
-  color: var(--color-text);
-}
-
-.response {
-  color: var(--color-text-muted);
 }
 
 .arrow {
