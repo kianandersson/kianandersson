@@ -156,6 +156,14 @@ items:
     lastUsed: 2026
     group: Methodologies & Practices
 
+  - name: SEO
+    level: 3
+    years: 4
+    lastUsed: 2026
+    group: Methodologies & Practices
+    covers:
+      - Search Engine Optimization
+
   # Languages & Runtimes
   - name: TypeScript
     level: 5
