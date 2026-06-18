@@ -2,6 +2,8 @@
 
 Source for [kianandersson.dk](https://kianandersson.dk).
 
+Design system at [kianandersson.dk/design](https://kianandersson.dk/design).
+
 Built with [Astro](https://astro.build) and [Preact](https://preactjs.com).
 
 ## Develop

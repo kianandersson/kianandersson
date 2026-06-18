@@ -24,10 +24,25 @@
   color: var(--color-text);
 }
 
+/* Inline-in-sentence variant. Drops the chip padding/typography so the
+ * link reads as part of the surrounding text; the underline keeps it
+ * legible as a link without relying on colour alone. */
+.inline {
+  display: inline-block;
+  margin: calc(var(--space-2xs) * -1) calc(var(--space-xs) * -1);
+  font: inherit;
+}
+
 .link:focus-visible {
   color: var(--color-accent-strong);
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+.inline.link:focus-visible {
+  /* Hug the text — without the chip padding, a 2px offset reads as a gap. */
+  outline-offset: 1px;
+  border-radius: var(--radius-s);
 }
 
 @media (hover: hover) {

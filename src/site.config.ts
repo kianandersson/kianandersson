@@ -35,7 +35,7 @@ const parsed = SiteConfigSchema.parse({
   links: {
     github: 'https://github.com/kianandersson',
     linkedin: 'https://www.linkedin.com/in/kianandersson',
-    source: 'https://github.com/kianandersson/kianandersson.com',
+    source: 'https://github.com/kianandersson/kianandersson',
   },
   languages: [
     { name: 'Danish', level: 'Native' },
