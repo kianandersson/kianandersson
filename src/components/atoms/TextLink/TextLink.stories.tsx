@@ -34,10 +34,12 @@ export const ClickBehavior: Story = {
 };
 
 export const AsAnchor: Story = {
-  args: { tone: 'default', children: 'open-source', href: '#' },
-  play: async ({ canvasElement }) => {
+  /* Inert in Storybook — production callers pass the real URL.
+     `javascript:void(0)` is fully no-op (doesn't update the URL hash). */
+  args: { tone: 'default', children: 'open-source', href: 'javascript:void(0)' },
+  play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     const link = canvas.getByRole('link', { name: /open-source/i });
-    await expect(link).toHaveAttribute('href', '#');
+    await expect(link).toHaveAttribute('href', args.href as string);
   },
 };
