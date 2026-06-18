@@ -14,12 +14,7 @@ describe('sortGroups', () => {
   });
 
   it('puts groups not in the order at the end, preserving their relative order', () => {
-    const groups: Item[] = [
-      { group: 'X' },
-      { group: 'A' },
-      { group: 'Y' },
-      { group: 'B' },
-    ];
+    const groups: Item[] = [{ group: 'X' }, { group: 'A' }, { group: 'Y' }, { group: 'B' }];
     expect(sortGroups(groups, ['A', 'B']).map((g) => g.group)).toEqual(['A', 'B', 'X', 'Y']);
   });
 

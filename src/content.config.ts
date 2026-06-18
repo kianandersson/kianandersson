@@ -51,7 +51,9 @@ const skills = defineCollection({
   schema: z
     .object({
       name: z.string().min(1),
-      level: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]).optional(),
+      level: z
+        .union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)])
+        .optional(),
       years: z.number().int().nonnegative().optional(),
       lastUsed: z.number().int().optional(),
       group: z.string().min(1).optional(),

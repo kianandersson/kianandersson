@@ -15,9 +15,9 @@ import '../styles/tokens.css';
 const theme = 'dark';
 
 // Same source the Hero "Key skills" block draws from.
-const skills = (await getCollection('skills'))
-  .filter((skill) => skill.data.keySkill)
-  .map((skill) => skill.data.name);
+const skills = (await getCollection('keySkills'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((entry) => entry.data.name);
 ---
 
 <html lang="en" data-theme={theme}>

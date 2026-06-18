@@ -4,12 +4,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { formatPeriod } from '../lib/formatPeriod';
 import { groupSkills } from '../lib/group-skills';
 import { buildPersonJsonLd } from '../lib/person-json-ld';
+import type { SkillLevel } from '../lib/skill';
 import { sortGroups } from '../lib/sort-groups';
 import { sortSkills } from '../lib/sort-skills';
-
-const groupOrder = (await getCollection('skillGroups'))
-  .sort((a, b) => a.data.order - b.data.order)
-  .map((entry) => entry.data.name);
 import { siteConfig } from '../site.config';
 import IndexTemplate from '../templates/IndexTemplate.astro';
 
@@ -20,21 +17,33 @@ const hero = {
   availableFrom: siteConfig.availableFrom,
 };
 
-const allSkills = (await getCollection('skills'))
+type VisibleSkill = {
+  id: string;
+  name: string;
+  level: SkillLevel;
+  years: number;
+  group: string;
+};
+
+const groupOrder = (await getCollection('skillGroups'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((entry) => entry.data.name);
+
+const allSkills: VisibleSkill[] = (await getCollection('skills'))
   .filter((entry) => !entry.data.hide)
   .map((entry) => ({
     id: entry.id,
     name: entry.data.name,
-    level: entry.data.level,
-    years: entry.data.years,
-    group: entry.data.group,
+    level: entry.data.level as SkillLevel,
+    years: entry.data.years as number,
+    group: entry.data.group as string,
   }));
 
 const skillByName = new Map(allSkills.map((skill) => [skill.name, skill]));
 const keySkills = (await getCollection('keySkills'))
   .sort((a, b) => a.data.order - b.data.order)
   .map((entry) => skillByName.get(entry.data.name))
-  .filter((skill): skill is NonNullable<typeof skill> => skill !== undefined)
+  .filter((skill): skill is VisibleSkill => skill !== undefined)
   .map(({ id, name, level, years }) => ({ id, name, level, years }));
 
 const skillGroups = sortGroups(
