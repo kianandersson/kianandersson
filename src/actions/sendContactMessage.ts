@@ -11,9 +11,6 @@ import { siteConfig } from '../site.config';
 
 const emailField = z.string().trim().regex(CONTACT_EMAIL_REGEX);
 
-// Format-check the secrets at request time — `astro:env` only type-checks
-// strings, so an invalid email here would otherwise surface as a generic
-// Resend rejection deep in the handler.
 const envSchema = z.object({
   RESEND_API_KEY: z.string().min(1),
   SENDER_EMAIL: emailField,
