@@ -29,30 +29,25 @@ items:
     years: 7
     lastUsed: 2026
     group: Leadership & Architecture
+    covers:
+      - Stakeholder Management
 
   - name: Engineering Management
     level: 4
     years: 5
     lastUsed: 2026
     group: Leadership & Architecture
-
-  - name: Solution Architecture
-    level: 4
-    years: 5
-    lastUsed: 2026
-    group: Leadership & Architecture
+    covers:
+      - Change Management
 
   - name: Software Architecture
     level: 4
     years: 7
     lastUsed: 2026
     group: Leadership & Architecture
-
-  - name: System Architecture
-    level: 4
-    years: 7
-    lastUsed: 2026
-    group: Leadership & Architecture
+    covers:
+      - Solution Architecture
+      - System Architecture
 
   - name: Microservices Architecture
     level: 4
@@ -105,23 +100,13 @@ items:
     lastUsed: 2026
     group: Leadership & Architecture
 
-  - name: Stakeholder Management
+  - name: Technical Hiring
     level: 3
     years: 5
     lastUsed: 2026
     group: Leadership & Architecture
-
-  - name: Change Management
-    level: 3
-    years: 5
-    lastUsed: 2026
-    group: Leadership & Architecture
-
-  - name: Talent Acquisition
-    level: 3
-    years: 5
-    lastUsed: 2026
-    group: Leadership & Architecture
+    covers:
+      - Talent Acquisition
 
   # Methodologies & Practices
   - name: Agile Development
@@ -284,29 +269,21 @@ items:
     lastUsed: 2026
     group: Frontend
 
-  - name: Web Vitals
+  - name: Web Performance
     level: 2
     years: 2
     lastUsed: 2026
     group: Frontend
-
-  - name: HTML
-    level: 5
-    years: 15
-    lastUsed: 2026
-    group: Frontend
+    covers:
+      - Web Vitals
 
   - name: CSS
     level: 5
     years: 15
     lastUsed: 2026
     group: Frontend
-
-  - name: SASS
-    level: 4
-    years: 10
-    lastUsed: 2026
-    group: Frontend
+    covers:
+      - SASS
 
   # Backend & APIs
   - name: REST
@@ -524,6 +501,7 @@ items:
       - Session Management
       - Multi-Factor Authentication
       - Federated Identity
+      - MitID
 
   - name: Authorization
     level: 4
@@ -540,12 +518,6 @@ items:
   - name: Single Sign-On
     level: 4
     years: 7
-    lastUsed: 2026
-    group: Security & Identity
-
-  - name: MitID
-    level: 2
-    years: 4
     lastUsed: 2026
     group: Security & Identity
 
@@ -594,6 +566,7 @@ items:
       - Unit Testing
       - Integration Testing
       - End-to-End Testing
+      - Supertest
 
   - name: Jest
     level: 3
@@ -631,12 +604,6 @@ items:
     lastUsed: 2026
     group: Quality & Testing
 
-  - name: Supertest
-    level: 3
-    years: 4
-    lastUsed: 2026
-    group: Quality & Testing
-
   - name: Performance Testing
     level: 3
     years: 5
@@ -655,30 +622,18 @@ items:
     years: 2
     lastUsed: 2026
     group: Methodologies & Practices
+    covers:
+      - Agentic Development
 
-  - name: Agentic Development
-    level: 3
-    years: 0
-    lastUsed: 2026
-    group: Methodologies & Practices
-
-  - name: Event Tracking
+  - name: Product Analytics
     level: 3
     years: 1
     lastUsed: 2026
     group: Data & Analytics
-
-  - name: Behavioral Analytics
-    level: 2
-    years: 1
-    lastUsed: 2026
-    group: Data & Analytics
-
-  - name: Customer Data Platform
-    level: 2
-    years: 1
-    lastUsed: 2026
-    group: Data & Analytics
+    covers:
+      - Event Tracking
+      - Behavioral Analytics
+      - Customer Data Platform
 
   - name: A/B Testing
     level: 2
@@ -693,6 +648,9 @@ items:
     hide: true
 
   - name: CircleCI
+    hide: true
+
+  - name: HTML
     hide: true
 
   - name: JSON:API
