@@ -39,5 +39,24 @@ export const AsAnchor: Story = {
     const canvas = within(canvasElement);
     const link = canvas.getByRole('link', { name: /open-source/i });
     await expect(link).toHaveAttribute('href', '#');
+    // No target=_blank → no auto-rel.
+    await expect(link).not.toHaveAttribute('rel');
+  },
+};
+
+export const AsExternalAnchorBehavior: Story = {
+  tags: ['!dev', '!autodocs'],
+  args: {
+    tone: 'default',
+    children: 'open-source',
+    href: 'https://github.com',
+    target: '_blank',
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const link = canvas.getByRole('link', { name: /open-source/i });
+    await expect(link).toHaveAttribute('href', 'https://github.com');
+    // target=_blank auto-adds rel="noopener noreferrer".
+    await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
   },
 };

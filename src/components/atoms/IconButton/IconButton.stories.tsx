@@ -49,5 +49,19 @@ export const AsLinkBehavior: Story = {
     const canvas = within(canvasElement);
     const link = canvas.getByRole('link', { name: /github/i });
     await expect(link).toHaveAttribute('href', 'https://github.com');
+    // target=_blank auto-adds rel="noopener noreferrer".
+    await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+  },
+};
+
+export const AsInternalLinkBehavior: Story = {
+  args: { href: '/somewhere' },
+  tags: ['!dev', '!autodocs'],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const link = canvas.getByRole('link', { name: /github/i });
+    await expect(link).toHaveAttribute('href', '/somewhere');
+    // No target=_blank → no auto-rel.
+    await expect(link).not.toHaveAttribute('rel');
   },
 };
