@@ -4,6 +4,10 @@ Source for [kianandersson.dk](https://kianandersson.dk).
 
 Built with [Astro](https://astro.build) and [Preact](https://preactjs.com).
 
+## Design system
+
+Storybook ships alongside the site at [kianandersson.dk/design](https://kianandersson.dk/design) on every deploy (and on each PR preview). Run `pnpm storybook` for a local instance.
+
 ## Develop
 
 Requires Node ≥20, pnpm 11, and Playwright's Chromium.
