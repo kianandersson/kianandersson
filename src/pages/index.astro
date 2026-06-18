@@ -4,6 +4,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { formatPeriod } from '../lib/formatPeriod';
 import { groupSkills } from '../lib/group-skills';
 import { buildPersonJsonLd } from '../lib/person-json-ld';
+import { sortGroups } from '../lib/sort-groups';
+import { sortSkills } from '../lib/sort-skills';
+
+const groupOrder = (await getCollection('skillGroups'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((entry) => entry.data.name);
 import { siteConfig } from '../site.config';
 import IndexTemplate from '../templates/IndexTemplate.astro';
 
@@ -14,23 +20,28 @@ const hero = {
   availableFrom: siteConfig.availableFrom,
 };
 
-const allSkills = (await getCollection('skills')).map((entry) => ({
-  id: entry.id,
-  name: entry.data.name,
-  level: entry.data.level,
-  years: entry.data.years,
-  group: entry.data.group,
-  keySkill: entry.data.keySkill,
-}));
+const allSkills = (await getCollection('skills'))
+  .filter((entry) => !entry.data.hide)
+  .map((entry) => ({
+    id: entry.id,
+    name: entry.data.name,
+    level: entry.data.level,
+    years: entry.data.years,
+    group: entry.data.group,
+    keySkill: entry.data.keySkill,
+  }));
 
 const keySkills = allSkills
   .filter((entry) => entry.keySkill)
   .map(({ id, name, level, years }) => ({ id, name, level, years }));
 
-const skillGroups = groupSkills(allSkills).map(({ group, items }) => ({
-  group,
-  skills: items.map(({ id, name, level, years }) => ({ id, name, level, years })),
-}));
+const skillGroups = sortGroups(
+  groupSkills(allSkills).map(({ group, items }) => ({
+    group,
+    skills: sortSkills(items).map(({ id, name, level, years }) => ({ id, name, level, years })),
+  })),
+  groupOrder,
+);
 
 const experienceEntries = (await getCollection('experience')).sort(
   (a, b) => b.data.start.getTime() - a.data.start.getTime(),

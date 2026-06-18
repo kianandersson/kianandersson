@@ -1,0 +1,18 @@
+role: Software Engineer
+meta: EuroAds / Gravity4
+start: 2014-06-01
+end: 2017-01-31
+description: >-
+  Built tooling to optimise ad campaign management across platforms, including
+  a real-time revenue and spend dashboard for Facebook campaigns that materially
+  improved profitability for the team running them.
+stack:
+  - PHP
+  - SQL
+  - Amazon Web Services
+  - HTML
+  - CSS
+  - SASS
+methods:
+  - A/B Testing
+  - Responsive Web Design

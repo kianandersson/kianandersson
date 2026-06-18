@@ -32,24 +32,45 @@ function yamlDir(relativeDir: string): Loader {
   };
 }
 
+type SkillsFile = {
+  groups: string[];
+  items: Record<string, unknown>[];
+};
+
 const skills = defineCollection({
   loader: file('src/content/skills.yaml', {
     parser: (text) => {
-      const entries = yaml.load(text) as Record<string, unknown>[];
-      return entries.map((entry) => ({
+      const parsed = yaml.load(text) as SkillsFile;
+      return parsed.items.map((entry) => ({
         id: slugify(String(entry.name)),
         ...entry,
       }));
     },
   }),
-  schema: z.object({
-    name: z.string().min(1),
-    level: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
-    years: z.number().int().nonnegative(),
-    lastUsed: z.number().int(),
-    group: z.string().min(1),
-    keySkill: z.boolean(),
-  }),
+  schema: z
+    .object({
+      name: z.string().min(1),
+      level: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]).optional(),
+      years: z.number().int().nonnegative().optional(),
+      lastUsed: z.number().int().optional(),
+      group: z.string().min(1).optional(),
+      keySkill: z.boolean().optional(),
+      covers: z.array(z.string().min(1)).optional(),
+      hide: z.boolean().optional(),
+    })
+    .refine(
+      (data) =>
+        data.hide === true ||
+        (data.level !== undefined &&
+          data.years !== undefined &&
+          data.lastUsed !== undefined &&
+          data.group !== undefined &&
+          data.keySkill !== undefined),
+      {
+        message:
+          'A visible skill must have level, years, lastUsed, group, and keySkill. Hidden skills (hide: true) may omit them.',
+      },
+    ),
 });
 
 const experience = defineCollection({
@@ -65,4 +86,21 @@ const experience = defineCollection({
   }),
 });
 
-export const collections = { skills, experience };
+const skillGroups = defineCollection({
+  loader: file('src/content/skills.yaml', {
+    parser: (text) => {
+      const parsed = yaml.load(text) as SkillsFile;
+      return parsed.groups.map((name, index) => ({
+        id: slugify(name),
+        name,
+        order: index,
+      }));
+    },
+  }),
+  schema: z.object({
+    name: z.string().min(1),
+    order: z.number().int().nonnegative(),
+  }),
+});
+
+export const collections = { skills, experience, skillGroups };

@@ -1,0 +1,40 @@
+role: Engineering Lead
+meta: Danish Broadcasting Corporation
+start: 2022-06-01
+end: 2026-05-31
+description: >-
+  Built the login platform, and the team behind it, from scratch. Scaled it
+  to millions of users, with up to 500,000 concurrent during live events.
+  Shipped React user interfaces and an accessible, atomic-design component
+  library alongside the backend, established GDPR compliance and a high
+  security bar, and led the migration from a SaaS identity provider to an
+  in-house OAuth/OIDC server that saved the organisation millions.
+stack:
+  - TypeScript
+  - Node.js
+  - React.js
+  - GraphQL
+  - MongoDB
+  - OAuth
+  - OpenID Connect
+  - JSON Web Token
+  - Docker
+  - Kubernetes
+  - Helm
+  - Google Cloud Platform
+  - Kong
+  - Nginx
+  - WebSockets
+  - GitHub Actions
+  - Redis
+methods:
+  - Engineering Management
+  - Software Architecture
+  - Continuous Delivery
+  - Site Reliability Engineering
+  - Atomic Design
+  - Authorization
+  - Distributed Systems
+  - Mentoring
+  - Incident Management
+  - Code Review

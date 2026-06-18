@@ -1,206 +1,800 @@
-# Skills data — single source of truth for both the Hero "Key skills" section
-# and the full grouped Skills section. Mark `keySkill: true` to surface a skill
-# in the Hero block; everything else only appears in the grouped section.
-# The entry id is derived from `name` (lowercased, non-alphanumerics → "-").
-# Placeholder data taken from the design prototype; replace with the real list.
+# Display order for skill groups in the All Skills section.
+# Each entry matches a `group` value in the skills below. Reorder freely.
+groups:
+  - Leadership & Architecture
+  - Languages & Runtimes
+  - Frontend
+  - Backend & APIs
+  - Databases
+  - Cloud & DevOps
+  - Security & Identity
+  - Quality & Testing
+  - Methodologies & Practices
+  - Data & Analytics
 
-# Programming Languages
-- name: TypeScript
-  level: 5
-  years: 8
-  lastUsed: 2026
-  group: Programming Languages
-  keySkill: true
+items:
+  # Leadership & Architecture
+  - name: Technical Leadership
+    level: 4
+    years: 7
+    lastUsed: 2026
+    group: Leadership & Architecture
+    keySkill: true
 
-- name: JavaScript
-  level: 5
-  years: 10
-  lastUsed: 2026
-  group: Programming Languages
-  keySkill: false
+  - name: Engineering Management
+    level: 4
+    years: 5
+    lastUsed: 2026
+    group: Leadership & Architecture
+    keySkill: false
 
-- name: SQL
-  level: 4
-  years: 8
-  lastUsed: 2026
-  group: Programming Languages
-  keySkill: false
+  - name: Solution Architecture
+    level: 4
+    years: 5
+    lastUsed: 2026
+    group: Leadership & Architecture
+    keySkill: false
 
-- name: Go
-  level: 2
-  years: 2
-  lastUsed: 2025
-  group: Programming Languages
-  keySkill: true
+  - name: Software Architecture
+    level: 4
+    years: 7
+    lastUsed: 2026
+    group: Leadership & Architecture
+    keySkill: true
 
-- name: PHP
-  level: 3
-  years: 6
-  lastUsed: 2021
-  group: Programming Languages
-  keySkill: false
+  - name: System Architecture
+    level: 4
+    years: 7
+    lastUsed: 2026
+    group: Leadership & Architecture
+    keySkill: false
 
-# Frameworks & Libraries
-- name: React
-  level: 4
-  years: 7
-  lastUsed: 2026
-  group: Frameworks & Libraries
-  keySkill: true
+  - name: Microservices Architecture
+    level: 4
+    years: 7
+    lastUsed: 2026
+    group: Leadership & Architecture
+    keySkill: false
 
-- name: Next.js
-  level: 4
-  years: 5
-  lastUsed: 2026
-  group: Frameworks & Libraries
-  keySkill: false
+  - name: Distributed Systems
+    level: 4
+    years: 5
+    lastUsed: 2026
+    group: Leadership & Architecture
+    keySkill: false
 
-- name: Node.js
-  level: 4
-  years: 6
-  lastUsed: 2026
-  group: Frameworks & Libraries
-  keySkill: true
+  - name: Event-Driven Architecture
+    level: 3
+    years: 5
+    lastUsed: 2026
+    group: Leadership & Architecture
+    keySkill: false
 
-- name: tRPC
-  level: 3
-  years: 2
-  lastUsed: 2026
-  group: Frameworks & Libraries
-  keySkill: false
+  - name: High Availability
+    level: 3
+    years: 5
+    lastUsed: 2026
+    group: Leadership & Architecture
+    keySkill: false
+    covers:
+      - Resilience
+      - Fault Tolerance
 
-- name: Fastify
-  level: 3
-  years: 3
-  lastUsed: 2025
-  group: Frameworks & Libraries
-  keySkill: false
+  - name: Scalability
+    level: 4
+    years: 9
+    lastUsed: 2026
+    group: Leadership & Architecture
+    keySkill: false
 
-- name: Vue
-  level: 3
-  years: 3
-  lastUsed: 2021
-  group: Frameworks & Libraries
-  keySkill: false
+  - name: API Gateway
+    level: 3
+    years: 9
+    lastUsed: 2026
+    group: Backend & APIs
+    keySkill: false
 
-# Data & Infrastructure
-- name: PostgreSQL
-  level: 3
-  years: 5
-  lastUsed: 2026
-  group: Data & Infrastructure
-  keySkill: true
+  - name: Domain-Driven Design
+    level: 3
+    years: 5
+    lastUsed: 2026
+    group: Leadership & Architecture
+    keySkill: false
 
-- name: Docker
-  level: 4
-  years: 5
-  lastUsed: 2026
-  group: Data & Infrastructure
-  keySkill: false
+  - name: Mentoring
+    level: 4
+    years: 5
+    lastUsed: 2026
+    group: Leadership & Architecture
+    keySkill: false
 
-- name: AWS
-  level: 3
-  years: 4
-  lastUsed: 2026
-  group: Data & Infrastructure
-  keySkill: true
+  - name: Stakeholder Management
+    level: 3
+    years: 5
+    lastUsed: 2026
+    group: Leadership & Architecture
+    keySkill: false
 
-- name: Redis
-  level: 3
-  years: 4
-  lastUsed: 2025
-  group: Data & Infrastructure
-  keySkill: false
+  - name: Change Management
+    level: 3
+    years: 5
+    lastUsed: 2026
+    group: Leadership & Architecture
+    keySkill: false
 
-- name: Kubernetes
-  level: 2
-  years: 2
-  lastUsed: 2024
-  group: Data & Infrastructure
-  keySkill: false
+  - name: Talent Acquisition
+    level: 3
+    years: 5
+    lastUsed: 2026
+    group: Leadership & Architecture
+    keySkill: false
 
-- name: MongoDB
-  level: 3
-  years: 3
-  lastUsed: 2022
-  group: Data & Infrastructure
-  keySkill: false
+  # Methodologies & Practices
+  - name: Agile Development
+    level: 4
+    years: 9
+    lastUsed: 2026
+    group: Methodologies & Practices
+    keySkill: false
+    covers:
+      - Scrum
 
-# Methodologies & Practices
-- name: Domain-Driven Design
-  level: 4
-  years: 5
-  lastUsed: 2026
-  group: Methodologies & Practices
-  keySkill: false
+  - name: Continuous Delivery
+    level: 4
+    years: 9
+    lastUsed: 2026
+    group: Methodologies & Practices
+    keySkill: false
+    covers:
+      - Continuous Integration
+      - Continuous Deployment
 
-- name: Test-Driven Development
-  level: 4
-  years: 6
-  lastUsed: 2026
-  group: Methodologies & Practices
-  keySkill: false
+  - name: Test-Driven Development
+    level: 3
+    years: 5
+    lastUsed: 2026
+    group: Methodologies & Practices
+    keySkill: false
 
-- name: CI/CD
-  level: 4
-  years: 6
-  lastUsed: 2026
-  group: Methodologies & Practices
-  keySkill: false
+  - name: Behavior-Driven Development
+    level: 3
+    years: 5
+    lastUsed: 2022
+    group: Methodologies & Practices
+    keySkill: false
 
-- name: Pair programming
-  level: 4
-  years: 7
-  lastUsed: 2026
-  group: Methodologies & Practices
-  keySkill: false
+  - name: Code Review
+    level: 4
+    years: 9
+    lastUsed: 2026
+    group: Methodologies & Practices
+    keySkill: false
 
-- name: Continuous Delivery
-  level: 4
-  years: 5
-  lastUsed: 2026
-  group: Methodologies & Practices
-  keySkill: false
+  - name: Technical Writing
+    level: 4
+    years: 9
+    lastUsed: 2026
+    group: Methodologies & Practices
+    keySkill: false
 
-- name: Trunk-based dev
-  level: 3
-  years: 3
-  lastUsed: 2025
-  group: Methodologies & Practices
-  keySkill: false
+  - name: Responsive Web Design
+    level: 4
+    years: 10
+    lastUsed: 2026
+    group: Methodologies & Practices
+    keySkill: false
 
-# Leadership & Architecture
-- name: Code review culture
-  level: 5
-  years: 7
-  lastUsed: 2026
-  group: Leadership & Architecture
-  keySkill: false
+  # Languages & Runtimes
+  - name: TypeScript
+    level: 5
+    years: 6
+    lastUsed: 2026
+    group: Languages & Runtimes
+    keySkill: true
 
-- name: Clean Architecture
-  level: 4
-  years: 5
-  lastUsed: 2026
-  group: Leadership & Architecture
-  keySkill: false
+  - name: JavaScript
+    level: 5
+    years: 15
+    lastUsed: 2026
+    group: Languages & Runtimes
+    keySkill: false
 
-- name: System design
-  level: 4
-  years: 5
-  lastUsed: 2026
-  group: Leadership & Architecture
-  keySkill: false
+  - name: Node.js
+    level: 5
+    years: 6
+    lastUsed: 2026
+    group: Languages & Runtimes
+    keySkill: true
 
-- name: Mentoring
-  level: 4
-  years: 4
-  lastUsed: 2026
-  group: Leadership & Architecture
-  keySkill: false
+  - name: PHP
+    level: 5
+    years: 11
+    lastUsed: 2022
+    group: Languages & Runtimes
+    keySkill: false
 
-- name: Technical roadmapping
-  level: 3
-  years: 3
-  lastUsed: 2025
-  group: Leadership & Architecture
-  keySkill: false
+  - name: C#
+    level: 2
+    years: 1
+    lastUsed: 2022
+    group: Languages & Runtimes
+    keySkill: false
+
+  - name: .NET
+    level: 2
+    years: 1
+    lastUsed: 2022
+    group: Languages & Runtimes
+    keySkill: false
+
+  - name: Go
+    level: 1
+    years: 0
+    lastUsed: 2026
+    group: Languages & Runtimes
+    keySkill: false
+
+  - name: Bun
+    level: 3
+    years: 1
+    lastUsed: 2026
+    group: Languages & Runtimes
+    keySkill: false
+
+  - name: Deno
+    level: 3
+    years: 1
+    lastUsed: 2026
+    group: Languages & Runtimes
+    keySkill: false
+
+  # Frontend
+  - name: React.js
+    level: 5
+    years: 6
+    lastUsed: 2026
+    group: Frontend
+    keySkill: true
+
+  - name: React Native
+    level: 2
+    years: 3
+    lastUsed: 2026
+    group: Frontend
+    keySkill: false
+
+  - name: Next.js
+    level: 3
+    years: 4
+    lastUsed: 2025
+    group: Frontend
+    keySkill: false
+
+  - name: Expo
+    level: 2
+    years: 3
+    lastUsed: 2026
+    group: Frontend
+    keySkill: false
+
+  - name: Design Systems
+    level: 3
+    years: 4
+    lastUsed: 2026
+    group: Frontend
+    keySkill: true
+    covers:
+      - Component Libraries
+      - Atomic Design
+
+  - name: Storybook
+    level: 3
+    years: 4
+    lastUsed: 2026
+    group: Frontend
+    keySkill: false
+
+  - name: Server-Side Rendering
+    level: 3
+    years: 4
+    lastUsed: 2026
+    group: Frontend
+    keySkill: false
+
+  - name: Accessibility
+    level: 3
+    years: 4
+    lastUsed: 2026
+    group: Frontend
+    keySkill: false
+
+  - name: Internationalization
+    level: 3
+    years: 4
+    lastUsed: 2026
+    group: Frontend
+    keySkill: false
+
+  - name: Web Vitals
+    level: 2
+    years: 2
+    lastUsed: 2026
+    group: Frontend
+    keySkill: false
+
+  - name: HTML
+    level: 5
+    years: 15
+    lastUsed: 2026
+    group: Frontend
+    keySkill: false
+
+  - name: CSS
+    level: 5
+    years: 15
+    lastUsed: 2026
+    group: Frontend
+    keySkill: false
+
+  - name: SASS
+    level: 4
+    years: 10
+    lastUsed: 2026
+    group: Frontend
+    keySkill: false
+
+  # Backend & APIs
+  - name: REST
+    level: 4
+    years: 12
+    lastUsed: 2026
+    group: Backend & APIs
+    keySkill: false
+
+  - name: GraphQL
+    level: 4
+    years: 4
+    lastUsed: 2026
+    group: Backend & APIs
+    keySkill: false
+
+  - name: Open API
+    level: 3
+    years: 9
+    lastUsed: 2026
+    group: Backend & APIs
+    keySkill: false
+
+  - name: WebSockets
+    level: 3
+    years: 4
+    lastUsed: 2026
+    group: Backend & APIs
+    keySkill: false
+
+  - name: gRPC
+    level: 1
+    years: 0
+    lastUsed: 2026
+    group: Backend & APIs
+    keySkill: false
+
+  - name: API Design
+    level: 4
+    years: 9
+    lastUsed: 2026
+    group: Backend & APIs
+    keySkill: false
+    covers:
+      - GraphQL Schema Design
+      - API Versioning
+
+  - name: Symfony
+    level: 4
+    years: 5
+    lastUsed: 2022
+    group: Backend & APIs
+    keySkill: false
+
+  - name: Laravel
+    level: 4
+    years: 2
+    lastUsed: 2022
+    group: Backend & APIs
+    keySkill: false
+
+  # Databases
+  - name: SQL
+    level: 4
+    years: 15
+    lastUsed: 2026
+    group: Databases
+    keySkill: false
+
+  - name: MongoDB
+    level: 4
+    years: 5
+    lastUsed: 2026
+    group: Databases
+    keySkill: false
+
+  - name: Redis
+    level: 3
+    years: 9
+    lastUsed: 2026
+    group: Databases
+    keySkill: false
+
+  - name: Caching strategies
+    level: 3
+    years: 9
+    lastUsed: 2026
+    group: Databases
+    keySkill: false
+
+  - name: Database Modeling
+    level: 4
+    years: 15
+    lastUsed: 2026
+    group: Databases
+    keySkill: false
+
+  # Cloud & DevOps
+  - name: Docker
+    level: 4
+    years: 9
+    lastUsed: 2026
+    group: Cloud & DevOps
+    keySkill: false
+
+  - name: Kubernetes
+    level: 3
+    years: 5
+    lastUsed: 2026
+    group: Cloud & DevOps
+    keySkill: false
+
+  - name: Helm
+    level: 3
+    years: 4
+    lastUsed: 2026
+    group: Cloud & DevOps
+    keySkill: false
+
+  - name: Google Cloud Platform
+    level: 3
+    years: 5
+    lastUsed: 2026
+    group: Cloud & DevOps
+    keySkill: false
+
+  - name: Nginx
+    level: 2
+    years: 9
+    lastUsed: 2026
+    group: Cloud & DevOps
+    keySkill: false
+
+  - name: Kong
+    level: 2
+    years: 5
+    lastUsed: 2026
+    group: Cloud & DevOps
+    keySkill: false
+
+  - name: GitHub Actions
+    level: 4
+    years: 4
+    lastUsed: 2026
+    group: Cloud & DevOps
+    keySkill: false
+
+  - name: Observability
+    level: 3
+    years: 4
+    lastUsed: 2026
+    group: Cloud & DevOps
+    keySkill: false
+    covers:
+      - Distributed tracing
+
+  - name: OpenTelemetry
+    level: 3
+    years: 4
+    lastUsed: 2026
+    group: Cloud & DevOps
+    keySkill: false
+
+  - name: Grafana
+    level: 3
+    years: 4
+    lastUsed: 2026
+    group: Cloud & DevOps
+    keySkill: false
+
+  - name: Monitoring
+    level: 3
+    years: 9
+    lastUsed: 2026
+    group: Cloud & DevOps
+    keySkill: false
+
+  - name: Service Level Objectives
+    level: 3
+    years: 4
+    lastUsed: 2026
+    group: Cloud & DevOps
+    keySkill: false
+
+  - name: Incident Management
+    level: 3
+    years: 4
+    lastUsed: 2026
+    group: Cloud & DevOps
+    keySkill: false
+
+  - name: Site Reliability Engineering
+    level: 3
+    years: 4
+    lastUsed: 2026
+    group: Cloud & DevOps
+    keySkill: false
+
+  - name: DevOps
+    level: 4
+    years: 9
+    lastUsed: 2026
+    group: Cloud & DevOps
+    keySkill: false
+
+  - name: Amazon Web Services
+    level: 1
+    years: 2
+    lastUsed: 2017
+    group: Cloud & DevOps
+    keySkill: false
+
+  # Security & Identity
+  - name: OAuth
+    level: 5
+    years: 7
+    lastUsed: 2026
+    group: Security & Identity
+    keySkill: false
+
+  - name: OpenID Connect
+    level: 5
+    years: 7
+    lastUsed: 2026
+    group: Security & Identity
+    keySkill: false
+
+  - name: JSON Web Token
+    level: 5
+    years: 7
+    lastUsed: 2026
+    group: Security & Identity
+    keySkill: false
+
+  - name: GDPR
+    level: 4
+    years: 4
+    lastUsed: 2026
+    group: Security & Identity
+    keySkill: false
+
+  - name: Auth0
+    level: 4
+    years: 5
+    lastUsed: 2024
+    group: Security & Identity
+    keySkill: false
+
+  - name: Authentication
+    level: 4
+    years: 7
+    lastUsed: 2026
+    group: Security & Identity
+    keySkill: false
+    covers:
+      - Session Management
+      - Multi-Factor Authentication
+      - Federated Identity
+
+  - name: Authorization
+    level: 4
+    years: 9
+    lastUsed: 2026
+    group: Security & Identity
+    keySkill: false
+
+  - name: Identity & Access Management
+    level: 4
+    years: 7
+    lastUsed: 2026
+    group: Security & Identity
+    keySkill: false
+
+  - name: Single Sign-On
+    level: 4
+    years: 7
+    lastUsed: 2026
+    group: Security & Identity
+    keySkill: false
+
+  - name: MitID
+    level: 2
+    years: 4
+    lastUsed: 2026
+    group: Security & Identity
+    keySkill: false
+
+  - name: Information Security
+    level: 4
+    years: 4
+    lastUsed: 2026
+    group: Security & Identity
+    keySkill: false
+    covers:
+      - Compliance
+      - Risk Management
+      - Vulnerability Management
+      - Cryptography
+
+  - name: OWASP
+    level: 3
+    years: 4
+    lastUsed: 2026
+    group: Security & Identity
+    keySkill: false
+
+  - name: Secrets Management
+    level: 3
+    years: 9
+    lastUsed: 2026
+    group: Security & Identity
+    keySkill: false
+
+  - name: Transport Layer Security
+    level: 3
+    years: 4
+    lastUsed: 2026
+    group: Security & Identity
+    keySkill: false
+
+  - name: Rate Limiting
+    level: 3
+    years: 5
+    lastUsed: 2026
+    group: Security & Identity
+    keySkill: false
+
+  # Quality & Testing
+  - name: Test Automation
+    level: 4
+    years: 9
+    lastUsed: 2026
+    group: Quality & Testing
+    keySkill: false
+    covers:
+      - Unit Testing
+      - Integration Testing
+      - End-to-End Testing
+
+  - name: Jest
+    level: 3
+    years: 6
+    lastUsed: 2026
+    group: Quality & Testing
+    keySkill: false
+
+  - name: React Testing Library
+    level: 3
+    years: 4
+    lastUsed: 2026
+    group: Quality & Testing
+    keySkill: false
+
+  - name: Cypress
+    level: 2
+    years: 2
+    lastUsed: 2024
+    group: Quality & Testing
+    keySkill: false
+
+  - name: Nightwatch
+    level: 3
+    years: 2
+    lastUsed: 2026
+    group: Quality & Testing
+    keySkill: false
+
+  - name: Vitest
+    level: 2
+    years: 1
+    lastUsed: 2026
+    group: Quality & Testing
+    keySkill: false
+
+  - name: Playwright
+    level: 2
+    years: 1
+    lastUsed: 2026
+    group: Quality & Testing
+    keySkill: false
+
+  - name: Supertest
+    level: 3
+    years: 4
+    lastUsed: 2026
+    group: Quality & Testing
+    keySkill: false
+
+  - name: Performance Testing
+    level: 3
+    years: 5
+    lastUsed: 2026
+    group: Quality & Testing
+    keySkill: false
+
+  - name: k6
+    level: 3
+    years: 5
+    lastUsed: 2026
+    group: Quality & Testing
+    keySkill: false
+
+  # Data & Analytics
+  - name: AI-Assisted Development
+    level: 3
+    years: 2
+    lastUsed: 2026
+    group: Methodologies & Practices
+    keySkill: false
+
+  - name: Agentic Development
+    level: 3
+    years: 0
+    lastUsed: 2026
+    group: Methodologies & Practices
+    keySkill: false
+
+  - name: Event Tracking
+    level: 3
+    years: 1
+    lastUsed: 2026
+    group: Data & Analytics
+    keySkill: false
+
+  - name: Behavioral Analytics
+    level: 2
+    years: 1
+    lastUsed: 2026
+    group: Data & Analytics
+    keySkill: false
+
+  - name: Customer Data Platform
+    level: 2
+    years: 1
+    lastUsed: 2026
+    group: Data & Analytics
+    keySkill: false
+
+  - name: A/B Testing
+    level: 2
+    years: 2
+    lastUsed: 2017
+    group: Data & Analytics
+    keySkill: false
+
+  # Hidden — tech used in past roles but no longer marketed. Stays here so the
+  # experience-consistency test accepts the names; `hide: true` keeps them out
+  # of the UI. Visible-skill fields (level, years, etc.) may be omitted.
+  - name: Apigee
+    hide: true
+
+  - name: CircleCI
+    hide: true
+
+  - name: JSON:API
+    hide: true
