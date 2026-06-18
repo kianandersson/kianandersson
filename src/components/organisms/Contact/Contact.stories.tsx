@@ -11,11 +11,14 @@ type Args = {
   availableFrom: number;
 };
 
+const noopSend = async () => ({});
+
 function ContactDemo({ recipientName, showAvailability, availableFrom }: Args) {
   return (
     <Contact
       recipientName={recipientName}
       availableFrom={showAvailability ? new Date(availableFrom) : undefined}
+      onSend={noopSend}
     />
   );
 }
