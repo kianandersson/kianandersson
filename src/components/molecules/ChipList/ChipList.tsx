@@ -7,14 +7,20 @@ import styles from './ChipList.module.css';
 type Props = {
   label: string;
   items: string[];
-  limit: number;
+  maxChars: number;
+  perItemCost?: number;
+  minItems?: number;
   variant: ChipVariant;
 };
 
-export function ChipList({ label, items, limit, variant }: Props) {
+export function ChipList({ label, items, maxChars, perItemCost, minItems, variant }: Props) {
   const [isOpen, setOpen] = useState(false);
   const toggle = useCallback(() => setOpen((prev) => !prev), []);
-  const { visible, hidden, hasMore, hiddenCount } = sliceList(items, limit);
+  const { visible, hidden, hasMore, hiddenCount } = sliceList(items, {
+    maxChars,
+    perItemCost,
+    minItems,
+  });
 
   return (
     <div className={styles.row}>
