@@ -34,7 +34,7 @@ export const server = {
         subject: z.string().trim().min(1).max(CONTACT_SUBJECT_MAX),
         message: z.string().trim().min(1).max(CONTACT_MESSAGE_MAX),
       }),
-      handler: async (input, context) => {
+      handler: async (input, context) =>
         tracer.startActiveSpan('action.contact.send', async (span) => {
           try {
             const env = envSchema.parse({ RESEND_API_KEY, SENDER_EMAIL, RECIPIENT_EMAIL });
@@ -64,8 +64,7 @@ export const server = {
               message: SEND_FAILED_MESSAGE,
             });
           }
-        });
-      },
+        }),
     }),
   },
 };
