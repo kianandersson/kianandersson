@@ -32,7 +32,9 @@ export const Default: Story = {
 export const WithAction: Story = {
   args: {
     title: 'Key skills',
-    action: <TextLink href="#skills">All skills →</TextLink>,
+    /* Inert in Storybook — production passes the real anchor target.
+       `javascript:void(0)` is fully no-op (doesn't update the URL hash). */
+    action: <TextLink href="javascript:void(0)">All skills →</TextLink>,
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
