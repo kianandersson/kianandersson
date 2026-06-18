@@ -12,14 +12,14 @@ stack:
   - JavaScript
   - SQL
   - Docker
-  - REST
-  - Nginx
   - HTML
   - CSS
   - SASS
+  - REST
+  - Nginx
 methods:
   - Software Architecture
-  - Technical Leadership
   - Database Modeling
   - Responsive Web Design
   - Search Engine Optimization
+  - Technical Leadership

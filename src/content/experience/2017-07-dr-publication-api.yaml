@@ -11,10 +11,10 @@ description: >-
 stack:
   - PHP
   - Symfony
-  - SQL
   - OAuth
   - OpenID Connect
   - Auth0
+  - SQL
   - REST
   - Redis
   - Docker
@@ -23,30 +23,30 @@ stack:
   - Nginx
   - CircleCI
 methods:
-  - Software Architecture
   - API Design
-  - Microservices Architecture
   - Authentication
+  - Identity & Access Management
+  - Microservices Architecture
+  - Event-Driven Architecture
+  - Software Architecture
   - Distributed Systems
   - Authorization
-  - Identity & Access Management
   - Single Sign-On
   - Scalability
   - High Availability
-  - Event-Driven Architecture
   - API Gateway
   - Open API
-  - Technical Leadership
+  - Behavior-Driven Development
+  - Test-Driven Development
+  - Test Automation
   - Continuous Delivery
   - Code Review
-  - Test Automation
-  - Test-Driven Development
-  - Behavior-Driven Development
-  - Agile Development
-  - DevOps
-  - Observability
-  - Monitoring
   - Database Modeling
-  - Caching Strategies
   - Secrets Management
-  - Technical Writing
+  # - Technical Leadership
+  # - Agile Development
+  # - DevOps
+  # - Observability
+  # - Monitoring
+  # - Caching Strategies
+  # - Technical Writing

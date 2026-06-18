@@ -16,6 +16,7 @@ stack:
   - GraphQL
   - OAuth
   - OpenID Connect
+  - MitID
   - MongoDB
   - Redis
   - Docker
@@ -23,71 +24,70 @@ stack:
   - Helm
   - Google Cloud Platform
   - GitHub Actions
+  - OpenTelemetry
+  - Grafana
   - Storybook
   - Next.js
-  - JavaScript
-  - SASS
-  - REST
   - WebSockets
   - Kong
-  - Nginx
-  - Grafana
-  - Auth0
-  - React Native
-  - Expo
-  - Jest
-  - Vitest
-  - React Testing Library
-  - Playwright
-  - Cypress
-  - Nightwatch
-  - Supertest
-  - k6
+  # - JavaScript
+  # - SASS
+  # - REST
+  # - Transport Layer Security
+  # - Nginx
+  # - Auth0
+  # - React Native
+  # - Expo
+  # - Jest
+  # - Vitest
+  # - React Testing Library
+  # - Playwright
+  # - Cypress
+  # - Nightwatch
+  # - Supertest
+  # - k6
 methods:
-  - Engineering Management
-  - Technical Leadership
-  - Technical Hiring
-  - Mentoring
-  - Software Architecture
-  - Site Reliability Engineering
-  - Distributed Systems
-  - Domain-Driven Design
-  - High Availability
-  - Incident Management
-  - Service Level Objectives
   - Authentication
-  - Authorization
+  - Site Reliability Engineering
   - Identity & Access Management
-  - Single Sign-On
-  - MitID
-  - GDPR
-  - Information Security
-  - OWASP
-  - Secrets Management
-  - Transport Layer Security
-  - Rate Limiting
   - Design Systems
   - Atomic Design
-  - Accessibility
-  - Internationalization
-  - Server-Side Rendering
+  - GDPR
+  - Software Architecture
+  - Distributed Systems
+  - High Availability
+  - Information Security
+  - Incident Management
+  - Service Level Objectives
+  - Authorization
+  - Single Sign-On
+  - Domain-Driven Design
   - Web Performance
-  - Responsive Web Design
+  - Accessibility
+  - Server-Side Rendering
   - API Design
-  - API Gateway
-  - Open API
-  - Test Automation
-  - Performance Testing
-  - Code Review
-  - Continuous Delivery
-  - Agile Development
-  - DevOps
-  - Observability
-  - OpenTelemetry
-  - Monitoring
-  - Database Modeling
-  - Caching Strategies
-  - Event Tracking
-  - Behavioral Analytics
-  - Customer Data Platform
-  - Technical Writing
+  - Internationalization
+  # - API Gateway
+  # - Open API
+  # - OWASP
+  # - Responsive Web Design
+  # - Secrets Management
+  # - Rate Limiting
+  # - Test Automation
+  # - Performance Testing
+  # - Code Review
+  # - Continuous Delivery
+  # - Engineering Management
+  # - Technical Leadership
+  # - Technical Hiring
+  # - Mentoring
+  # - Agile Development
+  # - DevOps
+  # - Observability
+  # - Monitoring
+  # - Database Modeling
+  # - Caching Strategies
+  # - Event Tracking
+  # - Behavioral Analytics
+  # - Customer Data Platform
+  # - Technical Writing

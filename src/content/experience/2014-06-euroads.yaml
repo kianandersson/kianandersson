@@ -11,11 +11,11 @@ stack:
   - SQL
   - JavaScript
   - Amazon Web Services
-  - REST
-  - Nginx
   - HTML
   - CSS
   - SASS
+  - REST
+  - Nginx
 methods:
   - A/B Testing
   - Database Modeling

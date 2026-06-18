@@ -17,9 +17,9 @@ stack:
   - Kubernetes
   - MongoDB
   - SQL
-  - JSON:API
   - Docker
   - Google Cloud Platform
+  - JSON:API
   - Kong
   - REST
   - Redis
@@ -29,35 +29,35 @@ stack:
   - OAuth
   - OpenID Connect
 methods:
-  - Engineering Management
-  - Technical Leadership
-  - Technical Hiring
-  - Mentoring
   - Software Architecture
   - Microservices Architecture
   - Domain-Driven Design
+  - Event-Driven Architecture
+  - API Design
   - Distributed Systems
   - Scalability
   - High Availability
-  - Event-Driven Architecture
-  - API Design
   - API Gateway
   - Open API
   - Authentication
   - Authorization
   - Identity & Access Management
   - Single Sign-On
+  - Behavior-Driven Development
   - Continuous Delivery
   - Code Review
   - Test Automation
   - Test-Driven Development
-  - Behavior-Driven Development
-  - Agile Development
-  - DevOps
-  - Observability
-  - Monitoring
-  - Database Modeling
-  - Caching Strategies
-  - Secrets Management
-  - Rate Limiting
-  - Technical Writing
+  - Technical Hiring
+  # - Engineering Management
+  # - Technical Leadership
+  # - Mentoring
+  # - Agile Development
+  # - DevOps
+  # - Observability
+  # - Monitoring
+  # - Database Modeling
+  # - Caching Strategies
+  # - Secrets Management
+  # - Rate Limiting
+  # - Technical Writing
