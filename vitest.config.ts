@@ -19,6 +19,16 @@ export default defineConfig({
     },
   },
   test: {
+    coverage: {
+      provider: 'v8',
+      // Only count what the stories actually drive: Preact components
+      // under src/components. Foundations, lib/, and pages/ are
+      // tested elsewhere or are documentation surfaces.
+      include: ['src/components/**/*.{ts,tsx}'],
+      exclude: ['**/*.stories.tsx', '**/index.ts'],
+      reporter: ['text', 'html'],
+      reportsDirectory: './coverage/storybook',
+    },
     projects: [
       {
         extends: true,
@@ -40,16 +50,6 @@ export default defineConfig({
             provider: playwright(),
             headless: true,
             instances: [{ browser: 'chromium' }],
-          },
-          coverage: {
-            provider: 'v8',
-            // Only count what the stories actually drive: Preact components
-            // under src/components. Foundations, lib/, and pages/ are
-            // tested elsewhere or are documentation surfaces.
-            include: ['src/components/**/*.{ts,tsx}'],
-            exclude: ['**/*.stories.tsx', '**/index.ts'],
-            reporter: ['text', 'html'],
-            reportsDirectory: './coverage/storybook',
           },
         },
       },
