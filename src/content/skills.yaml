@@ -362,7 +362,7 @@ items:
     lastUsed: 2026
     group: Databases
 
-  - name: Caching strategies
+  - name: Caching Strategies
     level: 3
     years: 9
     lastUsed: 2026
@@ -423,7 +423,7 @@ items:
     lastUsed: 2026
     group: Cloud & DevOps
     covers:
-      - Distributed tracing
+      - Distributed Tracing
 
   - name: OpenTelemetry
     level: 3
