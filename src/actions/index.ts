@@ -1,6 +1,6 @@
-import opentelemetry, { SpanStatusCode } from '@opentelemetry/api';
 import { ActionError, defineAction } from 'astro:actions';
 import { RECIPIENT_EMAIL, RESEND_API_KEY, SENDER_EMAIL } from 'astro:env/server';
+import opentelemetry, { SpanStatusCode } from '@opentelemetry/api';
 import { Resend } from 'resend';
 import { z } from 'zod';
 import {
