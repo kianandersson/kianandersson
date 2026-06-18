@@ -1,19 +1,5 @@
-# Display order for skill groups in the All Skills section.
-# Each entry matches a `group` value in the skills below. Reorder freely.
-groups:
-  - Leadership & Architecture
-  - Languages & Runtimes
-  - Frontend
-  - Backend & APIs
-  - Databases
-  - Cloud & DevOps
-  - Security & Identity
-  - Quality & Testing
-  - Methodologies & Practices
-  - Data & Analytics
-
 # Skills surfaced in the Hero "Key skills" block, in display order.
-# Each entry must match an item name below. Reorder to taste.
+# Each entry must match a visible skill name below. Reorder to taste.
 featured:
   - TypeScript
   - Node.js
@@ -22,748 +8,670 @@ featured:
   - Software Architecture
   - Technical Leadership
 
-items:
-  # Leadership & Architecture
-  - name: Technical Leadership
-    type: method
-    level: 4
-    years: 7
-    lastUsed: 2026
-    group: Leadership & Architecture
-    covers:
-      - Stakeholder Management
-
-  - name: Engineering Management
-    type: method
-    level: 4
-    years: 5
-    lastUsed: 2026
-    group: Leadership & Architecture
-    covers:
-      - Change Management
-
-  - name: Software Architecture
-    type: method
-    level: 4
-    years: 7
-    lastUsed: 2026
-    group: Leadership & Architecture
-    covers:
-      - Solution Architecture
-      - System Architecture
-
-  - name: Microservices Architecture
-    type: method
-    level: 4
-    years: 7
-    lastUsed: 2026
-    group: Leadership & Architecture
-
-  - name: Distributed Systems
-    type: method
-    level: 4
-    years: 5
-    lastUsed: 2026
-    group: Leadership & Architecture
-
-  - name: Event-Driven Architecture
-    type: method
-    level: 3
-    years: 5
-    lastUsed: 2026
-    group: Leadership & Architecture
-
-  - name: High Availability
-    type: method
-    level: 3
-    years: 5
-    lastUsed: 2026
-    group: Leadership & Architecture
-    covers:
-      - Resilience
-      - Fault Tolerance
-
-  - name: Scalability
-    type: method
-    level: 4
-    years: 9
-    lastUsed: 2026
-    group: Leadership & Architecture
-
-  - name: API Gateway
-    type: method
-    level: 3
-    years: 9
-    lastUsed: 2026
-    group: Backend & APIs
-
-  - name: Domain-Driven Design
-    type: method
-    level: 3
-    years: 5
-    lastUsed: 2026
-    group: Leadership & Architecture
-
-  - name: Mentoring
-    type: method
-    level: 4
-    years: 5
-    lastUsed: 2026
-    group: Leadership & Architecture
-
-  - name: Technical Hiring
-    type: method
-    level: 3
-    years: 5
-    lastUsed: 2026
-    group: Leadership & Architecture
-    covers:
-      - Talent Acquisition
-
-  # Methodologies & Practices
-  - name: Agile Development
-    type: method
-    level: 4
-    years: 9
-    lastUsed: 2026
-    group: Methodologies & Practices
-    covers:
-      - Scrum
-
-  - name: Continuous Delivery
-    type: method
-    level: 4
-    years: 9
-    lastUsed: 2026
-    group: Methodologies & Practices
-    covers:
-      - Continuous Integration
-      - Continuous Deployment
-
-  - name: Test-Driven Development
-    type: method
-    level: 3
-    years: 5
-    lastUsed: 2026
-    group: Methodologies & Practices
-
-  - name: Behavior-Driven Development
-    type: method
-    level: 3
-    years: 5
-    lastUsed: 2022
-    group: Methodologies & Practices
-
-  - name: Code Review
-    type: method
-    level: 4
-    years: 9
-    lastUsed: 2026
-    group: Methodologies & Practices
-
-  - name: Technical Writing
-    type: method
-    level: 4
-    years: 9
-    lastUsed: 2026
-    group: Methodologies & Practices
-
-  - name: Responsive Web Design
-    type: method
-    level: 4
-    years: 10
-    lastUsed: 2026
-    group: Methodologies & Practices
-
-  - name: Search Engine Optimization
-    type: method
-    level: 3
-    years: 4
-    lastUsed: 2026
-    group: Methodologies & Practices
-
-  # Languages & Runtimes
-  - name: TypeScript
-    type: stack
-    level: 5
-    years: 6
-    lastUsed: 2026
-    group: Languages & Runtimes
-
-  - name: JavaScript
-    type: stack
-    level: 5
-    years: 15
-    lastUsed: 2026
-    group: Languages & Runtimes
-
-  - name: Node.js
-    type: stack
-    level: 5
-    years: 6
-    lastUsed: 2026
-    group: Languages & Runtimes
-
-  - name: PHP
-    type: stack
-    level: 5
-    years: 11
-    lastUsed: 2022
-    group: Languages & Runtimes
-
-  - name: C#
-    type: stack
-    level: 2
-    years: 1
-    lastUsed: 2022
-    group: Languages & Runtimes
-
-  - name: .NET
-    type: stack
-    level: 2
-    years: 1
-    lastUsed: 2022
-    group: Languages & Runtimes
-
-  - name: Go
-    type: stack
-    level: 1
-    years: 0
-    lastUsed: 2026
-    group: Languages & Runtimes
-
-  - name: Bun
-    type: stack
-    level: 3
-    years: 1
-    lastUsed: 2026
-    group: Languages & Runtimes
-
-  - name: Deno
-    type: stack
-    level: 3
-    years: 1
-    lastUsed: 2026
-    group: Languages & Runtimes
-
-  # Frontend
-  - name: React.js
-    type: stack
-    level: 5
-    years: 6
-    lastUsed: 2026
-    group: Frontend
-
-  - name: React Native
-    type: stack
-    level: 2
-    years: 3
-    lastUsed: 2026
-    group: Frontend
-
-  - name: Next.js
-    type: stack
-    level: 3
-    years: 4
-    lastUsed: 2025
-    group: Frontend
-
-  - name: Expo
-    type: stack
-    level: 2
-    years: 3
-    lastUsed: 2026
-    group: Frontend
-
-  - name: Design Systems
-    type: method
-    level: 4
-    years: 4
-    lastUsed: 2026
-    group: Frontend
-    covers:
-      - Component Libraries
-      - Atomic Design
-
-  - name: Storybook
-    type: stack
-    level: 3
-    years: 4
-    lastUsed: 2026
-    group: Frontend
-
-  - name: Server-Side Rendering
-    type: method
-    level: 3
-    years: 4
-    lastUsed: 2026
-    group: Frontend
-
-  - name: Accessibility
-    type: method
-    level: 3
-    years: 4
-    lastUsed: 2026
-    group: Frontend
-
-  - name: Internationalization
-    type: method
-    level: 3
-    years: 4
-    lastUsed: 2026
-    group: Frontend
-
-  - name: Web Performance
-    type: method
-    level: 2
-    years: 2
-    lastUsed: 2026
-    group: Frontend
-    covers:
-      - Web Vitals
-
-  - name: CSS
-    type: stack
-    level: 5
-    years: 15
-    lastUsed: 2026
-    group: Frontend
-    covers:
-      - SASS
-
-  # Backend & APIs
-  - name: REST
-    type: stack
-    level: 4
-    years: 12
-    lastUsed: 2026
-    group: Backend & APIs
-
-  - name: GraphQL
-    type: stack
-    level: 4
-    years: 4
-    lastUsed: 2026
-    group: Backend & APIs
-
-  - name: Open API
-    type: method
-    level: 3
-    years: 9
-    lastUsed: 2026
-    group: Backend & APIs
-
-  - name: WebSockets
-    type: stack
-    level: 3
-    years: 4
-    lastUsed: 2026
-    group: Backend & APIs
-
-  - name: gRPC
-    type: stack
-    level: 1
-    years: 0
-    lastUsed: 2026
-    group: Backend & APIs
-
-  - name: API Design
-    type: method
-    level: 4
-    years: 9
-    lastUsed: 2026
-    group: Backend & APIs
-    covers:
-      - GraphQL Schema Design
-      - API Versioning
-
-  - name: Symfony
-    type: stack
-    level: 4
-    years: 5
-    lastUsed: 2022
-    group: Backend & APIs
-
-  - name: Laravel
-    type: stack
-    level: 4
-    years: 2
-    lastUsed: 2022
-    group: Backend & APIs
-
-  # Databases
-  - name: SQL
-    type: stack
-    level: 4
-    years: 15
-    lastUsed: 2026
-    group: Databases
-
-  - name: MongoDB
-    type: stack
-    level: 4
-    years: 5
-    lastUsed: 2026
-    group: Databases
-
-  - name: Redis
-    type: stack
-    level: 3
-    years: 9
-    lastUsed: 2026
-    group: Databases
-
-  - name: Caching Strategies
-    type: method
-    level: 3
-    years: 9
-    lastUsed: 2026
-    group: Databases
-
-  - name: Database Modeling
-    type: method
-    level: 4
-    years: 15
-    lastUsed: 2026
-    group: Databases
-
-  # Cloud & DevOps
-  - name: Docker
-    type: stack
-    level: 4
-    years: 9
-    lastUsed: 2026
-    group: Cloud & DevOps
-
-  - name: Kubernetes
-    type: stack
-    level: 3
-    years: 5
-    lastUsed: 2026
-    group: Cloud & DevOps
-
-  - name: Helm
-    type: stack
-    level: 3
-    years: 4
-    lastUsed: 2026
-    group: Cloud & DevOps
-
-  - name: Google Cloud Platform
-    type: stack
-    level: 3
-    years: 5
-    lastUsed: 2026
-    group: Cloud & DevOps
-
-  - name: Nginx
-    type: stack
-    level: 2
-    years: 9
-    lastUsed: 2026
-    group: Cloud & DevOps
-
-  - name: Kong
-    type: stack
-    level: 2
-    years: 5
-    lastUsed: 2026
-    group: Cloud & DevOps
-
-  - name: GitHub Actions
-    type: stack
-    level: 4
-    years: 4
-    lastUsed: 2026
-    group: Cloud & DevOps
-
-  - name: Observability
-    type: method
-    level: 3
-    years: 4
-    lastUsed: 2026
-    group: Cloud & DevOps
-    covers:
-      - Distributed Tracing
-
-  - name: OpenTelemetry
-    type: stack
-    level: 3
-    years: 4
-    lastUsed: 2026
-    group: Cloud & DevOps
-
-  - name: Grafana
-    type: stack
-    level: 3
-    years: 4
-    lastUsed: 2026
-    group: Cloud & DevOps
-
-  - name: Monitoring
-    type: method
-    level: 3
-    years: 9
-    lastUsed: 2026
-    group: Cloud & DevOps
-
-  - name: Service Level Objectives
-    type: method
-    level: 3
-    years: 4
-    lastUsed: 2026
-    group: Cloud & DevOps
-
-  - name: Incident Management
-    type: method
-    level: 3
-    years: 4
-    lastUsed: 2026
-    group: Cloud & DevOps
-
-  - name: Site Reliability Engineering
-    type: method
-    level: 3
-    years: 4
-    lastUsed: 2026
-    group: Cloud & DevOps
-
-  - name: DevOps
-    type: method
-    level: 4
-    years: 9
-    lastUsed: 2026
-    group: Cloud & DevOps
-
-  - name: Amazon Web Services
-    type: stack
-    level: 1
-    years: 2
-    lastUsed: 2017
-    group: Cloud & DevOps
-
-  # Security & Identity
-  - name: OAuth
-    type: stack
-    level: 5
-    years: 7
-    lastUsed: 2026
-    group: Security & Identity
-
-  - name: OpenID Connect
-    type: stack
-    level: 5
-    years: 7
-    lastUsed: 2026
-    group: Security & Identity
-
-  - name: GDPR
-    type: method
-    level: 4
-    years: 4
-    lastUsed: 2026
-    group: Security & Identity
-
-  - name: Auth0
-    type: stack
-    level: 4
-    years: 5
-    lastUsed: 2024
-    group: Security & Identity
-
-  - name: Authentication
-    type: method
-    level: 4
-    years: 7
-    lastUsed: 2026
-    group: Security & Identity
-    covers:
-      - Session Management
-      - Multi-Factor Authentication
-      - Federated Identity
-
-  - name: Authorization
-    type: method
-    level: 4
-    years: 9
-    lastUsed: 2026
-    group: Security & Identity
-
-  - name: Identity & Access Management
-    type: method
-    level: 4
-    years: 7
-    lastUsed: 2026
-    group: Security & Identity
-
-  - name: Single Sign-On
-    type: method
-    level: 4
-    years: 7
-    lastUsed: 2026
-    group: Security & Identity
-
-  - name: Information Security
-    type: method
-    level: 4
-    years: 4
-    lastUsed: 2026
-    group: Security & Identity
-    covers:
-      - Compliance
-      - Risk Management
-      - Vulnerability Management
-      - Cryptography
-
-  - name: OWASP
-    type: method
-    level: 3
-    years: 4
-    lastUsed: 2026
-    group: Security & Identity
-
-  - name: Secrets Management
-    type: method
-    level: 3
-    years: 9
-    lastUsed: 2026
-    group: Security & Identity
-
-  - name: Transport Layer Security
-    type: stack
-    level: 3
-    years: 4
-    lastUsed: 2026
-    group: Security & Identity
-
-  - name: Rate Limiting
-    type: method
-    level: 3
-    years: 5
-    lastUsed: 2026
-    group: Security & Identity
-
-  # Quality & Testing
-  - name: Test Automation
-    type: method
-    level: 4
-    years: 9
-    lastUsed: 2026
-    group: Quality & Testing
-    covers:
-      - Unit Testing
-      - Integration Testing
-      - End-to-End Testing
-
-  - name: Jest
-    type: stack
-    level: 3
-    years: 6
-    lastUsed: 2026
-    group: Quality & Testing
-
-  - name: React Testing Library
-    type: stack
-    level: 3
-    years: 4
-    lastUsed: 2026
-    group: Quality & Testing
-
-  - name: Cypress
-    type: stack
-    level: 2
-    years: 2
-    lastUsed: 2024
-    group: Quality & Testing
-
-  - name: Nightwatch
-    type: stack
-    level: 3
-    years: 2
-    lastUsed: 2026
-    group: Quality & Testing
-
-  - name: Vitest
-    type: stack
-    level: 2
-    years: 1
-    lastUsed: 2026
-    group: Quality & Testing
-
-  - name: Playwright
-    type: stack
-    level: 2
-    years: 1
-    lastUsed: 2026
-    group: Quality & Testing
-
-  - name: Performance Testing
-    type: method
-    level: 3
-    years: 5
-    lastUsed: 2026
-    group: Quality & Testing
-
-  - name: k6
-    type: stack
-    level: 3
-    years: 5
-    lastUsed: 2026
-    group: Quality & Testing
-
-  # Data & Analytics
-  - name: AI-Assisted Development
-    type: method
-    level: 3
-    years: 2
-    lastUsed: 2026
-    group: Methodologies & Practices
-    covers:
-      - Agentic Development
-
-  - name: Product Analytics
-    type: method
-    level: 3
-    years: 1
-    lastUsed: 2026
-    group: Data & Analytics
-    covers:
-      - Event Tracking
-      - Behavioral Analytics
-      - Customer Data Platform
-
-  - name: A/B Testing
-    type: method
-    level: 2
-    years: 2
-    lastUsed: 2017
-    group: Data & Analytics
-
-  # Hidden — tech used in past roles but no longer marketed (or too niche to
-  # surface). Stays here so the experience-consistency test accepts the names;
-  # `hide: true` keeps them out of the UI. Visible-skill fields (level, years,
-  # etc.) may be omitted but `type` is still required for type-consistency
-  # checks against experience entries.
-  - name: Apigee
-    type: stack
-    hide: true
-
-  - name: CircleCI
-    type: stack
-    hide: true
-
-  - name: HTML
-    type: stack
-    hide: true
-
-  - name: JSON:API
-    type: stack
-    hide: true
-
-  - name: MitID
-    type: stack
-    hide: true
-
-  - name: Supertest
-    type: stack
-    hide: true
+# Each group declares its display order (file order = display order). Skills
+# nest directly inside their group; file order within a group is display
+# order. A skill name listed in another skill's `covers:` may also exist as a
+# top-level entry — that's how multi-parent and cross-type relationships work.
+# Hidden skills (`hide: true`) stay in their conceptual group so experience
+# references still resolve, but they don't render as a row.
+groups:
+  - name: Leadership & Architecture
+    skills:
+      - name: Technical Leadership
+        type: method
+        level: 4
+        years: 7
+        lastUsed: 2026
+        covers:
+          - Stakeholder Management
+
+      - name: Engineering Management
+        type: method
+        level: 4
+        years: 5
+        lastUsed: 2026
+        covers:
+          - Change Management
+
+      - name: Software Architecture
+        type: method
+        level: 4
+        years: 7
+        lastUsed: 2026
+        covers:
+          - Solution Architecture
+          - System Architecture
+
+      - name: Microservices Architecture
+        type: method
+        level: 4
+        years: 7
+        lastUsed: 2026
+
+      - name: Distributed Systems
+        type: method
+        level: 4
+        years: 5
+        lastUsed: 2026
+
+      - name: Event-Driven Architecture
+        type: method
+        level: 3
+        years: 5
+        lastUsed: 2026
+
+      - name: High Availability
+        type: method
+        level: 3
+        years: 5
+        lastUsed: 2026
+        covers:
+          - Resilience
+          - Fault Tolerance
+
+      - name: Scalability
+        type: method
+        level: 4
+        years: 9
+        lastUsed: 2026
+
+      - name: Domain-Driven Design
+        type: method
+        level: 3
+        years: 5
+        lastUsed: 2026
+
+      - name: Mentoring
+        type: method
+        level: 4
+        years: 5
+        lastUsed: 2026
+
+      - name: Technical Hiring
+        type: method
+        level: 3
+        years: 5
+        lastUsed: 2026
+        covers:
+          - Talent Acquisition
+
+  - name: Languages & Runtimes
+    skills:
+      - name: TypeScript
+        type: stack
+        level: 5
+        years: 6
+        lastUsed: 2026
+
+      - name: JavaScript
+        type: stack
+        level: 5
+        years: 15
+        lastUsed: 2026
+
+      - name: Node.js
+        type: stack
+        level: 5
+        years: 6
+        lastUsed: 2026
+
+      - name: PHP
+        type: stack
+        level: 5
+        years: 11
+        lastUsed: 2022
+
+      - name: C#
+        type: stack
+        level: 2
+        years: 1
+        lastUsed: 2022
+
+      - name: .NET
+        type: stack
+        level: 2
+        years: 1
+        lastUsed: 2022
+
+      - name: Go
+        type: stack
+        level: 1
+        years: 0
+        lastUsed: 2026
+
+      - name: Bun
+        type: stack
+        level: 3
+        years: 1
+        lastUsed: 2026
+
+      - name: Deno
+        type: stack
+        level: 3
+        years: 1
+        lastUsed: 2026
+
+  - name: Frontend
+    skills:
+      - name: React.js
+        type: stack
+        level: 5
+        years: 6
+        lastUsed: 2026
+
+      - name: React Native
+        type: stack
+        level: 2
+        years: 3
+        lastUsed: 2026
+
+      - name: Next.js
+        type: stack
+        level: 3
+        years: 4
+        lastUsed: 2025
+
+      - name: Expo
+        type: stack
+        level: 2
+        years: 3
+        lastUsed: 2026
+
+      - name: Design Systems
+        type: method
+        level: 4
+        years: 4
+        lastUsed: 2026
+        covers:
+          - Component Libraries
+          - Atomic Design
+
+      - name: Storybook
+        type: stack
+        level: 3
+        years: 4
+        lastUsed: 2026
+
+      - name: Server-Side Rendering
+        type: method
+        level: 3
+        years: 4
+        lastUsed: 2026
+
+      - name: Accessibility
+        type: method
+        level: 3
+        years: 4
+        lastUsed: 2026
+
+      - name: Internationalization
+        type: method
+        level: 3
+        years: 4
+        lastUsed: 2026
+
+      - name: Web Performance
+        type: method
+        level: 2
+        years: 2
+        lastUsed: 2026
+        covers:
+          - Web Vitals
+
+      - name: CSS
+        type: stack
+        level: 5
+        years: 15
+        lastUsed: 2026
+        covers:
+          - SASS
+
+      # Hidden historical name, kept for experience references.
+      - name: HTML
+        type: stack
+        hide: true
+
+  - name: Backend & APIs
+    skills:
+      - name: API Gateway
+        type: method
+        level: 3
+        years: 9
+        lastUsed: 2026
+
+      - name: REST
+        type: stack
+        level: 4
+        years: 12
+        lastUsed: 2026
+
+      - name: GraphQL
+        type: stack
+        level: 4
+        years: 4
+        lastUsed: 2026
+
+      - name: Open API
+        type: method
+        level: 3
+        years: 9
+        lastUsed: 2026
+
+      - name: WebSockets
+        type: stack
+        level: 3
+        years: 4
+        lastUsed: 2026
+
+      - name: gRPC
+        type: stack
+        level: 1
+        years: 0
+        lastUsed: 2026
+
+      - name: API Design
+        type: method
+        level: 4
+        years: 9
+        lastUsed: 2026
+        covers:
+          - GraphQL Schema Design
+          - API Versioning
+
+      - name: Symfony
+        type: stack
+        level: 4
+        years: 5
+        lastUsed: 2022
+
+      - name: Laravel
+        type: stack
+        level: 4
+        years: 2
+        lastUsed: 2022
+
+      # Hidden — tech used in past roles but no longer marketed.
+      - name: Apigee
+        type: stack
+        hide: true
+
+      - name: JSON:API
+        type: stack
+        hide: true
+
+  - name: Databases
+    skills:
+      - name: SQL
+        type: stack
+        level: 4
+        years: 15
+        lastUsed: 2026
+
+      - name: MongoDB
+        type: stack
+        level: 4
+        years: 5
+        lastUsed: 2026
+
+      - name: Redis
+        type: stack
+        level: 3
+        years: 9
+        lastUsed: 2026
+
+      - name: Caching Strategies
+        type: method
+        level: 3
+        years: 9
+        lastUsed: 2026
+
+      - name: Database Modeling
+        type: method
+        level: 4
+        years: 15
+        lastUsed: 2026
+
+  - name: Cloud & DevOps
+    skills:
+      - name: Docker
+        type: stack
+        level: 4
+        years: 9
+        lastUsed: 2026
+
+      - name: Kubernetes
+        type: stack
+        level: 3
+        years: 5
+        lastUsed: 2026
+
+      - name: Helm
+        type: stack
+        level: 3
+        years: 4
+        lastUsed: 2026
+
+      - name: Google Cloud Platform
+        type: stack
+        level: 3
+        years: 5
+        lastUsed: 2026
+
+      - name: Nginx
+        type: stack
+        level: 2
+        years: 9
+        lastUsed: 2026
+
+      - name: Kong
+        type: stack
+        level: 2
+        years: 5
+        lastUsed: 2026
+
+      - name: GitHub Actions
+        type: stack
+        level: 4
+        years: 4
+        lastUsed: 2026
+
+      - name: Observability
+        type: method
+        level: 3
+        years: 4
+        lastUsed: 2026
+        covers:
+          - Distributed Tracing
+
+      - name: OpenTelemetry
+        type: stack
+        level: 3
+        years: 4
+        lastUsed: 2026
+
+      - name: Grafana
+        type: stack
+        level: 3
+        years: 4
+        lastUsed: 2026
+
+      - name: Monitoring
+        type: method
+        level: 3
+        years: 9
+        lastUsed: 2026
+
+      - name: Service Level Objectives
+        type: method
+        level: 3
+        years: 4
+        lastUsed: 2026
+
+      - name: Incident Management
+        type: method
+        level: 3
+        years: 4
+        lastUsed: 2026
+
+      - name: Site Reliability Engineering
+        type: method
+        level: 3
+        years: 4
+        lastUsed: 2026
+
+      - name: DevOps
+        type: method
+        level: 4
+        years: 9
+        lastUsed: 2026
+
+      - name: Amazon Web Services
+        type: stack
+        level: 1
+        years: 2
+        lastUsed: 2017
+
+      # Hidden historical CI provider, kept for experience references.
+      - name: CircleCI
+        type: stack
+        hide: true
+
+  - name: Security & Identity
+    skills:
+      - name: OAuth
+        type: stack
+        level: 5
+        years: 7
+        lastUsed: 2026
+
+      - name: OpenID Connect
+        type: stack
+        level: 5
+        years: 7
+        lastUsed: 2026
+
+      - name: GDPR
+        type: method
+        level: 4
+        years: 4
+        lastUsed: 2026
+
+      - name: Auth0
+        type: stack
+        level: 4
+        years: 5
+        lastUsed: 2024
+
+      - name: Authentication
+        type: method
+        level: 4
+        years: 7
+        lastUsed: 2026
+        covers:
+          - Session Management
+          - Multi-Factor Authentication
+          - Federated Identity
+
+      - name: Authorization
+        type: method
+        level: 4
+        years: 9
+        lastUsed: 2026
+
+      - name: Identity & Access Management
+        type: method
+        level: 4
+        years: 7
+        lastUsed: 2026
+
+      - name: Single Sign-On
+        type: method
+        level: 4
+        years: 7
+        lastUsed: 2026
+
+      - name: Information Security
+        type: method
+        level: 4
+        years: 4
+        lastUsed: 2026
+        covers:
+          - Compliance
+          - Risk Management
+          - Vulnerability Management
+          - Cryptography
+
+      - name: OWASP
+        type: method
+        level: 3
+        years: 4
+        lastUsed: 2026
+
+      - name: Secrets Management
+        type: method
+        level: 3
+        years: 9
+        lastUsed: 2026
+
+      - name: Transport Layer Security
+        type: stack
+        level: 3
+        years: 4
+        lastUsed: 2026
+
+      - name: Rate Limiting
+        type: method
+        level: 3
+        years: 5
+        lastUsed: 2026
+
+      # Hidden Danish national eID, kept for experience references.
+      - name: MitID
+        type: stack
+        hide: true
+
+  - name: Quality & Testing
+    skills:
+      - name: Test Automation
+        type: method
+        level: 4
+        years: 9
+        lastUsed: 2026
+        covers:
+          - Unit Testing
+          - Integration Testing
+          - End-to-End Testing
+
+      - name: Jest
+        type: stack
+        level: 3
+        years: 6
+        lastUsed: 2026
+
+      - name: React Testing Library
+        type: stack
+        level: 3
+        years: 4
+        lastUsed: 2026
+
+      - name: Cypress
+        type: stack
+        level: 2
+        years: 2
+        lastUsed: 2024
+
+      - name: Nightwatch
+        type: stack
+        level: 3
+        years: 2
+        lastUsed: 2026
+
+      - name: Vitest
+        type: stack
+        level: 2
+        years: 1
+        lastUsed: 2026
+
+      - name: Playwright
+        type: stack
+        level: 2
+        years: 1
+        lastUsed: 2026
+
+      - name: Performance Testing
+        type: method
+        level: 3
+        years: 5
+        lastUsed: 2026
+
+      - name: k6
+        type: stack
+        level: 3
+        years: 5
+        lastUsed: 2026
+
+      # Hidden HTTP assertion library, kept for experience references.
+      - name: Supertest
+        type: stack
+        hide: true
+
+  - name: Methodologies & Practices
+    skills:
+      - name: Agile Development
+        type: method
+        level: 4
+        years: 9
+        lastUsed: 2026
+        covers:
+          - Scrum
+
+      - name: Continuous Delivery
+        type: method
+        level: 4
+        years: 9
+        lastUsed: 2026
+        covers:
+          - Continuous Integration
+          - Continuous Deployment
+
+      - name: Test-Driven Development
+        type: method
+        level: 3
+        years: 5
+        lastUsed: 2026
+
+      - name: Behavior-Driven Development
+        type: method
+        level: 3
+        years: 5
+        lastUsed: 2022
+
+      - name: Code Review
+        type: method
+        level: 4
+        years: 9
+        lastUsed: 2026
+
+      - name: Technical Writing
+        type: method
+        level: 4
+        years: 9
+        lastUsed: 2026
+
+      - name: Responsive Web Design
+        type: method
+        level: 4
+        years: 10
+        lastUsed: 2026
+
+      - name: Search Engine Optimization
+        type: method
+        level: 3
+        years: 4
+        lastUsed: 2026
+
+      - name: AI-Assisted Development
+        type: method
+        level: 3
+        years: 2
+        lastUsed: 2026
+        covers:
+          - Agentic Development
+
+  - name: Data & Analytics
+    skills:
+      - name: Product Analytics
+        type: method
+        level: 3
+        years: 1
+        lastUsed: 2026
+        covers:
+          - Event Tracking
+          - Behavioral Analytics
+          - Customer Data Platform
+
+      - name: A/B Testing
+        type: method
+        level: 2
+        years: 2
+        lastUsed: 2017
