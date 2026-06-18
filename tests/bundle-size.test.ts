@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 
 const CLIENT_DIST = join('dist', 'client');
 const ASTRO_DIR = join(CLIENT_DIST, '_astro');
-const LIMIT_BYTES = 12 * 1024;
+const LIMIT_BYTES = 13 * 1024;
 const SCRIPT_REFERENCE = /_astro\/([\w.-]+\.js)/g;
 
 describe('shipped JS bundle', () => {

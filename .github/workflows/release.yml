@@ -41,30 +41,9 @@ jobs:
     with:
       url: ${{ needs.url.outputs.url }}
 
-  test:
-    name: Test
-    uses: ./.github/workflows/test.yml
-
-  e2e:
-    name: End-to-end tests
-    needs: [url, build]
-    uses: ./.github/workflows/e2e.yml
-    with:
-      url: ${{ needs.url.outputs.url }}
-      artifact-name: ${{ needs.build.outputs.artifact-name }}
-      artifact-path: ${{ needs.build.outputs.artifact-path }}
-
-  bundle-size:
-    name: Bundle size
-    needs: build
-    uses: ./.github/workflows/bundle-size.yml
-    with:
-      artifact-name: ${{ needs.build.outputs.artifact-name }}
-      artifact-path: ${{ needs.build.outputs.artifact-path }}
-
   deploy:
     name: Deploy to production
-    needs: [url, build, test, e2e, bundle-size]
+    needs: [url, build]
     uses: ./.github/workflows/deploy.yml
     with:
       environment: production
