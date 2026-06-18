@@ -19,7 +19,7 @@ const validInput = {
 };
 
 function makeContext() {
-  return { request: new Request('https://kianandersson.dk/_actions/sendContactMessage') };
+  return { request: new Request('https://kianandersson.dk/_actions/contact/send') };
 }
 
 describe('sendContactMessageHandler', () => {
