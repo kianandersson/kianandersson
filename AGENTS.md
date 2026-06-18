@@ -31,9 +31,9 @@ JS only sets `document.documentElement.dataset.theme`. Tokens drive everything e
 
 ## Testing
 
-- **Vitest** — pure logic in `lib/`.
+- **Vitest** — pure logic in `lib/`, plus action handlers with their external integrations mocked.
 - **Storybook + addon-vitest** — component contracts via `play()` in real Chromium. `addon-a11y` gates at `'error'`.
-- **Playwright** — multi-browser flows + page-level axe. Contact action mocked via `page.route()`.
+- **Playwright** — multi-browser flows + page-level axe. Action endpoints mocked via `page.route()`, so e2e only covers form-side behaviour.
 - **Lighthouse + bundle-size** — perf budgets.
 
 Strict red-green-refactor on `lib/` and `play()`. Other layers are gates, not test-first targets.
