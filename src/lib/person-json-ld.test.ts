@@ -163,6 +163,23 @@ describe('buildPersonJsonLd', () => {
     expect(json.knowsAbout).toEqual(['TypeScript', 'PostgreSQL', 'React']);
   });
 
+  it('flattens skill covers into knowsAbout right after their parent', () => {
+    const json = buildPersonJsonLd(site, experience, siteUrl, [
+      { name: 'Authentication', covers: ['Session Management', 'MitID'] },
+      { name: 'CSS', covers: ['SASS'] },
+      { name: 'Mentoring' },
+    ]);
+
+    expect(json.knowsAbout).toEqual([
+      'Authentication',
+      'Session Management',
+      'MitID',
+      'CSS',
+      'SASS',
+      'Mentoring',
+    ]);
+  });
+
   it('omits knowsAbout when no skills are provided', () => {
     const json = buildPersonJsonLd(site, experience, siteUrl);
     expect(json.knowsAbout).toBeUndefined();
