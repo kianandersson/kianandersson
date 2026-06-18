@@ -42,6 +42,7 @@ Strict red-green-refactor on `lib/` and `play()`. Other layers are gates, not te
 - Tests describe behavior, not structure.
 - No coverage gate.
 - Region/landmark assertions belong at the template or e2e layer.
+- Actions: e2e-mocked at `page.route()`. Add a handler-level test on the second action or once a handler takes more than one external integration.
 
 ## Budget
 
