@@ -17,6 +17,9 @@ importers:
       '@astrojs/preact':
         specifier: ^5.1.5
         version: 5.1.5(@babel/core@7.29.7)(@types/node@25.9.3)(preact@10.29.2)(rollup@4.61.1)(yaml@2.9.0)
+      '@opentelemetry/api':
+        specifier: ^1.9.1
+        version: 1.9.1
       astro:
         specifier: ^6.4.6
         version: 6.4.6(@types/node@25.9.3)(rollup@4.61.1)(yaml@2.9.0)

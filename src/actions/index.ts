@@ -1,5 +1,6 @@
 import { ActionError, defineAction } from 'astro:actions';
 import { RECIPIENT_EMAIL, RESEND_API_KEY, SENDER_EMAIL } from 'astro:env/server';
+import { SpanStatusCode, trace } from '@opentelemetry/api';
 import { Resend } from 'resend';
 import { z } from 'zod';
 import {
@@ -32,32 +33,35 @@ export const server = {
         message: z.string().trim().min(1).max(CONTACT_MESSAGE_MAX),
       }),
       handler: async (input, context) => {
-        const env = envSchema.safeParse({ RESEND_API_KEY, SENDER_EMAIL, RECIPIENT_EMAIL });
-        if (!env.success) {
+        try {
+          const env = envSchema.parse({ RESEND_API_KEY, SENDER_EMAIL, RECIPIENT_EMAIL });
+          const host = new URL(context.request.url).hostname;
+
+          const { error } = await new Resend(env.RESEND_API_KEY).emails.send({
+            from: `${host} <${env.SENDER_EMAIL}>`,
+            to: `${siteConfig.fullName} <${env.RECIPIENT_EMAIL}>`,
+            replyTo: input.email,
+            subject: input.subject,
+            text: input.message,
+          });
+
+          if (error) throw new Error(error.message);
+
+          return { ok: true } as const;
+        } catch (cause) {
+          if (cause instanceof ActionError) throw cause;
+
+          const error = cause instanceof Error ? cause : new Error(String(cause));
+          const span = trace.getActiveSpan();
+
+          span?.recordException(error);
+          span?.setStatus({ code: SpanStatusCode.ERROR });
+
           throw new ActionError({
             code: 'INTERNAL_SERVER_ERROR',
             message: SEND_FAILED_MESSAGE,
           });
         }
-
-        const host = new URL(context.request.url).hostname;
-
-        const { error } = await new Resend(env.data.RESEND_API_KEY).emails.send({
-          from: `${host} <${env.data.SENDER_EMAIL}>`,
-          to: `${siteConfig.fullName} <${env.data.RECIPIENT_EMAIL}>`,
-          replyTo: input.email,
-          subject: input.subject,
-          text: input.message,
-        });
-
-        if (error) {
-          throw new ActionError({
-            code: 'INTERNAL_SERVER_ERROR',
-            message: SEND_FAILED_MESSAGE,
-          });
-        }
-
-        return { ok: true } as const;
       },
     }),
   },
