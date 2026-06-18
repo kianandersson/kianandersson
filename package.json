@@ -40,6 +40,7 @@
     "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.60.0",
     "@storybook/addon-a11y": "^10.4.6",
+    "@storybook/addon-docs": "^10.4.6",
     "@storybook/addon-vitest": "10.4.6",
     "@storybook/preact-vite": "^10.4.6",
     "@testing-library/jest-dom": "^6.9.1",

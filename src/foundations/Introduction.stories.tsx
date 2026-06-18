@@ -63,8 +63,9 @@ function Page() {
           Design system
         </Heading>
         <Text as="p" size="subheading" tone="muted">
-          The catalog for a personal CV / freelance landing page. Tokens drive everything; the rule
-          of two extracts shared anatomy on the second consumer.
+          The design system behind kianandersson.dk. Components read only the semantic token layer,
+          so re-theming never touches a component file. Anatomy is extracted on the second consumer,
+          not anticipated on the first.
         </Text>
       </header>
 
