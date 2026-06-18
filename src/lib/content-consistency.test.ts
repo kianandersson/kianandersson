@@ -9,13 +9,13 @@ type SkillItem = {
   years?: number;
   lastUsed?: number;
   group?: string;
-  keySkill?: boolean;
   covers?: string[];
   hide?: boolean;
 };
 
 type SkillsFile = {
   groups: string[];
+  featured: string[];
   items: SkillItem[];
 };
 
@@ -95,6 +95,26 @@ describe('skills.yaml internal consistency', () => {
         startYear >= 2000,
         `Skill "${item.name}" implies a start year of ${startYear} (lastUsed ${item.lastUsed} - years ${item.years}) — likely a typo`,
       ).toBe(true);
+    }
+  });
+
+  it('every featured name matches a visible standalone item', () => {
+    const visibleNames = new Set(visibleItems.map((s) => s.name));
+    for (const name of skills.featured) {
+      expect(
+        visibleNames.has(name),
+        `featured entry "${name}" doesn't match any visible skill in items`,
+      ).toBe(true);
+    }
+  });
+
+  it('featured entries are unique', () => {
+    const counts = new Map<string, number>();
+    for (const name of skills.featured) {
+      counts.set(name, (counts.get(name) ?? 0) + 1);
+    }
+    for (const [name, count] of counts) {
+      expect(count, `featured includes "${name}" ${count} times`).toBe(1);
     }
   });
 });

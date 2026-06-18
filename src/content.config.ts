@@ -34,6 +34,7 @@ function yamlDir(relativeDir: string): Loader {
 
 type SkillsFile = {
   groups: string[];
+  featured: string[];
   items: Record<string, unknown>[];
 };
 
@@ -54,7 +55,6 @@ const skills = defineCollection({
       years: z.number().int().nonnegative().optional(),
       lastUsed: z.number().int().optional(),
       group: z.string().min(1).optional(),
-      keySkill: z.boolean().optional(),
       covers: z.array(z.string().min(1)).optional(),
       hide: z.boolean().optional(),
     })
@@ -64,11 +64,10 @@ const skills = defineCollection({
         (data.level !== undefined &&
           data.years !== undefined &&
           data.lastUsed !== undefined &&
-          data.group !== undefined &&
-          data.keySkill !== undefined),
+          data.group !== undefined),
       {
         message:
-          'A visible skill must have level, years, lastUsed, group, and keySkill. Hidden skills (hide: true) may omit them.',
+          'A visible skill must have level, years, lastUsed, and group. Hidden skills (hide: true) may omit them.',
       },
     ),
 });
@@ -103,4 +102,21 @@ const skillGroups = defineCollection({
   }),
 });
 
-export const collections = { skills, experience, skillGroups };
+const keySkills = defineCollection({
+  loader: file('src/content/skills.yaml', {
+    parser: (text) => {
+      const parsed = yaml.load(text) as SkillsFile;
+      return parsed.featured.map((name, index) => ({
+        id: slugify(name),
+        name,
+        order: index,
+      }));
+    },
+  }),
+  schema: z.object({
+    name: z.string().min(1),
+    order: z.number().int().nonnegative(),
+  }),
+});
+
+export const collections = { skills, experience, skillGroups, keySkills };

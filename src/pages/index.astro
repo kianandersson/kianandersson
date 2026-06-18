@@ -28,11 +28,13 @@ const allSkills = (await getCollection('skills'))
     level: entry.data.level,
     years: entry.data.years,
     group: entry.data.group,
-    keySkill: entry.data.keySkill,
   }));
 
-const keySkills = allSkills
-  .filter((entry) => entry.keySkill)
+const skillByName = new Map(allSkills.map((skill) => [skill.name, skill]));
+const keySkills = (await getCollection('keySkills'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((entry) => skillByName.get(entry.data.name))
+  .filter((skill): skill is NonNullable<typeof skill> => skill !== undefined)
   .map(({ id, name, level, years }) => ({ id, name, level, years }));
 
 const skillGroups = sortGroups(
