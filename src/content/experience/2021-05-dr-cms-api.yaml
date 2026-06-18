@@ -11,24 +11,53 @@ description: >-
 stack:
   - PHP
   - .NET
+  - C#
   - Symfony
   - Laravel
-  - SQL
+  - Kubernetes
   - MongoDB
+  - SQL
   - JSON:API
   - Docker
-  - Kubernetes
   - Google Cloud Platform
   - Kong
+  - REST
+  - Redis
+  - Nginx
   - CircleCI
   - Auth0
-  - Redis
+  - OAuth
+  - OpenID Connect
 methods:
   - Engineering Management
+  - Technical Leadership
+  - Technical Hiring
+  - Mentoring
   - Software Architecture
   - Microservices Architecture
+  - Domain-Driven Design
+  - Distributed Systems
+  - Scalability
+  - High Availability
+  - Event-Driven Architecture
   - API Design
-  - Technical Hiring
+  - API Gateway
+  - Open API
+  - Authentication
+  - Authorization
+  - Identity & Access Management
+  - Single Sign-On
   - Continuous Delivery
-  - Behavior-Driven Development
   - Code Review
+  - Test Automation
+  - Test-Driven Development
+  - Behavior-Driven Development
+  - Agile Development
+  - DevOps
+  - Observability
+  - Monitoring
+  - Database Modeling
+  - Caching Strategies
+  - Secrets Management
+  - Rate Limiting
+  - Technical Writing

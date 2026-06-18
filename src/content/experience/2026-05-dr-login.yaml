@@ -1,0 +1,93 @@
+role: Engineering Lead
+meta: Danish Broadcasting Corporation
+start: 2022-06-01
+end: 2026-05-31
+description: >-
+  Built the login platform, and the team behind it, from scratch. Scaled it
+  to millions of users, with up to 500,000 concurrent during live events.
+  Shipped React user interfaces and an accessible, atomic-design component
+  library alongside the backend, established GDPR compliance and a high
+  security bar, and led the migration from a SaaS identity provider to an
+  in-house OAuth/OIDC server that saved the organisation millions.
+stack:
+  - TypeScript
+  - Node.js
+  - React.js
+  - GraphQL
+  - OAuth
+  - OpenID Connect
+  - MongoDB
+  - Redis
+  - Docker
+  - Kubernetes
+  - Helm
+  - Google Cloud Platform
+  - GitHub Actions
+  - Storybook
+  - Next.js
+  - JavaScript
+  - SASS
+  - REST
+  - WebSockets
+  - Kong
+  - Nginx
+  - Grafana
+  - Auth0
+  - React Native
+  - Expo
+  - Jest
+  - Vitest
+  - React Testing Library
+  - Playwright
+  - Cypress
+  - Nightwatch
+  - Supertest
+  - k6
+methods:
+  - Engineering Management
+  - Technical Leadership
+  - Technical Hiring
+  - Mentoring
+  - Software Architecture
+  - Site Reliability Engineering
+  - Distributed Systems
+  - Domain-Driven Design
+  - High Availability
+  - Incident Management
+  - Service Level Objectives
+  - Authentication
+  - Authorization
+  - Identity & Access Management
+  - Single Sign-On
+  - MitID
+  - GDPR
+  - Information Security
+  - OWASP
+  - Secrets Management
+  - Transport Layer Security
+  - Rate Limiting
+  - Design Systems
+  - Atomic Design
+  - Accessibility
+  - Internationalization
+  - Server-Side Rendering
+  - Web Performance
+  - Responsive Web Design
+  - API Design
+  - API Gateway
+  - Open API
+  - Test Automation
+  - Performance Testing
+  - Code Review
+  - Continuous Delivery
+  - Agile Development
+  - DevOps
+  - Observability
+  - OpenTelemetry
+  - Monitoring
+  - Database Modeling
+  - Caching Strategies
+  - Event Tracking
+  - Behavioral Analytics
+  - Customer Data Platform
+  - Technical Writing

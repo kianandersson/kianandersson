@@ -7,11 +7,14 @@ description: >-
   end to end, from design to deployment. Where the craft started.
 stack:
   - PHP
-  - SQL
   - JavaScript
   - HTML
   - CSS
   - SASS
+  - SQL
+  - REST
+  - Nginx
 methods:
   - Responsive Web Design
   - Search Engine Optimization
+  - Internationalization

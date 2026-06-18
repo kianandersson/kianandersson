@@ -12,19 +12,41 @@ stack:
   - PHP
   - Symfony
   - SQL
+  - OAuth
+  - OpenID Connect
   - Auth0
-  - Docker
+  - REST
   - Redis
-  - Apigee
+  - Docker
   - Kong
+  - Apigee
   - Nginx
   - CircleCI
 methods:
   - Software Architecture
   - API Design
+  - Microservices Architecture
   - Authentication
+  - Distributed Systems
+  - Authorization
+  - Identity & Access Management
+  - Single Sign-On
+  - Scalability
+  - High Availability
+  - Event-Driven Architecture
+  - API Gateway
+  - Open API
+  - Technical Leadership
   - Continuous Delivery
-  - Test Automation
-  - Behavior-Driven Development
-  - Monitoring
   - Code Review
+  - Test Automation
+  - Test-Driven Development
+  - Behavior-Driven Development
+  - Agile Development
+  - DevOps
+  - Observability
+  - Monitoring
+  - Database Modeling
+  - Caching Strategies
+  - Secrets Management
+  - Technical Writing

@@ -9,10 +9,14 @@ description: >-
 stack:
   - PHP
   - SQL
+  - JavaScript
   - Amazon Web Services
+  - REST
+  - Nginx
   - HTML
   - CSS
   - SASS
 methods:
   - A/B Testing
+  - Database Modeling
   - Responsive Web Design
