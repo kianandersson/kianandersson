@@ -11,7 +11,6 @@ const withTheme: Decorator = (Story, context) => {
 };
 
 const preview: Preview = {
-  tags: ['autodocs'],
   parameters: {
     backgrounds: { disable: true },
     a11y: { test: 'error' },
