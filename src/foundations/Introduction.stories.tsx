@@ -63,9 +63,9 @@ function Page() {
           Design system
         </Heading>
         <Text as="p" size="subheading" tone="muted">
-          The design system behind kianandersson.dk. Components read only the semantic token layer,
-          so re-theming never touches a component file. Anatomy is extracted on the second consumer,
-          not anticipated on the first.
+          The design system behind Kian Andersson's personal website. Components read only the
+          semantic token layer, so re-theming never touches a component file. Components stay simple
+          until a second use case proves what needs to flex — abstraction is earned, not guessed.
         </Text>
       </header>
 
