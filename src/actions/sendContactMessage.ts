@@ -53,7 +53,7 @@ export async function sendContactMessageHandler(
 
     const error = cause instanceof Error ? cause : new Error(String(cause));
 
-    console.error('Failed to send contact message', error);
+    console.error({ message: 'Failed to send contact message', error });
 
     throw new ActionError({
       code: 'INTERNAL_SERVER_ERROR',
