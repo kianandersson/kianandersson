@@ -2,14 +2,12 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "kianandersson",
   "compatibility_date": "2026-01-01",
+  "keep_vars": true,
   "observability": {
     "enabled": true,
     "logs": {
       "enabled": true,
       "invocation_logs": true
-    },
-    "traces": {
-      "enabled": true
     }
   }
 }
