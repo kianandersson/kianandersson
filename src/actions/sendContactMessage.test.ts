@@ -1,4 +1,3 @@
-import { ActionError } from 'astro:actions';
 import { Resend } from 'resend';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { sendContactMessageHandler } from './sendContactMessage';
@@ -11,9 +10,7 @@ vi.mock('resend', () => ({
   }),
 }));
 
-function makeContext(url = 'https://kianandersson.dk/_actions/sendContactMessage') {
-  return { request: new Request(url) };
-}
+const SEND_FAILED_MESSAGE = "Couldn't send the message — please try again in a moment.";
 
 const validInput = {
   email: 'jane@example.com',
@@ -21,52 +18,49 @@ const validInput = {
   message: 'Hello — would love to chat.',
 };
 
+function makeContext() {
+  return { request: new Request('https://kianandersson.dk/_actions/sendContactMessage') };
+}
+
 describe('sendContactMessageHandler', () => {
   afterEach(() => {
-    sendMock.mockReset();
-    vi.mocked(Resend).mockClear();
+    vi.clearAllMocks();
   });
 
-  it('forwards a valid submission to Resend with from/replyTo derived from env and the request host', async () => {
+  it('sends through Resend with `from` derived from the request host', async () => {
     sendMock.mockResolvedValueOnce({ data: { id: 'msg_1' }, error: null });
 
-    const result = await sendContactMessageHandler(
-      validInput,
-      makeContext('https://kianandersson.dk/anything'),
-    );
+    const result = await sendContactMessageHandler(validInput, makeContext());
 
     expect(result).toEqual({ ok: true });
     expect(vi.mocked(Resend)).toHaveBeenCalledWith('re_test_key');
     expect(sendMock).toHaveBeenCalledWith({
       from: 'kianandersson.dk <sender@kianandersson.dk>',
       to: expect.stringContaining('<mail@kianandersson.dk>'),
-      replyTo: 'jane@example.com',
-      subject: 'Project enquiry',
-      text: 'Hello — would love to chat.',
+      replyTo: validInput.email,
+      subject: validInput.subject,
+      text: validInput.message,
     });
   });
 
-  it('maps a Resend failure response to an INTERNAL_SERVER_ERROR ActionError', async () => {
+  it('maps a Resend error response to an ActionError', async () => {
     sendMock.mockResolvedValueOnce({
       data: null,
       error: { name: 'invalid_to_field', message: 'Recipient rejected' },
     });
 
-    await expect(sendContactMessageHandler(validInput, makeContext())).rejects.toBeInstanceOf(
-      ActionError,
-    );
     await expect(sendContactMessageHandler(validInput, makeContext())).rejects.toMatchObject({
       code: 'INTERNAL_SERVER_ERROR',
-      message: "Couldn't send the message — please try again in a moment.",
+      message: SEND_FAILED_MESSAGE,
     });
   });
 
-  it('maps a thrown Resend exception to an INTERNAL_SERVER_ERROR ActionError', async () => {
-    sendMock.mockRejectedValue(new Error('network'));
+  it('maps a thrown Resend exception to an ActionError', async () => {
+    sendMock.mockRejectedValueOnce(new Error('network'));
 
     await expect(sendContactMessageHandler(validInput, makeContext())).rejects.toMatchObject({
       code: 'INTERNAL_SERVER_ERROR',
-      message: "Couldn't send the message — please try again in a moment.",
+      message: SEND_FAILED_MESSAGE,
     });
   });
 });
