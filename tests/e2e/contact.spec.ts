@@ -1,7 +1,7 @@
 import { expect, type Route, test } from '@playwright/test';
 import { stringify as devalueStringify } from 'devalue';
 
-const CONTACT_ENDPOINT = /\/_actions\/contact\.send/;
+const CONTACT_ENDPOINT = /\/_actions\/sendContactMessage/;
 
 async function openForm(page: import('@playwright/test').Page) {
   await page.goto('/');

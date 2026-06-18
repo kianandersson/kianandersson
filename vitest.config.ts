@@ -22,6 +22,16 @@ export default defineConfig({
     projects: [
       {
         extends: true,
+        resolve: {
+          alias: {
+            'astro:actions': fileURLToPath(
+              new URL('./vitest.astro-actions-stub.ts', import.meta.url),
+            ),
+            'astro:env/server': fileURLToPath(
+              new URL('./vitest.astro-env-stub.ts', import.meta.url),
+            ),
+          },
+        },
         test: {
           name: 'unit',
           environment: 'jsdom',
