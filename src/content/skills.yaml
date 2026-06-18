@@ -503,12 +503,6 @@ items:
     lastUsed: 2026
     group: Security & Identity
 
-  - name: JSON Web Token
-    level: 5
-    years: 7
-    lastUsed: 2026
-    group: Security & Identity
-
   - name: GDPR
     level: 4
     years: 4

@@ -17,7 +17,6 @@ stack:
   - MongoDB
   - OAuth
   - OpenID Connect
-  - JSON Web Token
   - Docker
   - Kubernetes
   - Helm
