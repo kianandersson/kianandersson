@@ -29,8 +29,7 @@ type State = {
 };
 
 type Action =
-  | { type: 'open' }
-  | { type: 'close' }
+  | { type: 'toggle' }
   | { type: 'submit' }
   | { type: 'sendFailed'; message: string }
   | { type: 'sendSucceeded' }
@@ -57,47 +56,58 @@ function startCollapse(state: State, success: CollapseSuccess): State {
   return { ...state, phase: { kind: 'collapsing', success } };
 }
 
+function applyToggle(state: State): State {
+  switch (state.phase.kind) {
+    case 'closed':
+      return { ...state, phase: { kind: 'open' } };
+    case 'collapsing':
+      return { phase: { kind: 'open' }, formKey: state.formKey + 1 };
+    case 'open':
+    case 'sending':
+    case 'error':
+    case 'flying':
+    case 'leavingForm':
+      return startCollapse(state, 'none');
+    case 'success':
+      return startCollapse(state, 'shown');
+    case 'leavingSuccess':
+      return startCollapse(state, 'leaving');
+  }
+}
+
 function reducer(state: State, action: Action): State {
+  if (action.type === 'toggle') return applyToggle(state);
   const { phase } = state;
   switch (phase.kind) {
-    case 'closed':
-      if (action.type === 'open') return { ...state, phase: { kind: 'open' } };
-      return state;
     case 'open':
       if (action.type === 'submit') return { ...state, phase: { kind: 'sending' } };
-      if (action.type === 'close') return startCollapse(state, 'none');
       return state;
     case 'sending':
       if (action.type === 'sendSucceeded') return { ...state, phase: { kind: 'flying' } };
       if (action.type === 'sendFailed')
         return { ...state, phase: { kind: 'error', message: action.message } };
-      if (action.type === 'close') return startCollapse(state, 'none');
       return state;
     case 'error':
       if (action.type === 'submit') return { ...state, phase: { kind: 'sending' } };
-      if (action.type === 'close') return startCollapse(state, 'none');
       return state;
     case 'flying':
       if (action.type === 'flightEnded') return { ...state, phase: { kind: 'leavingForm' } };
-      if (action.type === 'close') return startCollapse(state, 'none');
       return state;
     case 'leavingForm':
       if (action.type === 'formLeaveHalfDone') return { ...state, phase: { kind: 'success' } };
-      if (action.type === 'close') return startCollapse(state, 'none');
       return state;
     case 'success':
       if (action.type === 'successDwellDone')
         return { ...state, phase: { kind: 'leavingSuccess' } };
-      if (action.type === 'close') return startCollapse(state, 'shown');
       return state;
     case 'leavingSuccess':
-      if (action.type === 'successLeaveDone' || action.type === 'close')
-        return startCollapse(state, 'leaving');
+      if (action.type === 'successLeaveDone') return startCollapse(state, 'leaving');
       return state;
     case 'collapsing':
       if (action.type === 'collapseDone')
         return { phase: { kind: 'closed' }, formKey: state.formKey + 1 };
-      if (action.type === 'open') return { phase: { kind: 'open' }, formKey: state.formKey + 1 };
+      return state;
+    default:
       return state;
   }
 }
@@ -127,6 +137,10 @@ function abortableDelay(ms: number, signal: AbortSignal): Promise<void> {
  * Race-safety: each toggle/submit starts a fresh AbortController. Pending
  * delays observe the signal and resolve early; the orchestrating coroutine
  * checks `signal.aborted` after every await and bails out without dispatching.
+ *
+ * The collapse-to-closed timer is owned by an effect on `phase.kind` instead
+ * of the coroutine, so both the manual close path and the auto-flow tail end
+ * up in the same place.
  */
 export function useContactSubmission({ send }: Options) {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
@@ -140,18 +154,8 @@ export function useContactSubmission({ send }: Options) {
   }
 
   function toggle() {
-    const { phase } = state;
-    if (phase.kind === 'closed' || phase.kind === 'collapsing') {
-      controllerRef.current?.abort();
-      dispatch({ type: 'open' });
-      return;
-    }
-    const signal = restart();
-    dispatch({ type: 'close' });
-    void abortableDelay(COLLAPSE_MS, signal).then(() => {
-      if (signal.aborted) return;
-      dispatch({ type: 'collapseDone' });
-    });
+    controllerRef.current?.abort();
+    dispatch({ type: 'toggle' });
   }
 
   async function submit(payload: ContactPayload) {
@@ -189,13 +193,23 @@ export function useContactSubmission({ send }: Options) {
     if (signal.aborted) return;
 
     dispatch({ type: 'successLeaveDone' });
-    await abortableDelay(COLLAPSE_MS, signal);
-    if (signal.aborted) return;
-
-    dispatch({ type: 'collapseDone' });
+    // Phase is now `collapsing`; the effect below schedules `collapseDone`.
   }
 
   useEffect(() => () => controllerRef.current?.abort(), []);
+
+  // Owns the collapse → closed transition for both manual close and auto-flow:
+  // when phase enters `collapsing`, schedule the final reset; cleanup aborts
+  // it if the user re-opens mid-collapse.
+  useEffect(() => {
+    if (state.phase.kind !== 'collapsing') return;
+    const controller = new AbortController();
+    void abortableDelay(COLLAPSE_MS, controller.signal).then(() => {
+      if (controller.signal.aborted) return;
+      dispatch({ type: 'collapseDone' });
+    });
+    return () => controller.abort();
+  }, [state.phase.kind]);
 
   const { phase } = state;
   // `collapsing` is the close-animation phase: aria-expanded should already
