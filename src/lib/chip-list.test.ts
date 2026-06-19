@@ -26,10 +26,9 @@ describe('sliceList', () => {
     });
 
     it('reports the overflow count', () => {
-      const { hasMore, hiddenCount } = sliceList(
-        ['React', 'Preact', 'Astro', 'TypeScript'],
-        { maxChars: 20 },
-      );
+      const { hasMore, hiddenCount } = sliceList(['React', 'Preact', 'Astro', 'TypeScript'], {
+        maxChars: 20,
+      });
       expect(hasMore).toBe(true);
       expect(hiddenCount).toBe(1);
     });

@@ -66,9 +66,7 @@ const skills = defineCollection({
     .refine(
       (data) =>
         data.hide === true ||
-        (data.level !== undefined &&
-          data.years !== undefined &&
-          data.lastUsed !== undefined),
+        (data.level !== undefined && data.years !== undefined && data.lastUsed !== undefined),
       {
         message:
           'A visible skill must have level, years, and lastUsed. Hidden skills (hide: true) may omit them.',
