@@ -83,6 +83,7 @@ const jsonLd = buildPersonJsonLd(
   })),
   new URL('/', Astro.site).toString(),
   allSkills.filter((skill) => skill.level >= 3).map(({ name, children }) => ({ name, children })),
+  new URL('/profile.jpg', Astro.site).toString(),
 );
 ---
 

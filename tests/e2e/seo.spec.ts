@@ -25,6 +25,7 @@ test.describe('SEO surfaces', () => {
 
     expect(data['@context']).toBe('https://schema.org');
     expect(data['@type']).toBe('Person');
+    expect(data.image).toBe(`${astroConfig.site}/profile.jpg`);
 
     // worksFor only appears while a current role is held; otherwise it is
     // correctly omitted and every experience surfaces under alumniOf instead.
