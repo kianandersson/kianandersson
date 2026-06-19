@@ -1,8 +1,8 @@
 # Kian Andersson
 
-Source for [kianandersson.dk](https://kianandersson.dk).
+Source for [kianandersson.com](https://kianandersson.com).
 
-Design system at [kianandersson.dk/design](https://kianandersson.dk/design).
+Design system at [kianandersson.com/design](https://kianandersson.com/design).
 
 Built with [Astro](https://astro.build) and [Preact](https://preactjs.com).
 

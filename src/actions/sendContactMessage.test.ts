@@ -19,7 +19,7 @@ const validInput = {
 };
 
 function makeContext() {
-  return { request: new Request('https://kianandersson.dk/_actions/contact/send') };
+  return { request: new Request('https://kianandersson.com/_actions/contact/send') };
 }
 
 describe('sendContactMessageHandler', () => {
@@ -35,7 +35,7 @@ describe('sendContactMessageHandler', () => {
     expect(result).toEqual({ ok: true });
     expect(vi.mocked(Resend)).toHaveBeenCalledWith('re_test_key');
     expect(sendMock).toHaveBeenCalledWith({
-      from: 'kianandersson.dk <sender@example.com>',
+      from: 'kianandersson.com <sender@example.com>',
       to: expect.stringContaining('<recipient@example.com>'),
       replyTo: validInput.email,
       subject: validInput.subject,
