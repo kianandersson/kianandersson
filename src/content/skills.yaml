@@ -1,5 +1,3 @@
-# Skills surfaced in the Hero "Key skills" block, in display order.
-# Each entry must match a visible skill name below. Reorder to taste.
 featured:
   - TypeScript
   - Node.js
@@ -8,145 +6,150 @@ featured:
   - Software Architecture
   - Technical Leadership
 
-# Each group declares its display order (file order = display order). Skills
-# nest directly inside their group; file order within a group is display
-# order. A skill name listed in another skill's `covers:` may also exist as a
-# top-level entry — that's how multi-parent and cross-type relationships work.
-# Hidden skills (`hide: true`) stay in their conceptual group so experience
-# references still resolve, but they don't render as a row.
 groups:
   - name: Leadership & Architecture
     skills:
       - name: Technical Leadership
-        type: method
+        category: organizational
         level: 4
         years: 7
         lastUsed: 2026
-        covers:
+        children:
           - Stakeholder Management
 
       - name: Engineering Management
-        type: method
+        category: organizational
         level: 4
         years: 5
         lastUsed: 2026
-        covers:
+        children:
           - Change Management
 
       - name: Software Architecture
-        type: method
+        category: concept
         level: 4
         years: 7
         lastUsed: 2026
-        covers:
+        children:
           - Solution Architecture
           - System Architecture
 
       - name: Microservices Architecture
-        type: method
+        category: concept
         level: 4
         years: 7
         lastUsed: 2026
 
       - name: Distributed Systems
-        type: method
+        category: concept
         level: 4
         years: 5
         lastUsed: 2026
 
       - name: Event-Driven Architecture
-        type: method
+        category: concept
         level: 3
         years: 5
         lastUsed: 2026
 
       - name: High Availability
-        type: method
+        category: concept
         level: 3
         years: 5
         lastUsed: 2026
-        covers:
-          - Resilience
-          - Fault Tolerance
 
       - name: Scalability
-        type: method
+        category: concept
         level: 4
         years: 9
         lastUsed: 2026
 
       - name: Domain-Driven Design
-        type: method
+        category: concept
         level: 3
         years: 5
         lastUsed: 2026
 
       - name: Mentoring
-        type: method
+        category: organizational
         level: 4
         years: 5
         lastUsed: 2026
 
       - name: Technical Hiring
-        type: method
+        category: organizational
         level: 3
         years: 5
         lastUsed: 2026
-        covers:
-          - Talent Acquisition
+
+      - name: Stakeholder Management
+        category: organizational
+        hide: true
+
+      - name: Change Management
+        category: organizational
+        hide: true
+
+      - name: Solution Architecture
+        category: concept
+        hide: true
+
+      - name: System Architecture
+        category: concept
+        hide: true
 
   - name: Languages & Runtimes
     skills:
       - name: TypeScript
-        type: stack
+        category: technology
         level: 5
         years: 6
         lastUsed: 2026
 
       - name: JavaScript
-        type: stack
+        category: technology
         level: 5
         years: 15
         lastUsed: 2026
 
       - name: Node.js
-        type: stack
+        category: technology
         level: 5
         years: 6
         lastUsed: 2026
 
       - name: PHP
-        type: stack
+        category: technology
         level: 5
         years: 11
         lastUsed: 2022
 
       - name: C#
-        type: stack
+        category: technology
         level: 2
         years: 1
         lastUsed: 2022
 
       - name: .NET
-        type: stack
+        category: technology
         level: 2
         years: 1
         lastUsed: 2022
 
       - name: Go
-        type: stack
+        category: technology
         level: 1
         years: 0
         lastUsed: 2026
 
       - name: Bun
-        type: stack
+        category: technology
         level: 3
         years: 1
         lastUsed: 2026
 
       - name: Deno
-        type: stack
+        category: technology
         level: 3
         years: 1
         lastUsed: 2026
@@ -154,179 +157,193 @@ groups:
   - name: Frontend
     skills:
       - name: React.js
-        type: stack
+        category: technology
         level: 5
         years: 6
         lastUsed: 2026
 
       - name: React Native
-        type: stack
+        category: technology
         level: 2
         years: 3
         lastUsed: 2026
 
       - name: Next.js
-        type: stack
+        category: technology
         level: 3
         years: 4
         lastUsed: 2025
 
       - name: Expo
-        type: stack
+        category: technology
         level: 2
         years: 3
         lastUsed: 2026
 
       - name: Design Systems
-        type: method
+        category: concept
         level: 4
         years: 4
         lastUsed: 2026
-        covers:
+        children:
           - Component Libraries
           - Atomic Design
 
       - name: Storybook
-        type: stack
+        category: technology
         level: 3
         years: 4
         lastUsed: 2026
 
       - name: Server-Side Rendering
-        type: method
+        category: concept
         level: 3
         years: 4
         lastUsed: 2026
 
       - name: Accessibility
-        type: method
+        category: practice
         level: 3
         years: 4
         lastUsed: 2026
 
       - name: Internationalization
-        type: method
+        category: practice
         level: 3
         years: 4
         lastUsed: 2026
 
       - name: Web Performance
-        type: method
+        category: practice
         level: 2
         years: 2
         lastUsed: 2026
-        covers:
-          - Web Vitals
 
       - name: CSS
-        type: stack
+        category: technology
         level: 5
         years: 15
         lastUsed: 2026
-        covers:
+        children:
           - SASS
 
-      # Hidden historical name, kept for experience references.
       - name: HTML
-        type: stack
+        category: technology
+        hide: true
+
+      - name: Component Libraries
+        category: concept
+        hide: true
+
+      - name: Atomic Design
+        category: concept
+        hide: true
+
+      - name: SASS
+        category: technology
         hide: true
 
   - name: Backend & APIs
     skills:
       - name: API Gateway
-        type: method
+        category: concept
         level: 3
         years: 9
         lastUsed: 2026
+        children:
+          - Kong
+          - Apigee
 
       - name: REST
-        type: stack
+        category: technology
         level: 4
         years: 12
         lastUsed: 2026
 
       - name: GraphQL
-        type: stack
+        category: technology
         level: 4
         years: 4
         lastUsed: 2026
 
       - name: Open API
-        type: method
+        category: technology
         level: 3
         years: 9
         lastUsed: 2026
 
       - name: WebSockets
-        type: stack
+        category: technology
         level: 3
         years: 4
         lastUsed: 2026
 
       - name: gRPC
-        type: stack
+        category: technology
         level: 1
         years: 0
         lastUsed: 2026
 
       - name: API Design
-        type: method
+        category: concept
         level: 4
         years: 9
         lastUsed: 2026
-        covers:
+        children:
           - GraphQL Schema Design
-          - API Versioning
 
       - name: Symfony
-        type: stack
+        category: technology
         level: 4
         years: 5
         lastUsed: 2022
 
       - name: Laravel
-        type: stack
+        category: technology
         level: 4
         years: 2
         lastUsed: 2022
 
-      # Hidden — tech used in past roles but no longer marketed.
       - name: Apigee
-        type: stack
+        category: technology
         hide: true
 
       - name: JSON:API
-        type: stack
+        category: technology
+        hide: true
+
+      - name: GraphQL Schema Design
+        category: concept
         hide: true
 
   - name: Databases
     skills:
       - name: SQL
-        type: stack
+        category: technology
         level: 4
         years: 15
         lastUsed: 2026
 
       - name: MongoDB
-        type: stack
+        category: technology
         level: 4
         years: 5
         lastUsed: 2026
 
       - name: Redis
-        type: stack
+        category: technology
         level: 3
         years: 9
         lastUsed: 2026
 
       - name: Caching Strategies
-        type: method
+        category: concept
         level: 3
         years: 9
         lastUsed: 2026
 
       - name: Database Modeling
-        type: method
+        category: concept
         level: 4
         years: 15
         lastUsed: 2026
@@ -334,344 +351,430 @@ groups:
   - name: Cloud & DevOps
     skills:
       - name: Docker
-        type: stack
+        category: technology
         level: 4
         years: 9
         lastUsed: 2026
 
       - name: Kubernetes
-        type: stack
+        category: technology
         level: 3
         years: 5
         lastUsed: 2026
 
       - name: Helm
-        type: stack
+        category: technology
         level: 3
         years: 4
         lastUsed: 2026
 
       - name: Google Cloud Platform
-        type: stack
+        category: technology
         level: 3
         years: 5
         lastUsed: 2026
 
       - name: Nginx
-        type: stack
+        category: technology
         level: 2
         years: 9
         lastUsed: 2026
 
       - name: Kong
-        type: stack
+        category: technology
         level: 2
         years: 5
         lastUsed: 2026
 
       - name: GitHub Actions
-        type: stack
+        category: technology
         level: 4
         years: 4
         lastUsed: 2026
 
       - name: Observability
-        type: method
+        category: concept
         level: 3
         years: 4
         lastUsed: 2026
-        covers:
+        children:
           - Distributed Tracing
+          - OpenTelemetry
+          - Grafana
 
       - name: OpenTelemetry
-        type: stack
+        category: technology
         level: 3
         years: 4
         lastUsed: 2026
 
       - name: Grafana
-        type: stack
+        category: technology
         level: 3
         years: 4
         lastUsed: 2026
 
       - name: Monitoring
-        type: method
+        category: practice
         level: 3
         years: 9
         lastUsed: 2026
+        children:
+          - Grafana
 
       - name: Service Level Objectives
-        type: method
+        category: concept
         level: 3
         years: 4
         lastUsed: 2026
 
       - name: Incident Management
-        type: method
+        category: practice
         level: 3
         years: 4
         lastUsed: 2026
 
       - name: Site Reliability Engineering
-        type: method
+        category: practice
         level: 3
         years: 4
         lastUsed: 2026
 
       - name: DevOps
-        type: method
+        category: practice
         level: 4
         years: 9
         lastUsed: 2026
 
       - name: Amazon Web Services
-        type: stack
+        category: technology
         level: 1
         years: 2
         lastUsed: 2017
 
-      # Hidden historical CI provider, kept for experience references.
       - name: CircleCI
-        type: stack
+        category: technology
+        hide: true
+
+      - name: Distributed Tracing
+        category: concept
         hide: true
 
   - name: Security & Identity
     skills:
       - name: OAuth
-        type: stack
+        category: technology
         level: 5
         years: 7
         lastUsed: 2026
 
       - name: OpenID Connect
-        type: stack
+        category: technology
         level: 5
         years: 7
         lastUsed: 2026
 
       - name: GDPR
-        type: method
+        category: practice
         level: 4
         years: 4
         lastUsed: 2026
 
       - name: Auth0
-        type: stack
+        category: technology
         level: 4
         years: 5
         lastUsed: 2024
 
       - name: Authentication
-        type: method
+        category: concept
         level: 4
         years: 7
         lastUsed: 2026
-        covers:
+        children:
           - Session Management
           - Multi-Factor Authentication
           - Federated Identity
+          - OAuth
+          - OpenID Connect
+          - Auth0
+          - MitID
 
       - name: Authorization
-        type: method
+        category: concept
         level: 4
         years: 9
         lastUsed: 2026
 
       - name: Identity & Access Management
-        type: method
+        category: concept
         level: 4
         years: 7
         lastUsed: 2026
 
       - name: Single Sign-On
-        type: method
+        category: concept
         level: 4
         years: 7
         lastUsed: 2026
 
       - name: Information Security
-        type: method
+        category: concept
         level: 4
         years: 4
         lastUsed: 2026
-        covers:
+        children:
           - Compliance
           - Risk Management
           - Vulnerability Management
           - Cryptography
 
       - name: OWASP
-        type: method
+        category: practice
         level: 3
         years: 4
         lastUsed: 2026
 
       - name: Secrets Management
-        type: method
+        category: concept
         level: 3
         years: 9
         lastUsed: 2026
 
       - name: Transport Layer Security
-        type: stack
+        category: technology
         level: 3
         years: 4
         lastUsed: 2026
 
       - name: Rate Limiting
-        type: method
+        category: concept
         level: 3
         years: 5
         lastUsed: 2026
 
-      # Hidden Danish national eID, kept for experience references.
       - name: MitID
-        type: stack
+        category: technology
+        hide: true
+
+      - name: Session Management
+        category: concept
+        hide: true
+
+      - name: Multi-Factor Authentication
+        category: concept
+        hide: true
+
+      - name: Federated Identity
+        category: concept
+        hide: true
+
+      - name: Compliance
+        category: practice
+        hide: true
+
+      - name: Risk Management
+        category: practice
+        hide: true
+
+      - name: Vulnerability Management
+        category: practice
+        hide: true
+
+      - name: Cryptography
+        category: concept
         hide: true
 
   - name: Quality & Testing
     skills:
       - name: Test Automation
-        type: method
+        category: practice
         level: 4
         years: 9
         lastUsed: 2026
-        covers:
+        children:
           - Unit Testing
           - Integration Testing
           - End-to-End Testing
+          - Jest
+          - Vitest
+          - React Testing Library
+          - Cypress
+          - Nightwatch
+          - Playwright
+          - Supertest
 
       - name: Jest
-        type: stack
+        category: technology
         level: 3
         years: 6
         lastUsed: 2026
 
       - name: React Testing Library
-        type: stack
+        category: technology
         level: 3
         years: 4
         lastUsed: 2026
 
       - name: Cypress
-        type: stack
+        category: technology
         level: 2
         years: 2
         lastUsed: 2024
 
       - name: Nightwatch
-        type: stack
+        category: technology
         level: 3
         years: 2
         lastUsed: 2026
 
       - name: Vitest
-        type: stack
+        category: technology
         level: 2
         years: 1
         lastUsed: 2026
 
       - name: Playwright
-        type: stack
+        category: technology
         level: 2
         years: 1
         lastUsed: 2026
 
       - name: Performance Testing
-        type: method
+        category: practice
         level: 3
         years: 5
         lastUsed: 2026
+        children:
+          - k6
 
       - name: k6
-        type: stack
+        category: technology
         level: 3
         years: 5
         lastUsed: 2026
 
-      # Hidden HTTP assertion library, kept for experience references.
       - name: Supertest
-        type: stack
+        category: technology
+        hide: true
+
+      - name: Unit Testing
+        category: practice
+        hide: true
+
+      - name: Integration Testing
+        category: practice
+        hide: true
+
+      - name: End-to-End Testing
+        category: practice
         hide: true
 
   - name: Methodologies & Practices
     skills:
       - name: Agile Development
-        type: method
+        category: practice
         level: 4
         years: 9
         lastUsed: 2026
-        covers:
+        children:
           - Scrum
 
       - name: Continuous Delivery
-        type: method
+        category: practice
         level: 4
         years: 9
         lastUsed: 2026
-        covers:
+        children:
           - Continuous Integration
           - Continuous Deployment
 
       - name: Test-Driven Development
-        type: method
+        category: practice
         level: 3
         years: 5
         lastUsed: 2026
 
       - name: Behavior-Driven Development
-        type: method
+        category: practice
         level: 3
         years: 5
         lastUsed: 2022
 
       - name: Code Review
-        type: method
+        category: practice
         level: 4
         years: 9
         lastUsed: 2026
 
       - name: Technical Writing
-        type: method
+        category: practice
         level: 4
         years: 9
         lastUsed: 2026
 
       - name: Responsive Web Design
-        type: method
+        category: practice
         level: 4
         years: 10
         lastUsed: 2026
 
       - name: Search Engine Optimization
-        type: method
+        category: practice
         level: 3
         years: 4
         lastUsed: 2026
 
       - name: AI-Assisted Development
-        type: method
+        category: practice
         level: 3
         years: 2
         lastUsed: 2026
-        covers:
+        children:
           - Agentic Development
+
+      - name: Scrum
+        category: practice
+        hide: true
+
+      - name: Continuous Integration
+        category: practice
+        hide: true
+
+      - name: Continuous Deployment
+        category: practice
+        hide: true
+
+      - name: Agentic Development
+        category: practice
+        hide: true
 
   - name: Data & Analytics
     skills:
       - name: Product Analytics
-        type: method
+        category: practice
         level: 3
         years: 1
         lastUsed: 2026
-        covers:
+        children:
           - Event Tracking
           - Behavioral Analytics
           - Customer Data Platform
 
       - name: A/B Testing
-        type: method
+        category: practice
         level: 2
         years: 2
         lastUsed: 2017
+
+      - name: Event Tracking
+        category: practice
+        hide: true
+
+      - name: Behavioral Analytics
+        category: practice
+        hide: true
+
+      - name: Customer Data Platform
+        category: concept
+        hide: true

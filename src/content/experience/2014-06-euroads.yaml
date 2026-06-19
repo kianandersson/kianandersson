@@ -6,17 +6,18 @@ description: >-
   Built tooling to optimise ad campaign management across platforms, including
   a real-time revenue and spend dashboard for Facebook campaigns that materially
   improved profitability for the team running them.
-stack:
+technologies:
   - PHP
-  - SQL
   - JavaScript
+  - SQL
   - Amazon Web Services
-  - HTML
   - CSS
   - SASS
+  - HTML
   - REST
   - Nginx
-methods:
-  - A/B Testing
+concepts:
   - Database Modeling
+practices:
+  - A/B Testing
   - Responsive Web Design

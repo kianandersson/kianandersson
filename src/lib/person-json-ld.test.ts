@@ -163,10 +163,10 @@ describe('buildPersonJsonLd', () => {
     expect(json.knowsAbout).toEqual(['TypeScript', 'PostgreSQL', 'React']);
   });
 
-  it('flattens skill covers into knowsAbout right after their parent', () => {
+  it('flattens skill children into knowsAbout right after their parent', () => {
     const json = buildPersonJsonLd(site, experience, siteUrl, [
-      { name: 'Authentication', covers: ['Session Management', 'MitID'] },
-      { name: 'CSS', covers: ['SASS'] },
+      { name: 'Authentication', children: ['Session Management', 'MitID'] },
+      { name: 'CSS', children: ['SASS'] },
       { name: 'Mentoring' },
     ]);
 

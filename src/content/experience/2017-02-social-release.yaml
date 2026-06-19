@@ -6,20 +6,25 @@ description: >-
   Recruited as lead developer for an early-stage startup building livestreaming
   and fan engagement for musicians. Designed and built the product and
   infrastructure from the ground up.
-stack:
+technologies:
   - PHP
   - Laravel
   - JavaScript
-  - SQL
-  - Docker
-  - HTML
   - CSS
   - SASS
+  - HTML
+  - SQL
   - REST
+  - Docker
   - Nginx
-methods:
+concepts:
   - Software Architecture
   - Database Modeling
+  - Solution Architecture
+  - System Architecture
+practices:
   - Responsive Web Design
   - Search Engine Optimization
+organizational:
   - Technical Leadership
+  - Stakeholder Management

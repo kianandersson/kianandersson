@@ -3,15 +3,15 @@ import { join } from 'node:path';
 import yaml from 'js-yaml';
 import { describe, expect, it } from 'vitest';
 
-type SkillType = 'stack' | 'method';
+type SkillCategory = 'technology' | 'concept' | 'practice' | 'organizational';
 
 type SkillItem = {
   name: string;
-  type: SkillType;
+  category: SkillCategory;
   level?: number;
   years?: number;
   lastUsed?: number;
-  covers?: string[];
+  children?: string[];
   hide?: boolean;
 };
 
@@ -29,8 +29,10 @@ type ExperienceFile = {
   role: string;
   meta: string;
   description: string;
-  stack: string[];
-  methods: string[];
+  technologies: string[];
+  concepts?: string[];
+  practices?: string[];
+  organizational?: string[];
 };
 
 const REPO_ROOT = process.cwd();
@@ -86,28 +88,30 @@ describe('skills.yaml internal consistency', () => {
     }
   });
 
-  it('every covered name resolves to a single type', () => {
+  it('every child resolves to a single type', () => {
     // A name may appear as a top-level skill AND in one or more parents'
-    // covers arrays. That's how multi-parent / cross-type relationships work.
-    // The rule we still enforce: if a name appears only in covers (no
+    // children arrays. That's how multi-parent / cross-type relationships work.
+    // The rule we still enforce: if a name appears only as a child (no
     // top-level entry), all parents listing it must share the same type —
     // otherwise the type is ambiguous.
-    const topLevelType = new Map<string, SkillType>(allItems.map((s) => [s.name, s.type]));
-    const coverParents = new Map<string, SkillType[]>();
+    const topLevelCategory = new Map<string, SkillCategory>(
+      allItems.map((s) => [s.name, s.category]),
+    );
+    const childParents = new Map<string, SkillCategory[]>();
     for (const item of allItems) {
-      if (!item.covers) continue;
-      for (const covered of item.covers) {
-        const list = coverParents.get(covered) ?? [];
-        list.push(item.type);
-        coverParents.set(covered, list);
+      if (!item.children) continue;
+      for (const child of item.children) {
+        const list = childParents.get(child) ?? [];
+        list.push(item.category);
+        childParents.set(child, list);
       }
     }
-    for (const [covered, parentTypes] of coverParents) {
-      if (topLevelType.has(covered)) continue; // top-level wins, no ambiguity
+    for (const [child, parentTypes] of childParents) {
+      if (topLevelCategory.has(child)) continue; // top-level wins, no ambiguity
       const unique = new Set(parentTypes);
       expect(
         unique.size === 1,
-        `"${covered}" is covered by parents of mixed types (${[...unique].join(', ')}) and has no top-level entry — add a top-level skill to disambiguate`,
+        `"${child}" is listed as a child by parents of mixed types (${[...unique].join(', ')}) and has no top-level entry — add a top-level skill to disambiguate`,
       ).toBe(true);
     }
   });
@@ -132,11 +136,12 @@ describe('skills.yaml internal consistency', () => {
     }
   });
 
-  it('every item has a type of "stack" or "method"', () => {
+  it('every item has a valid category', () => {
+    const valid: SkillCategory[] = ['technology', 'concept', 'practice', 'organizational'];
     for (const item of allItems) {
       expect(
-        item.type === 'stack' || item.type === 'method',
-        `Skill "${item.name}" has invalid type "${item.type}" — must be "stack" or "method"`,
+        valid.includes(item.category),
+        `Skill "${item.name}" has invalid category "${item.category}" — must be one of ${valid.join(', ')}`,
       ).toBe(true);
     }
   });
@@ -157,45 +162,58 @@ describe('experience vs skills consistency', () => {
   const allItems = flattenSkills(skills);
   const experience = loadExperience();
 
-  // Effective type per referenceable name. Top-level entries win over cover
-  // inheritance, which is what enables cross-type relationships (e.g. a
-  // `stack` skill can be covered by a `method`-typed parent without losing
-  // its own type when referenced from experience.stack).
-  const nameType = (() => {
-    const map = new Map<string, SkillType>();
-    for (const item of allItems) map.set(item.name, item.type);
+  // Effective category per referenceable name. Top-level entries win over
+  // parent inheritance, which is what enables cross-category relationships
+  // (e.g. a `stack` skill can be listed as a child by a `method`-typed parent
+  // without losing its own category when referenced from experience.stack).
+  const nameCategory = (() => {
+    const map = new Map<string, SkillCategory>();
+    for (const item of allItems) map.set(item.name, item.category);
     for (const item of allItems) {
-      if (!item.covers) continue;
-      for (const c of item.covers) {
-        if (!map.has(c)) map.set(c, item.type);
+      if (!item.children) continue;
+      for (const c of item.children) {
+        if (!map.has(c)) map.set(c, item.category);
       }
     }
     return map;
   })();
 
-  function check(field: 'stack' | 'methods', expectedType: SkillType) {
+  // Each experience field maps to exactly one skill category.
+  function check(
+    field: 'technologies' | 'concepts' | 'practices' | 'organizational',
+    expected: SkillCategory,
+  ) {
     for (const role of experience) {
-      for (const name of role[field]) {
-        const actualType = nameType.get(name);
+      const list = role[field] ?? [];
+      for (const name of list) {
+        const actual = nameCategory.get(name);
         expect(
-          actualType !== undefined,
-          `"${role.role} @ ${role.meta}" ${field} includes "${name}" — not a skill, cover, or hidden historical entry. ` +
-            `Either rename it to match skills.yaml, mark it covered under a paraply, or add it to skills.yaml with hide: true.`,
+          actual !== undefined,
+          `"${role.role} @ ${role.meta}" ${field} includes "${name}" — not a skill, child, or hidden historical entry. ` +
+            `Either rename it to match skills.yaml, mark it as a child under a paraply, or add it to skills.yaml with hide: true.`,
         ).toBe(true);
         expect(
-          actualType,
-          `"${role.role} @ ${role.meta}" lists "${name}" under ${field}, but it is typed as "${actualType}" in skills.yaml. ` +
-            `Either move it to the other field, or fix the type in skills.yaml.`,
-        ).toBe(expectedType);
+          actual,
+          `"${role.role} @ ${role.meta}" lists "${name}" under ${field}, but it has category "${actual}" in skills.yaml. ` +
+            `Expected "${expected}". Move it to the matching field, or fix the category in skills.yaml.`,
+        ).toBe(expected);
       }
     }
   }
 
-  it('every stack item matches a skill or cover of type "stack"', () => {
-    check('stack', 'stack');
+  it('every technologies item resolves to category "technology"', () => {
+    check('technologies', 'technology');
   });
 
-  it('every methods item matches a skill or cover of type "method"', () => {
-    check('methods', 'method');
+  it('every concepts item resolves to category "concept"', () => {
+    check('concepts', 'concept');
+  });
+
+  it('every practices item resolves to category "practice"', () => {
+    check('practices', 'practice');
+  });
+
+  it('every organizational item resolves to category "organizational"', () => {
+    check('organizational', 'organizational');
   });
 });

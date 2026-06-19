@@ -17,7 +17,7 @@ interface ExperienceSource {
 
 interface SkillSource {
   name: string;
-  covers?: string[];
+  children?: string[];
 }
 
 interface Organization {
@@ -92,7 +92,7 @@ export function buildPersonJsonLd(
       : undefined,
     hasOccupation: hasOccupation.length ? hasOccupation : undefined,
     knowsAbout: skills.length
-      ? skills.flatMap((skill) => [skill.name, ...(skill.covers ?? [])])
+      ? skills.flatMap((skill) => [skill.name, ...(skill.children ?? [])])
       : undefined,
   };
 }

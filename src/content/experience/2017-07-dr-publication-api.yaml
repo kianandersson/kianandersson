@@ -8,45 +8,55 @@ description: >-
   clients. Took on growing architectural and lead responsibility from 2019,
   including establishing the Auth0-based identity platform that the rest of
   the organisation consumed.
-stack:
+technologies:
   - PHP
   - Symfony
   - OAuth
   - OpenID Connect
   - Auth0
   - SQL
-  - REST
   - Redis
   - Docker
+  - REST
   - Kong
+  - Open API
   - Apigee
-  - Nginx
   - CircleCI
-methods:
+  - Nginx
+concepts:
+  - Software Architecture
   - API Design
   - Authentication
   - Identity & Access Management
   - Microservices Architecture
-  - Event-Driven Architecture
-  - Software Architecture
-  - Distributed Systems
   - Authorization
   - Single Sign-On
+  - Distributed Systems
   - Scalability
   - High Availability
+  - Event-Driven Architecture
   - API Gateway
-  - Open API
+  - Federated Identity
+  - Database Modeling
+  - Caching Strategies
+  - Secrets Management
+  - Session Management
+  - Solution Architecture
+  - System Architecture
+practices:
   - Behavior-Driven Development
   - Test-Driven Development
   - Test Automation
   - Continuous Delivery
   - Code Review
-  - Database Modeling
-  - Secrets Management
-  # - Technical Leadership
-  # - Agile Development
-  # - DevOps
-  # - Observability
-  # - Monitoring
-  # - Caching Strategies
-  # - Technical Writing
+  - Continuous Integration
+  - Continuous Deployment
+  - Unit Testing
+  - Integration Testing
+  - End-to-End Testing
+  - Agile Development
+  - DevOps
+  - Monitoring
+  - Technical Writing
+organizational:
+  - Technical Leadership

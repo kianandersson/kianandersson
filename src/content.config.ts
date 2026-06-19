@@ -53,14 +53,14 @@ const skills = defineCollection({
   schema: z
     .object({
       name: z.string().min(1),
-      type: z.enum(['stack', 'method']),
+      category: z.enum(['technology', 'concept', 'practice', 'organizational']),
       level: z
         .union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)])
         .optional(),
       years: z.number().int().nonnegative().optional(),
       lastUsed: z.number().int().optional(),
       group: z.string().min(1),
-      covers: z.array(z.string().min(1)).optional(),
+      children: z.array(z.string().min(1)).optional(),
       hide: z.boolean().optional(),
     })
     .refine(
@@ -82,8 +82,10 @@ const experience = defineCollection({
     role: z.string().min(1),
     meta: z.string().min(1),
     description: z.string().min(1),
-    stack: z.array(z.string().min(1)),
-    methods: z.array(z.string().min(1)),
+    technologies: z.array(z.string().min(1)),
+    concepts: z.array(z.string().min(1)).optional(),
+    practices: z.array(z.string().min(1)).optional(),
+    organizational: z.array(z.string().min(1)).optional(),
     start: z.coerce.date(),
     end: z.coerce.date().optional(),
   }),

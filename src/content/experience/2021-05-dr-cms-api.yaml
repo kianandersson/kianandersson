@@ -8,56 +8,67 @@ description: >-
   microservices architecture, and led a PHP-to-.NET migration aligned with
   the organisation's broader technology strategy. Lifted agility, cloud
   maturity, and product scalability across the stack.
-stack:
+technologies:
   - PHP
   - .NET
   - C#
   - Symfony
-  - Laravel
   - Kubernetes
-  - MongoDB
   - SQL
+  - MongoDB
   - Docker
-  - Google Cloud Platform
-  - JSON:API
-  - Kong
   - REST
   - Redis
-  - Nginx
-  - CircleCI
-  - Auth0
+  - Google Cloud Platform
+  - Kong
   - OAuth
   - OpenID Connect
-methods:
+  - Auth0
+  - JSON:API
+  - Laravel
+  - Open API
+  - CircleCI
+  - Nginx
+concepts:
   - Software Architecture
   - Microservices Architecture
   - Domain-Driven Design
   - Event-Driven Architecture
   - API Design
-  - Distributed Systems
   - Scalability
+  - Distributed Systems
   - High Availability
   - API Gateway
-  - Open API
   - Authentication
-  - Authorization
   - Identity & Access Management
+  - Database Modeling
+  - Observability
+  - Authorization
+  - Caching Strategies
   - Single Sign-On
+  - Secrets Management
+  - Rate Limiting
+  - Federated Identity
+  - Session Management
+  - Solution Architecture
+  - System Architecture
+practices:
   - Behavior-Driven Development
   - Continuous Delivery
   - Code Review
   - Test Automation
   - Test-Driven Development
+  - Continuous Integration
+  - Continuous Deployment
+  - Unit Testing
+  - Integration Testing
+  - End-to-End Testing
+  - Agile Development
+  - DevOps
+  - Monitoring
+  - Technical Writing
+organizational:
   - Technical Hiring
-  # - Engineering Management
-  # - Technical Leadership
-  # - Mentoring
-  # - Agile Development
-  # - DevOps
-  # - Observability
-  # - Monitoring
-  # - Database Modeling
-  # - Caching Strategies
-  # - Secrets Management
-  # - Rate Limiting
-  # - Technical Writing
+  - Engineering Management
+  - Technical Leadership
+  - Mentoring

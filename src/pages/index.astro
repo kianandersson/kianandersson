@@ -23,7 +23,7 @@ type VisibleSkill = {
   level: SkillLevel;
   years: number;
   group: string;
-  covers?: string[];
+  children?: string[];
 };
 
 const groupOrder = (await getCollection('skillGroups'))
@@ -38,7 +38,7 @@ const allSkills: VisibleSkill[] = (await getCollection('skills'))
     level: entry.data.level as SkillLevel,
     years: entry.data.years as number,
     group: entry.data.group as string,
-    covers: entry.data.covers as string[] | undefined,
+    children: entry.data.children as string[] | undefined,
   }));
 
 const skillByName = new Map(allSkills.map((skill) => [skill.name, skill]));
@@ -60,14 +60,17 @@ const experienceEntries = (await getCollection('experience')).sort(
   (a, b) => b.data.start.getTime() - a.data.start.getTime(),
 );
 
+const STACK_LIMIT = 20;
+const METHODS_LIMIT = 20;
+
 const experience = experienceEntries.map((entry) => ({
   id: entry.id,
   role: entry.data.role,
   meta: entry.data.meta,
   period: formatPeriod(entry.data.start, entry.data.end),
   description: entry.data.description,
-  stack: entry.data.stack,
-  methods: entry.data.methods,
+  stack: entry.data.technologies.slice(0, STACK_LIMIT),
+  methods: (entry.data.concepts ?? []).slice(0, METHODS_LIMIT),
 }));
 
 const jsonLd = buildPersonJsonLd(
@@ -79,7 +82,7 @@ const jsonLd = buildPersonJsonLd(
     end: entry.data.end,
   })),
   new URL('/', Astro.site).toString(),
-  allSkills.filter((skill) => skill.level >= 3).map(({ name, covers }) => ({ name, covers })),
+  allSkills.filter((skill) => skill.level >= 3).map(({ name, children }) => ({ name, children })),
 );
 ---
 

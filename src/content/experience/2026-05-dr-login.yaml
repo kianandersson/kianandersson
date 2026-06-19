@@ -9,85 +9,99 @@ description: >-
   library alongside the backend, established GDPR compliance and a high
   security bar, and led the migration from a SaaS identity provider to an
   in-house OAuth/OIDC server that saved the organisation millions.
-stack:
+technologies:
   - TypeScript
-  - Node.js
   - React.js
-  - GraphQL
+  - Node.js
+  - Next.js
   - OAuth
+  - GraphQL
   - OpenID Connect
-  - MitID
+  - Storybook
+  - Kubernetes
   - MongoDB
   - Redis
   - Docker
-  - Kubernetes
-  - Helm
   - Google Cloud Platform
-  - GitHub Actions
-  - OpenTelemetry
-  - Grafana
-  - Storybook
-  - Next.js
+  - REST
   - WebSockets
+  - OpenTelemetry
   - Kong
-  # - JavaScript
-  # - SASS
-  # - REST
-  # - Transport Layer Security
-  # - Nginx
-  # - Auth0
-  # - React Native
-  # - Expo
-  # - Jest
-  # - Vitest
-  # - React Testing Library
-  # - Playwright
-  # - Cypress
-  # - Nightwatch
-  # - Supertest
-  # - k6
-methods:
+  - Grafana
+  - Auth0
+  - GitHub Actions
+  - Helm
+  - SASS
+  - JavaScript
+  - React Native
+  - Expo
+  - Open API
+  - Jest
+  - Vitest
+  - React Testing Library
+  - Playwright
+  - Cypress
+  - Nightwatch
+  - Supertest
+  - k6
+  - Transport Layer Security
+  - MitID
+  - Nginx
+concepts:
   - Authentication
-  - Site Reliability Engineering
   - Identity & Access Management
-  - Design Systems
-  - Atomic Design
-  - GDPR
   - Software Architecture
+  - Authorization
+  - Information Security
   - Distributed Systems
   - High Availability
-  - Information Security
-  - Incident Management
-  - Service Level Objectives
-  - Authorization
+  - Design Systems
   - Single Sign-On
+  - API Design
+  - Observability
+  - Server-Side Rendering
   - Domain-Driven Design
+  - Federated Identity
+  - Multi-Factor Authentication
+  - Caching Strategies
+  - Service Level Objectives
+  - Database Modeling
+  - Rate Limiting
+  - Secrets Management
+  - Atomic Design
+  - Component Libraries
+  - GraphQL Schema Design
+  - Cryptography
+  - Session Management
+  - Distributed Tracing
+  - API Gateway
+  - Solution Architecture
+  - System Architecture
+  - Customer Data Platform
+practices:
+  - Site Reliability Engineering
+  - GDPR
+  - Incident Management
   - Web Performance
   - Accessibility
-  - Server-Side Rendering
-  - API Design
   - Internationalization
-  # - API Gateway
-  # - Open API
-  # - OWASP
-  # - Responsive Web Design
-  # - Secrets Management
-  # - Rate Limiting
-  # - Test Automation
-  # - Performance Testing
-  # - Code Review
-  # - Continuous Delivery
-  # - Engineering Management
-  # - Technical Leadership
-  # - Technical Hiring
-  # - Mentoring
-  # - Agile Development
-  # - DevOps
-  # - Observability
-  # - Monitoring
-  # - Database Modeling
-  # - Caching Strategies
-  # - Event Tracking
-  # - Behavioral Analytics
-  # - Customer Data Platform
-  # - Technical Writing
+  - Compliance
+  - Risk Management
+  - Vulnerability Management
+  - OWASP
+  - Responsive Web Design
+  - Test Automation
+  - Performance Testing
+  - Code Review
+  - Continuous Delivery
+  - Agile Development
+  - DevOps
+  - Monitoring
+  - Event Tracking
+  - Behavioral Analytics
+  - Technical Writing
+organizational:
+  - Engineering Management
+  - Technical Leadership
+  - Technical Hiring
+  - Mentoring
