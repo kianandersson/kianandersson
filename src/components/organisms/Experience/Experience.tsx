@@ -60,22 +60,26 @@ export function Experience({ entries }: Props) {
                 </Text>
               </div>
               <div className={styles.chipGroups}>
-                <ChipList
-                  label="Stack"
-                  items={entry.stack}
-                  maxChars={STACK_MAX_CHARS}
-                  perItemCost={CHIP_PER_ITEM_COST}
-                  minItems={STACK_MIN_ITEMS}
-                  variant="stack"
-                />
-                <ChipList
-                  label="Methods"
-                  items={entry.methods}
-                  maxChars={METHODS_MAX_CHARS}
-                  perItemCost={CHIP_PER_ITEM_COST}
-                  minItems={METHODS_MIN_ITEMS}
-                  variant="methods"
-                />
+                {entry.stack.length > 0 && (
+                  <ChipList
+                    label="Stack"
+                    items={entry.stack}
+                    maxChars={STACK_MAX_CHARS}
+                    perItemCost={CHIP_PER_ITEM_COST}
+                    minItems={STACK_MIN_ITEMS}
+                    variant="stack"
+                  />
+                )}
+                {entry.methods.length > 0 && (
+                  <ChipList
+                    label="Methods"
+                    items={entry.methods}
+                    maxChars={METHODS_MAX_CHARS}
+                    perItemCost={CHIP_PER_ITEM_COST}
+                    minItems={METHODS_MIN_ITEMS}
+                    variant="methods"
+                  />
+                )}
               </div>
             </li>
           ))}

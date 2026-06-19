@@ -14,6 +14,8 @@ technologies:
   - SQL
   - REST
   - Nginx
+concepts:
+  - Database Modeling
 practices:
   - Responsive Web Design
   - Search Engine Optimization
