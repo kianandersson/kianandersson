@@ -27,10 +27,10 @@ export type SiteConfig = SiteConfigInput & { fullName: string };
 const parsed = SiteConfigSchema.parse({
   firstName: 'Kian',
   lastName: 'Andersson',
-  role: 'Senior Full-stack Engineer',
+  role: 'Full-Stack Engineering Lead',
   location: 'Denmark',
   tagline:
-    'I build pragmatic, well-tested software across the stack — TypeScript, Node, and the front end.',
+    'Engineering lead and architect with 15+ years across the stack, building design systems and accessible user interfaces, distributed services, and the engineering teams behind them.',
   availableFrom: '2026-06-01',
   links: {
     github: 'https://github.com/kianandersson',

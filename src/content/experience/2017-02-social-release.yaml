@@ -1,0 +1,30 @@
+role: Lead Software Engineer
+meta: Social Release
+start: 2017-02-01
+end: 2017-06-30
+description: >-
+  Recruited as lead developer for an early-stage startup building livestreaming
+  and fan engagement for musicians. Designed and built the product and
+  infrastructure from the ground up.
+technologies:
+  - PHP
+  - Laravel
+  - JavaScript
+  - CSS
+  - SASS
+  - HTML
+  - SQL
+  - REST
+  - Docker
+  - Nginx
+concepts:
+  - Software Architecture
+  - Database Modeling
+  - Solution Architecture
+  - System Architecture
+practices:
+  - Responsive Web Design
+  - Search Engine Optimization
+organizational:
+  - Technical Leadership
+  - Stakeholder Management

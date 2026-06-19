@@ -17,6 +17,7 @@ interface ExperienceSource {
 
 interface SkillSource {
   name: string;
+  children?: string[];
 }
 
 interface Organization {
@@ -90,6 +91,8 @@ export function buildPersonJsonLd(
       ? past.map((entry) => ({ '@type': 'Organization', name: entry.meta }))
       : undefined,
     hasOccupation: hasOccupation.length ? hasOccupation : undefined,
-    knowsAbout: skills.length ? skills.map((skill) => skill.name) : undefined,
+    knowsAbout: skills.length
+      ? skills.flatMap((skill) => [skill.name, ...(skill.children ?? [])])
+      : undefined,
   };
 }

@@ -32,24 +32,46 @@ function yamlDir(relativeDir: string): Loader {
   };
 }
 
+type SkillsFile = {
+  featured: string[];
+  groups: { name: string; skills: Record<string, unknown>[] }[];
+};
+
 const skills = defineCollection({
   loader: file('src/content/skills.yaml', {
     parser: (text) => {
-      const entries = yaml.load(text) as Record<string, unknown>[];
-      return entries.map((entry) => ({
-        id: slugify(String(entry.name)),
-        ...entry,
-      }));
+      const parsed = yaml.load(text) as SkillsFile;
+      return parsed.groups.flatMap((group) =>
+        group.skills.map((entry) => ({
+          id: slugify(String(entry.name)),
+          group: group.name,
+          ...entry,
+        })),
+      );
     },
   }),
-  schema: z.object({
-    name: z.string().min(1),
-    level: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
-    years: z.number().int().nonnegative(),
-    lastUsed: z.number().int(),
-    group: z.string().min(1),
-    keySkill: z.boolean(),
-  }),
+  schema: z
+    .object({
+      name: z.string().min(1),
+      category: z.enum(['technology', 'concept', 'practice', 'organizational']),
+      level: z
+        .union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)])
+        .optional(),
+      years: z.number().int().nonnegative().optional(),
+      lastUsed: z.number().int().optional(),
+      group: z.string().min(1),
+      children: z.array(z.string().min(1)).optional(),
+      hide: z.boolean().optional(),
+    })
+    .refine(
+      (data) =>
+        data.hide === true ||
+        (data.level !== undefined && data.years !== undefined && data.lastUsed !== undefined),
+      {
+        message:
+          'A visible skill must have level, years, and lastUsed. Hidden skills (hide: true) may omit them.',
+      },
+    ),
 });
 
 const experience = defineCollection({
@@ -58,11 +80,47 @@ const experience = defineCollection({
     role: z.string().min(1),
     meta: z.string().min(1),
     description: z.string().min(1),
-    stack: z.array(z.string().min(1)),
-    methods: z.array(z.string().min(1)),
+    technologies: z.array(z.string().min(1)),
+    concepts: z.array(z.string().min(1)).optional(),
+    practices: z.array(z.string().min(1)).optional(),
+    organizational: z.array(z.string().min(1)).optional(),
     start: z.coerce.date(),
     end: z.coerce.date().optional(),
   }),
 });
 
-export const collections = { skills, experience };
+const skillGroups = defineCollection({
+  loader: file('src/content/skills.yaml', {
+    parser: (text) => {
+      const parsed = yaml.load(text) as SkillsFile;
+      return parsed.groups.map((group, index) => ({
+        id: slugify(group.name),
+        name: group.name,
+        order: index,
+      }));
+    },
+  }),
+  schema: z.object({
+    name: z.string().min(1),
+    order: z.number().int().nonnegative(),
+  }),
+});
+
+const keySkills = defineCollection({
+  loader: file('src/content/skills.yaml', {
+    parser: (text) => {
+      const parsed = yaml.load(text) as SkillsFile;
+      return parsed.featured.map((name, index) => ({
+        id: slugify(name),
+        name,
+        order: index,
+      }));
+    },
+  }),
+  schema: z.object({
+    name: z.string().min(1),
+    order: z.number().int().nonnegative(),
+  }),
+});
+
+export const collections = { skills, experience, skillGroups, keySkills };

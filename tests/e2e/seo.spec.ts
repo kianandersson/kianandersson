@@ -26,9 +26,14 @@ test.describe('SEO surfaces', () => {
     expect(data['@context']).toBe('https://schema.org');
     expect(data['@type']).toBe('Person');
 
-    expect(data.worksFor).toMatchObject({ '@type': 'Organization' });
-    expect(typeof data.worksFor.name).toBe('string');
-    expect(data.worksFor.name.length).toBeGreaterThan(0);
+    // worksFor only appears while a current role is held; otherwise it is
+    // correctly omitted and every experience surfaces under alumniOf instead.
+    const hasCurrent = data.worksFor !== undefined;
+    if (hasCurrent) {
+      expect(data.worksFor).toMatchObject({ '@type': 'Organization' });
+      expect(typeof data.worksFor.name).toBe('string');
+      expect(data.worksFor.name.length).toBeGreaterThan(0);
+    }
 
     expect(Array.isArray(data.alumniOf)).toBe(true);
     expect(data.alumniOf.length).toBeGreaterThan(0);
@@ -39,10 +44,14 @@ test.describe('SEO surfaces', () => {
     }
 
     expect(Array.isArray(data.hasOccupation)).toBe(true);
-    expect(data.hasOccupation[0]).toMatchObject({ '@type': 'Occupation' });
-    expect(typeof data.hasOccupation[0].name).toBe('string');
-    expect(data.hasOccupation[0].name.length).toBeGreaterThan(0);
-    for (const role of data.hasOccupation.slice(1)) {
+    expect(data.hasOccupation.length).toBeGreaterThan(0);
+    if (hasCurrent) {
+      expect(data.hasOccupation[0]).toMatchObject({ '@type': 'Occupation' });
+      expect(typeof data.hasOccupation[0].name).toBe('string');
+      expect(data.hasOccupation[0].name.length).toBeGreaterThan(0);
+    }
+    const pastRoles = hasCurrent ? data.hasOccupation.slice(1) : data.hasOccupation;
+    for (const role of pastRoles) {
       expect(role).toMatchObject({
         '@type': 'Role',
         startDate: expect.stringMatching(/^\d{4}-\d{2}$/),

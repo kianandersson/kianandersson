@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/preact-vite';
 import { expect, userEvent, within } from 'storybook/test';
+import { sliceList } from '../../../lib/chip-list';
 import { ChipList } from './ChipList';
 
 const meta: Meta<typeof ChipList> = {
@@ -7,12 +8,14 @@ const meta: Meta<typeof ChipList> = {
   component: ChipList,
   argTypes: {
     label: { control: 'text' },
-    limit: { control: 'number' },
+    maxChars: { control: 'number' },
+    minItems: { control: 'number' },
     variant: { control: { type: 'inline-radio' }, options: ['stack', 'methods'] },
   },
   args: {
     label: 'Stack',
-    limit: 6,
+    maxChars: 40,
+    minItems: 3,
     variant: 'stack',
     items: ['TypeScript', 'React', 'Preact', 'Astro', 'Node', 'Vite', 'CSS Modules', 'Vitest'],
   },
@@ -27,7 +30,10 @@ export const ExpandCollapseBehavior: Story = {
   tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
-    const overflowCount = (args.items as string[]).length - (args.limit as number);
+    const { hiddenCount } = sliceList(args.items as string[], {
+      maxChars: args.maxChars as number,
+      minItems: args.minItems as number | undefined,
+    });
 
     await expect(canvas.getByText(args.label as string)).toBeInTheDocument();
 
@@ -42,7 +48,7 @@ export const ExpandCollapseBehavior: Story = {
 
     const toggle = canvas.getByRole('button');
     await expect(toggle).toHaveAttribute('aria-expanded', 'false');
-    await expect(toggle).toHaveAccessibleName(new RegExp(`${overflowCount} more`, 'i'));
+    await expect(toggle).toHaveAccessibleName(new RegExp(`${hiddenCount} more`, 'i'));
 
     // Expand.
     await userEvent.click(toggle);
@@ -56,7 +62,7 @@ export const ExpandCollapseBehavior: Story = {
 };
 
 export const NoOverflow: Story = {
-  args: { items: ['TypeScript', 'React', 'Preact'] },
+  args: { items: ['TypeScript', 'React', 'Preact'], maxChars: 100 },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(canvas.queryByRole('button')).not.toBeInTheDocument();

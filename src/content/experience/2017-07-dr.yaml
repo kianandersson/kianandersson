@@ -1,0 +1,62 @@
+role: Senior Software Engineer
+meta: Danish Broadcasting Corporation
+start: 2017-07-01
+end: 2021-04-30
+description: >-
+  Built and maintained services for storing, indexing, and serving content
+  from the organisation's CMS systems, powering dr.dk and other internal
+  clients. Took on growing architectural and lead responsibility from 2019,
+  including establishing the Auth0-based identity platform that the rest of
+  the organisation consumed.
+technologies:
+  - PHP
+  - Symfony
+  - OAuth
+  - OpenID Connect
+  - Auth0
+  - SQL
+  - Redis
+  - Docker
+  - REST
+  - Kong
+  - Open API
+  - Apigee
+  - CircleCI
+  - Nginx
+concepts:
+  - Software Architecture
+  - API Design
+  - Authentication
+  - Identity & Access Management
+  - Microservices Architecture
+  - Authorization
+  - Single Sign-On
+  - Distributed Systems
+  - Scalability
+  - High Availability
+  - Event-Driven Architecture
+  - API Gateway
+  - Federated Identity
+  - Database Modeling
+  - Caching Strategies
+  - Secrets Management
+  - Session Management
+  - Solution Architecture
+  - System Architecture
+practices:
+  - Behavior-Driven Development
+  - Test-Driven Development
+  - Test Automation
+  - Continuous Delivery
+  - Code Review
+  - Continuous Integration
+  - Continuous Deployment
+  - Unit Testing
+  - Integration Testing
+  - End-to-End Testing
+  - Agile Development
+  - DevOps
+  - Monitoring
+  - Technical Writing
+organizational:
+  - Technical Leadership

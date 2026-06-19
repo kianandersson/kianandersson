@@ -1,0 +1,107 @@
+role: Engineering Lead
+meta: Danish Broadcasting Corporation
+start: 2022-06-01
+end: 2026-05-31
+description: >-
+  Built the login platform, and the team behind it, from scratch. Scaled it
+  to millions of users, with up to 500,000 concurrent during live events.
+  Shipped React user interfaces and an accessible, atomic-design component
+  library alongside the backend, established GDPR compliance and a high
+  security bar, and led the migration from a SaaS identity provider to an
+  in-house OAuth/OIDC server that saved the organisation millions.
+technologies:
+  - TypeScript
+  - React.js
+  - Node.js
+  - Next.js
+  - OAuth
+  - GraphQL
+  - OpenID Connect
+  - Storybook
+  - Kubernetes
+  - MongoDB
+  - Redis
+  - Docker
+  - Google Cloud Platform
+  - REST
+  - WebSockets
+  - OpenTelemetry
+  - Kong
+  - Grafana
+  - Auth0
+  - GitHub Actions
+  - Helm
+  - SASS
+  - JavaScript
+  - React Native
+  - Expo
+  - Open API
+  - Jest
+  - Vitest
+  - React Testing Library
+  - Playwright
+  - Cypress
+  - Nightwatch
+  - Supertest
+  - k6
+  - Transport Layer Security
+  - MitID
+  - Nginx
+concepts:
+  - Authentication
+  - Identity & Access Management
+  - Software Architecture
+  - Authorization
+  - Information Security
+  - Distributed Systems
+  - High Availability
+  - Design Systems
+  - Single Sign-On
+  - API Design
+  - Observability
+  - Server-Side Rendering
+  - Domain-Driven Design
+  - Federated Identity
+  - Multi-Factor Authentication
+  - Caching Strategies
+  - Service Level Objectives
+  - Database Modeling
+  - Rate Limiting
+  - Secrets Management
+  - Atomic Design
+  - Component Libraries
+  - GraphQL Schema Design
+  - Cryptography
+  - Session Management
+  - Distributed Tracing
+  - API Gateway
+  - Solution Architecture
+  - System Architecture
+  - Customer Data Platform
+practices:
+  - Site Reliability Engineering
+  - GDPR
+  - Incident Management
+  - Web Performance
+  - Accessibility
+  - Internationalization
+  - Compliance
+  - Risk Management
+  - Vulnerability Management
+  - OWASP
+  - Responsive Web Design
+  - Test Automation
+  - Performance Testing
+  - Code Review
+  - Continuous Delivery
+  - Agile Development
+  - DevOps
+  - Monitoring
+  - Event Tracking
+  - Behavioral Analytics
+  - Technical Writing
+organizational:
+  - Engineering Management
+  - Technical Leadership
+  - Technical Hiring
+  - Mentoring

@@ -1,0 +1,22 @@
+role: Software Engineer
+meta: Freelance
+start: 2011-01-01
+end: 2014-12-31
+description: >-
+  Built portfolio websites and custom CMS solutions for actors and musicians,
+  end to end, from design to deployment. Where the craft started.
+technologies:
+  - PHP
+  - JavaScript
+  - HTML
+  - CSS
+  - SASS
+  - SQL
+  - REST
+  - Nginx
+concepts:
+  - Database Modeling
+practices:
+  - Responsive Web Design
+  - Search Engine Optimization
+  - Internationalization

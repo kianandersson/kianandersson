@@ -1,0 +1,74 @@
+role: Engineering Lead
+meta: Danish Broadcasting Corporation
+start: 2021-05-01
+end: 2022-05-31
+description: >-
+  Led the publication CMS and API team. Grew it from three to seven engineers
+  through hiring and a merge with the CMS team, drove the transition to a
+  microservices architecture, and led a PHP-to-.NET migration aligned with
+  the organisation's broader technology strategy. Lifted agility, cloud
+  maturity, and product scalability across the stack.
+technologies:
+  - PHP
+  - .NET
+  - C#
+  - Symfony
+  - Kubernetes
+  - SQL
+  - MongoDB
+  - Docker
+  - REST
+  - Redis
+  - Google Cloud Platform
+  - Kong
+  - OAuth
+  - OpenID Connect
+  - Auth0
+  - JSON:API
+  - Laravel
+  - Open API
+  - CircleCI
+  - Nginx
+concepts:
+  - Software Architecture
+  - Microservices Architecture
+  - Domain-Driven Design
+  - Event-Driven Architecture
+  - API Design
+  - Scalability
+  - Distributed Systems
+  - High Availability
+  - API Gateway
+  - Authentication
+  - Identity & Access Management
+  - Database Modeling
+  - Observability
+  - Authorization
+  - Caching Strategies
+  - Single Sign-On
+  - Secrets Management
+  - Rate Limiting
+  - Federated Identity
+  - Session Management
+  - Solution Architecture
+  - System Architecture
+practices:
+  - Behavior-Driven Development
+  - Continuous Delivery
+  - Code Review
+  - Test Automation
+  - Test-Driven Development
+  - Continuous Integration
+  - Continuous Deployment
+  - Unit Testing
+  - Integration Testing
+  - End-to-End Testing
+  - Agile Development
+  - DevOps
+  - Monitoring
+  - Technical Writing
+organizational:
+  - Technical Hiring
+  - Engineering Management
+  - Technical Leadership
+  - Mentoring

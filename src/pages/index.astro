@@ -4,6 +4,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { formatPeriod } from '../lib/formatPeriod';
 import { groupSkills } from '../lib/group-skills';
 import { buildPersonJsonLd } from '../lib/person-json-ld';
+import type { SkillLevel } from '../lib/skill';
+import { sortGroups } from '../lib/sort-groups';
+import { sortSkills } from '../lib/sort-skills';
 import { siteConfig } from '../site.config';
 import IndexTemplate from '../templates/IndexTemplate.astro';
 
@@ -14,27 +17,51 @@ const hero = {
   availableFrom: siteConfig.availableFrom,
 };
 
-const allSkills = (await getCollection('skills')).map((entry) => ({
-  id: entry.id,
-  name: entry.data.name,
-  level: entry.data.level,
-  years: entry.data.years,
-  group: entry.data.group,
-  keySkill: entry.data.keySkill,
-}));
+type VisibleSkill = {
+  id: string;
+  name: string;
+  level: SkillLevel;
+  years: number;
+  group: string;
+  children?: string[];
+};
 
-const keySkills = allSkills
-  .filter((entry) => entry.keySkill)
+const groupOrder = (await getCollection('skillGroups'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((entry) => entry.data.name);
+
+const allSkills: VisibleSkill[] = (await getCollection('skills'))
+  .filter((entry) => !entry.data.hide)
+  .map((entry) => ({
+    id: entry.id,
+    name: entry.data.name,
+    level: entry.data.level as SkillLevel,
+    years: entry.data.years as number,
+    group: entry.data.group as string,
+    children: entry.data.children as string[] | undefined,
+  }));
+
+const skillByName = new Map(allSkills.map((skill) => [skill.name, skill]));
+const keySkills = (await getCollection('keySkills'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((entry) => skillByName.get(entry.data.name))
+  .filter((skill): skill is VisibleSkill => skill !== undefined)
   .map(({ id, name, level, years }) => ({ id, name, level, years }));
 
-const skillGroups = groupSkills(allSkills).map(({ group, items }) => ({
-  group,
-  skills: items.map(({ id, name, level, years }) => ({ id, name, level, years })),
-}));
+const skillGroups = sortGroups(
+  groupSkills(allSkills).map(({ group, items }) => ({
+    group,
+    skills: sortSkills(items).map(({ id, name, level, years }) => ({ id, name, level, years })),
+  })),
+  groupOrder,
+);
 
 const experienceEntries = (await getCollection('experience')).sort(
   (a, b) => b.data.start.getTime() - a.data.start.getTime(),
 );
+
+const STACK_LIMIT = 20;
+const METHODS_LIMIT = 20;
 
 const experience = experienceEntries.map((entry) => ({
   id: entry.id,
@@ -42,8 +69,8 @@ const experience = experienceEntries.map((entry) => ({
   meta: entry.data.meta,
   period: formatPeriod(entry.data.start, entry.data.end),
   description: entry.data.description,
-  stack: entry.data.stack,
-  methods: entry.data.methods,
+  stack: entry.data.technologies.slice(0, STACK_LIMIT),
+  methods: (entry.data.concepts ?? []).slice(0, METHODS_LIMIT),
 }));
 
 const jsonLd = buildPersonJsonLd(
@@ -55,7 +82,7 @@ const jsonLd = buildPersonJsonLd(
     end: entry.data.end,
   })),
   new URL('/', Astro.site).toString(),
-  allSkills.filter((skill) => skill.level >= 3).map(({ name }) => ({ name })),
+  allSkills.filter((skill) => skill.level >= 3).map(({ name, children }) => ({ name, children })),
 );
 ---
 
