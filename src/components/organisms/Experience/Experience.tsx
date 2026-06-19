@@ -6,12 +6,12 @@ import { SectionHeader } from '../../molecules/SectionHeader';
 import styles from './Experience.module.css';
 
 // Desktop chip area ~556px (700 container − 48 padding − 24 timeline − 56 label − 16 gap).
-// Geist Mono 12px ≈ 7.2px/char. Chip padding+gap ≈ 5 chars; "+N more" reserves ≈ 11 chars.
-// 1 line ≈ 77 chars → 66 budget; 2 lines ≈ 154 chars → 130 budget (wrap-safe).
+// Geist Mono 12px ≈ 7.2px/char. Chip padding+gap ≈ 5 chars; "+NN more" reserves ≈ 13 chars (2-digit safe).
+// 1 line ≈ 77 chars → 64 budget; 2 lines ≈ 154 chars → 128 budget (wrap-safe).
 const CHIP_PER_ITEM_COST = 5;
-const STACK_MAX_CHARS = 66;
+const STACK_MAX_CHARS = 64;
 const STACK_MIN_ITEMS = 3;
-const METHODS_MAX_CHARS = 130;
+const METHODS_MAX_CHARS = 128;
 const METHODS_MIN_ITEMS = 3;
 
 export type ExperienceEntry = {
