@@ -45,6 +45,25 @@ describe('buildPersonJsonLd', () => {
     expect(json.url).toBe(siteUrl);
   });
 
+  it('exposes the profile image when one is provided', () => {
+    const json = buildPersonJsonLd(
+      site,
+      experience,
+      siteUrl,
+      [],
+      'https://example.com/profile.jpg',
+    );
+
+    expect(json.image).toBe('https://example.com/profile.jpg');
+  });
+
+  it('omits image when none is provided', () => {
+    const json = buildPersonJsonLd(site, experience, siteUrl);
+
+    expect(json.image).toBeUndefined();
+    expect(JSON.stringify(json)).not.toContain('"image"');
+  });
+
   it('does not expose an email address in the structured data', () => {
     const json = buildPersonJsonLd(site, experience, siteUrl);
 

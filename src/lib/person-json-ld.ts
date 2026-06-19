@@ -42,6 +42,7 @@ export interface PersonJsonLd {
   '@type': 'Person';
   name: string;
   url: string;
+  image?: string;
   jobTitle: string;
   address: { '@type': 'PostalAddress'; addressCountry: string };
   sameAs: string[];
@@ -60,6 +61,7 @@ export function buildPersonJsonLd(
   experience: ExperienceSource[],
   url: string,
   skills: SkillSource[] = [],
+  image?: string,
 ): PersonJsonLd {
   const sorted = [...experience].sort((a, b) => b.start.getTime() - a.start.getTime());
   const current = sorted.find((entry) => !entry.end);
@@ -83,6 +85,7 @@ export function buildPersonJsonLd(
     '@type': 'Person',
     name: site.fullName,
     url,
+    image: image || undefined,
     jobTitle: site.role,
     address: { '@type': 'PostalAddress', addressCountry: site.location },
     sameAs: [site.links.github, site.links.linkedin],
