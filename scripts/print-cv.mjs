@@ -10,9 +10,9 @@
  * deploy. Everything else on the CV footer comes from the site config.
  *
  * Usage:
- *   pnpm print:cv --email me@example.com --phone "+45 12 34 56 78"
- *   pnpm print:cv --options ./my-details.json
- *   pnpm print:cv            # uses cv.options.json if present
+ *   pnpm print --email me@example.com --phone "+45 12 34 56 78"
+ *   pnpm print --options ./my-details.json
+ *   pnpm print            # uses cv.options.json if present
  *
  * Options: --email --phone
  *          --options <file>  JSON with email/phone (CLI flags win)
@@ -137,9 +137,9 @@ function printUsage() {
       `The private details (email, phone) are added here; everything else on\n` +
       `the footer comes from the site config.\n\n` +
       `Usage:\n` +
-      `  pnpm print:cv --email me@example.com --phone "+45 12 34 56 78"\n` +
-      `  pnpm print:cv --options ./my-details.json\n` +
-      `  pnpm print:cv            # uses cv.options.json if present\n\n` +
+      `  pnpm print --email me@example.com --phone "+45 12 34 56 78"\n` +
+      `  pnpm print --options ./my-details.json\n` +
+      `  pnpm print            # uses cv.options.json if present\n\n` +
       `Private options: ${CONTACT_FIELDS.map((f) => `--${f}`).join(' ')}\n` +
       `  --options, -o <file>   JSON file with email/phone (CLI flags win)\n` +
       `  --output <file>        PDF output path (default cv.pdf)\n`,
