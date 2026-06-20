@@ -46,7 +46,7 @@ export default defineConfig({
   },
   vite: {
     // Private contact details for the print build, injected at build time by
-    // scripts/print.mjs. Inlined here (rather than via astro:env) so the
+    // scripts/print.ts. Inlined here (rather than via astro:env) so the
     // value survives into the Cloudflare adapter's workerd prerender, and is
     // simply '' on the public build — so nothing private ever ships.
     define: {

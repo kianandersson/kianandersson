@@ -23,7 +23,7 @@ See `.env.example` for local development.
 - `RESEND_API_KEY` — Resend API key.
 - `SENDER_EMAIL` — verified sender address.
 - `RECIPIENT_EMAIL` — destination inbox.
-- `EXCLUDE_STORYBOOK` — when set, `pnpm build` skips the Storybook catalog.
+- `EXCLUDE_STORYBOOK` — set to skip building `/design/` (faster local builds).
 
 ## Common commands
 

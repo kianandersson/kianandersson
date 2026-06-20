@@ -18,10 +18,6 @@ const hero = {
   availableFrom: siteConfig.availableFrom,
 };
 
-// The "My coordinates" print footer. The public links always show (in print);
-// the private email/phone are inlined at build time via Vite define (see
-// astro.config.mjs) and are only present in the local print build, never on the
-// public deploy.
 const printContact = parsePrintOptions(__PRINT_OPTIONS__);
 const coordinates: ContactDetails = {
   ...printContact,

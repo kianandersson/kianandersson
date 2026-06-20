@@ -20,6 +20,7 @@
  */
 import { readFileSync } from 'node:fs';
 import { rm } from 'node:fs/promises';
+import type { AddressInfo } from 'node:net';
 import { createServer } from 'node:net';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -28,15 +29,18 @@ import { chromium } from '@playwright/test';
 import { build, preview } from 'astro';
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
-const CONTACT_FIELDS = ['email', 'phone'];
+const CONTACT_FIELDS = ['email', 'phone'] as const;
 const DEFAULT_OPTIONS_FILE = join(ROOT, 'print.options.json');
+
+type ContactField = (typeof CONTACT_FIELDS)[number];
+type Contact = Partial<Record<ContactField, string>>;
 
 // Build inside the project root (not the OS temp dir): the Cloudflare adapter
 // derives a relative .dev.vars path during prerender, and a path outside the
 // repo breaks the workerd runtime it spins up.
 const BUILD_DIR = join(ROOT, '.print');
 
-async function main() {
+async function main(): Promise<void> {
   const { values } = parseArgs({
     options: {
       email: { type: 'string' },
@@ -95,9 +99,9 @@ async function main() {
  * print.options.json if present) with CLI flags, where CLI flags win. Blank
  * values are dropped so empty placeholders don't surface on the CV.
  */
-function collectContact(values) {
+function collectContact(values: { email?: string; phone?: string; options?: string }): Contact {
   const fromFile = readOptionsFile(values.options);
-  const merged = {};
+  const merged: Contact = {};
   for (const field of CONTACT_FIELDS) {
     const value = values[field] ?? fromFile[field];
     if (typeof value === 'string' && value.trim() !== '') {
@@ -107,9 +111,9 @@ function collectContact(values) {
   return merged;
 }
 
-function readOptionsFile(explicitPath) {
+function readOptionsFile(explicitPath?: string): Record<string, unknown> {
   const path = explicitPath ? resolve(explicitPath) : DEFAULT_OPTIONS_FILE;
-  let raw;
+  let raw: string;
   try {
     raw = readFileSync(path, 'utf8');
   } catch {
@@ -124,7 +128,7 @@ function readOptionsFile(explicitPath) {
   }
 }
 
-function printUsage() {
+function printUsage(): void {
   console.log(
     `Render the front page to a PDF CV (local only).\n\n` +
       `The private details (email, phone) are added here; everything else on\n` +
@@ -139,7 +143,7 @@ function printUsage() {
   );
 }
 
-async function renderPdf(origin, outputPath) {
+async function renderPdf(origin: string, outputPath: string): Promise<void> {
   const browser = await chromium.launch();
   try {
     const page = await browser.newPage();
@@ -158,13 +162,13 @@ async function renderPdf(origin, outputPath) {
 }
 
 /** Grab an available port so the preview server never clashes with a dev run. */
-function freePort() {
+function freePort(): Promise<number> {
   return new Promise((resolvePromise, reject) => {
     const probe = createServer();
     probe.unref();
     probe.on('error', reject);
     probe.listen(0, '127.0.0.1', () => {
-      const { port } = /** @type {import('node:net').AddressInfo} */ (probe.address());
+      const { port } = probe.address() as AddressInfo;
       probe.close(() => resolvePromise(port));
     });
   });

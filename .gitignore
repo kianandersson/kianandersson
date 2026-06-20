@@ -6,7 +6,7 @@ dist/
 .astro/
 .wrangler/
 
-# Generated PDF + its temp build + local contact details (all private)
+# Local CV print: output, temp build, and contact details
 cv.pdf
 print.options.json
 .print/
