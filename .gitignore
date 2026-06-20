@@ -6,7 +6,7 @@ dist/
 .astro/
 .wrangler/
 
-# Local CV print: output, temp build, and contact details
+# Print output and options
 cv.pdf
 print.options.json
 .print/
