@@ -14,12 +14,10 @@ const meta: Meta<typeof Coordinates> = {
     ),
   ],
   args: {
-    contact: {
-      location: 'Denmark',
-      website: 'https://example.com',
-      github: 'https://github.com/example',
-      linkedin: 'https://www.linkedin.com/in/example',
-    },
+    location: 'Denmark',
+    website: 'https://example.com',
+    github: 'https://github.com/example',
+    linkedin: 'https://www.linkedin.com/in/example',
   },
 };
 
@@ -48,14 +46,12 @@ export const PublicLinks: Story = {
 // The local print build: private email/phone added.
 export const WithPrivateDetails: Story = {
   args: {
-    contact: {
-      email: 'me@example.com',
-      phone: '+45 12 34 56 78',
-      location: 'Denmark',
-      website: 'https://example.com',
-      github: 'https://github.com/example',
-      linkedin: 'https://www.linkedin.com/in/example',
-    },
+    email: 'me@example.com',
+    phone: '+45 12 34 56 78',
+    location: 'Denmark',
+    website: 'https://example.com',
+    github: 'https://github.com/example',
+    linkedin: 'https://www.linkedin.com/in/example',
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -73,13 +69,11 @@ export const WithPrivateDetails: Story = {
 // Only one of the private fields (here email, no phone).
 export const WithEmailOnly: Story = {
   args: {
-    contact: {
-      email: 'me@example.com',
-      location: 'Denmark',
-      website: 'https://example.com',
-      github: 'https://github.com/example',
-      linkedin: 'https://www.linkedin.com/in/example',
-    },
+    email: 'me@example.com',
+    location: 'Denmark',
+    website: 'https://example.com',
+    github: 'https://github.com/example',
+    linkedin: 'https://www.linkedin.com/in/example',
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -92,7 +86,8 @@ export const WithEmailOnly: Story = {
 };
 
 export const EmptyBehavior: Story = {
-  args: { contact: {} },
+  // Clear the defaults from meta so nothing renders.
+  args: { location: undefined, website: undefined, github: undefined, linkedin: undefined },
   tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement }) => {
     await expect(canvasElement.querySelector('section')).toBeNull();

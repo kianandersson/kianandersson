@@ -1,10 +1,15 @@
-import type { ContactDetails } from '../../../lib/print-options';
 import { DefinitionItem } from '../../molecules/DefinitionItem';
 import { SectionHeader } from '../../molecules/SectionHeader';
 import styles from './Coordinates.module.css';
 
-type Props = {
-  contact: ContactDetails;
+/** The component owns its contract — plain fields, no data-layer type. */
+export type CoordinatesProps = {
+  email?: string;
+  phone?: string;
+  location?: string;
+  website?: string;
+  github?: string;
+  linkedin?: string;
 };
 
 type ContactItem = { label: string; value: string; href?: string };
@@ -19,7 +24,7 @@ function urlPath(url: string): string {
   return new URL(url).pathname.replace(/\/$/, '');
 }
 
-function toItems(contact: ContactDetails): ContactItem[] {
+function toItems(contact: CoordinatesProps): ContactItem[] {
   const items: ContactItem[] = [];
   if (contact.email) {
     items.push({ label: 'Email', value: contact.email, href: `mailto:${contact.email}` });
@@ -53,13 +58,13 @@ function toItems(contact: ContactDetails): ContactItem[] {
  * columns"). Hidden on screen, shown in print: the public links always, plus
  * the private email/phone in the local print build (see `PRINT_OPTIONS`).
  */
-export function Coordinates({ contact }: Props) {
-  const items = toItems(contact);
+export function Coordinates(props: CoordinatesProps) {
+  const items = toItems(props);
   if (items.length === 0) return null;
 
   // Location floats to the bottom (see the CSS) when the contact count would
   // otherwise split the GitHub/LinkedIn pair across rows.
-  const contactCount = (contact.email ? 1 : 0) + (contact.phone ? 1 : 0);
+  const contactCount = (props.email ? 1 : 0) + (props.phone ? 1 : 0);
 
   return (
     <section class={styles.root} id="coordinates" aria-labelledby="coordinates-heading">

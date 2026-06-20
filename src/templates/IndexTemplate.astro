@@ -1,12 +1,11 @@
 ---
-import { Coordinates } from '../components/organisms/Coordinates';
+import { Coordinates, type CoordinatesProps } from '../components/organisms/Coordinates';
 import { Experience, type ExperienceEntry } from '../components/organisms/Experience';
 import { Hero } from '../components/organisms/Hero';
 import { type KeySkill, KeySkills } from '../components/organisms/KeySkills';
 import { type Language, Miscellaneous } from '../components/organisms/Miscellaneous';
 import { type SkillGroup, SkillGroups } from '../components/organisms/SkillGroups';
 import { ContactContainer } from '../containers';
-import type { ContactDetails } from '../lib/print-options';
 
 interface Props {
   hero: {
@@ -19,7 +18,7 @@ interface Props {
   experience: ExperienceEntry[];
   skillGroups: SkillGroup[];
   languages: Language[];
-  coordinates: ContactDetails;
+  coordinates: CoordinatesProps;
 }
 
 const { hero, keySkills, experience, skillGroups, languages, coordinates } = Astro.props;
@@ -47,7 +46,7 @@ const { hero, keySkills, experience, skillGroups, languages, coordinates } = Ast
   <section id="miscellaneous" aria-labelledby="miscellaneous-heading">
     <Miscellaneous languages={languages} />
   </section>
-  <Coordinates contact={coordinates} />
+  <Coordinates {...coordinates} />
   <slot />
 </main>
 
