@@ -18,12 +18,12 @@ const hero = {
   availableFrom: siteConfig.availableFrom,
 };
 
-// Private contact details (email/phone) for the offline CV, inlined at build
-// time via Vite define (see astro.config.mjs). Empty on the public build, so
-// nothing is rendered there; populated only when printing locally with
-// scripts/print-cv.mjs. Everything else on the footer comes from the site config.
+// The "My coordinates" print footer. The public links always show (in print);
+// the private email/phone are inlined at build time via Vite define (see
+// astro.config.mjs) and are only present in the local print build, never on the
+// public deploy.
 const printContact = parsePrintOptions(__PRINT_OPTIONS__);
-const contactDetails: ContactDetails | null = printContact && {
+const coordinates: ContactDetails = {
   ...printContact,
   location: siteConfig.location,
   website: siteConfig.links.website,
@@ -108,7 +108,7 @@ const jsonLd = buildPersonJsonLd(
     experience={experience}
     skillGroups={skillGroups}
     languages={siteConfig.languages}
-    printContact={contactDetails}
+    coordinates={coordinates}
   />
 </BaseLayout>
 

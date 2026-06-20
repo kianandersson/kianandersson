@@ -19,10 +19,10 @@ interface Props {
   experience: ExperienceEntry[];
   skillGroups: SkillGroup[];
   languages: Language[];
-  printContact?: ContactDetails | null;
+  coordinates: ContactDetails;
 }
 
-const { hero, keySkills, experience, skillGroups, languages, printContact } = Astro.props;
+const { hero, keySkills, experience, skillGroups, languages, coordinates } = Astro.props;
 ---
 
 <main>
@@ -47,7 +47,7 @@ const { hero, keySkills, experience, skillGroups, languages, printContact } = As
   <section id="miscellaneous" aria-labelledby="miscellaneous-heading">
     <Miscellaneous languages={languages} />
   </section>
-  {printContact && <Coordinates contact={printContact} />}
+  <Coordinates contact={coordinates} />
   <slot />
 </main>
 

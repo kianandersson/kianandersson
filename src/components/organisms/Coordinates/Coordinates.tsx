@@ -55,10 +55,14 @@ export function Coordinates({ contact }: Props) {
   const items = toItems(contact);
   if (items.length === 0) return null;
 
+  // Three columns when the private details (email/phone) are present — i.e. the
+  // local print build; two for the public print, which only has the links.
+  const columns = contact.email || contact.phone ? 3 : 2;
+
   return (
     <section class={styles.root} id="coordinates" aria-labelledby="coordinates-heading">
       <SectionHeader title="My coordinates" id="coordinates-heading" />
-      <dl class={styles.grid}>
+      <dl class={styles.grid} data-columns={columns}>
         {items.map((item) => (
           <DefinitionItem key={item.label} label={item.label} value={item.value} href={item.href} />
         ))}
