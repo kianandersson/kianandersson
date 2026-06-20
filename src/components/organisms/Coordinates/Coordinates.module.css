@@ -30,6 +30,20 @@
   }
 }
 
+/* Public print (no email/phone): location is the first item. On the wide
+ * 3-column layout push it to the end so the links stay together and location
+ * sits alone on the second row. Restore the natural order once the grid
+ * collapses (mobile). */
+.grid[data-has-contact="false"] > :first-child {
+  order: 1;
+}
+
+@container (max-width: 560px) {
+  .grid[data-has-contact="false"] > :first-child {
+    order: 0;
+  }
+}
+
 @media print {
   .root {
     --print-contact-display: flex;

@@ -31,6 +31,11 @@ function toItems(contact: ContactDetails): ContactItem[] {
       href: `tel:${contact.phone.replace(/\s+/g, '')}`,
     });
   }
+  // Location sits right after the contact fields. With no email/phone it lands
+  // first; the grid then nudges it to the end on the wide layout (see the CSS).
+  if (contact.location) {
+    items.push({ label: 'Location', value: contact.location });
+  }
   if (contact.website) {
     items.push({ label: 'Website', value: stripScheme(contact.website), href: contact.website });
   }
@@ -39,10 +44,6 @@ function toItems(contact: ContactDetails): ContactItem[] {
   }
   if (contact.linkedin) {
     items.push({ label: 'LinkedIn', value: urlPath(contact.linkedin), href: contact.linkedin });
-  }
-  // Location last so the public print (links only) leaves it alone on row two.
-  if (contact.location) {
-    items.push({ label: 'Location', value: contact.location });
   }
   return items;
 }
@@ -56,10 +57,12 @@ export function Coordinates({ contact }: Props) {
   const items = toItems(contact);
   if (items.length === 0) return null;
 
+  const hasContact = Boolean(contact.email || contact.phone);
+
   return (
     <section class={styles.root} id="coordinates" aria-labelledby="coordinates-heading">
       <SectionHeader title="My coordinates" id="coordinates-heading" />
-      <dl class={styles.grid}>
+      <dl class={styles.grid} data-has-contact={hasContact ? 'true' : 'false'}>
         {items.map((item) => (
           <DefinitionItem key={item.label} label={item.label} value={item.value} href={item.href} />
         ))}
