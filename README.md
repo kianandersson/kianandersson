@@ -42,23 +42,14 @@ pnpm print              # render the front page to cv.pdf (runs locally)
 
 ## Print to PDF
 
-The public site omits the private contact details (email and phone).
-`pnpm print` adds them back for a local PDF only: it builds the site with the
-details into a temporary directory, renders it to `cv.pdf` with Playwright, and
-deletes the build afterwards so nothing private is left on disk. The details
-never touch `.env` or the public deploy. Everything else on the footer
-(location, website, LinkedIn, GitHub) comes from `src/site.config.ts`.
-
-Pass the private details as flags, or keep them in a git-ignored
-`print.options.json`:
+`pnpm print` renders the page to `cv.pdf` locally, adding the private contact
+details (email, phone) the public site omits — via a temp build that's torn
+down after. Everything else comes from `src/site.config.ts`.
 
 ```sh
 pnpm print --email me@example.com --phone "+45 12 34 56 78"
-pnpm print --options ./my-details.json
-pnpm print            # uses print.options.json if present
+pnpm print            # uses a git-ignored print.options.json if present
 ```
-
-Run `pnpm print --help` for the options.
 
 ## License
 
