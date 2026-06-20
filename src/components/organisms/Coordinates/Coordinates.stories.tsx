@@ -70,6 +70,27 @@ export const WithPrivateDetails: Story = {
   },
 };
 
+// Only one of the private fields (here email, no phone).
+export const WithEmailOnly: Story = {
+  args: {
+    contact: {
+      email: 'me@example.com',
+      location: 'Copenhagen, Denmark',
+      website: 'https://example.com',
+      github: 'https://github.com/example',
+      linkedin: 'https://www.linkedin.com/in/example',
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole('link', { name: 'me@example.com' })).toHaveAttribute(
+      'href',
+      'mailto:me@example.com',
+    );
+    await expect(canvas.queryByText('Phone')).toBeNull();
+  },
+};
+
 export const EmptyBehavior: Story = {
   args: { contact: {} },
   tags: ['!dev', '!autodocs'],
