@@ -1,0 +1,27 @@
+/* Hidden on screen; revealed only when printing (or in the catalog preview via
+ * [data-print-preview]). Design: "Option A — 3 columns". The grid properties
+ * are inert while display is none, so a single declaration covers both states. */
+.root {
+  display: var(--print-contact-display, none);
+  flex-direction: column;
+  gap: var(--space-m);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px 32px;
+  margin: 0;
+  padding-top: var(--space-l);
+  border-top: 1px solid var(--color-divider);
+}
+
+@media print {
+  .root {
+    --print-contact-display: flex;
+  }
+}
+
+[data-print-preview] .root {
+  --print-contact-display: flex;
+}

@@ -1,0 +1,31 @@
+.item {
+  min-width: 0;
+}
+
+.label {
+  display: block;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+.value {
+  display: block;
+  margin: 4px 0 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--color-text);
+  word-break: break-word;
+}
+
+.link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+.link:hover {
+  color: var(--color-accent);
+}

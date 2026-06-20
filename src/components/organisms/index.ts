@@ -1,5 +1,6 @@
 export * from './Contact';
 export * from './ContactForm';
+export * from './Coordinates';
 export * from './Experience';
 export * from './Footer';
 export * from './Hero';

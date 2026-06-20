@@ -23,7 +23,8 @@
     "test:e2e": "playwright test",
     "test:lighthouse": "lhci autorun",
     "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm test:bundle",
-    "storybook": "storybook dev -p 6006"
+    "storybook": "storybook dev -p 6006",
+    "print:cv": "node scripts/print-cv.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^13.7.0",

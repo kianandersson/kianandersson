@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { formatPeriod } from '../lib/formatPeriod';
 import { groupSkills } from '../lib/group-skills';
 import { buildPersonJsonLd } from '../lib/person-json-ld';
+import { type ContactDetails, parsePrintOptions } from '../lib/print-options';
 import type { SkillLevel } from '../lib/skill';
 import { sortGroups } from '../lib/sort-groups';
 import { sortSkills } from '../lib/sort-skills';
@@ -15,6 +16,19 @@ const hero = {
   tagline: siteConfig.tagline,
   recipientName: siteConfig.fullName,
   availableFrom: siteConfig.availableFrom,
+};
+
+// Private contact details (email/phone) for the offline CV, inlined at build
+// time via Vite define (see astro.config.mjs). Empty on the public build, so
+// nothing is rendered there; populated only when printing locally with
+// scripts/print-cv.mjs. Everything else on the footer comes from the site config.
+const printContact = parsePrintOptions(__PRINT_OPTIONS__);
+const contactDetails: ContactDetails | null = printContact && {
+  ...printContact,
+  location: siteConfig.location,
+  website: siteConfig.links.website,
+  github: siteConfig.links.github,
+  linkedin: siteConfig.links.linkedin,
 };
 
 type VisibleSkill = {
@@ -94,6 +108,7 @@ const jsonLd = buildPersonJsonLd(
     experience={experience}
     skillGroups={skillGroups}
     languages={siteConfig.languages}
+    printContact={contactDetails}
   />
 </BaseLayout>
 

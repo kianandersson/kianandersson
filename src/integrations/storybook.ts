@@ -18,6 +18,12 @@ export function storybook(): AstroIntegration {
     hooks: {
       // `dir` is the client output URL (dist/client/ for the cloudflare adapter).
       'astro:build:done': async ({ dir, logger }) => {
+        // Skip the (slow) Storybook build when it isn't needed — e.g. the local
+        // CV print build, which only renders the page itself.
+        if (process.env.EXCLUDE_STORYBOOK) {
+          logger.info('EXCLUDE_STORYBOOK set — skipping Storybook build.');
+          return;
+        }
         const outDir = fileURLToPath(new URL(`./${OUTPUT_SUBDIR}/`, dir));
         logger.info('Building Storybook…');
         await run('pnpm', ['exec', 'storybook', 'build', '--output-dir', outDir, '--quiet']);

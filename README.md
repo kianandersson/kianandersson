@@ -23,6 +23,8 @@ See `.env.example` for local development.
 - `RESEND_API_KEY` — Resend API key.
 - `SENDER_EMAIL` — verified sender address.
 - `RECIPIENT_EMAIL` — destination inbox.
+- `EXCLUDE_STORYBOOK` — when set, `pnpm build` skips the Storybook catalog.
+- `BUILD_OUT_DIR` — overrides the build output directory.
 
 ## Common commands
 
@@ -35,7 +37,28 @@ pnpm test               # vitest
 pnpm test:bundle        # gzipped JS budget
 pnpm test:e2e           # playwright + axe
 pnpm test:lighthouse    # lighthouse CI
+pnpm print:cv           # render the front page to cv.pdf (runs locally)
 ```
+
+## Print the CV
+
+The public site omits the private contact details (email and phone).
+`pnpm print:cv` adds them back for a local PDF only: it builds the site with the
+details into a temporary directory, renders it to `cv.pdf` with Playwright, and
+deletes the build afterwards so nothing private is left on disk. The details
+never touch `.env` or the public deploy. Everything else on the footer
+(location, website, LinkedIn, GitHub) comes from `src/site.config.ts`.
+
+Pass the private details as flags, or keep them in a git-ignored
+`cv.options.json`:
+
+```sh
+pnpm print:cv --email me@example.com --phone "+45 12 34 56 78"
+pnpm print:cv --options ./my-details.json
+pnpm print:cv            # uses cv.options.json if present
+```
+
+Run `pnpm print:cv --help` for the options.
 
 ## License
 

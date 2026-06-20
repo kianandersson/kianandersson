@@ -8,6 +8,7 @@ const SiteConfigSchema = z.object({
   location: z.string(),
   tagline: z.string(),
   links: z.object({
+    website: z.url(),
     github: z.url(),
     linkedin: z.url(),
     source: z.url(),
@@ -33,6 +34,7 @@ const parsed = SiteConfigSchema.parse({
     'Engineering lead and architect with 15+ years across the stack, building design systems and accessible user interfaces, distributed services, and the engineering teams behind them.',
   availableFrom: '2026-06-01',
   links: {
+    website: 'https://kianandersson.com',
     github: 'https://github.com/kianandersson',
     linkedin: 'https://www.linkedin.com/in/kianandersson',
     source: 'https://github.com/kianandersson/kianandersson',

@@ -8,8 +8,13 @@ import { storybook } from './src/integrations/storybook.ts';
 
 const site = process.env.URL ?? 'http://localhost:4321';
 
+// `scripts/print-cv.mjs` redirects the build into a throwaway temp dir so the
+// CV (which embeds private contact details) never lands in the tracked dist/.
+const outDir = process.env.BUILD_OUT_DIR;
+
 export default defineConfig({
   site,
+  ...(outDir ? { outDir } : {}),
   adapter: cloudflare(),
   // Astro 6 has no `session: false` switch. The Cloudflare adapter's
   // default driver is KV, which adds a SESSION binding wrangler then tries
@@ -45,6 +50,13 @@ export default defineConfig({
     },
   },
   vite: {
+    // Private contact details for the offline CV, injected at build time by
+    // scripts/print-cv.mjs. Inlined here (rather than via astro:env) so the
+    // value survives into the Cloudflare adapter's workerd prerender, and is
+    // simply '' on the public build — so nothing private ever ships.
+    define: {
+      __PRINT_OPTIONS__: JSON.stringify(process.env.PRINT_OPTIONS ?? ''),
+    },
     optimizeDeps: {
       // Workaround for astro/issues/16248: deps that aren't reachable by the
       // SSR scanner end up discovered at runtime, triggering rebundles that
