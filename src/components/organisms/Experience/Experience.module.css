@@ -68,4 +68,16 @@
   .rail {
     display: none;
   }
+
+  /* Keep each role whole so page breaks fall between entries rather than
+     mid-entry. */
+  .entry {
+    break-inside: avoid;
+  }
+
+  /* If an entry is too tall to keep whole and must split, never strand its
+     role heading: keep the title block with the content below it. */
+  .titleBlock {
+    break-after: avoid;
+  }
 }
