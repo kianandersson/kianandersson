@@ -46,7 +46,7 @@ export function parsePrintOptions(raw: string | undefined): PrintOptions | null 
 
 /**
  * Drops blank string fields so empty placeholders (e.g. an unfilled `phone`
- * in the .env template) read as absent rather than failing validation.
+ * in print.options.json) read as absent rather than failing validation.
  */
 function dropBlankFields(value: unknown): unknown {
   if (typeof value !== 'object' || value === null) return value;
