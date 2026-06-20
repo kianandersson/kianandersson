@@ -23,7 +23,7 @@ See `.env.example` for local development.
 - `RESEND_API_KEY` — Resend API key.
 - `SENDER_EMAIL` — verified sender address.
 - `RECIPIENT_EMAIL` — destination inbox.
-- `EXCLUDE_STORYBOOK` — set to skip building `/design/` (faster local builds).
+- `EXCLUDE_STORYBOOK` — exclude design catalog from build
 
 ## Common commands
 
