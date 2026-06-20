@@ -15,7 +15,7 @@ const meta: Meta<typeof Coordinates> = {
   ],
   args: {
     contact: {
-      location: 'Copenhagen, Denmark',
+      location: 'Denmark',
       website: 'https://example.com',
       github: 'https://github.com/example',
       linkedin: 'https://www.linkedin.com/in/example',
@@ -38,7 +38,7 @@ export const PublicLinks: Story = {
       'href',
       'https://github.com/example',
     );
-    await expect(canvas.getByText('Copenhagen, Denmark')).toBeInTheDocument();
+    await expect(canvas.getByText('Denmark')).toBeInTheDocument();
     // No private details in the public print.
     await expect(canvas.queryByText('Email')).toBeNull();
     await expect(canvas.queryByText('Phone')).toBeNull();
@@ -51,7 +51,7 @@ export const WithPrivateDetails: Story = {
     contact: {
       email: 'me@example.com',
       phone: '+45 12 34 56 78',
-      location: 'Copenhagen, Denmark',
+      location: 'Denmark',
       website: 'https://example.com',
       github: 'https://github.com/example',
       linkedin: 'https://www.linkedin.com/in/example',
@@ -75,7 +75,7 @@ export const WithEmailOnly: Story = {
   args: {
     contact: {
       email: 'me@example.com',
-      location: 'Copenhagen, Denmark',
+      location: 'Denmark',
       website: 'https://example.com',
       github: 'https://github.com/example',
       linkedin: 'https://www.linkedin.com/in/example',
