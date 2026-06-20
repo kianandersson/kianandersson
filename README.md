@@ -45,7 +45,7 @@ Run `pnpm print` to render the page to a PDF locally.
 
 ```sh
 pnpm print --email me@example.com --phone "+45 12 34 56 78"
-pnpm print            # uses a git-ignored print.options.json if present
+pnpm print            # uses print.options.json if present
 ```
 
 ## License
