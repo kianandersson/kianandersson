@@ -43,8 +43,7 @@ pnpm print              # render the front page to cv.pdf (runs locally)
 ## Print to PDF
 
 `pnpm print` renders the page to `cv.pdf` locally, adding the private contact
-details (email, phone) the public site omits — via a temp build that's torn
-down after. Everything else comes from `src/site.config.ts`.
+details (email, phone) the public site omits.
 
 ```sh
 pnpm print --email me@example.com --phone "+45 12 34 56 78"
