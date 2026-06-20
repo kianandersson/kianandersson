@@ -3,8 +3,9 @@ import { extname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium, type Page } from '@playwright/test';
 import type { AstroIntegration } from 'astro';
+import { OG_IMAGE_SIZE } from '../lib/og';
 
-const CANVAS = { width: 1200, height: 630 } as const;
+const CANVAS = OG_IMAGE_SIZE;
 const OUTPUT_FILE = 'og.png';
 
 // Fake origin for build-time rendering: every request is intercepted and

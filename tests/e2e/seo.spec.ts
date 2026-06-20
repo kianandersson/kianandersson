@@ -1,6 +1,8 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import astroConfig from '../../astro.config.mjs';
+import { OG_IMAGE_SIZE } from '../../src/lib/og';
+import { siteConfig } from '../../src/site.config';
 
 test.describe('SEO surfaces', () => {
   test('home advertises OG image and twitter large card', async ({ page }) => {
@@ -10,9 +12,39 @@ test.describe('SEO surfaces', () => {
       'content',
       `${astroConfig.site}/og.png`,
     );
+    await expect(page.locator('meta[property="og:image:width"]')).toHaveAttribute(
+      'content',
+      String(OG_IMAGE_SIZE.width),
+    );
+    await expect(page.locator('meta[property="og:image:height"]')).toHaveAttribute(
+      'content',
+      String(OG_IMAGE_SIZE.height),
+    );
     await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
       'content',
       'summary_large_image',
+    );
+  });
+
+  test('home declares og:site_name and profile metadata', async ({ page }) => {
+    await page.goto('/');
+
+    await expect(page.locator('meta[property="og:site_name"]')).toHaveAttribute(
+      'content',
+      siteConfig.fullName,
+    );
+    await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute('content', 'en_US');
+    await expect(page.locator('meta[property="og:profile:first_name"]')).toHaveAttribute(
+      'content',
+      siteConfig.firstName,
+    );
+    await expect(page.locator('meta[property="og:profile:last_name"]')).toHaveAttribute(
+      'content',
+      siteConfig.lastName,
+    );
+    await expect(page.locator('meta[property="og:image:alt"]')).toHaveAttribute(
+      'content',
+      siteConfig.defaultTitle,
     );
   });
 
