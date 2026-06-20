@@ -9,7 +9,7 @@ dist/
 # Generated PDF + its temp build + local contact details (all private)
 cv.pdf
 print.options.json
-.print-*/
+.print/
 
 # Environment
 .env

@@ -20,7 +20,7 @@
  */
 import { spawn } from 'node:child_process';
 import { createReadStream, readFileSync } from 'node:fs';
-import { mkdtemp, rm, stat } from 'node:fs/promises';
+import { mkdir, rm, stat } from 'node:fs/promises';
 import http from 'node:http';
 import { extname, join, normalize, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -78,7 +78,9 @@ async function main() {
   // Build inside the project root (not the OS temp dir): the Cloudflare adapter
   // derives a relative .dev.vars path during prerender, and a path outside the
   // repo breaks the workerd runtime it spins up.
-  const buildDir = await mkdtemp(join(ROOT, '.print-'));
+  const buildDir = join(ROOT, '.print');
+  await rm(buildDir, { recursive: true, force: true }); // clear any leftover from a crashed run
+  await mkdir(buildDir, { recursive: true });
   try {
     console.log(`→ Building site with contact details (${buildDir})`);
     await build(buildDir, JSON.stringify(contact));
