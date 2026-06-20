@@ -42,8 +42,8 @@ pnpm print              # render the front page to cv.pdf (runs locally)
 
 ## Print to PDF
 
-`pnpm print` renders the page to `cv.pdf` locally, adding the private contact
-details (email, phone) the public site omits.
+`pnpm print` renders the page to `cv.pdf` locally, adding the email and phone
+that the public site omits.
 
 ```sh
 pnpm print --email me@example.com --phone "+45 12 34 56 78"
