@@ -23,7 +23,7 @@ const SiteConfigSchema = z.object({
 });
 
 type SiteConfigInput = z.infer<typeof SiteConfigSchema>;
-export type SiteConfig = SiteConfigInput & { fullName: string };
+export type SiteConfig = SiteConfigInput & { fullName: string; defaultTitle: string };
 
 const parsed = SiteConfigSchema.parse({
   firstName: 'Kian',
@@ -45,7 +45,12 @@ const parsed = SiteConfigSchema.parse({
   ],
 });
 
+const fullName = `${parsed.firstName} ${parsed.lastName}`;
+
 export const siteConfig: SiteConfig = {
   ...parsed,
-  fullName: `${parsed.firstName} ${parsed.lastName}`,
+  fullName,
+  // Spaced em dash is the separator across every title/OG surface — keep it
+  // here so the convention lives in one place.
+  defaultTitle: `${fullName} — ${parsed.role}`,
 };

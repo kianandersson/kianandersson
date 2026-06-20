@@ -1,6 +1,7 @@
 ---
 import { Footer } from '../components/organisms/Footer';
 import { SiteHeader } from '../components/organisms/SiteHeader';
+import { OG_IMAGE_SIZE } from '../lib/og';
 import { buildPersonJsonLd, type PersonJsonLd } from '../lib/person-json-ld';
 import { siteConfig } from '../site.config';
 import '../styles/tokens.css';
@@ -13,11 +14,15 @@ interface Props {
 }
 
 const {
-  title = `${siteConfig.fullName} — ${siteConfig.role}`,
+  title = siteConfig.defaultTitle,
   description = `${siteConfig.fullName}, ${siteConfig.role} based in ${siteConfig.location}.`,
   jsonLd,
   showPrint = true,
 } = Astro.props;
+
+// The OG image always depicts the person, regardless of the page title, so its
+// alt text stays fixed rather than tracking `title`.
+const ogImageAlt = siteConfig.defaultTitle;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 const ogImage = new URL('/og.png', Astro.site).toString();
@@ -41,15 +46,23 @@ const currentYear = new Date().getFullYear();
     <link rel="canonical" href={canonical} />
 
     <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content={siteConfig.fullName} />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content={String(OG_IMAGE_SIZE.width)} />
+    <meta property="og:image:height" content={String(OG_IMAGE_SIZE.height)} />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta property="og:profile:first_name" content={siteConfig.firstName} />
+    <meta property="og:profile:last_name" content={siteConfig.lastName} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
     <link
       rel="preload"
