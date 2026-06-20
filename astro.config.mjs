@@ -8,13 +8,8 @@ import { storybook } from './src/integrations/storybook.ts';
 
 const site = process.env.URL ?? 'http://localhost:4321';
 
-// `scripts/print.mjs` redirects the build into a throwaway temp dir so the
-// print build (which embeds private contact details) never lands in the tracked dist/.
-const outDir = process.env.BUILD_OUT_DIR;
-
 export default defineConfig({
   site,
-  ...(outDir ? { outDir } : {}),
   adapter: cloudflare(),
   // Astro 6 has no `session: false` switch. The Cloudflare adapter's
   // default driver is KV, which adds a SESSION binding wrangler then tries

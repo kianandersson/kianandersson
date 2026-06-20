@@ -24,7 +24,6 @@ See `.env.example` for local development.
 - `SENDER_EMAIL` — verified sender address.
 - `RECIPIENT_EMAIL` — destination inbox.
 - `EXCLUDE_STORYBOOK` — when set, `pnpm build` skips the Storybook catalog.
-- `BUILD_OUT_DIR` — overrides the build output directory.
 
 ## Common commands
 

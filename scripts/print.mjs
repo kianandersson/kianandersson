@@ -4,10 +4,10 @@
  *
  * The public site deliberately omits the private contact details (email and
  * phone). This script collects those from CLI options (and/or an options file),
- * builds the site *with* them into a throwaway temp directory, serves the static
- * client output, prints it to PDF via Playwright, then deletes the build so
- * nothing private is left behind. The details never touch .env or the public
- * deploy. Everything else on the page footer comes from the site config.
+ * builds the site *with* them into a throwaway temp directory, previews it,
+ * prints it to PDF via Playwright, then deletes the build so nothing private is
+ * left behind. The details never touch .env or the public deploy. Everything
+ * else on the page footer comes from the site config.
  *
  * Usage:
  *   pnpm print --email me@example.com --phone "+45 12 34 56 78"
@@ -18,37 +18,23 @@
  *          --options <file>  JSON with email/phone (CLI flags win)
  *          --output <file>   PDF path (default cv.pdf)
  */
-import { spawn } from 'node:child_process';
-import { createReadStream, readFileSync } from 'node:fs';
-import { mkdir, rm, stat } from 'node:fs/promises';
-import http from 'node:http';
-import { extname, join, normalize, resolve, sep } from 'node:path';
+import { readFileSync } from 'node:fs';
+import { rm } from 'node:fs/promises';
+import { createServer } from 'node:net';
+import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { chromium } from '@playwright/test';
+import { build, preview } from 'astro';
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const CONTACT_FIELDS = ['email', 'phone'];
 const DEFAULT_OPTIONS_FILE = join(ROOT, 'print.options.json');
 
-const MIME = {
-  '.html': 'text/html; charset=utf-8',
-  '.css': 'text/css; charset=utf-8',
-  '.js': 'text/javascript; charset=utf-8',
-  '.mjs': 'text/javascript; charset=utf-8',
-  '.json': 'application/json; charset=utf-8',
-  '.svg': 'image/svg+xml',
-  '.png': 'image/png',
-  '.jpg': 'image/jpeg',
-  '.jpeg': 'image/jpeg',
-  '.webp': 'image/webp',
-  '.avif': 'image/avif',
-  '.woff2': 'font/woff2',
-  '.woff': 'font/woff',
-  '.xml': 'application/xml; charset=utf-8',
-  '.txt': 'text/plain; charset=utf-8',
-  '.ico': 'image/x-icon',
-};
+// Build inside the project root (not the OS temp dir): the Cloudflare adapter
+// derives a relative .dev.vars path during prerender, and a path outside the
+// repo breaks the workerd runtime it spins up.
+const BUILD_DIR = join(ROOT, '.print');
 
 async function main() {
   const { values } = parseArgs({
@@ -75,26 +61,31 @@ async function main() {
 
   const outputPdf = values.output ? resolve(values.output) : join(ROOT, 'cv.pdf');
 
-  // Build inside the project root (not the OS temp dir): the Cloudflare adapter
-  // derives a relative .dev.vars path during prerender, and a path outside the
-  // repo breaks the workerd runtime it spins up.
-  const buildDir = join(ROOT, '.print');
-  await rm(buildDir, { recursive: true, force: true }); // clear any leftover from a crashed run
-  await mkdir(buildDir, { recursive: true });
-  try {
-    console.log(`→ Building site with contact details (${buildDir})`);
-    await build(buildDir, JSON.stringify(contact));
+  // The private details are inlined at build time via a Vite define that reads
+  // PRINT_OPTIONS (see astro.config.mjs); Storybook is skipped for speed.
+  process.env.PRINT_OPTIONS = JSON.stringify(contact);
+  process.env.EXCLUDE_STORYBOOK = '1';
 
-    const { server, origin } = await serve(join(buildDir, 'client'));
+  try {
+    console.log('→ Building site with contact details');
+    await build({ root: ROOT, outDir: BUILD_DIR, logLevel: 'error' });
+
+    const port = await freePort();
+    const server = await preview({
+      root: ROOT,
+      outDir: BUILD_DIR,
+      logLevel: 'error',
+      server: { port },
+    });
     try {
       console.log('→ Rendering PDF');
-      await renderPdf(origin, outputPdf);
+      await renderPdf(`http://localhost:${port}/`, outputPdf);
       console.log(`✓ Wrote ${outputPdf}`);
     } finally {
-      server.close();
+      await server.stop();
     }
   } finally {
-    await rm(buildDir, { recursive: true, force: true });
+    await rm(BUILD_DIR, { recursive: true, force: true });
     console.log('✓ Removed temporary build');
   }
 }
@@ -148,61 +139,11 @@ function printUsage() {
   );
 }
 
-function build(outDir, printOptions) {
-  return run('pnpm', ['exec', 'astro', 'build'], {
-    ...process.env,
-    PRINT_OPTIONS: printOptions,
-    BUILD_OUT_DIR: outDir,
-    EXCLUDE_STORYBOOK: '1',
-  });
-}
-
-function serve(root) {
-  const base = resolve(root);
-  const server = http.createServer((req, res) => {
-    handle(base, req, res).catch(() => {
-      if (!res.headersSent) res.writeHead(500);
-      res.end('Server error');
-    });
-  });
-
-  return new Promise((resolvePromise) => {
-    server.listen(0, '127.0.0.1', () => {
-      const { port } = /** @type {import('node:net').AddressInfo} */ (server.address());
-      resolvePromise({ server, origin: `http://127.0.0.1:${port}` });
-    });
-  });
-}
-
-async function handle(base, req, res) {
-  const urlPath = decodeURIComponent((req.url ?? '/').split('?')[0]);
-  let filePath = normalize(join(base, urlPath));
-
-  // Refuse to serve anything outside the build directory.
-  if (filePath !== base && !filePath.startsWith(base + sep)) {
-    res.writeHead(403).end('Forbidden');
-    return;
-  }
-
-  let info = await stat(filePath).catch(() => null);
-  if (info?.isDirectory()) {
-    filePath = join(filePath, 'index.html');
-    info = await stat(filePath).catch(() => null);
-  }
-  if (!info?.isFile()) {
-    res.writeHead(404).end('Not found');
-    return;
-  }
-
-  res.writeHead(200, { 'content-type': MIME[extname(filePath)] ?? 'application/octet-stream' });
-  createReadStream(filePath).pipe(res);
-}
-
 async function renderPdf(origin, outputPath) {
   const browser = await chromium.launch();
   try {
     const page = await browser.newPage();
-    await page.goto(`${origin}/`, { waitUntil: 'networkidle' });
+    await page.goto(origin, { waitUntil: 'networkidle' });
     await page.emulateMedia({ media: 'print' });
     await page.pdf({
       path: outputPath,
@@ -216,13 +157,15 @@ async function renderPdf(origin, outputPath) {
   }
 }
 
-function run(command, args, env) {
+/** Grab an available port so the preview server never clashes with a dev run. */
+function freePort() {
   return new Promise((resolvePromise, reject) => {
-    const child = spawn(command, args, { stdio: 'inherit', cwd: ROOT, env });
-    child.on('error', reject);
-    child.on('exit', (code) => {
-      if (code === 0) resolvePromise();
-      else reject(new Error(`${command} ${args.join(' ')} exited with code ${code}`));
+    const probe = createServer();
+    probe.unref();
+    probe.on('error', reject);
+    probe.listen(0, '127.0.0.1', () => {
+      const { port } = /** @type {import('node:net').AddressInfo} */ (probe.address());
+      probe.close(() => resolvePromise(port));
     });
   });
 }
