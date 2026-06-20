@@ -26,14 +26,13 @@ const meta: Meta<typeof Coordinates> = {
 export default meta;
 type Story = StoryObj<typeof Coordinates>;
 
-// The public print: links only, laid out in two columns.
+// The public print: links only (location left alone on row two).
 export const PublicLinks: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(
       canvas.getByRole('heading', { level: 2, name: /My coordinates/i }),
     ).toBeInTheDocument();
-    await expect(canvasElement.querySelector('dl')).toHaveAttribute('data-columns', '2');
     // GitHub/LinkedIn show only the path, but link to the full URL.
     await expect(canvas.getByRole('link', { name: '/example' })).toHaveAttribute(
       'href',
@@ -46,7 +45,7 @@ export const PublicLinks: Story = {
   },
 };
 
-// The local print build: private email/phone added, laid out in three columns.
+// The local print build: private email/phone added.
 export const WithPrivateDetails: Story = {
   args: {
     contact: {
@@ -60,7 +59,6 @@ export const WithPrivateDetails: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(canvasElement.querySelector('dl')).toHaveAttribute('data-columns', '3');
     await expect(canvas.getByRole('link', { name: 'me@example.com' })).toHaveAttribute(
       'href',
       'mailto:me@example.com',
