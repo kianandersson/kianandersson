@@ -1,18 +1,18 @@
 #!/usr/bin/env node
 /**
- * Renders the front page to a PDF CV — locally only.
+ * Renders the front page to a PDF — locally only.
  *
  * The public site deliberately omits the private contact details (email and
  * phone). This script collects those from CLI options (and/or an options file),
  * builds the site *with* them into a throwaway temp directory, serves the static
  * client output, prints it to PDF via Playwright, then deletes the build so
  * nothing private is left behind. The details never touch .env or the public
- * deploy. Everything else on the CV footer comes from the site config.
+ * deploy. Everything else on the page footer comes from the site config.
  *
  * Usage:
  *   pnpm print --email me@example.com --phone "+45 12 34 56 78"
  *   pnpm print --options ./my-details.json
- *   pnpm print            # uses cv.options.json if present
+ *   pnpm print            # uses print.options.json if present
  *
  * Options: --email --phone
  *          --options <file>  JSON with email/phone (CLI flags win)
@@ -29,7 +29,7 @@ import { chromium } from '@playwright/test';
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const CONTACT_FIELDS = ['email', 'phone'];
-const DEFAULT_OPTIONS_FILE = join(ROOT, 'cv.options.json');
+const DEFAULT_OPTIONS_FILE = join(ROOT, 'print.options.json');
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -78,7 +78,7 @@ async function main() {
   // Build inside the project root (not the OS temp dir): the Cloudflare adapter
   // derives a relative .dev.vars path during prerender, and a path outside the
   // repo breaks the workerd runtime it spins up.
-  const buildDir = await mkdtemp(join(ROOT, '.cv-build-'));
+  const buildDir = await mkdtemp(join(ROOT, '.print-'));
   try {
     console.log(`→ Building site with contact details (${buildDir})`);
     await build(buildDir, JSON.stringify(contact));
@@ -99,7 +99,7 @@ async function main() {
 
 /**
  * Merges contact details from an options file (explicit --options, else
- * cv.options.json if present) with CLI flags, where CLI flags win. Blank
+ * print.options.json if present) with CLI flags, where CLI flags win. Blank
  * values are dropped so empty placeholders don't surface on the CV.
  */
 function collectContact(values) {
@@ -139,7 +139,7 @@ function printUsage() {
       `Usage:\n` +
       `  pnpm print --email me@example.com --phone "+45 12 34 56 78"\n` +
       `  pnpm print --options ./my-details.json\n` +
-      `  pnpm print            # uses cv.options.json if present\n\n` +
+      `  pnpm print            # uses print.options.json if present\n\n` +
       `Private options: ${CONTACT_FIELDS.map((f) => `--${f}`).join(' ')}\n` +
       `  --options, -o <file>   JSON file with email/phone (CLI flags win)\n` +
       `  --output <file>        PDF output path (default cv.pdf)\n`,

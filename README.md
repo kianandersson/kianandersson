@@ -40,7 +40,7 @@ pnpm test:lighthouse    # lighthouse CI
 pnpm print              # render the front page to cv.pdf (runs locally)
 ```
 
-## Print the CV
+## Print to PDF
 
 The public site omits the private contact details (email and phone).
 `pnpm print` adds them back for a local PDF only: it builds the site with the
@@ -50,12 +50,12 @@ never touch `.env` or the public deploy. Everything else on the footer
 (location, website, LinkedIn, GitHub) comes from `src/site.config.ts`.
 
 Pass the private details as flags, or keep them in a git-ignored
-`cv.options.json`:
+`print.options.json`:
 
 ```sh
 pnpm print --email me@example.com --phone "+45 12 34 56 78"
 pnpm print --options ./my-details.json
-pnpm print            # uses cv.options.json if present
+pnpm print            # uses print.options.json if present
 ```
 
 Run `pnpm print --help` for the options.

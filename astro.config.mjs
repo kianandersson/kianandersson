@@ -8,8 +8,8 @@ import { storybook } from './src/integrations/storybook.ts';
 
 const site = process.env.URL ?? 'http://localhost:4321';
 
-// `scripts/print-cv.mjs` redirects the build into a throwaway temp dir so the
-// CV (which embeds private contact details) never lands in the tracked dist/.
+// `scripts/print.mjs` redirects the build into a throwaway temp dir so the
+// print build (which embeds private contact details) never lands in the tracked dist/.
 const outDir = process.env.BUILD_OUT_DIR;
 
 export default defineConfig({
@@ -50,8 +50,8 @@ export default defineConfig({
     },
   },
   vite: {
-    // Private contact details for the offline CV, injected at build time by
-    // scripts/print-cv.mjs. Inlined here (rather than via astro:env) so the
+    // Private contact details for the print build, injected at build time by
+    // scripts/print.mjs. Inlined here (rather than via astro:env) so the
     // value survives into the Cloudflare adapter's workerd prerender, and is
     // simply '' on the public build — so nothing private ever ships.
     define: {

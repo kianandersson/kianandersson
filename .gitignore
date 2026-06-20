@@ -6,10 +6,10 @@ dist/
 .astro/
 .wrangler/
 
-# Generated CV + its temp build + local contact details (all private)
+# Generated PDF + its temp build + local contact details (all private)
 cv.pdf
-cv.options.json
-.cv-build-*/
+print.options.json
+.print-*/
 
 # Environment
 .env
