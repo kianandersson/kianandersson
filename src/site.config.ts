@@ -50,8 +50,7 @@ const fullName = `${parsed.firstName} ${parsed.lastName}`;
 export const siteConfig: SiteConfig = {
   ...parsed,
   fullName,
-  // Spaced hyphen is the separator across every title/OG surface — the
-  // conventional, pixel-efficient choice for SERP title links (Google rewrites
-  // pipes/em dashes to hyphens anyway). Kept here so it lives in one place.
-  defaultTitle: `${fullName} - ${parsed.role}`,
+  // Spaced pipe is the separator across every title/OG surface — kept here so
+  // the convention lives in one place.
+  defaultTitle: `${fullName} | ${parsed.role}`,
 };
