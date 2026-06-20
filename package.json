@@ -5,7 +5,7 @@
   "type": "module",
   "packageManager": "pnpm@11.6.0",
   "engines": {
-    "node": ">=20"
+    "node": ">=22.18"
   },
   "scripts": {
     "dev": "astro dev",
@@ -23,7 +23,8 @@
     "test:e2e": "playwright test",
     "test:lighthouse": "lhci autorun",
     "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm test:bundle",
-    "storybook": "storybook dev -p 6006"
+    "storybook": "storybook dev -p 6006",
+    "print": "node scripts/print.ts"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^13.7.0",

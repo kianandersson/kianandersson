@@ -134,6 +134,9 @@ const currentYear = new Date().getFullYear();
   }
 
   @page {
-    margin: 1.5cm;
+    size: A4;
+    /* 1cm keeps the 700px container inside A4's printable width (~718px at 1cm)
+       so nothing clips at the edges. */
+    margin: 1cm;
   }
 </style>

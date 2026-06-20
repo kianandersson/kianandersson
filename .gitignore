@@ -6,6 +6,11 @@ dist/
 .astro/
 .wrangler/
 
+# Print output and options
+cv.pdf
+print.options.json
+.print/
+
 # Environment
 .env
 .env.*

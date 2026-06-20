@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { formatPeriod } from '../lib/formatPeriod';
 import { groupSkills } from '../lib/group-skills';
 import { buildPersonJsonLd } from '../lib/person-json-ld';
+import { type ContactDetails, parsePrintOptions } from '../lib/print-options';
 import type { SkillLevel } from '../lib/skill';
 import { sortGroups } from '../lib/sort-groups';
 import { sortSkills } from '../lib/sort-skills';
@@ -15,6 +16,15 @@ const hero = {
   tagline: siteConfig.tagline,
   recipientName: siteConfig.fullName,
   availableFrom: siteConfig.availableFrom,
+};
+
+const printContact = parsePrintOptions(__PRINT_OPTIONS__);
+const coordinates: ContactDetails = {
+  ...printContact,
+  location: siteConfig.location,
+  website: siteConfig.links.website,
+  github: siteConfig.links.github,
+  linkedin: siteConfig.links.linkedin,
 };
 
 type VisibleSkill = {
@@ -94,6 +104,7 @@ const jsonLd = buildPersonJsonLd(
     experience={experience}
     skillGroups={skillGroups}
     languages={siteConfig.languages}
+    coordinates={coordinates}
   />
 </BaseLayout>
 

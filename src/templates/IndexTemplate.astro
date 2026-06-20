@@ -1,4 +1,5 @@
 ---
+import { Coordinates, type CoordinatesProps } from '../components/organisms/Coordinates';
 import { Experience, type ExperienceEntry } from '../components/organisms/Experience';
 import { Hero } from '../components/organisms/Hero';
 import { type KeySkill, KeySkills } from '../components/organisms/KeySkills';
@@ -17,9 +18,10 @@ interface Props {
   experience: ExperienceEntry[];
   skillGroups: SkillGroup[];
   languages: Language[];
+  coordinates: CoordinatesProps;
 }
 
-const { hero, keySkills, experience, skillGroups, languages } = Astro.props;
+const { hero, keySkills, experience, skillGroups, languages, coordinates } = Astro.props;
 ---
 
 <main>
@@ -44,6 +46,7 @@ const { hero, keySkills, experience, skillGroups, languages } = Astro.props;
   <section id="miscellaneous" aria-labelledby="miscellaneous-heading">
     <Miscellaneous languages={languages} />
   </section>
+  <Coordinates {...coordinates} />
   <slot />
 </main>
 

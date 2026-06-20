@@ -8,7 +8,7 @@ Built with [Astro](https://astro.build) and [Preact](https://preactjs.com).
 
 ## Develop
 
-Requires Node ≥20, pnpm 11, and Playwright's Chromium.
+Requires Node ≥22.18, pnpm 11, and Playwright's Chromium.
 
 ```sh
 pnpm install
@@ -23,6 +23,7 @@ See `.env.example` for local development.
 - `RESEND_API_KEY` — Resend API key.
 - `SENDER_EMAIL` — verified sender address.
 - `RECIPIENT_EMAIL` — destination inbox.
+- `EXCLUDE_STORYBOOK` — exclude design catalog from build
 
 ## Common commands
 
@@ -35,6 +36,16 @@ pnpm test               # vitest
 pnpm test:bundle        # gzipped JS budget
 pnpm test:e2e           # playwright + axe
 pnpm test:lighthouse    # lighthouse CI
+pnpm print              # render the front page to cv.pdf (runs locally)
+```
+
+## Print to PDF
+
+Run `pnpm print` to render the page to a PDF locally.
+
+```sh
+pnpm print --email me@example.com --phone "+45 12 34 56 78"
+pnpm print            # uses print.options.json if present
 ```
 
 ## License

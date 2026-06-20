@@ -1,6 +1,7 @@
 export * from './Accordion';
 export * from './ChipList';
 export * from './ContactButton';
+export * from './DefinitionItem';
 export * from './OpenGraphCard';
 export * from './PrintButton';
 export * from './SectionHeader';
