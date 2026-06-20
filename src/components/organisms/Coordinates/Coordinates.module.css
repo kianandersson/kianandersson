@@ -22,13 +22,6 @@
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
-  /* Keep GitHub + LinkedIn (the last two items) side by side: with an odd
-   * total they'd split across rows, so let the item before them span the full
-   * width to restore even pairing — no gaps. */
-  .grid > :nth-last-child(3):nth-child(odd) {
-    grid-column: 1 / -1;
-  }
 }
 
 @container (max-width: 360px) {
@@ -37,16 +30,28 @@
   }
 }
 
-/* Public print (no email/phone): location is the first item. On the wide
- * 3-column layout push it to the end so the links stay together and location
- * sits alone on the second row. Restore the natural order once the grid
- * collapses (mobile). */
-.grid[data-has-contact="false"] > :first-child {
+/* Ordering system: items flow densely in semantic order (contact, location,
+ * links), so the only incomplete cell is ever at the bottom — never a gap in
+ * the middle. Location is the one "floater": it drops to the end whenever
+ * leaving it in place would split the GitHub/LinkedIn pair across rows. That
+ * happens with 3 columns and no contact fields (location is item 1), and with
+ * 2 columns and a single contact field (location is item 2). */
+.grid[data-contact-count="0"] > :nth-child(1) {
   order: 1;
 }
 
 @container (max-width: 560px) {
-  .grid[data-has-contact="false"] > :first-child {
+  .grid[data-contact-count="0"] > :nth-child(1) {
+    order: 0;
+  }
+
+  .grid[data-contact-count="1"] > :nth-child(2) {
+    order: 1;
+  }
+}
+
+@container (max-width: 360px) {
+  .grid[data-contact-count="1"] > :nth-child(2) {
     order: 0;
   }
 }

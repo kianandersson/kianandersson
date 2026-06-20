@@ -57,12 +57,14 @@ export function Coordinates({ contact }: Props) {
   const items = toItems(contact);
   if (items.length === 0) return null;
 
-  const hasContact = Boolean(contact.email || contact.phone);
+  // Location floats to the bottom (see the CSS) when the contact count would
+  // otherwise split the GitHub/LinkedIn pair across rows.
+  const contactCount = (contact.email ? 1 : 0) + (contact.phone ? 1 : 0);
 
   return (
     <section class={styles.root} id="coordinates" aria-labelledby="coordinates-heading">
       <SectionHeader title="My coordinates" id="coordinates-heading" />
-      <dl class={styles.grid} data-has-contact={hasContact ? 'true' : 'false'}>
+      <dl class={styles.grid} data-contact-count={contactCount}>
         {items.map((item) => (
           <DefinitionItem key={item.label} label={item.label} value={item.value} href={item.href} />
         ))}
