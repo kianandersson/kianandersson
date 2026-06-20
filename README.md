@@ -41,7 +41,7 @@ pnpm print              # render the front page to cv.pdf (runs locally)
 
 ## Print to PDF
 
-Run `pnpm print` to render the page to a PDF locally (`cv.pdf` by default).
+Run `pnpm print` to render the page to a PDF locally.
 
 ```sh
 pnpm print --email me@example.com --phone "+45 12 34 56 78"
