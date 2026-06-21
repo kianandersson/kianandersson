@@ -90,6 +90,9 @@ importers:
       jsdom:
         specifier: ^29.1.1
         version: 29.1.1
+      sharp:
+        specifier: ^0.34.5
+        version: 0.34.5
       storybook:
         specifier: ^10.4.6
         version: 10.4.6(@testing-library/dom@8.20.1)(@types/react@19.2.17)(prettier@3.8.4)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)

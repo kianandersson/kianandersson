@@ -3,6 +3,7 @@ import cloudflare from '@astrojs/cloudflare';
 import preact from '@astrojs/preact';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig, envField, sessionDrivers } from 'astro/config';
+import { favicons } from './src/integrations/favicons.ts';
 import { ogImage } from './src/integrations/og-image.ts';
 import { storybook } from './src/integrations/storybook.ts';
 
@@ -23,6 +24,7 @@ export default defineConfig({
     // `/og` is a render-only canvas for the OG image, not a real page.
     sitemap({ filter: (page) => !page.endsWith('/og/') }),
     ogImage(),
+    favicons(),
     storybook(),
   ],
   env: {
