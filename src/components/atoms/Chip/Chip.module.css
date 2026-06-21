@@ -12,7 +12,7 @@
   background: var(--color-accent-subtle);
 }
 
-.chip[data-variant="methods"] {
+.chip[data-variant="domains"] {
   color: var(--color-text-muted);
   background: var(--color-surface-muted);
 }

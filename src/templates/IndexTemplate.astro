@@ -21,8 +21,8 @@ interface Props {
   coordinates: CoordinatesProps;
   /** Print build only: expand each role's stack skills in full (see Experience). */
   allStackSkills?: boolean;
-  /** Print build only: expand each role's methods skills in full (see Experience). */
-  allMethodSkills?: boolean;
+  /** Print build only: expand each role's domains skills in full (see Experience). */
+  allDomainSkills?: boolean;
   /** Print build only: show the hero profile photo (default: true). */
   profilePhoto?: boolean;
 }
@@ -35,7 +35,7 @@ const {
   languages,
   coordinates,
   allStackSkills = false,
-  allMethodSkills = false,
+  allDomainSkills = false,
   profilePhoto = true,
 } = Astro.props;
 ---
@@ -57,7 +57,7 @@ const {
     <Experience
       entries={experience}
       allStackSkills={allStackSkills}
-      allMethodSkills={allMethodSkills}
+      allDomainSkills={allDomainSkills}
       client:visible
     />
   </section>
