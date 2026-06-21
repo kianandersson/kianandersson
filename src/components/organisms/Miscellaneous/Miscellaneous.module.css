@@ -41,4 +41,10 @@
     padding: 0 var(--space-2xs);
     background: transparent;
   }
+
+  /* Keep the row whole with the section header (which has break-after: avoid)
+     so a break never strands the heading. */
+  .row {
+    break-inside: avoid;
+  }
 }

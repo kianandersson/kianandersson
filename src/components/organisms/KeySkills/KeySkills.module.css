@@ -13,6 +13,12 @@
   .allSkillsLink {
     display: none;
   }
+
+  /* Short, curated list: keep it whole with the section header (which has
+     break-after: avoid) so a break never strands the heading. */
+  .list {
+    break-inside: avoid;
+  }
 }
 
 .list {

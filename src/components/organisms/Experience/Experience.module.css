@@ -82,4 +82,10 @@
   .titleBlock {
     break-after: avoid;
   }
+
+  /* Keep the first entry with the section header (which has break-after: avoid)
+     so a break never strands the heading at the foot of a page. */
+  .list > :first-child {
+    break-before: avoid;
+  }
 }
