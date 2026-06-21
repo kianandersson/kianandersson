@@ -47,4 +47,16 @@ describe('parsePrintOptions', () => {
     expect(() => parsePrintOptions('{"minSkillLevel":6}')).toThrow();
     expect(() => parsePrintOptions('{"minSkillLevel":2.5}')).toThrow();
   });
+
+  it('parses allStackSkills and allMethodSkills independently', () => {
+    expect(parsePrintOptions('{"allStackSkills":true}')).toEqual({ allStackSkills: true });
+    expect(parsePrintOptions('{"allStackSkills":true,"allMethodSkills":true}')).toEqual({
+      allStackSkills: true,
+      allMethodSkills: true,
+    });
+  });
+
+  it('throws when allStackSkills is not a boolean', () => {
+    expect(() => parsePrintOptions('{"allStackSkills":"yes"}')).toThrow();
+  });
 });

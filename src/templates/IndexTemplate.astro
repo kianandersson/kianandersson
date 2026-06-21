@@ -19,9 +19,22 @@ interface Props {
   skillGroups: SkillGroup[];
   languages: Language[];
   coordinates: CoordinatesProps;
+  /** Print build only: expand each role's stack skills in full (see Experience). */
+  allStackSkills?: boolean;
+  /** Print build only: expand each role's methods skills in full (see Experience). */
+  allMethodSkills?: boolean;
 }
 
-const { hero, keySkills, experience, skillGroups, languages, coordinates } = Astro.props;
+const {
+  hero,
+  keySkills,
+  experience,
+  skillGroups,
+  languages,
+  coordinates,
+  allStackSkills = false,
+  allMethodSkills = false,
+} = Astro.props;
 ---
 
 <main>
@@ -38,7 +51,12 @@ const { hero, keySkills, experience, skillGroups, languages, coordinates } = Ast
     <KeySkills skills={keySkills} allSkillsHref="#skills" />
   </section>
   <section id="experience" aria-labelledby="experience-heading">
-    <Experience entries={experience} client:visible />
+    <Experience
+      entries={experience}
+      allStackSkills={allStackSkills}
+      allMethodSkills={allMethodSkills}
+      client:visible
+    />
   </section>
   <section id="skills" aria-labelledby="skills-heading">
     <SkillGroups groups={skillGroups} client:visible />

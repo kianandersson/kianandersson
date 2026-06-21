@@ -31,3 +31,40 @@
 .overflow[data-shown="false"] {
   display: none;
 }
+
+/* Print-only sibling of .chips: a plain comma-separated line sliced for print
+ * (full when expanded, else the preview + "+N more"). Hidden on screen, where
+ * the interactive chips take over; see ChipList.tsx. */
+.printList {
+  display: none;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption-s-size);
+  line-height: var(--text-caption-s-leading);
+  flex: 1;
+}
+
+.printList[data-variant="stack"] {
+  color: var(--color-accent-strong);
+}
+
+.printList[data-variant="methods"] {
+  color: var(--color-text-muted);
+}
+
+/* "+N more" reads as a quiet meta note rather than another skill, and stays on
+ * one line — paired with the leading non-breaking space it never orphans. */
+.printMore {
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+@media print {
+  .chips {
+    display: none;
+  }
+
+  .printList {
+    display: block;
+  }
+}

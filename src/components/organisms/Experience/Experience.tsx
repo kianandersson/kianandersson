@@ -14,6 +14,14 @@ const STACK_MIN_ITEMS = 3;
 const METHODS_MAX_CHARS = 128;
 const METHODS_MIN_ITEMS = 3;
 
+// Print list area ~604px (A4 1.5cm margins − gutter − 56 label − gap) with mono
+// ~9px ≈ 5.4px/char ≈ 112 chars/line. The list is plain comma text, so each item
+// only costs its ", " separator. Budgets target ~1 line (stack) / ~2 lines
+// (methods), wrap-safe with room for the trailing "+N more".
+const PRINT_PER_ITEM_COST = 2;
+const PRINT_STACK_MAX_CHARS = 95;
+const PRINT_METHODS_MAX_CHARS = 200;
+
 export type ExperienceEntry = {
   id: string;
   role: string;
@@ -26,9 +34,12 @@ export type ExperienceEntry = {
 
 type Props = {
   entries: ExperienceEntry[];
+  /** Print build only: render each role's full stack / methods list (see ChipList). */
+  allStackSkills?: boolean;
+  allMethodSkills?: boolean;
 };
 
-export function Experience({ entries }: Props) {
+export function Experience({ entries, allStackSkills = false, allMethodSkills = false }: Props) {
   return (
     <div className={styles.root}>
       <SectionHeader title="Experience" id="experience-heading" />
@@ -67,7 +78,10 @@ export function Experience({ entries }: Props) {
                     maxChars={STACK_MAX_CHARS}
                     perItemCost={CHIP_PER_ITEM_COST}
                     minItems={STACK_MIN_ITEMS}
+                    printMaxChars={PRINT_STACK_MAX_CHARS}
+                    printPerItemCost={PRINT_PER_ITEM_COST}
                     variant="stack"
+                    expand={allStackSkills}
                   />
                 )}
                 {entry.methods.length > 0 && (
@@ -77,7 +91,10 @@ export function Experience({ entries }: Props) {
                     maxChars={METHODS_MAX_CHARS}
                     perItemCost={CHIP_PER_ITEM_COST}
                     minItems={METHODS_MIN_ITEMS}
+                    printMaxChars={PRINT_METHODS_MAX_CHARS}
+                    printPerItemCost={PRINT_PER_ITEM_COST}
                     variant="methods"
+                    expand={allMethodSkills}
                   />
                 )}
               </div>

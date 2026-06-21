@@ -10,11 +10,17 @@ import { z } from 'zod';
  * - `minSkillLevel`: lowest skill level to keep in the "all skills" section.
  *   Omitted means every skill is included; set e.g. 3 to drop level 1–2 skills
  *   from the CV.
+ * - `allStackSkills` / `allMethodSkills`: when true, each role's stack (resp.
+ *   methods) skills print in full instead of truncating to the on-screen
+ *   "+N more" preview. They are independent, so a CV can expand one list and
+ *   truncate the other.
  */
 const PrintOptionsSchema = z.object({
   email: z.email().optional(),
   phone: z.string().optional(),
   minSkillLevel: z.coerce.number().int().min(1).max(5).optional(),
+  allStackSkills: z.boolean().optional(),
+  allMethodSkills: z.boolean().optional(),
 });
 
 export type PrintOptions = z.infer<typeof PrintOptionsSchema>;

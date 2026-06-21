@@ -33,6 +33,11 @@ const coordinates: ContactDetails = {
 // hand-picked highlight reel and stay untouched.
 const minSkillLevel = printOptions?.minSkillLevel ?? 1;
 
+// Each role's stack/methods skills truncate on paper like on screen; the print
+// build can opt to expand either list in full instead, independently.
+const allStackSkills = printOptions?.allStackSkills ?? false;
+const allMethodSkills = printOptions?.allMethodSkills ?? false;
+
 type VisibleSkill = {
   id: string;
   name: string;
@@ -113,6 +118,8 @@ const jsonLd = buildPersonJsonLd(
     skillGroups={skillGroups}
     languages={siteConfig.languages}
     coordinates={coordinates}
+    allStackSkills={allStackSkills}
+    allMethodSkills={allMethodSkills}
   />
 </BaseLayout>
 
