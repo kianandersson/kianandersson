@@ -326,10 +326,7 @@
   --text-display-xl-size: var(--font-size-900);
   --text-display-xl-leading: var(--line-height-200);
 
-  /* Leading for an inline, comma-separated value list (e.g. the print CV's
-     stack/methods skills). On screen those are flex chips with no line-height
-     in play, so this only takes effect on paper, where it's loosened (below) so
-     wrapped lines breathe. */
+  /* Print skill lists (flex chips on web, so print-only). */
   --text-list-leading: var(--line-height-400);
 
   /* Space semantics */
@@ -382,10 +379,7 @@
   :root {
     --color-surface: var(--color-white);
 
-    /* On paper the web type ramp is oversized — 16px body and 48px display run
-       the CV to 11+ pages. Re-scale the primitives (roughly ×0.7) so the whole
-       system shrinks proportionally to print-appropriate sizes without touching
-       any component. */
+    /* Re-scale the type ramp (~×0.7) for print. */
     --font-size-100: 9px;
     --font-size-200: 10px;
     --font-size-300: 11px;
@@ -400,12 +394,10 @@
     --line-height-500: 1.45;
     --line-height-600: 1.5;
 
-    /* The wrapped skill lists, by contrast, want a touch more room between
-       lines than the caption default they'd otherwise inherit. */
+    /* Looser than the caption default for the wrapped skill lists. */
     --text-list-leading: 1.7;
 
-    /* Compress the spacing scale (roughly ×0.6) so the generous web rhythm
-       doesn't waste page height. */
+    /* Compress the spacing scale (~×0.6) for print. */
     --space-1: 3px;
     --space-2: 5px;
     --space-3: 7px;

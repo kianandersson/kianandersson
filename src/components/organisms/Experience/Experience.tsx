@@ -5,21 +5,16 @@ import { ChipList } from '../../molecules/ChipList';
 import { SectionHeader } from '../../molecules/SectionHeader';
 import styles from './Experience.module.css';
 
-// Desktop chip area ~556px (700 container − 48 padding − 24 timeline − 56 label − 16 gap).
-// Geist Mono 12px ≈ 7.2px/char. Chip padding+gap ≈ 5 chars; "+NN more" reserves ≈ 13 chars (2-digit safe).
-// 1 line ≈ 77 chars, 2 lines ≈ 154 chars. Budgets sit well under that so the
-// "+N more" toggle always shares the last line rather than orphaning — better a
-// little slack than a stranded toggle.
+// Web chip area ~556px, Geist Mono 12px ≈ 77 chars/line; cost = text + ~5/item.
+// Budgets stay under 1 line (stack) / 2 lines (methods) so "+N more" never orphans.
 const CHIP_PER_ITEM_COST = 5;
 const STACK_MAX_CHARS = 58;
 const STACK_MIN_ITEMS = 3;
 const METHODS_MAX_CHARS = 112;
 const METHODS_MIN_ITEMS = 3;
 
-// Print list area ~604px (A4 1.5cm margins − gutter − 56 label − gap) with mono
-// ~9px ≈ 5.4px/char ≈ 112 chars/line. The list is plain comma text, so each item
-// only costs its ", " separator. Budgets target ~1 line (stack) / ~2 lines
-// (methods), wrap-safe with room for the trailing "+N more".
+// Print list ~604px, mono ~9px ≈ 112 chars/line; plain comma text (~2/item).
+// Budgets target ~1 line (stack) / ~2 lines (methods).
 const PRINT_PER_ITEM_COST = 2;
 const PRINT_STACK_MAX_CHARS = 95;
 const PRINT_METHODS_MAX_CHARS = 200;

@@ -1,19 +1,13 @@
 import { z } from 'zod';
 
 /**
- * Build-time options for the offline CV, injected via the `PRINT_OPTIONS` env
- * (a JSON string) only when generating the PDF locally — never on the public
- * build.
+ * Build-time print options, injected via `PRINT_OPTIONS` (JSON) only for the
+ * local PDF — never the public build.
  *
- * - `email` / `phone`: private contact details, intentionally absent from the
- *   public site. Everything else on the CV footer comes from the site config.
- * - `minSkillLevel`: lowest skill level to keep in the "all skills" section.
- *   Omitted means every skill is included; set e.g. 3 to drop level 1–2 skills
- *   from the CV.
- * - `allStackSkills` / `allMethodSkills`: when true, each role's stack (resp.
- *   methods) skills print in full instead of truncating to the on-screen
- *   "+N more" preview. They are independent, so a CV can expand one list and
- *   truncate the other.
+ * - `email` / `phone`: private contact details (the rest comes from site config).
+ * - `minSkillLevel`: drop skills below this level from "all skills" (default: all).
+ * - `allStackSkills` / `allMethodSkills`: print a role's full stack/methods list
+ *   instead of the "+N more" preview.
  */
 const PrintOptionsSchema = z.object({
   email: z.email().optional(),
@@ -37,12 +31,8 @@ export type ContactDetails = ContactOptions & {
 };
 
 /**
- * Parses the `PRINT_OPTIONS` env into the print build options.
- *
- * Returns `null` when nothing usable is provided (env unset, empty, or every
- * field blank) so the public build renders no contact block and keeps every
- * skill. Throws on malformed input so a botched print run fails loudly rather
- * than shipping a broken CV.
+ * Parses `PRINT_OPTIONS` into the print options, or `null` when nothing usable
+ * is provided. Throws on malformed input so a botched run fails loudly.
  */
 export function parsePrintOptions(raw: string | undefined): PrintOptions | null {
   if (!raw || raw.trim() === '') return null;
