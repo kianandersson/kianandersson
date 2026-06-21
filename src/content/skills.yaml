@@ -215,8 +215,8 @@ groups:
 
       - name: Web Performance
         category: practice
-        level: 2
-        years: 2
+        level: 3
+        years: 3
         lastUsed: 2026
 
       - name: CSS
@@ -630,13 +630,13 @@ groups:
 
       - name: Vitest
         category: technology
-        level: 2
+        level: 3
         years: 1
         lastUsed: 2026
 
       - name: Playwright
         category: technology
-        level: 2
+        level: 3
         years: 1
         lastUsed: 2026
 
