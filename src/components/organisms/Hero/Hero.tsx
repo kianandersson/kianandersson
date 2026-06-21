@@ -14,19 +14,21 @@ type Props = {
 export function Hero({ name, tagline, showProfilePhoto = false, children }: Props) {
   return (
     <div className={styles.root}>
-      {showProfilePhoto && (
-        // Decorative on a CV — the name is already in the heading. Hidden on
-        // screen and revealed only when printing (see Hero.module.css).
-        <img className={styles.photo} src="/profile.jpg" alt="" />
-      )}
-      <div className={styles.text}>
-        <Heading level={1} size="display-xl">
-          Hi, I'm <span className={styles.name}>{name}</span>.
-        </Heading>
-        <div className={styles.body}>
-          <Text as="p" size="heading-s" tone="muted">
-            {tagline}
-          </Text>
+      <div className={styles.lead}>
+        {showProfilePhoto && (
+          // Decorative on a CV — the name is already in the heading. Hidden on
+          // screen and revealed only when printing (see Hero.module.css).
+          <img className={styles.photo} src="/profile.jpg" alt="" />
+        )}
+        <div className={styles.text}>
+          <Heading level={1} size="display-xl">
+            Hi, I'm <span className={styles.name}>{name}</span>.
+          </Heading>
+          <div className={styles.body}>
+            <Text as="p" size="heading-s" tone="muted">
+              {tagline}
+            </Text>
+          </div>
         </div>
       </div>
       {children}

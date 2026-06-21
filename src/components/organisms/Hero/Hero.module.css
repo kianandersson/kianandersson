@@ -4,9 +4,22 @@
   gap: var(--space-xl);
   align-items: flex-start;
   /* Photo size scales with the available width so the print/preview layout
-     holds up at any page size (caps at 128px on a full A4). Shared by the
-     image and the gutter that reserves its corner. */
+     holds up at any page size (caps at 128px on a full A4). */
   --hero-photo-size: clamp(88px, 20vw, 128px);
+}
+
+/* Groups the heading/tagline with (on print) the profile photo. Stacks them in
+   a column by default — the layout that fits a phone-width page, photo above
+   the text — and turns into a row once there's room (see the container query). */
+.lead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+  align-items: flex-start;
+  /* Fill the hero width (.root doesn't stretch its items) so the row layout can
+     push the photo out to the right edge. Inert in the column layout — the text
+     stays left-aligned either way. */
+  align-self: stretch;
 }
 
 .text {
@@ -24,8 +37,7 @@
   max-width: 540px;
 }
 
-/* The profile photo rides along only on the printed CV. Hidden on screen; the
- * grid/position properties below are inert while display is none. */
+/* The profile photo rides along only on the printed CV (hidden on screen). */
 .photo {
   display: none;
   width: var(--hero-photo-size);
@@ -34,31 +46,44 @@
   border-radius: var(--radius-l);
 }
 
+/* Reveal the photo on print and in the catalog preview; container-type lets the
+   lead layout below respond to the available width. */
 @media print {
   .root {
-    position: relative;
-    /* Reserve the top-right corner so the heading never runs under the photo.
-       Only .text shows on print — the contact children are hidden — so this
-       gutter affects the heading/tagline alone. */
-    padding-right: calc(var(--hero-photo-size) + var(--space-l));
+    container-type: inline-size;
   }
 
   .photo {
     display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
   }
 }
 
 [data-print-preview] .root {
-  position: relative;
-  padding-right: calc(var(--hero-photo-size) + var(--space-l));
+  container-type: inline-size;
 }
 
 [data-print-preview] .photo {
   display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
+}
+
+/* Wide enough to sit the photo beside the text in the top-right corner.
+   align-items: flex-end bottom-aligns the text; the photo overrides to
+   flex-start. So when the text is taller it runs further down than the photo
+   (photo pinned to the corner), and when the text is shorter the photo grows
+   upward and the two bottoms line up. */
+@container (min-width: 480px) {
+  .lead {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+
+  .text {
+    flex: 1;
+  }
+
+  .photo {
+    order: 1;
+    align-self: flex-start;
+    flex: none;
+  }
 }
