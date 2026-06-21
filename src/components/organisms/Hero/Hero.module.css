@@ -3,6 +3,17 @@
   flex-direction: column;
   gap: var(--space-xl);
   align-items: flex-start;
+  --hero-photo-size: clamp(88px, 20vw, 128px);
+}
+
+.lead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+  align-items: flex-start;
+  /* .root doesn't stretch its items; fill the width so the row layout can push
+     the photo out to the right edge. */
+  align-self: stretch;
 }
 
 .text {
@@ -18,4 +29,54 @@
 
 .body {
   max-width: 540px;
+}
+
+.photo {
+  display: none;
+  width: var(--hero-photo-size);
+  height: var(--hero-photo-size);
+  object-fit: cover;
+  border-radius: var(--radius-m);
+}
+
+@media print {
+  .root {
+    container-type: inline-size;
+  }
+
+  .body {
+    max-width: 40ch;
+  }
+
+  .photo {
+    display: block;
+  }
+}
+
+[data-print-preview] .root {
+  container-type: inline-size;
+}
+
+[data-print-preview] .photo {
+  display: block;
+}
+
+/* flex-end bottom-aligns the text while the photo overrides to flex-start: tall
+   text runs below the photo (pinned to the corner), short text lets the photo
+   grow upward so the two bottoms line up. */
+@container (min-width: 480px) {
+  .lead {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+
+  .text {
+    flex: 1;
+  }
+
+  .photo {
+    order: 1;
+    align-self: flex-start;
+    flex: none;
+  }
 }

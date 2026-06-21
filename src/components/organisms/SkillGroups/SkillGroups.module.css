@@ -21,6 +21,12 @@
     /* Match Experience: same space below the rule as between groups. */
     padding-top: var(--space-4xl);
   }
+
+  /* Keep the first group with the section header (which has break-after: avoid)
+     so a break never strands the heading and top rule at the foot of a page. */
+  .groups > :first-child {
+    break-before: avoid;
+  }
 }
 
 .list {

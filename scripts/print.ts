@@ -22,8 +22,11 @@
  *          --all-stack-skills   Print each role's stack skills in full
  *          --all-method-skills  Print each role's methods skills in full
  *                               (both default to truncating like the web view)
+ *          --no-profile-photo   Leave the hero profile photo off the CV
+ *                               (default: included)
  *          --options <file>     JSON with email/phone/minSkillLevel/
- *                               allStackSkills/allMethodSkills (CLI flags win)
+ *                               allStackSkills/allMethodSkills/profilePhoto
+ *                               (CLI flags win)
  *          --output <file>      PDF path (default cv.pdf)
  */
 import { readFileSync } from 'node:fs';
@@ -46,6 +49,7 @@ type PrintOptions = Contact & {
   minSkillLevel?: number;
   allStackSkills?: boolean;
   allMethodSkills?: boolean;
+  profilePhoto?: boolean;
 };
 
 // Build inside the project root (not the OS temp dir): the Cloudflare adapter
@@ -61,6 +65,7 @@ async function main(): Promise<void> {
       'min-skill-level': { type: 'string' },
       'all-stack-skills': { type: 'boolean' },
       'all-method-skills': { type: 'boolean' },
+      'no-profile-photo': { type: 'boolean' },
       options: { type: 'string', short: 'o' },
       output: { type: 'string' },
       help: { type: 'boolean', short: 'h' },
@@ -121,6 +126,7 @@ function collectPrintOptions(values: {
   'min-skill-level'?: string;
   'all-stack-skills'?: boolean;
   'all-method-skills'?: boolean;
+  'no-profile-photo'?: boolean;
   options?: string;
 }): PrintOptions {
   const fromFile = readOptionsFile(values.options);
@@ -140,6 +146,11 @@ function collectPrintOptions(values: {
   }
   if ((values['all-method-skills'] ?? fromFile.allMethodSkills) === true) {
     merged.allMethodSkills = true;
+  }
+  // The photo is included by default; only emit the option to leave it off.
+  // The CLI flag wins, then the file can opt out with `profilePhoto: false`.
+  if (values['no-profile-photo'] === true || fromFile.profilePhoto === false) {
+    merged.profilePhoto = false;
   }
   return merged;
 }
@@ -191,8 +202,10 @@ function printUsage(): void {
       `  --all-stack-skills      Print each role's stack skills in full\n` +
       `  --all-method-skills     Print each role's methods skills in full\n` +
       `                          (both default to truncating like the web view)\n` +
+      `  --no-profile-photo      Leave the hero profile photo off (default: included)\n` +
       `  --options, -o <file>    JSON file with email/phone/minSkillLevel/\n` +
-      `                          allStackSkills/allMethodSkills (CLI flags win)\n` +
+      `                          allStackSkills/allMethodSkills/profilePhoto\n` +
+      `                          (CLI flags win)\n` +
       `  --output <file>         PDF output path (default cv.pdf)\n`,
   );
 }

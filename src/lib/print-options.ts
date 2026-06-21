@@ -8,6 +8,8 @@ import { z } from 'zod';
  * - `minSkillLevel`: drop skills below this level from "all skills" (default: all).
  * - `allStackSkills` / `allMethodSkills`: print a role's full stack/methods list
  *   instead of the "+N more" preview.
+ * - `profilePhoto`: include the hero profile photo on the CV (default: true; set
+ *   `false` to leave it off).
  */
 const PrintOptionsSchema = z.object({
   email: z.email().optional(),
@@ -15,6 +17,7 @@ const PrintOptionsSchema = z.object({
   minSkillLevel: z.coerce.number().int().min(1).max(5).optional(),
   allStackSkills: z.boolean().optional(),
   allMethodSkills: z.boolean().optional(),
+  profilePhoto: z.boolean().optional(),
 });
 
 export type PrintOptions = z.infer<typeof PrintOptionsSchema>;

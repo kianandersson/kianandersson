@@ -63,6 +63,9 @@
 
   .grid {
     gap: var(--space-s) var(--space-xl);
+    /* Keep the grid whole with the section header (which has break-after: avoid)
+       so a break never strands the heading. */
+    break-inside: avoid;
   }
 }
 

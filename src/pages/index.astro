@@ -37,6 +37,7 @@ const minSkillLevel = printOptions?.minSkillLevel ?? 1;
 // build can opt to expand either list in full instead, independently.
 const allStackSkills = printOptions?.allStackSkills ?? false;
 const allMethodSkills = printOptions?.allMethodSkills ?? false;
+const profilePhoto = printOptions?.profilePhoto ?? true;
 
 type VisibleSkill = {
   id: string;
@@ -120,6 +121,7 @@ const jsonLd = buildPersonJsonLd(
     coordinates={coordinates}
     allStackSkills={allStackSkills}
     allMethodSkills={allMethodSkills}
+    profilePhoto={profilePhoto}
   />
 </BaseLayout>
 
