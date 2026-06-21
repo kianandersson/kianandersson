@@ -3,22 +3,16 @@
   flex-direction: column;
   gap: var(--space-xl);
   align-items: flex-start;
-  /* Photo size scales with the available width so the print/preview layout
-     holds up at any page size (caps at 128px on a full A4). */
   --hero-photo-size: clamp(88px, 20vw, 128px);
 }
 
-/* Groups the heading/tagline with (on print) the profile photo. Stacks them in
-   a column by default — the layout that fits a phone-width page, photo above
-   the text — and turns into a row once there's room (see the container query). */
 .lead {
   display: flex;
   flex-direction: column;
-  gap: var(--space-l);
+  gap: var(--space-2xl);
   align-items: flex-start;
-  /* Fill the hero width (.root doesn't stretch its items) so the row layout can
-     push the photo out to the right edge. Inert in the column layout — the text
-     stays left-aligned either way. */
+  /* .root doesn't stretch its items; fill the width so the row layout can push
+     the photo out to the right edge. */
   align-self: stretch;
 }
 
@@ -37,20 +31,21 @@
   max-width: 540px;
 }
 
-/* The profile photo rides along only on the printed CV (hidden on screen). */
 .photo {
   display: none;
   width: var(--hero-photo-size);
   height: var(--hero-photo-size);
   object-fit: cover;
-  border-radius: var(--radius-l);
+  border-radius: var(--radius-m);
 }
 
-/* Reveal the photo on print and in the catalog preview; container-type lets the
-   lead layout below respond to the available width. */
 @media print {
   .root {
     container-type: inline-size;
+  }
+
+  .body {
+    max-width: 40ch;
   }
 
   .photo {
@@ -66,11 +61,9 @@
   display: block;
 }
 
-/* Wide enough to sit the photo beside the text in the top-right corner.
-   align-items: flex-end bottom-aligns the text; the photo overrides to
-   flex-start. So when the text is taller it runs further down than the photo
-   (photo pinned to the corner), and when the text is shorter the photo grows
-   upward and the two bottoms line up. */
+/* flex-end bottom-aligns the text while the photo overrides to flex-start: tall
+   text runs below the photo (pinned to the corner), short text lets the photo
+   grow upward so the two bottoms line up. */
 @container (min-width: 480px) {
   .lead {
     flex-direction: row;

@@ -21,8 +21,7 @@ type Story = StoryObj<typeof Hero>;
 
 export const Default: Story = {};
 
-// The profile photo is print-only; force the print preview so the catalog can
-// show the square photo in the top-right corner.
+// data-print-preview forces the print-only photo visible in the catalog.
 export const WithProfilePhoto: Story = {
   args: { showProfilePhoto: true },
   decorators: [

@@ -6,7 +6,7 @@ import styles from './Hero.module.css';
 type Props = {
   name: string;
   tagline: string;
-  /** Print only: show the square profile photo in the top-right corner. */
+  /** Print only. */
   showProfilePhoto?: boolean;
   children?: ComponentChildren;
 };
@@ -16,8 +16,7 @@ export function Hero({ name, tagline, showProfilePhoto = false, children }: Prop
     <div className={styles.root}>
       <div className={styles.lead}>
         {showProfilePhoto && (
-          // Decorative on a CV — the name is already in the heading. Hidden on
-          // screen and revealed only when printing (see Hero.module.css).
+          // Decorative: the name is already in the heading, so the alt is empty.
           <img className={styles.photo} src="/profile.jpg" alt="" />
         )}
         <div className={styles.text}>
