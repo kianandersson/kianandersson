@@ -326,6 +326,12 @@
   --text-display-xl-size: var(--font-size-900);
   --text-display-xl-leading: var(--line-height-200);
 
+  /* Leading for an inline, comma-separated value list (e.g. the print CV's
+     stack/methods skills). On screen those are flex chips with no line-height
+     in play, so this only takes effect on paper, where it's loosened (below) so
+     wrapped lines breathe. */
+  --text-list-leading: var(--line-height-400);
+
   /* Space semantics */
   --space-2xs: var(--space-1);
   --space-xs: var(--space-2);
@@ -393,6 +399,10 @@
     /* Body and loose leadings read tighter on paper to save vertical space. */
     --line-height-500: 1.45;
     --line-height-600: 1.5;
+
+    /* The wrapped skill lists, by contrast, want a touch more room between
+       lines than the caption default they'd otherwise inherit. */
+    --text-list-leading: 1.7;
 
     /* Compress the spacing scale (roughly ×0.6) so the generous web rhythm
        doesn't waste page height. */

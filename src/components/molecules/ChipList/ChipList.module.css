@@ -40,7 +40,7 @@
   margin: 0;
   font-family: var(--font-mono);
   font-size: var(--text-caption-s-size);
-  line-height: var(--text-caption-s-leading);
+  line-height: var(--text-list-leading);
   flex: 1;
 }
 
