@@ -1,20 +1,29 @@
 import { z } from 'zod';
 
 /**
- * Private contact details for the offline CV — email and phone only. These are
- * intentionally absent from the public site and injected at build time via the
- * `PRINT_OPTIONS` env (a JSON string) only when generating the PDF locally.
- * Everything else on the CV footer comes from the site config.
+ * Build-time print options, injected via `PRINT_OPTIONS` (JSON) only for the
+ * local PDF — never the public build.
+ *
+ * - `email` / `phone`: private contact details (the rest comes from site config).
+ * - `minSkillLevel`: drop skills below this level from "all skills" (default: all).
+ * - `allStackSkills` / `allMethodSkills`: print a role's full stack/methods list
+ *   instead of the "+N more" preview.
  */
 const PrintOptionsSchema = z.object({
   email: z.email().optional(),
   phone: z.string().optional(),
+  minSkillLevel: z.coerce.number().int().min(1).max(5).optional(),
+  allStackSkills: z.boolean().optional(),
+  allMethodSkills: z.boolean().optional(),
 });
 
 export type PrintOptions = z.infer<typeof PrintOptionsSchema>;
 
+/** The private contact subset rendered in the CV footer. */
+export type ContactOptions = Pick<PrintOptions, 'email' | 'phone'>;
+
 /** Full set of details rendered in the CV contact footer. */
-export type ContactDetails = PrintOptions & {
+export type ContactDetails = ContactOptions & {
   location?: string;
   website?: string;
   linkedin?: string;
@@ -22,12 +31,8 @@ export type ContactDetails = PrintOptions & {
 };
 
 /**
- * Parses the `PRINT_OPTIONS` env into the private contact details.
- *
- * Returns `null` when nothing usable is provided (env unset, empty, or every
- * field blank) so the public build renders no contact block at all. Throws on
- * malformed input so a botched print run fails loudly rather than shipping an
- * empty CV.
+ * Parses `PRINT_OPTIONS` into the print options, or `null` when nothing usable
+ * is provided. Throws on malformed input so a botched run fails loudly.
  */
 export function parsePrintOptions(raw: string | undefined): PrintOptions | null {
   if (!raw || raw.trim() === '') return null;

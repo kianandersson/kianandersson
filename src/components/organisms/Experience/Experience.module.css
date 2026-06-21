@@ -63,6 +63,8 @@
 @media print {
   .timeline {
     padding-left: 0;
+    /* Match the gap between entries now that the rail marker is hidden. */
+    padding-top: var(--space-4xl);
   }
 
   .rail {

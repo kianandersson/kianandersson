@@ -9,6 +9,20 @@
   border-bottom: 1px solid var(--color-divider);
 }
 
+@media print {
+  .groups {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4xl);
+    /* Top rule divides the section header from the first accordion; each
+       accordion's own bottom border closes it, so drop the container's. */
+    border-top: 1px solid var(--color-divider);
+    border-bottom: 0;
+    /* Match Experience: same space below the rule as between groups. */
+    padding-top: var(--space-4xl);
+  }
+}
+
 .list {
   list-style: none;
   margin: 0;

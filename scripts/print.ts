@@ -11,12 +11,20 @@
  *
  * Usage:
  *   pnpm print --email me@example.com --phone "+45 12 34 56 78"
+ *   pnpm print --email me@example.com --min-skill-level 3
+ *   pnpm print --email me@example.com --all-stack-skills --all-method-skills
  *   pnpm print --options ./my-details.json
  *   pnpm print            # uses print.options.json if present
  *
  * Options: --email --phone
- *          --options <file>  JSON with email/phone (CLI flags win)
- *          --output <file>   PDF path (default cv.pdf)
+ *          --min-skill-level <1-5>  Drop skills below this level from "all
+ *                                   skills" (default: keep every skill)
+ *          --all-stack-skills   Print each role's stack skills in full
+ *          --all-method-skills  Print each role's methods skills in full
+ *                               (both default to truncating like the web view)
+ *          --options <file>     JSON with email/phone/minSkillLevel/
+ *                               allStackSkills/allMethodSkills (CLI flags win)
+ *          --output <file>      PDF path (default cv.pdf)
  */
 import { readFileSync } from 'node:fs';
 import { rm } from 'node:fs/promises';
@@ -34,6 +42,11 @@ const DEFAULT_OPTIONS_FILE = join(ROOT, 'print.options.json');
 
 type ContactField = (typeof CONTACT_FIELDS)[number];
 type Contact = Partial<Record<ContactField, string>>;
+type PrintOptions = Contact & {
+  minSkillLevel?: number;
+  allStackSkills?: boolean;
+  allMethodSkills?: boolean;
+};
 
 // Build inside the project root (not the OS temp dir): the Cloudflare adapter
 // derives a relative .dev.vars path during prerender, and a path outside the
@@ -45,6 +58,9 @@ async function main(): Promise<void> {
     options: {
       email: { type: 'string' },
       phone: { type: 'string' },
+      'min-skill-level': { type: 'string' },
+      'all-stack-skills': { type: 'boolean' },
+      'all-method-skills': { type: 'boolean' },
       options: { type: 'string', short: 'o' },
       output: { type: 'string' },
       help: { type: 'boolean', short: 'h' },
@@ -56,8 +72,8 @@ async function main(): Promise<void> {
     return;
   }
 
-  const contact = collectContact(values);
-  if (Object.keys(contact).length === 0) {
+  const printOptions = collectPrintOptions(values);
+  if (!printOptions.email && !printOptions.phone) {
     console.error('No contact details provided.\n');
     printUsage();
     process.exit(1);
@@ -65,9 +81,9 @@ async function main(): Promise<void> {
 
   const outputPdf = values.output ? resolve(values.output) : join(ROOT, 'cv.pdf');
 
-  // The private details are inlined at build time via a Vite define that reads
+  // The options are inlined at build time via a Vite define that reads
   // PRINT_OPTIONS (see astro.config.mjs); Storybook is skipped for speed.
-  process.env.PRINT_OPTIONS = JSON.stringify(contact);
+  process.env.PRINT_OPTIONS = JSON.stringify(printOptions);
   process.env.EXCLUDE_STORYBOOK = '1';
 
   try {
@@ -95,20 +111,50 @@ async function main(): Promise<void> {
 }
 
 /**
- * Merges contact details from an options file (explicit --options, else
+ * Merges options from an options file (explicit --options, else
  * print.options.json if present) with CLI flags, where CLI flags win. Blank
- * values are dropped so empty placeholders don't surface on the CV.
+ * contact values are dropped so empty placeholders don't surface on the CV.
  */
-function collectContact(values: { email?: string; phone?: string; options?: string }): Contact {
+function collectPrintOptions(values: {
+  email?: string;
+  phone?: string;
+  'min-skill-level'?: string;
+  'all-stack-skills'?: boolean;
+  'all-method-skills'?: boolean;
+  options?: string;
+}): PrintOptions {
   const fromFile = readOptionsFile(values.options);
-  const merged: Contact = {};
+  const merged: PrintOptions = {};
   for (const field of CONTACT_FIELDS) {
     const value = values[field] ?? fromFile[field];
     if (typeof value === 'string' && value.trim() !== '') {
       merged[field] = value.trim();
     }
   }
+  const minSkillLevel = parseMinSkillLevel(values['min-skill-level'] ?? fromFile.minSkillLevel);
+  if (minSkillLevel !== undefined) {
+    merged.minSkillLevel = minSkillLevel;
+  }
+  if ((values['all-stack-skills'] ?? fromFile.allStackSkills) === true) {
+    merged.allStackSkills = true;
+  }
+  if ((values['all-method-skills'] ?? fromFile.allMethodSkills) === true) {
+    merged.allMethodSkills = true;
+  }
   return merged;
+}
+
+/**
+ * Validates the minimum skill level (1–5) up front so a typo fails with a clear
+ * message rather than surfacing as a cryptic build-time validation error.
+ */
+function parseMinSkillLevel(value: unknown): number | undefined {
+  if (value === undefined || value === null || value === '') return undefined;
+  const level = Number(value);
+  if (!Number.isInteger(level) || level < 1 || level > 5) {
+    throw new Error(`--min-skill-level must be an integer from 1 to 5 (got ${String(value)})`);
+  }
+  return level;
 }
 
 function readOptionsFile(explicitPath?: string): Record<string, unknown> {
@@ -135,11 +181,19 @@ function printUsage(): void {
       `the footer comes from the site config.\n\n` +
       `Usage:\n` +
       `  pnpm print --email me@example.com --phone "+45 12 34 56 78"\n` +
+      `  pnpm print --email me@example.com --min-skill-level 3\n` +
+      `  pnpm print --email me@example.com --all-stack-skills --all-method-skills\n` +
       `  pnpm print --options ./my-details.json\n` +
       `  pnpm print            # uses print.options.json if present\n\n` +
       `Private options: ${CONTACT_FIELDS.map((f) => `--${f}`).join(' ')}\n` +
-      `  --options, -o <file>   JSON file with email/phone (CLI flags win)\n` +
-      `  --output <file>        PDF output path (default cv.pdf)\n`,
+      `  --min-skill-level <1-5> Drop skills below this level from "all skills"\n` +
+      `                          (default: keep every skill)\n` +
+      `  --all-stack-skills      Print each role's stack skills in full\n` +
+      `  --all-method-skills     Print each role's methods skills in full\n` +
+      `                          (both default to truncating like the web view)\n` +
+      `  --options, -o <file>    JSON file with email/phone/minSkillLevel/\n` +
+      `                          allStackSkills/allMethodSkills (CLI flags win)\n` +
+      `  --output <file>         PDF output path (default cv.pdf)\n`,
   );
 }
 

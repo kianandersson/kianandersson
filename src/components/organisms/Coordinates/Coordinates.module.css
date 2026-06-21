@@ -60,6 +60,10 @@
   .root {
     --print-contact-display: flex;
   }
+
+  .grid {
+    gap: var(--space-s) var(--space-xl);
+  }
 }
 
 [data-print-preview] .root {

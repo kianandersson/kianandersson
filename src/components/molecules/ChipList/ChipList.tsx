@@ -11,16 +11,40 @@ type Props = {
   perItemCost?: number;
   minItems?: number;
   variant: ChipVariant;
+  printMaxChars?: number;
+  printPerItemCost?: number;
+  expand?: boolean;
 };
 
-export function ChipList({ label, items, maxChars, perItemCost, minItems, variant }: Props) {
+// Leading non-breaking space (with nowrap) keeps "+N more" off its own line.
+const MORE_PREFIX = ' ';
+
+export function ChipList({
+  label,
+  items,
+  maxChars,
+  perItemCost,
+  variant,
+  minItems,
+  printMaxChars,
+  printPerItemCost,
+  expand = false,
+}: Props) {
   const [isOpen, setOpen] = useState(false);
   const toggle = useCallback(() => setOpen((prev) => !prev), []);
+
   const { visible, hidden, hasMore, hiddenCount } = sliceList(items, {
     maxChars,
     perItemCost,
     minItems,
   });
+  const printSlice = sliceList(items, {
+    maxChars: printMaxChars ?? maxChars,
+    perItemCost: printPerItemCost ?? perItemCost,
+    minItems,
+  });
+  const printItems = expand ? items : printSlice.visible;
+  const printHiddenCount = expand ? 0 : printSlice.hiddenCount;
 
   return (
     <div className={styles.row}>
@@ -42,6 +66,12 @@ export function ChipList({ label, items, maxChars, perItemCost, minItems, varian
           </TextLink>
         )}
       </div>
+      <p className={styles.printList} data-variant={variant} aria-hidden="true">
+        {printItems.join(', ')}
+        {printHiddenCount > 0 && (
+          <span className={styles.printMore}>{`${MORE_PREFIX}+${printHiddenCount} more`}</span>
+        )}
+      </p>
     </div>
   );
 }

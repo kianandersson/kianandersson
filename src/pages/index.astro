@@ -18,14 +18,25 @@ const hero = {
   availableFrom: siteConfig.availableFrom,
 };
 
-const printContact = parsePrintOptions(__PRINT_OPTIONS__);
+const printOptions = parsePrintOptions(__PRINT_OPTIONS__);
 const coordinates: ContactDetails = {
-  ...printContact,
+  email: printOptions?.email,
+  phone: printOptions?.phone,
   location: siteConfig.location,
   website: siteConfig.links.website,
   github: siteConfig.links.github,
   linkedin: siteConfig.links.linkedin,
 };
+
+// "All skills" defaults to every skill; the local print build can raise the
+// floor (e.g. 3) to drop low-level entries from the CV. Key skills are a
+// hand-picked highlight reel and stay untouched.
+const minSkillLevel = printOptions?.minSkillLevel ?? 1;
+
+// Each role's stack/methods skills truncate on paper like on screen; the print
+// build can opt to expand either list in full instead, independently.
+const allStackSkills = printOptions?.allStackSkills ?? false;
+const allMethodSkills = printOptions?.allMethodSkills ?? false;
 
 type VisibleSkill = {
   id: string;
@@ -59,10 +70,12 @@ const keySkills = (await getCollection('keySkills'))
   .map(({ id, name, level, years }) => ({ id, name, level, years }));
 
 const skillGroups = sortGroups(
-  groupSkills(allSkills).map(({ group, items }) => ({
-    group,
-    skills: sortSkills(items).map(({ id, name, level, years }) => ({ id, name, level, years })),
-  })),
+  groupSkills(allSkills.filter((skill) => skill.level >= minSkillLevel)).map(
+    ({ group, items }) => ({
+      group,
+      skills: sortSkills(items).map(({ id, name, level, years }) => ({ id, name, level, years })),
+    }),
+  ),
   groupOrder,
 );
 
@@ -105,6 +118,8 @@ const jsonLd = buildPersonJsonLd(
     skillGroups={skillGroups}
     languages={siteConfig.languages}
     coordinates={coordinates}
+    allStackSkills={allStackSkills}
+    allMethodSkills={allMethodSkills}
   />
 </BaseLayout>
 

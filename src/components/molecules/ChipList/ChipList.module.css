@@ -31,3 +31,35 @@
 .overflow[data-shown="false"] {
   display: none;
 }
+
+.printList {
+  display: none;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption-s-size);
+  line-height: var(--text-list-leading);
+  flex: 1;
+}
+
+.printList[data-variant="stack"] {
+  color: var(--color-accent-strong);
+}
+
+.printList[data-variant="methods"] {
+  color: var(--color-text-muted);
+}
+
+.printMore {
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+@media print {
+  .chips {
+    display: none;
+  }
+
+  .printList {
+    display: block;
+  }
+}
