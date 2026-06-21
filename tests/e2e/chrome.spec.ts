@@ -64,7 +64,7 @@ test.describe('Theme toggle', () => {
 });
 
 test.describe('Print media', () => {
-  test('hides chrome, forces light tokens, keeps the short chip list with +N more', async ({
+  test('hides chrome, forces light tokens, swaps chips for the print skill list', async ({
     page,
   }) => {
     await page.emulateMedia({ colorScheme: 'dark' });
@@ -80,29 +80,19 @@ test.describe('Print media', () => {
     await expect(page.getByText('Available for new projects.')).toBeHidden();
     await expect(page.getByRole('link', { name: /get in touch/i })).toBeHidden();
     await expect(page.getByRole('link', { name: /all skills/i })).toBeHidden();
+    await expect(page.getByRole('button', { name: /more/i }).first()).toBeHidden();
 
     const surface = await page.evaluate(() =>
       getComputedStyle(document.documentElement).getPropertyValue('--color-surface').trim(),
     );
     expect(surface).toBe('oklch(100% 0 0)');
 
-    // Overflow chips live inside a [data-shown="false"] wrapper that's
-    // display: none when collapsed; visible chips are everything else.
-    const visibleChips = page.locator('span[data-variant]:not([data-shown="false"] *)');
-    const visibleCount = await visibleChips.count();
-    expect(visibleCount).toBeGreaterThan(0);
-    for (let i = 0; i < visibleCount; i++) {
-      await expect(visibleChips.nth(i)).toBeVisible();
-    }
-
-    const overflowChips = page.locator('[data-shown="false"] span[data-variant]');
-    const overflowCount = await overflowChips.count();
-    expect(overflowCount).toBeGreaterThan(0);
-    for (let i = 0; i < overflowCount; i++) {
-      await expect(overflowChips.nth(i)).toBeHidden();
-    }
-
-    await expect(page.getByRole('button', { name: /more/i }).first()).toBeVisible();
+    // The interactive chips give way to a plain comma-separated print list (a
+    // <p>, vs the chips' <span>), which ends with a static "+N more".
+    await expect(page.locator('span[data-variant]').first()).toBeHidden();
+    const printList = page.locator('p[data-variant]').first();
+    await expect(printList).toBeVisible();
+    await expect(printList).toContainText(/\+\d+ more/);
   });
 
   test('passes axe accessibility audit in print media', async ({ page }) => {
