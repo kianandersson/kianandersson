@@ -150,8 +150,9 @@ const currentYear = new Date().getFullYear();
 
   @page {
     size: A4;
-    /* 1cm keeps the 700px container inside A4's printable width (~718px at 1cm)
-       so nothing clips at the edges. */
-    margin: 1cm;
+    /* A comfortable CV margin. The content fills the printable width on print
+       (the 700px container cap is lifted — see IndexTemplate), so this margin
+       alone governs the whitespace on all four sides. */
+    margin: 1.5cm;
   }
 </style>

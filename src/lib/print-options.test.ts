@@ -33,4 +33,18 @@ describe('parsePrintOptions', () => {
   it('throws when the email is invalid', () => {
     expect(() => parsePrintOptions('{"email":"nope"}')).toThrow();
   });
+
+  it('parses minSkillLevel and coerces a numeric string', () => {
+    expect(parsePrintOptions('{"email":"me@example.com","minSkillLevel":3}')).toEqual({
+      email: 'me@example.com',
+      minSkillLevel: 3,
+    });
+    expect(parsePrintOptions('{"minSkillLevel":"3"}')).toEqual({ minSkillLevel: 3 });
+  });
+
+  it('throws when minSkillLevel is out of range or not an integer', () => {
+    expect(() => parsePrintOptions('{"minSkillLevel":0}')).toThrow();
+    expect(() => parsePrintOptions('{"minSkillLevel":6}')).toThrow();
+    expect(() => parsePrintOptions('{"minSkillLevel":2.5}')).toThrow();
+  });
 });

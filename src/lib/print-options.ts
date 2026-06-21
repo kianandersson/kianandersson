@@ -1,20 +1,29 @@
 import { z } from 'zod';
 
 /**
- * Private contact details for the offline CV — email and phone only. These are
- * intentionally absent from the public site and injected at build time via the
- * `PRINT_OPTIONS` env (a JSON string) only when generating the PDF locally.
- * Everything else on the CV footer comes from the site config.
+ * Build-time options for the offline CV, injected via the `PRINT_OPTIONS` env
+ * (a JSON string) only when generating the PDF locally — never on the public
+ * build.
+ *
+ * - `email` / `phone`: private contact details, intentionally absent from the
+ *   public site. Everything else on the CV footer comes from the site config.
+ * - `minSkillLevel`: lowest skill level to keep in the "all skills" section.
+ *   Omitted means every skill is included; set e.g. 3 to drop level 1–2 skills
+ *   from the CV.
  */
 const PrintOptionsSchema = z.object({
   email: z.email().optional(),
   phone: z.string().optional(),
+  minSkillLevel: z.coerce.number().int().min(1).max(5).optional(),
 });
 
 export type PrintOptions = z.infer<typeof PrintOptionsSchema>;
 
+/** The private contact subset rendered in the CV footer. */
+export type ContactOptions = Pick<PrintOptions, 'email' | 'phone'>;
+
 /** Full set of details rendered in the CV contact footer. */
-export type ContactDetails = PrintOptions & {
+export type ContactDetails = ContactOptions & {
   location?: string;
   website?: string;
   linkedin?: string;
@@ -22,12 +31,12 @@ export type ContactDetails = PrintOptions & {
 };
 
 /**
- * Parses the `PRINT_OPTIONS` env into the private contact details.
+ * Parses the `PRINT_OPTIONS` env into the print build options.
  *
  * Returns `null` when nothing usable is provided (env unset, empty, or every
- * field blank) so the public build renders no contact block at all. Throws on
- * malformed input so a botched print run fails loudly rather than shipping an
- * empty CV.
+ * field blank) so the public build renders no contact block and keeps every
+ * skill. Throws on malformed input so a botched print run fails loudly rather
+ * than shipping a broken CV.
  */
 export function parsePrintOptions(raw: string | undefined): PrintOptions | null {
   if (!raw || raw.trim() === '') return null;

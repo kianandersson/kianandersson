@@ -25,8 +25,15 @@
     -webkit-print-color-adjust: exact;
   }
 
-  /* --line is too pale on paper; force a visible mid-grey for off-dots. */
+  /* The divider tone is too pale to register on paper; step up to the subtle
+     text tone so off-dots stay visible. */
   .off {
-    background: #b0b0b0;
+    background: var(--color-text-subtle);
+  }
+
+  /* The 8px dots read oversized against the compressed print type. */
+  .dot {
+    width: 6px;
+    height: 6px;
   }
 }

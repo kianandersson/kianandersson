@@ -13,9 +13,9 @@
 
 .value {
   display: block;
-  margin: 4px 0 0;
+  margin: var(--space-1) 0 0;
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: var(--font-size-200);
   color: var(--color-text);
   word-break: break-word;
 }
@@ -28,4 +28,12 @@
 
 .link:hover {
   color: var(--color-accent);
+}
+
+@media print {
+  /* The value auto-scales via tokens; only the custom label size needs a print
+     step-down to stay smaller than the value it captions. */
+  .label {
+    font-size: var(--font-size-100);
+  }
 }

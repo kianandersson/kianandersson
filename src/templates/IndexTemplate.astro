@@ -63,7 +63,14 @@ const { hero, keySkills, experience, skillGroups, languages, coordinates } = Ast
 
   @media print {
     main {
-      padding: 0;
+      /* Let the content fill the printable area so the @page margin alone sets
+         the edge whitespace, rather than the 700px cap fighting it. A small
+         symmetric gutter keeps the right-aligned level-meter dots off the very
+         edge, where the renderer would otherwise clip the outermost one. */
+      max-width: none;
+      padding: 0 var(--space-2);
+      /* The 72px web rhythm between sections is far too airy on paper. */
+      gap: 28px;
     }
   }
 </style>
