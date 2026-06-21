@@ -96,14 +96,15 @@
     grid-template-rows: 1fr;
   }
 
-  /* Keep each accordion whole so page breaks fall between them rather than
-     mid-content. */
+  /* Divider after the last item, not above the next title — the gap separates
+     groups. Keep each accordion whole across page breaks. */
   .group {
+    border-top: 0;
+    border-bottom: 1px solid var(--color-divider);
     break-inside: avoid;
   }
 
-  /* If a group is too tall to keep whole and must split, never leave its title
-     orphaned: keep the trigger with the panel it opens. */
+  /* If a group must split, keep its title with the panel below it. */
   .trigger {
     break-after: avoid;
   }

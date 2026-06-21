@@ -25,12 +25,6 @@
     -webkit-print-color-adjust: exact;
   }
 
-  /* The divider tone is too pale to register on paper; step up to the subtle
-     text tone so off-dots stay visible. */
-  .off {
-    background: var(--color-text-subtle);
-  }
-
   /* The 8px dots read oversized against the compressed print type. */
   .dot {
     width: 6px;
