@@ -3,6 +3,10 @@
   flex-direction: column;
   gap: var(--space-xl);
   align-items: flex-start;
+  /* Photo size scales with the available width so the print/preview layout
+     holds up at any page size (caps at 128px on a full A4). Shared by the
+     image and the gutter that reserves its corner. */
+  --hero-photo-size: clamp(88px, 20vw, 128px);
 }
 
 .text {
@@ -18,4 +22,43 @@
 
 .body {
   max-width: 540px;
+}
+
+/* The profile photo rides along only on the printed CV. Hidden on screen; the
+ * grid/position properties below are inert while display is none. */
+.photo {
+  display: none;
+  width: var(--hero-photo-size);
+  height: var(--hero-photo-size);
+  object-fit: cover;
+  border-radius: var(--radius-l);
+}
+
+@media print {
+  .root {
+    position: relative;
+    /* Reserve the top-right corner so the heading never runs under the photo.
+       Only .text shows on print — the contact children are hidden — so this
+       gutter affects the heading/tagline alone. */
+    padding-right: calc(var(--hero-photo-size) + var(--space-l));
+  }
+
+  .photo {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
+[data-print-preview] .root {
+  position: relative;
+  padding-right: calc(var(--hero-photo-size) + var(--space-l));
+}
+
+[data-print-preview] .photo {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
 }

@@ -23,6 +23,8 @@ interface Props {
   allStackSkills?: boolean;
   /** Print build only: expand each role's methods skills in full (see Experience). */
   allMethodSkills?: boolean;
+  /** Print build only: show the hero profile photo (default: true). */
+  profilePhoto?: boolean;
 }
 
 const {
@@ -34,12 +36,13 @@ const {
   coordinates,
   allStackSkills = false,
   allMethodSkills = false,
+  profilePhoto = true,
 } = Astro.props;
 ---
 
 <main>
   <section>
-    <Hero name={hero.name} tagline={hero.tagline}>
+    <Hero name={hero.name} tagline={hero.tagline} showProfilePhoto={profilePhoto}>
       <ContactContainer
         recipientName={hero.recipientName}
         availableFrom={hero.availableFrom}

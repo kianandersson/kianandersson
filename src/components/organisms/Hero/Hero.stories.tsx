@@ -7,6 +7,7 @@ const meta: Meta<typeof Hero> = {
   argTypes: {
     name: { control: 'text' },
     tagline: { control: 'text' },
+    showProfilePhoto: { control: 'boolean' },
   },
   args: {
     name: 'Kian',
@@ -19,3 +20,16 @@ export default meta;
 type Story = StoryObj<typeof Hero>;
 
 export const Default: Story = {};
+
+// The profile photo is print-only; force the print preview so the catalog can
+// show the square photo in the top-right corner.
+export const WithProfilePhoto: Story = {
+  args: { showProfilePhoto: true },
+  decorators: [
+    (Story) => (
+      <div data-print-preview>
+        <Story />
+      </div>
+    ),
+  ],
+};

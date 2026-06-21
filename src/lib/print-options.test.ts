@@ -59,4 +59,12 @@ describe('parsePrintOptions', () => {
   it('throws when allStackSkills is not a boolean', () => {
     expect(() => parsePrintOptions('{"allStackSkills":"yes"}')).toThrow();
   });
+
+  it('parses profilePhoto when explicitly excluded', () => {
+    expect(parsePrintOptions('{"profilePhoto":false}')).toEqual({ profilePhoto: false });
+  });
+
+  it('throws when profilePhoto is not a boolean', () => {
+    expect(() => parsePrintOptions('{"profilePhoto":"no"}')).toThrow();
+  });
 });

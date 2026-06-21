@@ -72,6 +72,10 @@ test.describe('Print media', () => {
     await page.waitForFunction(() => !document.querySelector('astro-island')?.hasAttribute('ssr'));
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
 
+    // The hero profile photo is print-only — absent from the on-screen view.
+    const photo = page.locator('img[src="/profile.jpg"]');
+    await expect(photo).toBeHidden();
+
     await page.emulateMedia({ media: 'print', colorScheme: 'dark' });
 
     await expect(page.getByRole('banner')).toBeHidden();
@@ -93,6 +97,9 @@ test.describe('Print media', () => {
     const printList = page.locator('p[data-variant]').first();
     await expect(printList).toBeVisible();
     await expect(printList).toContainText(/\+\d+ more/);
+
+    // ...and rides along on the printed CV.
+    await expect(photo).toBeVisible();
   });
 
   test('passes axe accessibility audit in print media', async ({ page }) => {
