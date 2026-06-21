@@ -81,13 +81,10 @@ const {
 
   @media print {
     main {
-      /* Let the content fill the printable area so the @page margin alone sets
-         the edge whitespace, rather than the 700px cap fighting it. A small
-         symmetric gutter keeps the right-aligned level-meter dots off the very
-         edge, where the renderer would otherwise clip the outermost one. */
+      /* @page margin governs the edges; the gutter keeps the right-aligned
+         meter dots from clipping at the printable edge. */
       max-width: none;
       padding: 0 var(--space-xs);
-      /* The 72px web rhythm between sections is far too airy on paper. */
       gap: var(--space-6xl);
     }
   }

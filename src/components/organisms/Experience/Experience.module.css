@@ -63,9 +63,7 @@
 @media print {
   .timeline {
     padding-left: 0;
-    /* The large top padding existed to clear the rail marker, which is hidden
-       on print — match it to the gap between entries so the border sits an
-       equal distance from the first role as the roles sit from each other. */
+    /* Match the gap between entries now that the rail marker is hidden. */
     padding-top: var(--space-4xl);
   }
 

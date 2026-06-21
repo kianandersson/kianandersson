@@ -45,17 +45,8 @@ Run `pnpm print` to render the page to a PDF locally.
 
 ```sh
 pnpm print --email me@example.com --phone "+45 12 34 56 78"
-pnpm print --email me@example.com --min-skill-level 3  # drop level 1–2 skills
-pnpm print --email me@example.com --all-stack-skills --all-method-skills
 pnpm print            # uses print.options.json if present
 ```
-
-`--min-skill-level <1-5>` sets the lowest skill level kept in the "all skills"
-section (default: every skill). Curated key skills are unaffected.
-
-`--all-stack-skills` and `--all-method-skills` each print a role's stack (resp.
-methods) skills in full instead of truncating them like the web view. They are
-independent.
 
 ## License
 

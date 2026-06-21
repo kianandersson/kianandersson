@@ -61,7 +61,6 @@
     --print-contact-display: flex;
   }
 
-  /* Tighten the literal column/row gap to match the compressed print rhythm. */
   .grid {
     gap: var(--space-s) var(--space-xl);
   }
