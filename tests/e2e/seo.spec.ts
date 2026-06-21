@@ -26,6 +26,17 @@ test.describe('SEO surfaces', () => {
     );
   });
 
+  test('home suppresses the search-result image preview', async ({ page }) => {
+    await page.goto('/');
+
+    // Keeps Google from cropping the wide OG card into a thumbnail beside the
+    // result, without touching og:/twitter: previews used for social sharing.
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+      'content',
+      'max-image-preview:none',
+    );
+  });
+
   test('home declares og:site_name and profile metadata', async ({ page }) => {
     await page.goto('/');
 
