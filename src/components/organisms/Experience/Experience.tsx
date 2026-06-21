@@ -7,11 +7,13 @@ import styles from './Experience.module.css';
 
 // Desktop chip area ~556px (700 container − 48 padding − 24 timeline − 56 label − 16 gap).
 // Geist Mono 12px ≈ 7.2px/char. Chip padding+gap ≈ 5 chars; "+NN more" reserves ≈ 13 chars (2-digit safe).
-// 1 line ≈ 77 chars → 64 budget; 2 lines ≈ 154 chars → 128 budget (wrap-safe).
+// 1 line ≈ 77 chars, 2 lines ≈ 154 chars. Budgets sit well under that so the
+// "+N more" toggle always shares the last line rather than orphaning — better a
+// little slack than a stranded toggle.
 const CHIP_PER_ITEM_COST = 5;
-const STACK_MAX_CHARS = 64;
+const STACK_MAX_CHARS = 58;
 const STACK_MIN_ITEMS = 3;
-const METHODS_MAX_CHARS = 128;
+const METHODS_MAX_CHARS = 112;
 const METHODS_MIN_ITEMS = 3;
 
 // Print list area ~604px (A4 1.5cm margins − gutter − 56 label − gap) with mono
