@@ -104,8 +104,10 @@
     break-inside: avoid;
   }
 
-  /* If a group must split, keep its title with the panel below it. */
+  /* Drop the top padding so the container gap alone sets the spacing above each
+     title (matching Experience). Keep its title with the panel below it. */
   .trigger {
+    padding-top: 0;
     break-after: avoid;
   }
 }
