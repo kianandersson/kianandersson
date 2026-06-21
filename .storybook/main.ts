@@ -18,6 +18,11 @@ const config: StorybookConfig = {
       ...(viteConfig.resolve.alias ?? {}),
       'astro:actions': fileURLToPath(new URL('./astro-actions-stub.ts', import.meta.url)),
     };
+    // Storybook's Vite root is the project root, so Vite's default `publicDir`
+    // also resolves to `./public` — the same tree `staticDirs` already copies.
+    // Both copies run concurrently during `storybook build` and race to create
+    // `<out>/fonts`, throwing `EEXIST: mkdir`. Let `staticDirs` own the copy.
+    viteConfig.publicDir = false;
     return viteConfig;
   },
 };
