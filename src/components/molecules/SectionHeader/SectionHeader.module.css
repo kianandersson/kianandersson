@@ -15,3 +15,11 @@
 .action {
   margin-left: auto;
 }
+
+@media print {
+  /* Keep a section title with the content that follows so a page break never
+     strands the heading at the foot of a page. */
+  .header {
+    break-after: avoid;
+  }
+}

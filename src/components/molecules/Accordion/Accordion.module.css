@@ -95,4 +95,16 @@
   .panel {
     grid-template-rows: 1fr;
   }
+
+  /* Keep each accordion whole so page breaks fall between them rather than
+     mid-content. */
+  .group {
+    break-inside: avoid;
+  }
+
+  /* If a group is too tall to keep whole and must split, never leave its title
+     orphaned: keep the trigger with the panel it opens. */
+  .trigger {
+    break-after: avoid;
+  }
 }
