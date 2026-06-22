@@ -1,0 +1,15 @@
+version: 2
+updates:
+  # Keep GitHub Actions current so we don't drift onto deprecated runtimes
+  # (e.g. the Node 20 EOL warning that prompted this config). One grouped PR
+  # a week instead of a flood of single-action bumps.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: ci
