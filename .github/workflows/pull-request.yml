@@ -20,7 +20,7 @@ jobs:
     outputs:
       url: ${{ steps.url.outputs.url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - id: worker
         shell: bash
