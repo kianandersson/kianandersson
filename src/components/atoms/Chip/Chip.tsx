@@ -1,6 +1,6 @@
 import styles from './Chip.module.css';
 
-export type ChipVariant = 'stack' | 'methods';
+export type ChipVariant = 'stack' | 'domains';
 
 type Props = {
   label: string;

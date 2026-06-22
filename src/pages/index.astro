@@ -33,10 +33,10 @@ const coordinates: ContactDetails = {
 // hand-picked highlight reel and stay untouched.
 const minSkillLevel = printOptions?.minSkillLevel ?? 1;
 
-// Each role's stack/methods skills truncate on paper like on screen; the print
+// Each role's stack/domains skills truncate on paper like on screen; the print
 // build can opt to expand either list in full instead, independently.
 const allStackSkills = printOptions?.allStackSkills ?? false;
-const allMethodSkills = printOptions?.allMethodSkills ?? false;
+const allDomainSkills = printOptions?.allDomainSkills ?? false;
 const profilePhoto = printOptions?.profilePhoto ?? true;
 
 type VisibleSkill = {
@@ -85,7 +85,7 @@ const experienceEntries = (await getCollection('experience')).sort(
 );
 
 const STACK_LIMIT = 20;
-const METHODS_LIMIT = 20;
+const DOMAINS_LIMIT = 20;
 
 const experience = experienceEntries.map((entry) => ({
   id: entry.id,
@@ -94,7 +94,7 @@ const experience = experienceEntries.map((entry) => ({
   period: formatPeriod(entry.data.start, entry.data.end),
   description: entry.data.description,
   stack: entry.data.technologies.slice(0, STACK_LIMIT),
-  methods: (entry.data.concepts ?? []).slice(0, METHODS_LIMIT),
+  domains: (entry.data.concepts ?? []).slice(0, DOMAINS_LIMIT),
 }));
 
 const jsonLd = buildPersonJsonLd(
@@ -120,7 +120,7 @@ const jsonLd = buildPersonJsonLd(
     languages={siteConfig.languages}
     coordinates={coordinates}
     allStackSkills={allStackSkills}
-    allMethodSkills={allMethodSkills}
+    allDomainSkills={allDomainSkills}
     profilePhoto={profilePhoto}
   />
 </BaseLayout>

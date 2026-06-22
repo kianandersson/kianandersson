@@ -5,7 +5,7 @@ const meta: Meta<typeof Chip> = {
   title: 'Atoms/Chip',
   component: Chip,
   argTypes: {
-    variant: { control: { type: 'inline-radio' }, options: ['stack', 'methods'] },
+    variant: { control: { type: 'inline-radio' }, options: ['stack', 'domains'] },
     label: { control: 'text' },
   },
   args: {
@@ -19,6 +19,6 @@ type Story = StoryObj<typeof Chip>;
 
 export const Default: Story = {};
 
-export const Methods: Story = {
-  args: { label: 'Pair programming', variant: 'methods' },
+export const Domains: Story = {
+  args: { label: 'Design systems', variant: 'domains' },
 };

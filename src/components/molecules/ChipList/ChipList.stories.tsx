@@ -10,7 +10,7 @@ const meta: Meta<typeof ChipList> = {
     label: { control: 'text' },
     maxChars: { control: 'number' },
     minItems: { control: 'number' },
-    variant: { control: { type: 'inline-radio' }, options: ['stack', 'methods'] },
+    variant: { control: { type: 'inline-radio' }, options: ['stack', 'domains'] },
   },
   args: {
     label: 'Stack',
@@ -70,10 +70,10 @@ export const NoOverflow: Story = {
   },
 };
 
-export const Methods: Story = {
+export const Domains: Story = {
   args: {
-    label: 'Methods',
-    variant: 'methods',
-    items: ['TDD', 'Atomic design', 'Pair programming', 'Trunk-based development'],
+    label: 'Domains',
+    variant: 'domains',
+    items: ['Design systems', 'Web performance', 'Accessibility', 'Developer experience'],
   },
 };

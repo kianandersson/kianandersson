@@ -11,7 +11,7 @@ const ENTRIES: ExperienceEntry[] = [
     description:
       'Led a team of four engineers on a design-system migration; cut JS shipped by 40% and Lighthouse Performance climbed to 99.',
     stack: ['TypeScript', 'React', 'Next.js', 'Vite', 'Vitest', 'Playwright'],
-    methods: ['TDD', 'Atomic design', 'Pair programming'],
+    domains: ['Design systems', 'Web performance', 'Accessibility'],
   },
   {
     id: 'b',
@@ -21,7 +21,7 @@ const ENTRIES: ExperienceEntry[] = [
     description:
       'Owned the public-facing booking flow end-to-end; introduced contract-tested integration tests and removed three flaky CI suites.',
     stack: ['TypeScript', 'React', 'Webpack', 'Node'],
-    methods: ['Trunk-based development', 'Contract testing'],
+    domains: ['Developer experience', 'Continuous delivery'],
   },
 ];
 
@@ -51,7 +51,7 @@ export const Default: Story = {
     }
     for (const item of items) {
       await expect(within(item).getByText('Stack')).toBeInTheDocument();
-      await expect(within(item).getByText('Methods')).toBeInTheDocument();
+      await expect(within(item).getByText('Domains')).toBeInTheDocument();
     }
   },
 };

@@ -45,7 +45,7 @@
   color: var(--color-accent-strong);
 }
 
-.printList[data-variant="methods"] {
+.printList[data-variant="domains"] {
   color: var(--color-text-muted);
 }
 

@@ -16,7 +16,7 @@ test.describe('Experience section', () => {
     expect(await entries.count()).toBeGreaterThan(0);
   });
 
-  test('every entry has a role, stack group and methods group', async ({ page }) => {
+  test('every entry has a role, stack group and domains group', async ({ page }) => {
     await page.goto('/');
     const section = page.getByRole('region', { name: /Experience/i });
     const entries = section.getByRole('listitem');
@@ -25,7 +25,7 @@ test.describe('Experience section', () => {
       const entry = entries.nth(i);
       await expect(entry.getByRole('heading', { level: 3 })).toBeVisible();
       await expect(entry.getByText('Stack', { exact: true })).toBeVisible();
-      await expect(entry.getByText('Methods', { exact: true })).toBeVisible();
+      await expect(entry.getByText('Domains', { exact: true })).toBeVisible();
     }
   });
 

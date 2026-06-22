@@ -48,11 +48,11 @@ describe('parsePrintOptions', () => {
     expect(() => parsePrintOptions('{"minSkillLevel":2.5}')).toThrow();
   });
 
-  it('parses allStackSkills and allMethodSkills independently', () => {
+  it('parses allStackSkills and allDomainSkills independently', () => {
     expect(parsePrintOptions('{"allStackSkills":true}')).toEqual({ allStackSkills: true });
-    expect(parsePrintOptions('{"allStackSkills":true,"allMethodSkills":true}')).toEqual({
+    expect(parsePrintOptions('{"allStackSkills":true,"allDomainSkills":true}')).toEqual({
       allStackSkills: true,
-      allMethodSkills: true,
+      allDomainSkills: true,
     });
   });
 

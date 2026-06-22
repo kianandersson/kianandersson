@@ -6,7 +6,7 @@ import { z } from 'zod';
  *
  * - `email` / `phone`: private contact details (the rest comes from site config).
  * - `minSkillLevel`: drop skills below this level from "all skills" (default: all).
- * - `allStackSkills` / `allMethodSkills`: print a role's full stack/methods list
+ * - `allStackSkills` / `allDomainSkills`: print a role's full stack/domains list
  *   instead of the "+N more" preview.
  * - `profilePhoto`: include the hero profile photo on the CV (default: true; set
  *   `false` to leave it off).
@@ -16,7 +16,7 @@ const PrintOptionsSchema = z.object({
   phone: z.string().optional(),
   minSkillLevel: z.coerce.number().int().min(1).max(5).optional(),
   allStackSkills: z.boolean().optional(),
-  allMethodSkills: z.boolean().optional(),
+  allDomainSkills: z.boolean().optional(),
   profilePhoto: z.boolean().optional(),
 });
 
