@@ -15,7 +15,6 @@ export type SignatureTokens = {
   topPad: string;
   markWidth: string;
   gap: string;
-  indent: string; // contact line hang, clears the wordmark column
   rolePad: string;
   contactPad: string;
   markSize: string;
@@ -123,40 +122,40 @@ export function EmailSignature({
                     >
                       {role}
                     </div>
+                    {/* Contact line shares the column so the rule runs full height. */}
+                    <div
+                      style={{
+                        fontFamily: t.mono,
+                        fontSize: t.metaSize,
+                        lineHeight: t.contactLeading,
+                        color: t.contact,
+                        paddingTop: t.contactPad,
+                      }}
+                    >
+                      <a href={website} style={linkStyle}>
+                        {websiteLabel}
+                      </a>
+                      {email ? (
+                        <>
+                          {separator}
+                          <a href={`mailto:${email}`} style={linkStyle}>
+                            {emailUser}
+                            <span style={{ color: t.accent }}>@</span>
+                            {emailDomain}
+                          </a>
+                        </>
+                      ) : null}
+                      {phone ? (
+                        <>
+                          {separator}
+                          <span style={{ whiteSpace: 'nowrap' }}>{phone}</span>
+                        </>
+                      ) : null}
+                    </div>
                   </td>
                 </tr>
               </tbody>
             </table>
-            <div
-              style={{
-                fontFamily: t.mono,
-                fontSize: t.metaSize,
-                lineHeight: t.contactLeading,
-                color: t.contact,
-                paddingTop: t.contactPad,
-                paddingLeft: t.indent,
-              }}
-            >
-              <a href={website} style={linkStyle}>
-                {websiteLabel}
-              </a>
-              {email ? (
-                <>
-                  {separator}
-                  <a href={`mailto:${email}`} style={linkStyle}>
-                    {emailUser}
-                    <span style={{ color: t.accent }}>@</span>
-                    {emailDomain}
-                  </a>
-                </>
-              ) : null}
-              {phone ? (
-                <>
-                  {separator}
-                  <span style={{ whiteSpace: 'nowrap' }}>{phone}</span>
-                </>
-              ) : null}
-            </div>
           </td>
         </tr>
       </tbody>

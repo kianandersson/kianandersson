@@ -73,7 +73,7 @@ const LENGTH_TOKENS = {
   markWidth: '--space-6xl',
   gap: '--space-s',
   rolePad: '--space-2xs',
-  contactPad: '--space-xs',
+  contactPad: '--space-2xs',
   markSize: '--text-heading-m-size',
   nameSize: '--text-label-size',
   metaSize: '--text-caption-s-size',
@@ -189,8 +189,7 @@ function readIdentity(): Identity {
  * Loads tokens.css into a headless Chromium and reads each token's resolved
  * value the way the browser computes it: colours flattened to sRGB hex (via a
  * 1×1 canvas, so oklch survives into a value every e-mail client understands),
- * lengths as px, leadings as ratios, fonts as their full fallback stack. The
- * contact-line indent is derived so it always clears the wordmark column.
+ * lengths as px, leadings as ratios, fonts as their full fallback stack.
  */
 async function resolveTokens(): Promise<SignatureTokens> {
   const css = readFileSync(TOKENS_CSS, 'utf8');
@@ -252,8 +251,7 @@ async function resolveTokens(): Promise<SignatureTokens> {
       },
     )) as SignatureTokens;
 
-    const indent = Number.parseFloat(resolved.markWidth) + 1 + Number.parseFloat(resolved.gap);
-    return { ...resolved, indent: `${indent}px` };
+    return resolved;
   } finally {
     await browser.close();
   }

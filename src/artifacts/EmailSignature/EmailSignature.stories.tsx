@@ -13,9 +13,8 @@ const tokens: SignatureTokens = {
   topPad: 'var(--space-m)',
   markWidth: 'var(--space-6xl)',
   gap: 'var(--space-s)',
-  indent: 'calc(var(--space-6xl) + 1px + var(--space-s))',
   rolePad: 'var(--space-2xs)',
-  contactPad: 'var(--space-xs)',
+  contactPad: 'var(--space-2xs)',
   markSize: 'var(--text-heading-m-size)',
   nameSize: 'var(--text-label-size)',
   metaSize: 'var(--text-caption-s-size)',
@@ -28,6 +27,15 @@ const tokens: SignatureTokens = {
 const meta: Meta<typeof EmailSignature> = {
   title: 'Artifacts/EmailSignature',
   component: EmailSignature,
+  // Preview on white — the signature is always rendered on a mail client's
+  // white canvas, not the catalog's surface colour.
+  decorators: [
+    (Story) => (
+      <div style={{ background: '#ffffff', padding: 'var(--space-xl)' }}>
+        <Story />
+      </div>
+    ),
+  ],
   args: {
     mark: 'ka',
     fullName: 'Kian Andersson',
