@@ -37,6 +37,7 @@ pnpm test:bundle        # gzipped JS budget
 pnpm test:e2e           # playwright + axe
 pnpm test:lighthouse    # lighthouse CI
 pnpm print              # render the front page to cv.pdf (runs locally)
+pnpm signature          # build the e-mail signature and copy it (runs locally)
 ```
 
 ## Print to PDF
@@ -46,6 +47,19 @@ Run `pnpm print` to render the page to a PDF locally.
 ```sh
 pnpm print --email me@example.com --phone "+45 12 34 56 78"
 pnpm print            # uses print.options.json if present
+```
+
+## E-mail signature
+
+Run `pnpm signature` to build the HTML signature and copy it to the clipboard
+(macOS), ready to paste into a mail signature field. Colours, type sizes, and
+spacing resolve from the design tokens; name, role, and website from the site
+config. The private details (email, phone) are passed in, never stored in source.
+
+```sh
+pnpm signature --email me@example.com --phone "+45 12 34 56 78"
+pnpm signature            # uses print.options.json if present
+pnpm signature --email me@example.com --output signature.html
 ```
 
 ## License
