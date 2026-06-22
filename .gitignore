@@ -11,6 +11,9 @@ cv.pdf
 print.options.json
 .print/
 
+# Signature render artifact
+.signature/
+
 # Environment
 .env
 .env.*

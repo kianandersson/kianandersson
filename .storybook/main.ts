@@ -5,6 +5,7 @@ const config: StorybookConfig = {
   stories: [
     '../src/foundations/**/*.stories.@(ts|tsx)',
     '../src/components/**/*.stories.@(ts|tsx)',
+    '../src/artifacts/**/*.stories.@(ts|tsx)',
   ],
   addons: ['@storybook/addon-a11y', '@storybook/addon-vitest'],
   staticDirs: ['../public'],
