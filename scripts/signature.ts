@@ -42,6 +42,7 @@ import { type ComponentType, h } from 'preact';
 import { render } from 'preact-render-to-string';
 import type {
   EmailSignatureProps,
+  SignatureTokenManifest,
   SignatureTokens,
 } from '../src/artifacts/EmailSignature/EmailSignature';
 
@@ -56,36 +57,6 @@ type ContactField = (typeof CONTACT_FIELDS)[number];
 type Contact = Partial<Record<ContactField, string>>;
 
 type Identity = { fullName: string; mark: string; role: string; website: string };
-
-// Each SignatureTokens role mapped to the semantic token that fills it.
-// Semantic only — primitives never appear in artifacts (naming-conventions §3).
-const COLOR_TOKENS = {
-  text: '--color-text',
-  accent: '--color-accent',
-  contact: '--color-text-muted',
-  // text-subtle (slate-400) reads too light on white to clear WCAG AA, so the
-  // role shares the contact tone; the hierarchy comes from position, not colour.
-  role: '--color-text-muted',
-  divider: '--color-divider',
-} as const;
-const LENGTH_TOKENS = {
-  topPad: '--space-m',
-  markWidth: '--space-6xl',
-  gap: '--space-s',
-  rolePad: '--space-2xs',
-  contactPad: '--space-2xs',
-  markSize: '--text-heading-m-size',
-  nameSize: '--text-label-size',
-  metaSize: '--text-caption-s-size',
-} as const;
-const RATIO_TOKENS = {
-  tightLeading: '--text-heading-m-leading',
-  contactLeading: '--text-caption-m-leading',
-} as const;
-const FONT_TOKENS = {
-  sans: '--font-sans',
-  mono: '--font-mono',
-} as const;
 
 async function main(): Promise<void> {
   const { values } = parseArgs({
@@ -113,8 +84,9 @@ async function main(): Promise<void> {
   }
 
   const identity = readIdentity();
-  const tokens = await resolveTokens();
-  const html = await renderSignature(identity, contact, tokens);
+  const { EmailSignature, SIGNATURE_TOKENS } = await loadComponentModule();
+  const tokens = await resolveTokens(SIGNATURE_TOKENS);
+  const html = renderSignature(EmailSignature, identity, contact, tokens);
 
   if (values.output) {
     const outputPath = resolve(values.output);
@@ -191,7 +163,7 @@ function readIdentity(): Identity {
  * 1×1 canvas, so oklch survives into a value every e-mail client understands),
  * lengths as px, leadings as ratios, fonts as their full fallback stack.
  */
-async function resolveTokens(): Promise<SignatureTokens> {
+async function resolveTokens(manifest: SignatureTokenManifest): Promise<SignatureTokens> {
   const css = readFileSync(TOKENS_CSS, 'utf8');
   const browser = await chromium.launch();
   try {
@@ -199,57 +171,49 @@ async function resolveTokens(): Promise<SignatureTokens> {
     await page.setContent(
       `<!doctype html><html><head><style>${css}</style></head><body></body></html>`,
     );
-    const resolved = (await page.evaluate(
-      ({ colors, lengths, ratios, fonts }) => {
-        const probe = document.body.appendChild(document.createElement('div'));
-        const canvas = document.createElement('canvas');
-        canvas.width = canvas.height = 1;
-        const ctx = canvas.getContext('2d', { colorSpace: 'srgb' }) as CanvasRenderingContext2D;
+    const resolved = (await page.evaluate(({ color, length, ratio, font }) => {
+      const probe = document.body.appendChild(document.createElement('div'));
+      const canvas = document.createElement('canvas');
+      canvas.width = canvas.height = 1;
+      const ctx = canvas.getContext('2d', { colorSpace: 'srgb' }) as CanvasRenderingContext2D;
 
-        const toHex = (token: string): string => {
-          probe.style.color = `var(${token})`;
-          ctx.fillStyle = '#000';
-          ctx.fillStyle = getComputedStyle(probe).color;
-          ctx.fillRect(0, 0, 1, 1);
-          const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
-          return `#${[r, g, b].map((n) => n.toString(16).padStart(2, '0')).join('')}`;
-        };
-        const toLength = (token: string): string => {
-          probe.style.width = `var(${token})`;
-          return getComputedStyle(probe).width;
-        };
-        const toRatio = (token: string): number => {
-          probe.style.fontSize = '1000px';
-          probe.style.lineHeight = `var(${token})`;
-          const ratio = Number.parseFloat(getComputedStyle(probe).lineHeight) / 1000;
-          probe.style.fontSize = '';
-          probe.style.lineHeight = '';
-          return ratio;
-        };
-        const toFont = (token: string): string => {
-          probe.style.fontFamily = `var(${token})`;
-          // Single-quote family names so they survive inside a double-quoted
-          // style attribute, matching the e-mail convention.
-          return getComputedStyle(probe).fontFamily.replace(/"/g, "'");
-        };
+      const toHex = (token: string): string => {
+        probe.style.color = `var(${token})`;
+        ctx.fillStyle = '#000';
+        ctx.fillStyle = getComputedStyle(probe).color;
+        ctx.fillRect(0, 0, 1, 1);
+        const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
+        return `#${[r, g, b].map((n) => n.toString(16).padStart(2, '0')).join('')}`;
+      };
+      const toLength = (token: string): string => {
+        probe.style.width = `var(${token})`;
+        return getComputedStyle(probe).width;
+      };
+      const toRatio = (token: string): string => {
+        probe.style.fontSize = '1000px';
+        probe.style.lineHeight = `var(${token})`;
+        const value = Number.parseFloat(getComputedStyle(probe).lineHeight) / 1000;
+        probe.style.fontSize = '';
+        probe.style.lineHeight = '';
+        return String(value);
+      };
+      const toFont = (token: string): string => {
+        probe.style.fontFamily = `var(${token})`;
+        // Single-quote family names so they survive inside a double-quoted
+        // style attribute, matching the e-mail convention.
+        return getComputedStyle(probe).fontFamily.replace(/"/g, "'");
+      };
 
-        const map = <T>(entries: Record<string, string>, fn: (t: string) => T) =>
-          Object.fromEntries(Object.entries(entries).map(([key, token]) => [key, fn(token)]));
+      const resolve = (tokens: readonly string[], fn: (t: string) => string) =>
+        Object.fromEntries(tokens.map((token) => [token, fn(token)]));
 
-        return {
-          ...map(colors, toHex),
-          ...map(lengths, toLength),
-          ...map(ratios, toRatio),
-          ...map(fonts, toFont),
-        } as Record<string, string | number>;
-      },
-      {
-        colors: COLOR_TOKENS as Record<string, string>,
-        lengths: LENGTH_TOKENS as Record<string, string>,
-        ratios: RATIO_TOKENS as Record<string, string>,
-        fonts: FONT_TOKENS as Record<string, string>,
-      },
-    )) as SignatureTokens;
+      return {
+        ...resolve(color, toHex),
+        ...resolve(length, toLength),
+        ...resolve(ratio, toRatio),
+        ...resolve(font, toFont),
+      } as Record<string, string>;
+    }, manifest)) as SignatureTokens;
 
     return resolved;
   } finally {
@@ -258,16 +222,15 @@ async function resolveTokens(): Promise<SignatureTokens> {
 }
 
 /**
- * Renders the EmailSignature component to an HTML string. The component is a
- * leaf .tsx, so it's transpiled in place (esbuild) into a temp ESM module next
- * to the project root — where its bare `preact/jsx-runtime` import resolves —
- * then rendered with the resolved tokens and contact details.
+ * Loads the EmailSignature module in Node. The component is a leaf .tsx, so it's
+ * transpiled in place (esbuild) into a temp ESM module next to the project root
+ * — where its bare `preact/jsx-runtime` import resolves — then imported. This
+ * also gives the token manifest the component and the CLI share.
  */
-async function renderSignature(
-  identity: Identity,
-  contact: Contact,
-  tokens: SignatureTokens,
-): Promise<string> {
+async function loadComponentModule(): Promise<{
+  EmailSignature: ComponentType<EmailSignatureProps>;
+  SIGNATURE_TOKENS: SignatureTokenManifest;
+}> {
   const { code } = await transform(readFileSync(COMPONENT, 'utf8'), {
     loader: 'tsx',
     jsx: 'automatic',
@@ -276,13 +239,20 @@ async function renderSignature(
   });
   const tmp = join(ROOT, `.email-signature.${process.pid}.mjs`);
   writeFileSync(tmp, code);
-  let Component: ComponentType<EmailSignatureProps>;
   try {
-    ({ EmailSignature: Component } = await import(pathToFileURL(tmp).href));
+    return await import(pathToFileURL(tmp).href);
   } finally {
     rmSync(tmp, { force: true });
   }
+}
 
+/** Renders the component to an HTML string with the resolved tokens. */
+function renderSignature(
+  Component: ComponentType<EmailSignatureProps>,
+  identity: Identity,
+  contact: Contact,
+  tokens: SignatureTokens,
+): string {
   return render(
     h(Component, {
       mark: identity.mark,

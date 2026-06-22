@@ -1,30 +1,36 @@
 import type { JSX } from 'preact';
 
 /**
- * Concrete style values for the signature, one per design-token role. Kept as
- * plain strings so the same component renders two ways: Storybook passes live
- * `var(--token)` references (themed preview), while the CLI passes values
- * resolved to flat sRGB hex / px — e-mail clients understand no CSS variables.
+ * The design tokens the signature uses, grouped by how each resolves to a flat
+ * inline value for e-mail (colours → sRGB hex, lengths → px, leadings → ratio,
+ * fonts → fallback stack). One source of truth, shared by the component, the
+ * CLI resolver, and the Storybook preview — keyed by the real token names so
+ * there's no translation layer to keep in sync.
  */
-export type SignatureTokens = {
-  text: string; // name + wordmark
-  accent: string; // the dot and the @
-  contact: string; // contact line
-  role: string; // role/title
-  divider: string; // rule + separators
-  topPad: string;
-  markWidth: string;
-  gap: string;
-  rolePad: string;
-  contactPad: string;
-  markSize: string;
-  nameSize: string;
-  metaSize: string;
-  tightLeading: string | number;
-  contactLeading: string | number;
-  sans: string;
-  mono: string;
-};
+export const SIGNATURE_TOKENS = {
+  color: ['--color-text', '--color-accent', '--color-text-muted', '--color-divider'],
+  length: [
+    '--space-m',
+    '--space-6xl',
+    '--space-s',
+    '--space-2xs',
+    '--text-heading-m-size',
+    '--text-label-size',
+    '--text-caption-s-size',
+  ],
+  ratio: ['--text-heading-m-leading', '--text-caption-m-leading'],
+  font: ['--font-sans', '--font-mono'],
+} as const;
+
+export type SignatureTokenManifest = typeof SIGNATURE_TOKENS;
+type SignatureTokenName = SignatureTokenManifest[keyof SignatureTokenManifest][number];
+
+/**
+ * Each design token resolved to a flat value. Storybook passes live
+ * `var(--token)` references (themed preview); the CLI passes values resolved to
+ * flat sRGB hex / px — e-mail clients understand no CSS variables.
+ */
+export type SignatureTokens = Record<SignatureTokenName, string>;
 
 export type EmailSignatureProps = {
   /** Wordmark — the two initials, e.g. "ka". */
@@ -56,8 +62,8 @@ export function EmailSignature({
   phone,
   tokens: t,
 }: EmailSignatureProps) {
-  const linkStyle: JSX.CSSProperties = { color: t.contact, textDecoration: 'none' };
-  const separator = <span style={{ color: t.divider }}>{`${NBSP}·${NBSP}`}</span>;
+  const linkStyle: JSX.CSSProperties = { color: t['--color-text-muted'], textDecoration: 'none' };
+  const separator = <span style={{ color: t['--color-divider'] }}>{`${NBSP}·${NBSP}`}</span>;
   const [emailUser, emailDomain] = (email ?? '').split('@');
 
   return (
@@ -71,9 +77,9 @@ export function EmailSignature({
         <tr>
           <td
             style={{
-              paddingTop: t.topPad,
-              borderTop: `1px solid ${t.divider}`,
-              fontFamily: t.sans,
+              paddingTop: t['--space-m'],
+              borderTop: `1px solid ${t['--color-divider']}`,
+              fontFamily: t['--font-sans'],
             }}
           >
             <table
@@ -84,40 +90,53 @@ export function EmailSignature({
             >
               <tbody>
                 <tr>
-                  <td style={{ width: t.markWidth, verticalAlign: 'middle', whiteSpace: 'nowrap' }}>
+                  <td
+                    style={{
+                      width: t['--space-6xl'],
+                      verticalAlign: 'middle',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
                     <span
                       style={{
                         fontWeight: 700,
-                        fontSize: t.markSize,
+                        fontSize: t['--text-heading-m-size'],
                         letterSpacing: '-1.2px',
-                        color: t.text,
+                        color: t['--color-text'],
                       }}
                     >
                       {mark}
-                      <span style={{ color: t.accent }}>.</span>
+                      <span style={{ color: t['--color-accent'] }}>.</span>
                     </span>
                   </td>
-                  <td style={{ width: '1px', background: t.divider, fontSize: 0, lineHeight: 0 }}>
+                  <td
+                    style={{
+                      width: '1px',
+                      background: t['--color-divider'],
+                      fontSize: 0,
+                      lineHeight: 0,
+                    }}
+                  >
                     {NBSP}
                   </td>
-                  <td style={{ verticalAlign: 'top', paddingLeft: t.gap }}>
+                  <td style={{ verticalAlign: 'top', paddingLeft: t['--space-s'] }}>
                     <div
                       style={{
                         fontWeight: 600,
-                        fontSize: t.nameSize,
-                        lineHeight: t.tightLeading,
-                        color: t.text,
+                        fontSize: t['--text-label-size'],
+                        lineHeight: t['--text-heading-m-leading'],
+                        color: t['--color-text'],
                       }}
                     >
                       {fullName}
                     </div>
                     <div
                       style={{
-                        fontFamily: t.mono,
-                        fontSize: t.metaSize,
-                        lineHeight: t.tightLeading,
-                        color: t.role,
-                        paddingTop: t.rolePad,
+                        fontFamily: t['--font-mono'],
+                        fontSize: t['--text-caption-s-size'],
+                        lineHeight: t['--text-heading-m-leading'],
+                        color: t['--color-text-muted'],
+                        paddingTop: t['--space-2xs'],
                       }}
                     >
                       {role}
@@ -125,11 +144,11 @@ export function EmailSignature({
                     {/* Contact line shares the column so the rule runs full height. */}
                     <div
                       style={{
-                        fontFamily: t.mono,
-                        fontSize: t.metaSize,
-                        lineHeight: t.contactLeading,
-                        color: t.contact,
-                        paddingTop: t.contactPad,
+                        fontFamily: t['--font-mono'],
+                        fontSize: t['--text-caption-s-size'],
+                        lineHeight: t['--text-caption-m-leading'],
+                        color: t['--color-text-muted'],
+                        paddingTop: t['--space-2xs'],
                       }}
                     >
                       <a href={website} style={linkStyle}>
@@ -140,7 +159,7 @@ export function EmailSignature({
                           {separator}
                           <a href={`mailto:${email}`} style={linkStyle}>
                             {emailUser}
-                            <span style={{ color: t.accent }}>@</span>
+                            <span style={{ color: t['--color-accent'] }}>@</span>
                             {emailDomain}
                           </a>
                         </>
