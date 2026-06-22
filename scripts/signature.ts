@@ -19,6 +19,11 @@
  * private details (email, phone) are deliberately kept out of source — pass them
  * as options, same as `pnpm print`.
  *
+ * The logo ships in two clipboard steps. Many clients strip an inline image, so
+ * the signature is copied without one; then the real PNG is copied as an image
+ * to paste in below the divider, where it embeds as a `cid:` attachment every
+ * client renders.
+ *
  * Usage:
  *   pnpm signature --email me@example.com --phone "+45 12 34 56 78"
  *   pnpm signature --options ./my-details.json
@@ -34,29 +39,36 @@
 import { execFileSync } from 'node:child_process';
 import { readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import { createInterface } from 'node:readline/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
 import { chromium } from '@playwright/test';
 import { transform } from 'esbuild';
 import { type ComponentType, h } from 'preact';
 import { render } from 'preact-render-to-string';
+import sharp from 'sharp';
 import type {
   EmailSignatureProps,
   SignatureTokenManifest,
   SignatureTokens,
 } from '../src/artifacts/EmailSignature/EmailSignature';
+// Runtime import (unlike the type-only import above), so it needs the explicit
+// .ts extension: Node's ESM resolver does no extension guessing, and this script
+// runs straight through `node`.
+import { resolveSignatureTokens } from '../src/artifacts/EmailSignature/resolveTokens.ts';
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const TOKENS_CSS = join(ROOT, 'src/styles/tokens.css');
 const SITE_CONFIG = join(ROOT, 'src/site.config.ts');
 const COMPONENT = join(ROOT, 'src/artifacts/EmailSignature/EmailSignature.tsx');
+const LOGO_SVG = join(ROOT, 'assets/icon-rounded.svg');
 const DEFAULT_OPTIONS_FILE = join(ROOT, 'print.options.json');
 
 const CONTACT_FIELDS = ['email', 'phone'] as const;
 type ContactField = (typeof CONTACT_FIELDS)[number];
 type Contact = Partial<Record<ContactField, string>>;
 
-type Identity = { fullName: string; mark: string; role: string; website: string };
+type Identity = { fullName: string; role: string; website: string };
 
 async function main(): Promise<void> {
   const { values } = parseArgs({
@@ -86,6 +98,9 @@ async function main(): Promise<void> {
   const identity = readIdentity();
   const { EmailSignature, SIGNATURE_TOKENS } = await loadComponentModule();
   const tokens = await resolveTokens(SIGNATURE_TOKENS);
+  const logoPng = await renderLogo(Number.parseFloat(tokens['--space-4xl']));
+  // The signature is rendered without the logo; the raster is delivered on the
+  // clipboard separately, to be pasted in below the divider as an attachment.
   const html = renderSignature(EmailSignature, identity, contact, tokens);
 
   if (values.output) {
@@ -98,6 +113,7 @@ async function main(): Promise<void> {
   }
   if (!values['no-clipboard']) {
     copyHtmlToClipboard(html);
+    await copyLogoStep(logoPng);
   }
 }
 
@@ -138,7 +154,7 @@ function readOptionsFile(explicitPath?: string): Record<string, unknown> {
 /**
  * Reads the public identity from site.config.ts by source rather than import:
  * the config uses extensionless imports that Vite resolves but plain Node does
- * not. The wordmark is the two initials, matching the brand mark.
+ * not.
  */
 function readIdentity(): Identity {
   const src = readFileSync(SITE_CONFIG, 'utf8');
@@ -147,21 +163,20 @@ function readIdentity(): Identity {
     if (!match) throw new Error(`Could not read ${key} from site.config.ts`);
     return match[1];
   };
-  const firstName = pick('firstName');
-  const lastName = pick('lastName');
   return {
-    fullName: `${firstName} ${lastName}`,
-    mark: `${firstName[0]}${lastName[0]}`.toLowerCase(),
+    fullName: `${pick('firstName')} ${pick('lastName')}`,
     role: pick('role'),
     website: pick('website'),
   };
 }
 
 /**
- * Loads tokens.css into a headless Chromium and reads each token's resolved
- * value the way the browser computes it: colours flattened to sRGB hex (via a
- * 1×1 canvas, so oklch survives into a value every e-mail client understands),
- * lengths as px, leadings as ratios, fonts as their full fallback stack.
+ * Loads tokens.css into a headless Chromium and resolves each token to its flat
+ * value with the browser's own engine. This launches the real renderer rather
+ * than re-deriving the colour maths (oklch → sRGB gamut mapping) ourselves, so
+ * the signature gets exactly the sRGB the site ships — no second, drifting
+ * conversion. Storybook runs the same `resolveSignatureTokens` in its own
+ * browser, so the preview and the e-mail resolve identically.
  */
 async function resolveTokens(manifest: SignatureTokenManifest): Promise<SignatureTokens> {
   const css = readFileSync(TOKENS_CSS, 'utf8');
@@ -171,51 +186,7 @@ async function resolveTokens(manifest: SignatureTokenManifest): Promise<Signatur
     await page.setContent(
       `<!doctype html><html><head><style>${css}</style></head><body></body></html>`,
     );
-    const resolved = (await page.evaluate(({ color, length, ratio, font }) => {
-      const probe = document.body.appendChild(document.createElement('div'));
-      const canvas = document.createElement('canvas');
-      canvas.width = canvas.height = 1;
-      const ctx = canvas.getContext('2d', { colorSpace: 'srgb' }) as CanvasRenderingContext2D;
-
-      const toHex = (token: string): string => {
-        probe.style.color = `var(${token})`;
-        ctx.fillStyle = '#000';
-        ctx.fillStyle = getComputedStyle(probe).color;
-        ctx.fillRect(0, 0, 1, 1);
-        const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
-        return `#${[r, g, b].map((n) => n.toString(16).padStart(2, '0')).join('')}`;
-      };
-      const toLength = (token: string): string => {
-        probe.style.width = `var(${token})`;
-        return getComputedStyle(probe).width;
-      };
-      const toRatio = (token: string): string => {
-        probe.style.fontSize = '1000px';
-        probe.style.lineHeight = `var(${token})`;
-        const value = Number.parseFloat(getComputedStyle(probe).lineHeight) / 1000;
-        probe.style.fontSize = '';
-        probe.style.lineHeight = '';
-        return String(value);
-      };
-      const toFont = (token: string): string => {
-        probe.style.fontFamily = `var(${token})`;
-        // Single-quote family names so they survive inside a double-quoted
-        // style attribute, matching the e-mail convention.
-        return getComputedStyle(probe).fontFamily.replace(/"/g, "'");
-      };
-
-      const resolve = (tokens: readonly string[], fn: (t: string) => string) =>
-        Object.fromEntries(tokens.map((token) => [token, fn(token)]));
-
-      return {
-        ...resolve(color, toHex),
-        ...resolve(length, toLength),
-        ...resolve(ratio, toRatio),
-        ...resolve(font, toFont),
-      } as Record<string, string>;
-    }, manifest)) as SignatureTokens;
-
-    return resolved;
+    return (await page.evaluate(resolveSignatureTokens, manifest)) as SignatureTokens;
   } finally {
     await browser.close();
   }
@@ -246,7 +217,29 @@ async function loadComponentModule(): Promise<{
   }
 }
 
-/** Renders the component to an HTML string with the resolved tokens. */
+/**
+ * Rasterises the brand icon tile to a PNG for the clipboard. SVG isn't rendered
+ * by e-mail clients, and an inline image is stripped by many of them, so the
+ * tile never goes into the markup — it's copied as an image and pasted in below
+ * the divider, where it embeds as a `cid:` attachment every client renders.
+ *
+ * Full retina resolution at the right display size: the raster is 2× the display
+ * height in pixels but tagged at 144 DPI (2×72). A pasted image has no width
+ * attribute to scale it, so the mail editor sizes it by its DPI — Apple Mail
+ * places an 80px @ 144 DPI tile at 40 pt, sharp on retina yet not twice too big.
+ */
+async function renderLogo(displayHeight: number): Promise<Buffer> {
+  return sharp(readFileSync(LOGO_SVG), { density: 384 })
+    .resize({ height: Math.round(displayHeight * 2) })
+    .png()
+    .withMetadata({ density: 144 })
+    .toBuffer();
+}
+
+/**
+ * Renders the component to an HTML string with the resolved tokens. The logo is
+ * deliberately omitted — it's pasted in separately (see renderLogo).
+ */
 function renderSignature(
   Component: ComponentType<EmailSignatureProps>,
   identity: Identity,
@@ -255,7 +248,6 @@ function renderSignature(
 ): string {
   return render(
     h(Component, {
-      mark: identity.mark,
       fullName: identity.fullName,
       role: identity.role,
       website: identity.website,
@@ -285,12 +277,58 @@ function copyHtmlToClipboard(html: string): void {
   }
 }
 
+/**
+ * Second half of the paste flow: once the signature (with its placeholder tile)
+ * is in the mail editor, hand over the actual PNG on the clipboard so it can be
+ * pasted over the placeholder. Pasting a real image embeds it as a `cid:`
+ * attachment — robust across clients that strip an inline image `src`. macOS
+ * only; the prompt is skipped when stdin isn't a TTY.
+ */
+async function copyLogoStep(png: Buffer): Promise<void> {
+  if (process.platform !== 'darwin') return;
+  console.log(
+    '\n  The signature has no logo — paste it into your mail signature first, then\n' +
+      '  paste the logo image below the divider. Many clients drop an inline image,\n' +
+      '  but a pasted image embeds as an attachment they all render.\n',
+  );
+  if (process.stdin.isTTY) {
+    const rl = createInterface({ input: process.stdin, output: process.stdout });
+    await rl.question('  Press Enter to copy the logo image to the clipboard… ');
+    rl.close();
+  }
+  copyImageToClipboard(png);
+  console.log('✓ Logo image copied — click below the divider and paste to add the tile.');
+}
+
+/**
+ * Puts a PNG on the macOS clipboard as image data (not markup). osascript reads
+ * it as the `«class PNGf»` flavour from a short-lived temp file.
+ */
+function copyImageToClipboard(png: Buffer): void {
+  const tmp = join(ROOT, `.signature-logo.${process.pid}.png`);
+  writeFileSync(tmp, png);
+  try {
+    execFileSync('osascript', [
+      '-e',
+      `set the clipboard to (read (POSIX file ${JSON.stringify(tmp)}) as «class PNGf»)`,
+    ]);
+  } catch (cause) {
+    throw new Error('Failed to copy the logo image via osascript.', { cause });
+  } finally {
+    rmSync(tmp, { force: true });
+  }
+}
+
 function printUsage(): void {
   console.log(
     `Build the HTML e-mail signature and copy it to the clipboard (macOS).\n\n` +
       `Colours, sizes and spacing come from the design tokens; name, role and\n` +
       `website from site.config.ts. The private details (email, phone) are added\n` +
       `here and never touch source.\n\n` +
+      `The logo is delivered in two steps: the signature is copied without a\n` +
+      `logo, then (after you paste it) the real PNG is copied as an image — paste\n` +
+      `it in below the divider so it embeds as an attachment, which clients render\n` +
+      `even when they strip an inline image.\n\n` +
       `Usage:\n` +
       `  pnpm signature --email me@example.com --phone "+45 12 34 56 78"\n` +
       `  pnpm signature --options ./my-details.json\n` +

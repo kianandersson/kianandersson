@@ -1,4 +1,4 @@
-import type { JSX } from 'preact';
+import { Fragment, type JSX } from 'preact';
 
 /**
  * The design tokens the signature uses, grouped by how each resolves to a flat
@@ -8,17 +8,16 @@ import type { JSX } from 'preact';
  * there's no translation layer to keep in sync.
  */
 export const SIGNATURE_TOKENS = {
-  color: ['--color-text', '--color-accent', '--color-text-muted', '--color-divider'],
+  color: ['--color-text', '--color-text-muted', '--color-divider'],
   length: [
     '--space-m',
-    '--space-6xl',
-    '--space-s',
     '--space-2xs',
-    '--text-heading-m-size',
+    '--space-l', // gap above the signature, to the message it follows
+    '--space-4xl', // logo size — the CLI rasterises the tile to this
     '--text-label-size',
     '--text-caption-s-size',
   ],
-  ratio: ['--text-heading-m-leading', '--text-caption-m-leading'],
+  ratio: ['--text-label-leading', '--text-caption-s-leading'],
   font: ['--font-sans', '--font-mono'],
 } as const;
 
@@ -32,9 +31,22 @@ type SignatureTokenName = SignatureTokenManifest[keyof SignatureTokenManifest][n
  */
 export type SignatureTokens = Record<SignatureTokenName, string>;
 
+/**
+ * The brand icon tile, as an `<img>` with explicit width/height (display px).
+ * Optional: the CLI omits it and copies the tile to the clipboard as a separate
+ * image instead — many clients strip an inline image, so the signature is pasted
+ * up to the divider and the real PNG pasted in below it, where it embeds as a
+ * `cid:` attachment every client renders. Storybook passes the source SVG so the
+ * preview shows the assembled result.
+ *
+ * The tile carries its own dark background, so it stays legible on any e-mail
+ * background — light or dark — with no `prefers-color-scheme` swap, which a
+ * raster couldn't honour and many clients ignore anyway.
+ */
+export type SignatureLogo = { src: string; width: number; height: number };
+
 export type EmailSignatureProps = {
-  /** Wordmark — the two initials, e.g. "ka". */
-  mark: string;
+  logo?: SignatureLogo;
   fullName: string;
   role: string;
   /** Full URL for the link target. */
@@ -46,14 +58,11 @@ export type EmailSignatureProps = {
   tokens: SignatureTokens;
 };
 
-// Non-breaking spaces keep the separators and the divider cell from collapsing.
-const NBSP = '\u00A0';
-
 // Inline styles + table layout = maximum client compatibility: no external
-// stylesheets, no web fonts to load. The wordmark's weight and tracking are
-// brand specifics with no token, so they stay literal.
+// stylesheets, no web fonts to load. A single vertical column, stacked top to
+// bottom: name, role, website, e-mail, phone, a divider rule, then the logo.
 export function EmailSignature({
-  mark,
+  logo,
   fullName,
   role,
   website,
@@ -63,121 +72,99 @@ export function EmailSignature({
   tokens: t,
 }: EmailSignatureProps) {
   const linkStyle: JSX.CSSProperties = { color: t['--color-text-muted'], textDecoration: 'none' };
-  const separator = <span style={{ color: t['--color-divider'] }}>{`${NBSP}·${NBSP}`}</span>;
+  // Every line below the name shares one style: mono caption, muted, each nudged
+  // down from the line above by the same small step for an even stack.
+  const lineStyle: JSX.CSSProperties = {
+    fontFamily: t['--font-mono'],
+    fontSize: t['--text-caption-s-size'],
+    lineHeight: t['--text-caption-s-leading'],
+    color: t['--color-text-muted'],
+  };
+  // Always break the role onto its own lines (a hard <br>, not a soft wrap):
+  // after each comma, and before each "&" so the ampersand leads the next line.
+  const roleLines = role.split(/\s+(?=&)|(?<=,)\s+/);
   const [emailUser, emailDomain] = (email ?? '').split('@');
 
   return (
-    <table
-      role="presentation"
-      cellPadding="0"
-      cellSpacing="0"
-      style={{ borderCollapse: 'collapse' }}
-    >
-      <tbody>
-        <tr>
-          <td
-            style={{
-              paddingTop: t['--space-m'],
-              borderTop: `1px solid ${t['--color-divider']}`,
-              fontFamily: t['--font-sans'],
-            }}
-          >
-            <table
-              role="presentation"
-              cellPadding="0"
-              cellSpacing="0"
-              style={{ borderCollapse: 'collapse' }}
-            >
-              <tbody>
-                <tr>
-                  <td
-                    style={{
-                      width: t['--space-6xl'],
-                      verticalAlign: 'middle',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontWeight: 700,
-                        fontSize: t['--text-heading-m-size'],
-                        letterSpacing: '-1.2px',
-                        color: t['--color-text'],
-                      }}
-                    >
-                      {mark}
-                      <span style={{ color: t['--color-accent'] }}>.</span>
-                    </span>
-                  </td>
-                  <td
-                    style={{
-                      width: '1px',
-                      background: t['--color-divider'],
-                      fontSize: 0,
-                      lineHeight: 0,
-                    }}
-                  >
-                    {NBSP}
-                  </td>
-                  <td style={{ verticalAlign: 'top', paddingLeft: t['--space-s'] }}>
-                    <div
-                      style={{
-                        fontWeight: 600,
-                        fontSize: t['--text-label-size'],
-                        lineHeight: t['--text-heading-m-leading'],
-                        color: t['--color-text'],
-                      }}
-                    >
-                      {fullName}
-                    </div>
-                    <div
-                      style={{
-                        fontFamily: t['--font-mono'],
-                        fontSize: t['--text-caption-s-size'],
-                        lineHeight: t['--text-heading-m-leading'],
-                        color: t['--color-text-muted'],
-                        paddingTop: t['--space-2xs'],
-                      }}
-                    >
-                      {role}
-                    </div>
-                    {/* Contact line shares the column so the rule runs full height. */}
-                    <div
-                      style={{
-                        fontFamily: t['--font-mono'],
-                        fontSize: t['--text-caption-s-size'],
-                        lineHeight: t['--text-caption-m-leading'],
-                        color: t['--color-text-muted'],
-                        paddingTop: t['--space-2xs'],
-                      }}
-                    >
-                      <a href={website} style={linkStyle}>
-                        {websiteLabel}
-                      </a>
-                      {email ? (
-                        <>
-                          {separator}
-                          <a href={`mailto:${email}`} style={linkStyle}>
-                            {emailUser}
-                            <span style={{ color: t['--color-accent'] }}>@</span>
-                            {emailDomain}
-                          </a>
-                        </>
-                      ) : null}
-                      {phone ? (
-                        <>
-                          {separator}
-                          <span style={{ whiteSpace: 'nowrap' }}>{phone}</span>
-                        </>
-                      ) : null}
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <>
+      <table
+        role="presentation"
+        cellPadding="0"
+        cellSpacing="0"
+        style={{ borderCollapse: 'collapse' }}
+      >
+        <tbody>
+          <tr>
+            <td style={{ paddingTop: t['--space-l'], fontFamily: t['--font-sans'] }}>
+              <div
+                style={{
+                  fontWeight: 600,
+                  fontSize: t['--text-label-size'],
+                  lineHeight: t['--text-label-leading'],
+                  color: t['--color-text'],
+                }}
+              >
+                {fullName}
+              </div>
+              <div style={{ ...lineStyle, paddingTop: t['--space-2xs'] }}>
+                {roleLines.map((line, i) => (
+                  <Fragment key={line}>
+                    {i > 0 ? <br /> : null}
+                    {line.startsWith('&') ? (
+                      <>
+                        <span style={{ color: t['--color-text-muted'] }}>&</span>
+                        {line.slice(1)}
+                      </>
+                    ) : (
+                      line
+                    )}
+                  </Fragment>
+                ))}
+              </div>
+              <div style={{ ...lineStyle, paddingTop: t['--space-m'] }}>
+                <a href={website} style={linkStyle}>
+                  {websiteLabel}
+                </a>
+              </div>
+              {email ? (
+                <div style={{ ...lineStyle, paddingTop: t['--space-2xs'] }}>
+                  <a href={`mailto:${email}`} style={linkStyle}>
+                    {emailUser}
+                    <span style={{ color: t['--color-text-muted'] }}>@</span>
+                    {emailDomain}
+                  </a>
+                </div>
+              ) : null}
+              {phone ? (
+                <div style={{ ...lineStyle, paddingTop: t['--space-2xs'] }}>
+                  <a href={`tel:${phone}`} style={linkStyle}>
+                    {phone.startsWith('+') ? (
+                      <>
+                        <span style={{ color: t['--color-text-muted'] }}>+</span>
+                        {phone.slice(1)}
+                      </>
+                    ) : (
+                      phone
+                    )}
+                  </a>
+                </div>
+              ) : null}
+            </td>
+          </tr>
+        </tbody>
+      </table>{' '}
+      <br />
+      {logo ? (
+        <img
+          src={logo.src}
+          alt={fullName}
+          width={logo.width}
+          height={logo.height}
+          style={{ display: 'block', border: 0 }}
+        />
+      ) : (
+        'LOGO'
+      )}
+    </>
   );
 }
