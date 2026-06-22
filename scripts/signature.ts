@@ -37,7 +37,7 @@
  *          --no-clipboard        Skip copying to the clipboard
  */
 import { execFileSync } from 'node:child_process';
-import { readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { basename, dirname, extname, join, resolve } from 'node:path';
 import { createInterface } from 'node:readline/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -63,6 +63,9 @@ const SITE_CONFIG = join(ROOT, 'src/site.config.ts');
 const COMPONENT = join(ROOT, 'src/artifacts/EmailSignature/EmailSignature.tsx');
 const LOGO_SVG = join(ROOT, 'assets/icon-rounded.svg');
 const DEFAULT_OPTIONS_FILE = join(ROOT, 'print.options.json');
+// Throwaway dir for the transpiled component, inside the project root (like
+// `pnpm print`'s .print) so its bare `preact/jsx-runtime` import resolves.
+const BUILD_DIR = join(ROOT, '.signature');
 
 const CONTACT_FIELDS = ['email', 'phone'] as const;
 type ContactField = (typeof CONTACT_FIELDS)[number];
@@ -202,9 +205,10 @@ async function resolveTokens(manifest: SignatureTokenManifest): Promise<Signatur
 
 /**
  * Loads the EmailSignature module in Node. The component is a leaf .tsx, so it's
- * transpiled in place (esbuild) into a temp ESM module next to the project root
- * — where its bare `preact/jsx-runtime` import resolves — then imported. This
- * also gives the token manifest the component and the CLI share.
+ * transpiled (esbuild) into a temp ESM module under `.signature/` in the project
+ * root — where its bare `preact/jsx-runtime` import resolves — then imported and
+ * the throwaway dir removed. This also gives the token manifest the component
+ * and the CLI share.
  */
 async function loadComponentModule(): Promise<{
   EmailSignature: ComponentType<EmailSignatureProps>;
@@ -216,12 +220,13 @@ async function loadComponentModule(): Promise<{
     jsxImportSource: 'preact',
     format: 'esm',
   });
-  const tmp = join(ROOT, `.email-signature.${process.pid}.mjs`);
+  mkdirSync(BUILD_DIR, { recursive: true });
+  const tmp = join(BUILD_DIR, 'component.mjs');
   writeFileSync(tmp, code);
   try {
     return await import(pathToFileURL(tmp).href);
   } finally {
-    rmSync(tmp, { force: true });
+    rmSync(BUILD_DIR, { recursive: true, force: true });
   }
 }
 

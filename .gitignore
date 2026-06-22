@@ -12,7 +12,7 @@ print.options.json
 .print/
 
 # Signature render artifact
-.email-signature.*.mjs
+.signature/
 
 # Environment
 .env
