@@ -32,13 +32,13 @@
  *
  * Options: --email --phone
  *          --options, -o <file>  JSON with email/phone (CLI flags win)
- *          --output <file>       Also write the signature HTML to a file
+ *          --output <file>       Write the HTML (and logo PNG alongside) to a file
  *          --stdout              Print the signature HTML to stdout
  *          --no-clipboard        Skip copying to the clipboard
  */
 import { execFileSync } from 'node:child_process';
 import { readFileSync, rmSync, writeFileSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { basename, dirname, extname, join, resolve } from 'node:path';
 import { createInterface } from 'node:readline/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
@@ -107,6 +107,14 @@ async function main(): Promise<void> {
     const outputPath = resolve(values.output);
     writeFileSync(outputPath, `${html}\n`, 'utf8');
     console.log(`✓ Wrote ${outputPath}`);
+    // The clipboard is macOS-only; writing the logo alongside the HTML gives
+    // every platform both pieces to assemble by hand.
+    const logoPath = join(
+      dirname(outputPath),
+      `${basename(outputPath, extname(outputPath))}-logo.png`,
+    );
+    writeFileSync(logoPath, logoPng);
+    console.log(`✓ Wrote ${logoPath}`);
   }
   if (values.stdout) {
     console.log(html);
@@ -335,7 +343,7 @@ function printUsage(): void {
       `  pnpm signature --email me@example.com --output signature.html\n\n` +
       `Private options: ${CONTACT_FIELDS.map((f) => `--${f}`).join(' ')}\n` +
       `  --options, -o <file>  JSON file with email/phone (CLI flags win)\n` +
-      `  --output <file>       Also write the signature HTML to a file\n` +
+      `  --output <file>       Write the HTML (and the logo PNG alongside) to a file\n` +
       `  --stdout              Print the signature HTML to stdout\n` +
       `  --no-clipboard        Skip copying to the clipboard\n`,
   );

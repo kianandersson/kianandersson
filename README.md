@@ -29,20 +29,20 @@ See `.env.example` for local development.
 
 ```sh
 pnpm build              # production build
-pnpm check              # typecheck + lint + tests (fast gates)
+pnpm check              # typecheck + lint + tests
 pnpm typecheck          # astro check
 pnpm lint               # biome
 pnpm test               # vitest
-pnpm test:bundle        # gzipped JS budget
+pnpm test:bundle        # gzipped js budget
 pnpm test:e2e           # playwright + axe
-pnpm test:lighthouse    # lighthouse CI
-pnpm print              # render the front page to cv.pdf (runs locally)
-pnpm signature          # build the e-mail signature and copy it (runs locally)
+pnpm test:lighthouse    # lighthouse ci
+pnpm print              # build the cv as pdf
+pnpm signature          # build the e-mail signature
 ```
 
 ## Print to PDF
 
-Run `pnpm print` to render the page to a PDF locally.
+Run `pnpm print` to render the page to a PDF.
 
 ```sh
 pnpm print --email me@example.com --phone "+45 12 34 56 78"
@@ -51,15 +51,11 @@ pnpm print            # uses print.options.json if present
 
 ## E-mail signature
 
-Run `pnpm signature` to build the HTML signature and copy it to the clipboard
-(macOS), ready to paste into a mail signature field. Colours, type sizes, and
-spacing resolve from the design tokens; name, role, and website from the site
-config. The private details (email, phone) are passed in, never stored in source.
+Run `pnpm signature` to build the HTML signature,
 
 ```sh
 pnpm signature --email me@example.com --phone "+45 12 34 56 78"
 pnpm signature            # uses print.options.json if present
-pnpm signature --email me@example.com --output signature.html
 ```
 
 ## License
