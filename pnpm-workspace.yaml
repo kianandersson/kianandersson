@@ -3,13 +3,6 @@ allowBuilds:
   sharp: true
   workerd: false
 
-minimumReleaseAgeExclude:
-  - '@astrojs/cloudflare@14.1.1'
-  - '@astrojs/internal-helpers@0.10.1'
-  - '@astrojs/markdown-satteri@0.3.3'
-  - '@astrojs/preact@6.0.1'
-  - astro@7.0.6
-
 # Force Lighthouse 13.x under @lhci/cli (pinned to 12.6.1). Lighthouse 13.0.2
 # added `content-signal` to the robots.txt directive safelist, which Cloudflare's
 # zone-level Content Signals feature injects into every robots.txt response —
