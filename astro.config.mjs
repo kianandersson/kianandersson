@@ -67,18 +67,5 @@ export default defineConfig({
         'resend',
       ],
     },
-    plugins: [
-      {
-        // Top-level `optimizeDeps.force` doesn't reach the SSR environment —
-        // the adapter rebuilds the SSR optimizeDeps object without it. Inject
-        // `force: true` per-environment so restarts bundle fresh; the cached
-        // path triggers a spurious rebundle that loses the chunk-rename race.
-        name: 'force-ssr-prebundle',
-        configEnvironment(name) {
-          if (name === 'client') return;
-          return { optimizeDeps: { force: true } };
-        },
-      },
-    ],
   },
 });
