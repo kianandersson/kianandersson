@@ -74,19 +74,45 @@ const skills = defineCollection({
     ),
 });
 
+// A project groups work under a single engagement (e.g. multiple deliveries
+// for the same client). When present, the frontend renders role/technologies/
+// concepts from the project rather than the employment (see Experience.tsx).
+const projectSchema = z.object({
+  title: z.string().min(1),
+  role: z.string().min(1),
+  description: z.string().min(1),
+  technologies: z.array(z.string().min(1)).optional(),
+  concepts: z.array(z.string().min(1)).optional(),
+  practices: z.array(z.string().min(1)).optional(),
+  organizational: z.array(z.string().min(1)).optional(),
+});
+
 const experience = defineCollection({
   loader: yamlDir('src/content/experience'),
-  schema: z.object({
-    role: z.string().min(1),
-    meta: z.string().min(1),
-    description: z.string().min(1),
-    technologies: z.array(z.string().min(1)),
-    concepts: z.array(z.string().min(1)).optional(),
-    practices: z.array(z.string().min(1)).optional(),
-    organizational: z.array(z.string().min(1)).optional(),
-    start: z.coerce.date(),
-    end: z.coerce.date().optional(),
-  }),
+  schema: z
+    .object({
+      company: z.string().min(1),
+      // Optional once `projects` are present: the detail then lives per-project
+      // and these employment-level values are hidden in the frontend (they may
+      // still be defined for the machine-readable output).
+      role: z.string().min(1).optional(),
+      description: z.string().min(1),
+      technologies: z.array(z.string().min(1)).optional(),
+      concepts: z.array(z.string().min(1)).optional(),
+      practices: z.array(z.string().min(1)).optional(),
+      organizational: z.array(z.string().min(1)).optional(),
+      start: z.coerce.date(),
+      end: z.coerce.date().optional(),
+      projects: z.array(projectSchema).min(1).optional(),
+    })
+    .refine((data) => data.projects !== undefined || data.role !== undefined, {
+      message: 'An experience without projects must define a role.',
+      path: ['role'],
+    })
+    .refine((data) => data.projects !== undefined || data.technologies !== undefined, {
+      message: 'An experience without projects must define technologies.',
+      path: ['technologies'],
+    }),
 });
 
 const skillGroups = defineCollection({

@@ -25,14 +25,24 @@ type SkillsFile = {
   groups: SkillGroup[];
 };
 
-type ExperienceFile = {
-  role: string;
-  meta: string;
-  description: string;
-  technologies: string[];
+type SkillFields = {
+  technologies?: string[];
   concepts?: string[];
   practices?: string[];
   organizational?: string[];
+};
+
+type ExperienceProject = SkillFields & {
+  title: string;
+  role: string;
+  description: string;
+};
+
+type ExperienceFile = SkillFields & {
+  role?: string;
+  company: string;
+  description: string;
+  projects?: ExperienceProject[];
 };
 
 const REPO_ROOT = process.cwd();
@@ -178,25 +188,32 @@ describe('experience vs skills consistency', () => {
     return map;
   })();
 
-  // Each experience field maps to exactly one skill category.
+  // Each experience field maps to exactly one skill category. Skills live both
+  // at the employment level and per-project, so both are checked.
   function check(
     field: 'technologies' | 'concepts' | 'practices' | 'organizational',
     expected: SkillCategory,
   ) {
-    for (const role of experience) {
-      const list = role[field] ?? [];
-      for (const name of list) {
+    const checkList = (list: string[] | undefined, where: string) => {
+      for (const name of list ?? []) {
         const actual = nameCategory.get(name);
         expect(
           actual !== undefined,
-          `"${role.role} @ ${role.meta}" ${field} includes "${name}" — not a skill, child, or hidden historical entry. ` +
+          `${where} ${field} includes "${name}" — not a skill, child, or hidden historical entry. ` +
             `Either rename it to match skills.yaml, mark it as a child under a paraply, or add it to skills.yaml with hide: true.`,
         ).toBe(true);
         expect(
           actual,
-          `"${role.role} @ ${role.meta}" lists "${name}" under ${field}, but it has category "${actual}" in skills.yaml. ` +
+          `${where} lists "${name}" under ${field}, but it has category "${actual}" in skills.yaml. ` +
             `Expected "${expected}". Move it to the matching field, or fix the category in skills.yaml.`,
         ).toBe(expected);
+      }
+    };
+
+    for (const role of experience) {
+      checkList(role[field], `"${role.role ?? '—'} @ ${role.company}"`);
+      for (const project of role.projects ?? []) {
+        checkList(project[field], `"${project.title} @ ${role.company}"`);
       }
     }
   }

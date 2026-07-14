@@ -14,21 +14,21 @@ const site = {
 const siteUrl = 'https://example.com/';
 
 const experience = [
-  { meta: 'Freelance', role: 'Lead Engineer', start: new Date('2023-03-01') },
+  { company: 'Freelance', role: 'Lead Engineer', start: new Date('2023-03-01') },
   {
-    meta: 'Nordic SaaS ApS',
+    company: 'Nordic SaaS ApS',
     role: 'Senior Full-stack Engineer',
     start: new Date('2021-06-01'),
     end: new Date('2023-02-28'),
   },
   {
-    meta: 'Studio Nord',
+    company: 'Studio Nord',
     role: 'Full-stack Engineer',
     start: new Date('2019-08-01'),
     end: new Date('2021-05-31'),
   },
   {
-    meta: 'Webbureau',
+    company: 'Webbureau',
     role: 'Junior Developer',
     start: new Date('2017-01-01'),
     end: new Date('2019-07-31'),
@@ -140,9 +140,9 @@ describe('buildPersonJsonLd', () => {
     const json = buildPersonJsonLd(
       site,
       [
-        { meta: 'Now Co', role: 'Lead', start: new Date('2024-01-01') },
+        { company: 'Now Co', role: 'Lead', start: new Date('2024-01-01') },
         {
-          meta: 'Then Co',
+          company: 'Then Co',
           role: 'Senior',
           start: new Date('2020-01-01'),
           end: new Date('2023-12-31'),
@@ -160,6 +160,34 @@ describe('buildPersonJsonLd', () => {
         startDate: '2020-01',
         endDate: '2023-12',
         hasOccupation: { '@type': 'Occupation', name: 'Senior' },
+      },
+    ]);
+  });
+
+  it('anchors organisations from company even when an entry omits its role', () => {
+    const json = buildPersonJsonLd(
+      site,
+      [
+        { company: 'Client A', start: new Date('2024-01-01') },
+        {
+          company: 'Client B',
+          role: 'Senior Engineer',
+          start: new Date('2020-01-01'),
+          end: new Date('2023-12-31'),
+        },
+      ],
+      siteUrl,
+    );
+
+    // Companies still surface, roleless entries just contribute no occupation.
+    expect(json.worksFor).toEqual({ '@type': 'Organization', name: 'Client A' });
+    expect(json.alumniOf).toEqual([{ '@type': 'Organization', name: 'Client B' }]);
+    expect(json.hasOccupation).toEqual([
+      {
+        '@type': 'Role',
+        startDate: '2020-01',
+        endDate: '2023-12',
+        hasOccupation: { '@type': 'Occupation', name: 'Senior Engineer' },
       },
     ]);
   });

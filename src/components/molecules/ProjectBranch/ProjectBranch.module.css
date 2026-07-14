@@ -1,0 +1,86 @@
+.branch {
+  position: relative;
+  margin-top: var(--space-5xl);
+}
+
+/* Connectors span exactly from the main rail to the sub-rail. The main rail
+   sits at (space-1 − space-xl) from the entry content; the sub-rail at
+   space-xs — a gap of space-2xl. Height matches the curve's vertical run. */
+.fork,
+.merge {
+  position: absolute;
+  left: calc(var(--space-1) - var(--space-xl));
+  width: var(--space-2xl);
+  height: var(--space-4xl);
+}
+
+.fork {
+  top: calc(var(--space-4xl) * -1);
+}
+
+.merge {
+  top: 0;
+}
+
+.track {
+  position: relative;
+}
+
+/* Continuous sub-rail the project nodes sit on; the fork/merge connectors join
+   it to the main timeline rail at either end. */
+.rail {
+  position: absolute;
+  left: var(--space-xs);
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-divider);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+}
+
+.project {
+  position: relative;
+  padding-left: var(--space-3xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.mergeSpace {
+  position: relative;
+  height: var(--space-4xl);
+}
+
+@media print {
+  /* Paper drops the branch drawing and flattens to a plain indented list. */
+  .branch {
+    margin-top: var(--space-2xl);
+  }
+
+  .rail {
+    display: none;
+  }
+
+  .project {
+    padding-left: var(--space-l);
+    break-inside: avoid;
+  }
+
+  .mergeSpace {
+    display: none;
+  }
+}

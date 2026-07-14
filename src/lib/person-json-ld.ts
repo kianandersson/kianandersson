@@ -9,8 +9,10 @@ interface PersonSource {
 }
 
 interface ExperienceSource {
-  meta: string;
-  role: string;
+  company: string;
+  /** Optional: an engagement whose detail lives in its projects may omit the
+   *  employment-level role. The organisation (meta) still anchors worksFor. */
+  role?: string;
   start: Date;
   end?: Date;
 }
@@ -68,10 +70,11 @@ export function buildPersonJsonLd(
   const past = sorted.filter((entry) => entry.end);
 
   const hasOccupation: (Occupation | DatedRole)[] = [];
-  if (current) {
+  if (current?.role) {
     hasOccupation.push({ '@type': 'Occupation', name: current.role });
   }
   for (const entry of past) {
+    if (!entry.role) continue;
     hasOccupation.push({
       '@type': 'Role',
       startDate: toIsoMonth(entry.start),
@@ -89,9 +92,9 @@ export function buildPersonJsonLd(
     jobTitle: site.role,
     address: { '@type': 'PostalAddress', addressCountry: site.location },
     sameAs: [site.links.github, site.links.linkedin],
-    worksFor: current ? { '@type': 'Organization', name: current.meta } : undefined,
+    worksFor: current ? { '@type': 'Organization', name: current.company } : undefined,
     alumniOf: past.length
-      ? past.map((entry) => ({ '@type': 'Organization', name: entry.meta }))
+      ? past.map((entry) => ({ '@type': 'Organization', name: entry.company }))
       : undefined,
     hasOccupation: hasOccupation.length ? hasOccupation : undefined,
     knowsAbout: skills.length

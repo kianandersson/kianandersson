@@ -1,12 +1,25 @@
 .marker {
   position: absolute;
-  left: calc(1px - var(--space-xl));
-  top: var(--space-2);
   width: 8px;
   height: 8px;
   border-radius: var(--radius-full);
+}
+
+/* Top-level entry node: sits on the main rail with an accent glow. */
+.marker[data-tone="accent"] {
+  left: calc(1px - var(--space-xl));
+  top: var(--space-2);
   background: var(--color-accent);
   box-shadow: 0 0 0 4px var(--color-accent-subtle);
+}
+
+/* Nested project node: a muted-accent node on the branch sub-rail, punched out
+   of the page so the rail reads as passing behind it. */
+.marker[data-tone="muted"] {
+  left: var(--space-2xs);
+  top: var(--space-1);
+  background: var(--color-accent-muted);
+  box-shadow: 0 0 0 3px var(--color-surface);
 }
 
 @media print {

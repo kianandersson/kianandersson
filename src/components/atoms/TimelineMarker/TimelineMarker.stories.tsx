@@ -39,6 +39,28 @@ type Story = StoryObj<typeof TimelineMarker>;
 
 export const Default: Story = {};
 
+export const Muted: Story = {
+  render: () => (
+    <div style={{ position: 'relative', paddingLeft: 'var(--space-3xl)' }}>
+      <span
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          left: 'var(--space-xs)',
+          top: 0,
+          bottom: 0,
+          width: '2px',
+          background: 'var(--color-divider)',
+        }}
+      />
+      <div style={{ position: 'relative' }}>
+        <TimelineMarker tone="muted" />
+        <div style={{ color: 'var(--color-text-muted)' }}>Nested project</div>
+      </div>
+    </div>
+  ),
+};
+
 export const Bare: Story = {
   tags: ['!dev', '!autodocs'],
   render: () => <TimelineMarker />,

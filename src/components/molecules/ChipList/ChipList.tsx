@@ -1,7 +1,5 @@
-import { useCallback, useState } from 'preact/hooks';
 import { sliceList } from '../../../lib/chip-list';
 import { Chip, type ChipVariant } from '../../atoms/Chip';
-import { TextLink } from '../../atoms/TextLink';
 import styles from './ChipList.module.css';
 
 type Props = {
@@ -14,10 +12,12 @@ type Props = {
   printMaxChars?: number;
   printPerItemCost?: number;
   expand?: boolean;
+  /** Unique id for the CSS-only expand control. */
+  id: string;
 };
 
 // Leading non-breaking space (with nowrap) keeps "+N more" off its own line.
-const MORE_PREFIX = ' ';
+const MORE_PREFIX = ' ';
 
 export function ChipList({
   label,
@@ -29,10 +29,8 @@ export function ChipList({
   printMaxChars,
   printPerItemCost,
   expand = false,
+  id,
 }: Props) {
-  const [isOpen, setOpen] = useState(false);
-  const toggle = useCallback(() => setOpen((prev) => !prev), []);
-
   const { visible, hidden, hasMore, hiddenCount } = sliceList(items, {
     maxChars,
     perItemCost,
@@ -45,25 +43,28 @@ export function ChipList({
   });
   const printItems = expand ? items : printSlice.visible;
   const printHiddenCount = expand ? 0 : printSlice.hiddenCount;
+  const toggleId = `${id}-more`;
 
   return (
     <div className={styles.row}>
       <span className={styles.label}>{label}</span>
+      {hasMore && <input type="checkbox" id={toggleId} className={styles.input} />}
       <div className={styles.chips}>
         {visible.map((item) => (
           <Chip key={item} label={item} variant={variant} />
         ))}
         {hasMore && (
-          <span className={styles.overflow} data-shown={isOpen}>
+          <span className={styles.overflow}>
             {hidden.map((item) => (
               <Chip key={item} label={item} variant={variant} />
             ))}
           </span>
         )}
         {hasMore && (
-          <TextLink type="button" onClick={toggle} aria-expanded={isOpen}>
-            {isOpen ? 'Show less' : `+${hiddenCount} more`}
-          </TextLink>
+          <label htmlFor={toggleId} className={styles.toggle}>
+            <span className={styles.more}>{`+${hiddenCount} more`}</span>
+            <span className={styles.less}>Show less</span>
+          </label>
         )}
       </div>
       <p className={styles.printList} data-variant={variant} aria-hidden="true">

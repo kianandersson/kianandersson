@@ -13,6 +13,14 @@
   flex: 0 0 56px;
 }
 
+/* Off-screen but kept in the a11y tree and keyboard-operable via its label. */
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
 .chips {
   display: flex;
   flex-wrap: wrap;
@@ -22,14 +30,44 @@
 }
 
 /* Overflow bucket — stays in the DOM (SEO/crawler-friendly) and joins the
- * flex layout via `display: contents` when expanded. Collapsed state hides
- * the bucket entirely so its children don't take part in layout either. */
+ * flex layout via `display: contents` when the toggle is checked. Collapsed
+ * state hides the bucket entirely so its children don't take part in layout. */
 .overflow {
+  display: none;
+}
+
+.input:checked ~ .chips .overflow {
   display: contents;
 }
 
-.overflow[data-shown="false"] {
+.toggle {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption-s-size);
+  line-height: var(--text-caption-s-leading);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.toggle:hover {
+  color: var(--color-accent);
+}
+
+.less {
   display: none;
+}
+
+.input:checked ~ .chips .toggle .more {
+  display: none;
+}
+
+.input:checked ~ .chips .toggle .less {
+  display: inline;
+}
+
+.input:focus-visible ~ .chips .toggle {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }
 
 .printList {
@@ -55,7 +93,8 @@
 }
 
 @media print {
-  .chips {
+  .chips,
+  .input {
     display: none;
   }
 
