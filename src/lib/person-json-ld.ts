@@ -9,7 +9,7 @@ interface PersonSource {
 }
 
 interface ExperienceSource {
-  meta: string;
+  company: string;
   /** Optional: an engagement whose detail lives in its projects may omit the
    *  employment-level role. The organisation (meta) still anchors worksFor. */
   role?: string;
@@ -92,9 +92,9 @@ export function buildPersonJsonLd(
     jobTitle: site.role,
     address: { '@type': 'PostalAddress', addressCountry: site.location },
     sameAs: [site.links.github, site.links.linkedin],
-    worksFor: current ? { '@type': 'Organization', name: current.meta } : undefined,
+    worksFor: current ? { '@type': 'Organization', name: current.company } : undefined,
     alumniOf: past.length
-      ? past.map((entry) => ({ '@type': 'Organization', name: entry.meta }))
+      ? past.map((entry) => ({ '@type': 'Organization', name: entry.company }))
       : undefined,
     hasOccupation: hasOccupation.length ? hasOccupation : undefined,
     knowsAbout: skills.length

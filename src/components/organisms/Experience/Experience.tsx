@@ -10,8 +10,8 @@ export type ExperienceProject = ProjectBranchItem;
 
 export type ExperienceEntry = {
   id: string;
-  /** Company name — rendered as the entry heading. */
-  meta: string;
+  /** Company or client — rendered as the entry heading. */
+  company: string;
   /** Role — rendered under the company. Absent when the entry has projects. */
   role?: string;
   period: string;
@@ -41,7 +41,7 @@ export function Experience({ entries, allStackSkills = false, allDomainSkills = 
               <TimelineMarker />
               <div className={styles.titleBlock}>
                 <Heading level={3} size="s">
-                  {entry.meta}
+                  {entry.company}
                 </Heading>
                 <div className={styles.metaLine}>
                   {entry.role && (

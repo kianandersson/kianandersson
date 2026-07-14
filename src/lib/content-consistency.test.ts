@@ -40,7 +40,7 @@ type ExperienceProject = SkillFields & {
 
 type ExperienceFile = SkillFields & {
   role?: string;
-  meta: string;
+  company: string;
   description: string;
   projects?: ExperienceProject[];
 };
@@ -211,9 +211,9 @@ describe('experience vs skills consistency', () => {
     };
 
     for (const role of experience) {
-      checkList(role[field], `"${role.role ?? '—'} @ ${role.meta}"`);
+      checkList(role[field], `"${role.role ?? '—'} @ ${role.company}"`);
       for (const project of role.projects ?? []) {
-        checkList(project[field], `"${project.title} @ ${role.meta}"`);
+        checkList(project[field], `"${project.title} @ ${role.company}"`);
       }
     }
   }

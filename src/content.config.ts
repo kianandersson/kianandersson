@@ -91,11 +91,11 @@ const experience = defineCollection({
   loader: yamlDir('src/content/experience'),
   schema: z
     .object({
+      company: z.string().min(1),
       // Optional once `projects` are present: the detail then lives per-project
       // and these employment-level values are hidden in the frontend (they may
       // still be defined for the machine-readable output).
       role: z.string().min(1).optional(),
-      meta: z.string().min(1),
       description: z.string().min(1),
       technologies: z.array(z.string().min(1)).optional(),
       concepts: z.array(z.string().min(1)).optional(),
