@@ -164,6 +164,34 @@ describe('buildPersonJsonLd', () => {
     ]);
   });
 
+  it('anchors organisations from meta even when an entry omits its role', () => {
+    const json = buildPersonJsonLd(
+      site,
+      [
+        { meta: 'Client A', start: new Date('2024-01-01') },
+        {
+          meta: 'Client B',
+          role: 'Senior Engineer',
+          start: new Date('2020-01-01'),
+          end: new Date('2023-12-31'),
+        },
+      ],
+      siteUrl,
+    );
+
+    // Companies still surface, roleless entries just contribute no occupation.
+    expect(json.worksFor).toEqual({ '@type': 'Organization', name: 'Client A' });
+    expect(json.alumniOf).toEqual([{ '@type': 'Organization', name: 'Client B' }]);
+    expect(json.hasOccupation).toEqual([
+      {
+        '@type': 'Role',
+        startDate: '2020-01',
+        endDate: '2023-12',
+        hasOccupation: { '@type': 'Occupation', name: 'Senior Engineer' },
+      },
+    ]);
+  });
+
   it('omits worksFor and alumniOf when no experience is given', () => {
     const json = buildPersonJsonLd(site, [], siteUrl);
 

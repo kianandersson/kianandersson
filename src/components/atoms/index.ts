@@ -1,4 +1,5 @@
 export * from './AvailabilityStatus';
+export * from './BranchConnector';
 export * from './Button';
 export * from './Chip';
 export * from './Divider';

@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/preact-vite';
 import { expect, userEvent, within } from 'storybook/test';
-import { sliceList } from '../../../lib/chip-list';
 import { ChipList } from './ChipList';
 
 const meta: Meta<typeof ChipList> = {
@@ -13,6 +12,7 @@ const meta: Meta<typeof ChipList> = {
     variant: { control: { type: 'inline-radio' }, options: ['stack', 'domains'] },
   },
   args: {
+    id: 'demo',
     label: 'Stack',
     maxChars: 40,
     minItems: 3,
@@ -30,10 +30,6 @@ export const ExpandCollapseBehavior: Story = {
   tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
-    const { hiddenCount } = sliceList(args.items as string[], {
-      maxChars: args.maxChars as number,
-      minItems: args.minItems as number | undefined,
-    });
 
     await expect(canvas.getByText(args.label as string)).toBeInTheDocument();
 
@@ -42,22 +38,16 @@ export const ExpandCollapseBehavior: Story = {
       await expect(canvas.getByText(item)).toBeInTheDocument();
     }
 
-    const bucket = canvasElement.querySelector('[data-shown]');
-    await expect(bucket).not.toBeNull();
-    await expect(bucket).toHaveAttribute('data-shown', 'false');
+    // CSS-only disclosure: clicking the label toggles the associated checkbox.
+    const checkbox = canvas.getByRole('checkbox');
+    const label = canvasElement.querySelector('label[for]') as HTMLLabelElement;
+    await expect(checkbox).not.toBeChecked();
 
-    const toggle = canvas.getByRole('button');
-    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
-    await expect(toggle).toHaveAccessibleName(new RegExp(`${hiddenCount} more`, 'i'));
+    await userEvent.click(label);
+    await expect(checkbox).toBeChecked();
 
-    // Expand.
-    await userEvent.click(toggle);
-    await expect(bucket).toHaveAttribute('data-shown', 'true');
-    await expect(toggle).toHaveAttribute('aria-expanded', 'true');
-
-    // Collapse again.
-    await userEvent.click(canvas.getByRole('button', { name: /less/i }));
-    await expect(bucket).toHaveAttribute('data-shown', 'false');
+    await userEvent.click(label);
+    await expect(checkbox).not.toBeChecked();
   },
 };
 
@@ -65,8 +55,7 @@ export const NoOverflow: Story = {
   args: { items: ['TypeScript', 'React', 'Preact'], maxChars: 100 },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(canvas.queryByRole('button')).not.toBeInTheDocument();
-    await expect(canvasElement.querySelector('[data-shown]')).toBeNull();
+    await expect(canvas.queryByRole('checkbox')).not.toBeInTheDocument();
   },
 };
 

@@ -44,7 +44,9 @@ export const Default: Story = {
     const items = canvas.getAllByRole('listitem');
     await expect(items).toHaveLength(entries.length);
     for (const entry of entries) {
-      await expect(canvas.getByText(entry.role)).toBeInTheDocument();
+      if (entry.role) {
+        await expect(canvas.getByText(entry.role)).toBeInTheDocument();
+      }
       await expect(canvas.getByText(entry.meta)).toBeInTheDocument();
       await expect(canvas.getByText(entry.period)).toBeInTheDocument();
       await expect(canvas.getByText(entry.description)).toBeInTheDocument();
@@ -53,6 +55,59 @@ export const Default: Story = {
       await expect(within(item).getByText('Stack')).toBeInTheDocument();
       await expect(within(item).getByText('Domains')).toBeInTheDocument();
     }
+  },
+};
+
+const WITH_PROJECTS: ExperienceEntry[] = [
+  {
+    id: 'c',
+    meta: 'Danske Bank',
+    period: '2019 — 2023',
+    description: 'A multi-year engagement spanning several delivery teams.',
+    stack: [],
+    domains: [],
+    projects: [
+      {
+        id: 'c-0',
+        title: 'Login Platform',
+        role: 'Tech Lead',
+        description: 'Designed and shipped the OAuth/OIDC platform used across the group.',
+        stack: ['TypeScript', 'Node', 'OAuth'],
+        domains: ['Authentication', 'API design'],
+      },
+      {
+        id: 'c-1',
+        title: 'Payments Gateway',
+        role: 'Senior Engineer',
+        description: 'Built the settlement pipeline and reconciliation tooling.',
+        stack: ['Go', 'PostgreSQL'],
+        domains: ['Distributed systems'],
+      },
+    ],
+  },
+];
+
+export const WithProjects: Story = {
+  args: { entries: WITH_PROJECTS },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const entry = WITH_PROJECTS[0];
+
+    // Company is the entry heading; the employment carries no role line here.
+    await expect(canvas.getByRole('heading', { level: 3, name: entry.meta })).toBeInTheDocument();
+    await expect(canvas.getByText(entry.description)).toBeInTheDocument();
+
+    for (const project of entry.projects ?? []) {
+      await expect(
+        canvas.getByRole('heading', { level: 4, name: project.title }),
+      ).toBeInTheDocument();
+      await expect(canvas.getByText(project.role)).toBeInTheDocument();
+      await expect(canvas.getByText(project.description)).toBeInTheDocument();
+    }
+
+    // Each project carries its own Stack + Domains labels.
+    await expect(canvas.getAllByText('Stack')).toHaveLength(2);
+    await expect(canvas.getAllByText('Domains')).toHaveLength(2);
   },
 };
 

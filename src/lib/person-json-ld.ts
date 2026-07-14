@@ -10,7 +10,9 @@ interface PersonSource {
 
 interface ExperienceSource {
   meta: string;
-  role: string;
+  /** Optional: an engagement whose detail lives in its projects may omit the
+   *  employment-level role. The organisation (meta) still anchors worksFor. */
+  role?: string;
   start: Date;
   end?: Date;
 }
@@ -68,10 +70,11 @@ export function buildPersonJsonLd(
   const past = sorted.filter((entry) => entry.end);
 
   const hasOccupation: (Occupation | DatedRole)[] = [];
-  if (current) {
+  if (current?.role) {
     hasOccupation.push({ '@type': 'Occupation', name: current.role });
   }
   for (const entry of past) {
+    if (!entry.role) continue;
     hasOccupation.push({
       '@type': 'Role',
       startDate: toIsoMonth(entry.start),

@@ -93,8 +93,16 @@ const experience = experienceEntries.map((entry) => ({
   meta: entry.data.meta,
   period: formatPeriod(entry.data.start, entry.data.end),
   description: entry.data.description,
-  stack: entry.data.technologies.slice(0, STACK_LIMIT),
+  stack: (entry.data.technologies ?? []).slice(0, STACK_LIMIT),
   domains: (entry.data.concepts ?? []).slice(0, DOMAINS_LIMIT),
+  projects: entry.data.projects?.map((project, index) => ({
+    id: `${entry.id}-${index}`,
+    title: project.title,
+    role: project.role,
+    description: project.description,
+    stack: (project.technologies ?? []).slice(0, STACK_LIMIT),
+    domains: (project.concepts ?? []).slice(0, DOMAINS_LIMIT),
+  })),
 }));
 
 const jsonLd = buildPersonJsonLd(

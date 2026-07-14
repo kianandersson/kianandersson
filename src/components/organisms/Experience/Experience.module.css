@@ -54,12 +54,6 @@
   max-width: 560px;
 }
 
-.chipGroups {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-s);
-}
-
 @media print {
   .timeline {
     padding-left: 0;

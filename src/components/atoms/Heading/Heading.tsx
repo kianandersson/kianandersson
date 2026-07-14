@@ -1,7 +1,7 @@
 import type { ComponentChildren } from 'preact';
 import styles from './Heading.module.css';
 
-export type HeadingLevel = 1 | 2 | 3;
+export type HeadingLevel = 1 | 2 | 3 | 4;
 export type HeadingSize = 'display-xl' | 'display-l' | 'l' | 'm' | 's';
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
   id?: string;
 };
 
-const TAGS = { 1: 'h1', 2: 'h2', 3: 'h3' } as const;
+const TAGS = { 1: 'h1', 2: 'h2', 3: 'h3', 4: 'h4' } as const;
 
 export function Heading({ level, size, children, id }: Props) {
   const Tag = TAGS[level];

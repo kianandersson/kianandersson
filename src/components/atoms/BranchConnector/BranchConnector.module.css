@@ -1,0 +1,14 @@
+.connector {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.connector path {
+  fill: none;
+  stroke: var(--color-divider);
+  stroke-width: 2px;
+  /* Keep the stroke crisp even though the box is non-uniformly stretched. */
+  vector-effect: non-scaling-stroke;
+}

@@ -1,32 +1,25 @@
 import { Heading } from '../../atoms/Heading';
 import { Text } from '../../atoms/Text';
 import { TimelineMarker } from '../../atoms/TimelineMarker';
-import { ChipList } from '../../molecules/ChipList';
+import { ProjectBranch, type ProjectBranchItem } from '../../molecules/ProjectBranch';
 import { SectionHeader } from '../../molecules/SectionHeader';
+import { SkillChipGroups } from '../../molecules/SkillChipGroups';
 import styles from './Experience.module.css';
 
-// Web chip area ~556px, Geist Mono 12px ≈ 77 chars/line; cost = text + ~5/item.
-// Budgets stay under 1 line (stack) / 2 lines (domains) so "+N more" never orphans.
-const CHIP_PER_ITEM_COST = 5;
-const STACK_MAX_CHARS = 58;
-const STACK_MIN_ITEMS = 3;
-const DOMAINS_MAX_CHARS = 112;
-const DOMAINS_MIN_ITEMS = 3;
-
-// Print list ~604px, mono ~9px ≈ 112 chars/line; plain comma text (~2/item).
-// Budgets target ~1 line (stack) / ~2 lines (domains).
-const PRINT_PER_ITEM_COST = 2;
-const PRINT_STACK_MAX_CHARS = 95;
-const PRINT_DOMAINS_MAX_CHARS = 200;
+export type ExperienceProject = ProjectBranchItem;
 
 export type ExperienceEntry = {
   id: string;
-  role: string;
+  /** Company name — rendered as the entry heading. */
   meta: string;
+  /** Role — rendered under the company. Absent when the entry has projects. */
+  role?: string;
   period: string;
   description: string;
+  /** Shown only when the entry has no projects; otherwise the detail lives per-project. */
   stack: string[];
   domains: string[];
+  projects?: ExperienceProject[];
 };
 
 type Props = {
@@ -48,15 +41,19 @@ export function Experience({ entries, allStackSkills = false, allDomainSkills = 
               <TimelineMarker />
               <div className={styles.titleBlock}>
                 <Heading level={3} size="s">
-                  {entry.role}
+                  {entry.meta}
                 </Heading>
                 <div className={styles.metaLine}>
-                  <Text font="mono" size="caption-s" tone="muted">
-                    {entry.meta}
-                  </Text>
-                  <Text font="mono" size="caption-s" tone="muted" aria-hidden={true}>
-                    ·
-                  </Text>
+                  {entry.role && (
+                    <>
+                      <Text font="mono" size="caption-s" tone="muted">
+                        {entry.role}
+                      </Text>
+                      <Text font="mono" size="caption-s" tone="muted" aria-hidden={true}>
+                        ·
+                      </Text>
+                    </>
+                  )}
                   <Text font="mono" size="caption-s" tone="muted">
                     {entry.period}
                   </Text>
@@ -67,34 +64,21 @@ export function Experience({ entries, allStackSkills = false, allDomainSkills = 
                   {entry.description}
                 </Text>
               </div>
-              <div className={styles.chipGroups}>
-                {entry.stack.length > 0 && (
-                  <ChipList
-                    label="Stack"
-                    items={entry.stack}
-                    maxChars={STACK_MAX_CHARS}
-                    perItemCost={CHIP_PER_ITEM_COST}
-                    minItems={STACK_MIN_ITEMS}
-                    printMaxChars={PRINT_STACK_MAX_CHARS}
-                    printPerItemCost={PRINT_PER_ITEM_COST}
-                    variant="stack"
-                    expand={allStackSkills}
-                  />
-                )}
-                {entry.domains.length > 0 && (
-                  <ChipList
-                    label="Domains"
-                    items={entry.domains}
-                    maxChars={DOMAINS_MAX_CHARS}
-                    perItemCost={CHIP_PER_ITEM_COST}
-                    minItems={DOMAINS_MIN_ITEMS}
-                    printMaxChars={PRINT_DOMAINS_MAX_CHARS}
-                    printPerItemCost={PRINT_PER_ITEM_COST}
-                    variant="domains"
-                    expand={allDomainSkills}
-                  />
-                )}
-              </div>
+              {entry.projects && entry.projects.length > 0 ? (
+                <ProjectBranch
+                  projects={entry.projects}
+                  allStackSkills={allStackSkills}
+                  allDomainSkills={allDomainSkills}
+                />
+              ) : (
+                <SkillChipGroups
+                  idPrefix={entry.id}
+                  stack={entry.stack}
+                  domains={entry.domains}
+                  allStackSkills={allStackSkills}
+                  allDomainSkills={allDomainSkills}
+                />
+              )}
             </li>
           ))}
         </ol>
