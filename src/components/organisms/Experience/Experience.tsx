@@ -21,8 +21,8 @@ const PRINT_DOMAINS_MAX_CHARS = 200;
 
 export type ExperienceEntry = {
   id: string;
+  company: string;
   role: string;
-  meta: string;
   period: string;
   description: string;
   stack: string[];
@@ -48,7 +48,7 @@ export function Experience({ entries, allStackSkills = false, allDomainSkills = 
               <TimelineMarker />
               <div className={styles.titleBlock}>
                 <Heading level={3} size="s">
-                  {entry.meta}
+                  {entry.company}
                 </Heading>
                 <div className={styles.metaLine}>
                   <Text font="mono" size="caption-s" tone="muted">
