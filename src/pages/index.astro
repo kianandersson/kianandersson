@@ -89,8 +89,8 @@ const DOMAINS_LIMIT = 20;
 
 const experience = experienceEntries.map((entry) => ({
   id: entry.id,
+  company: entry.data.company,
   role: entry.data.role,
-  meta: entry.data.meta,
   period: formatPeriod(entry.data.start, entry.data.end),
   description: entry.data.description,
   stack: entry.data.technologies.slice(0, STACK_LIMIT),
@@ -100,7 +100,7 @@ const experience = experienceEntries.map((entry) => ({
 const jsonLd = buildPersonJsonLd(
   siteConfig,
   experienceEntries.map((entry) => ({
-    meta: entry.data.meta,
+    company: entry.data.company,
     role: entry.data.role,
     start: entry.data.start,
     end: entry.data.end,

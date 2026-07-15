@@ -77,8 +77,8 @@ const skills = defineCollection({
 const experience = defineCollection({
   loader: yamlDir('src/content/experience'),
   schema: z.object({
+    company: z.string().min(1),
     role: z.string().min(1),
-    meta: z.string().min(1),
     description: z.string().min(1),
     technologies: z.array(z.string().min(1)),
     concepts: z.array(z.string().min(1)).optional(),
