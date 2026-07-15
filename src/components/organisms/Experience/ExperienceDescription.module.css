@@ -9,28 +9,30 @@
   line-height: var(--text-body-leading);
 }
 
-/* Margin-based paragraph spacing (not flex gap) so it survives the switch to
-   `-webkit-box` in the clamped state below. */
-.body > * + * {
+/* Trailing ellipsis on the first section while collapsed. Two dots, because the
+   sentence already ends in a full stop — together they read as a "…" saying the
+   description continues. It's our own span, so styling it stays inside this
+   component; we never decorate the Text child from here. */
+.ellipsis {
+  color: inherit;
+}
+
+/* The sections after the first: hidden in the collapsed preview, revealed by the
+   checkbox below. This wrapper is ours, so we toggle it rather than reaching into
+   the Text paragraphs. Print and no-JS fall through to the revealed layout. */
+.rest {
+  display: none;
+}
+
+.check:checked ~ .body .rest {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
   margin-top: var(--space-s);
 }
 
-/* Collapsed preview: line-clamp so the cut lands on a line boundary and the
-   browser appends an ellipsis — signalling the sentence continues rather than
-   ending. The checkbox below releases it; print and no-JS keep the full text. */
-.clamped {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: var(--collapsed-lines);
-  line-clamp: var(--collapsed-lines);
-  overflow: hidden;
-}
-
-.check:checked ~ .clamped {
-  display: block;
-  -webkit-line-clamp: unset;
-  line-clamp: unset;
-  overflow: visible;
+.check:checked ~ .body .ellipsis {
+  display: none;
 }
 
 /* Visually hidden but focusable — the label is the visible affordance, the
@@ -49,9 +51,9 @@
 }
 
 /* Styled like TextLink (mono, muted, chip padding). Discoverability comes from
-   the clamp's trailing ellipsis and the chevron, not colour, so it stays quiet
-   against the description. Pulled back under the text so the label aligns with
-   the paragraph edge. */
+   the trailing ellipsis and the chevron, not colour, so it stays quiet against
+   the description. Pulled back under the text so the label aligns with the
+   paragraph edge. */
 .toggle {
   align-self: flex-start;
   display: inline-flex;
@@ -69,11 +71,11 @@
   transition: color 0.2s;
 }
 
-/* Points down (more) and flips up (less) on expand — mirrors Accordion. */
+/* Points down (more) and flips up (less) on expand — mirrors Accordion. Flips
+   instantly to match the toggle, which reveals the rest with no animation. */
 .chevron {
   display: inline-grid;
   place-items: center;
-  transition: transform 0.3s ease;
 }
 
 .check:checked ~ .toggle .chevron {
@@ -104,19 +106,17 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .chevron {
-    transition: none;
-  }
-}
-
 @media print {
-  /* Paper shows the whole description and never the toggle. */
-  .clamped {
-    display: block;
-    -webkit-line-clamp: unset;
-    line-clamp: unset;
-    overflow: visible;
+  /* Paper shows every section and never the toggle or its ellipsis. */
+  .rest {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    margin-top: var(--space-s);
+  }
+
+  .ellipsis {
+    display: none;
   }
 
   .check,

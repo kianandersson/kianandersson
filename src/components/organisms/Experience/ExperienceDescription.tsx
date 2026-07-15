@@ -3,16 +3,6 @@ import { ChevronIcon } from '../../atoms/icons';
 import { Text } from '../../atoms/Text';
 import styles from './ExperienceDescription.module.css';
 
-// Collapsed preview height, in body lines. Kept small so a long multi-paragraph
-// description shows a taste and expands on demand. Print ignores the clamp.
-const COLLAPSED_LINES = 4;
-
-// Approximate character budget for one line of the ~560px body column at 16px
-// sans. Only used to decide whether a description is long enough to warrant the
-// toggle at all — the visual cut itself is exact (CSS max-height). Deliberately
-// generous so only clearly-overflowing entries collapse.
-const CHARS_PER_LINE = 66;
-
 type Props = {
   /** Description text; blank lines (a `\n\n` break) separate paragraphs. */
   text: string;
@@ -25,33 +15,36 @@ function toParagraphs(text: string): string[] {
     .filter(Boolean);
 }
 
-function estimateLines(paragraphs: string[]): number {
-  return paragraphs.reduce(
-    (lines, paragraph) => lines + Math.max(1, Math.ceil(paragraph.length / CHARS_PER_LINE)),
-    0,
-  );
-}
-
 export function ExperienceDescription({ text }: Props) {
-  const paragraphs = toParagraphs(text);
+  const [lead, ...rest] = toParagraphs(text);
   const toggleId = useId();
   const bodyId = useId();
 
-  // Offer the toggle only when at least a couple of lines would be hidden;
-  // otherwise the clamp cuts nothing and the control would be dead weight.
-  const clampable = estimateLines(paragraphs) > COLLAPSED_LINES + 1;
+  // Collapse at the section boundary: the preview shows the first paragraph and
+  // the rest expand on demand. Only worth a toggle when there's more to reveal.
+  const clampable = rest.length > 0;
 
+  // The ellipsis and the `rest` wrapper are our own elements — we never reach
+  // into the Text children to hide or decorate them from here.
   const body = (
-    <div
-      id={bodyId}
-      className={clampable ? `${styles.body} ${styles.clamped}` : styles.body}
-      style={{ '--collapsed-lines': COLLAPSED_LINES }}
-    >
-      {paragraphs.map((paragraph) => (
-        <Text key={paragraph} as="p" size="body" tone="muted">
-          {paragraph}
-        </Text>
-      ))}
+    <div id={bodyId} className={styles.body}>
+      <Text as="p" size="body" tone="muted">
+        {lead}
+        {clampable && (
+          <span className={styles.ellipsis} aria-hidden="true">
+            ..
+          </span>
+        )}
+      </Text>
+      {clampable && (
+        <div className={styles.rest}>
+          {rest.map((paragraph) => (
+            <Text key={paragraph} as="p" size="body" tone="muted">
+              {paragraph}
+            </Text>
+          ))}
+        </div>
+      )}
     </div>
   );
 
@@ -59,7 +52,7 @@ export function ExperienceDescription({ text }: Props) {
     return <div className={styles.root}>{body}</div>;
   }
 
-  // Pure-CSS disclosure: a visually-hidden checkbox drives the clamp via a
+  // Pure-CSS disclosure: a visually-hidden checkbox drives the collapse via a
   // sibling selector, so expand/collapse needs no JS and works before (and
   // without) hydration. The label reuses the checkbox's toggling for free.
   return (
