@@ -1,4 +1,4 @@
-import type { ComponentChildren, JSX, Ref } from 'preact';
+import type { ComponentChildren, MouseEventHandler, Ref } from 'preact';
 import styles from './TextLink.module.css';
 
 export type TextLinkTone = 'muted' | 'default';
@@ -24,7 +24,7 @@ export type AnchorProps = SharedProps & {
   href: string;
   target?: string;
   rel?: string;
-  onClick?: JSX.MouseEventHandler<HTMLAnchorElement>;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
   ref?: Ref<HTMLAnchorElement>;
 };
 
@@ -32,7 +32,7 @@ export type ButtonProps = SharedProps & {
   href?: undefined;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
-  onClick?: JSX.MouseEventHandler<HTMLButtonElement>;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   ref?: Ref<HTMLButtonElement>;
 };
 

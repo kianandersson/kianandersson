@@ -1,4 +1,4 @@
-import { Fragment, type JSX } from 'preact';
+import { type CSSProperties, Fragment } from 'preact';
 
 /**
  * The design tokens the signature uses, grouped by how each resolves to a flat
@@ -71,10 +71,10 @@ export function EmailSignature({
   phone,
   tokens: t,
 }: EmailSignatureProps) {
-  const linkStyle: JSX.CSSProperties = { color: t['--color-text-muted'], textDecoration: 'none' };
+  const linkStyle: CSSProperties = { color: t['--color-text-muted'], textDecoration: 'none' };
   // Every line below the name shares one style: mono caption, muted, each nudged
   // down from the line above by the same small step for an even stack.
-  const lineStyle: JSX.CSSProperties = {
+  const lineStyle: CSSProperties = {
     fontFamily: t['--font-mono'],
     fontSize: t['--text-caption-s-size'],
     lineHeight: t['--text-caption-s-leading'],
