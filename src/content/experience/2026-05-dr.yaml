@@ -32,8 +32,8 @@ technologies:
   - Node.js
   - Next.js
   - OAuth
-  - GraphQL
   - OpenID Connect
+  - GraphQL
   - Storybook
   - Kubernetes
   - MongoDB
@@ -43,10 +43,12 @@ technologies:
   - REST
   - WebSockets
   - OpenTelemetry
-  - Kong
   - Grafana
-  - Auth0
   - GitHub Actions
+  - k6
+  - Transport Layer Security
+  - Kong
+  - Auth0
   - Helm
   - SASS
   - JavaScript
@@ -60,8 +62,6 @@ technologies:
   - Cypress
   - Nightwatch
   - Supertest
-  - k6
-  - Transport Layer Security
   - MitID
   - Nginx
 concepts:
@@ -73,21 +73,21 @@ concepts:
   - Distributed Systems
   - High Availability
   - Design Systems
+  - Atomic Design
+  - Component Libraries
   - Single Sign-On
   - API Design
   - Observability
-  - Server-Side Rendering
   - Domain-Driven Design
   - Federated Identity
   - Multi-Factor Authentication
-  - Caching Strategies
   - Service Level Objectives
   - Database Modeling
   - Data Migration
   - Rate Limiting
+  - Server-Side Rendering
+  - Caching Strategies
   - Secrets Management
-  - Atomic Design
-  - Component Libraries
   - GraphQL Schema Design
   - Cryptography
   - Session Management
