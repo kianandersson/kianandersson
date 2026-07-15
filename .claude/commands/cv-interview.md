@@ -36,12 +36,19 @@ representative structure they ask for:
   number of people involved, impact on the business.
 
 Weave those three parts into the single `description` prose block: situation &
-challenge → what I did and how → quantified results. Hold the whole block to
-roughly 10-14 lines and keep the verbs confident and active. More detail is not
+challenge → what I did and how → quantified results. Hold the whole block to 10
+lines at most, and keep the verbs confident and active. More detail is not
 automatically better: extra specifics can dilute a strong, punchy version, so
 where I already have an earlier or original description, compare against it and
 prefer whichever version sells best, even if that means cutting rather than
 adding.
+
+When trimming to fit, cut in order: role-evolution or "how my responsibilities
+changed over time" narrative that carries no concrete deliverable or number goes
+first; process and coordination colour (who I worked with, how we got there) next;
+quantified results and the decisions I owned are cut last. And give each concrete
+result or deliverable its own short sentence rather than burying it in a
+subordinate clause — a strong outcome loses force trailing off another.
 
 ## Skill fields (technologies / concepts / practices / organizational)
 
