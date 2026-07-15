@@ -1,0 +1,126 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.body {
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+}
+
+/* Margin-based paragraph spacing (not flex gap) so it survives the switch to
+   `-webkit-box` in the clamped state below. */
+.body > * + * {
+  margin-top: var(--space-s);
+}
+
+/* Collapsed preview: line-clamp so the cut lands on a line boundary and the
+   browser appends an ellipsis — signalling the sentence continues rather than
+   ending. The checkbox below releases it; print and no-JS keep the full text. */
+.clamped {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--collapsed-lines);
+  line-clamp: var(--collapsed-lines);
+  overflow: hidden;
+}
+
+.check:checked ~ .clamped {
+  display: block;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+  overflow: visible;
+}
+
+/* Visually hidden but focusable — the label is the visible affordance, the
+   checkbox carries state and keyboard operation. */
+.check {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Styled like TextLink (mono, muted, chip padding). Discoverability comes from
+   the clamp's trailing ellipsis and the chevron, not colour, so it stays quiet
+   against the description. Pulled back under the text so the label aligns with
+   the paragraph edge. */
+.toggle {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  margin-left: calc(var(--space-xs) * -1);
+  padding: var(--space-2xs) var(--space-xs);
+  border-radius: var(--radius-s);
+  font-family: var(--font-mono);
+  font-size: var(--text-caption-s-size);
+  line-height: var(--text-caption-s-leading);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+/* Points down (more) and flips up (less) on expand — mirrors Accordion. */
+.chevron {
+  display: inline-grid;
+  place-items: center;
+  transition: transform 0.3s ease;
+}
+
+.check:checked ~ .toggle .chevron {
+  transform: rotate(180deg);
+}
+
+.less {
+  display: none;
+}
+
+.check:checked ~ .toggle .more {
+  display: none;
+}
+
+.check:checked ~ .toggle .less {
+  display: inline;
+}
+
+.check:focus-visible ~ .toggle {
+  color: var(--color-accent-strong);
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) {
+  .toggle:hover {
+    color: var(--color-accent-strong);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chevron {
+    transition: none;
+  }
+}
+
+@media print {
+  /* Paper shows the whole description and never the toggle. */
+  .clamped {
+    display: block;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    overflow: visible;
+  }
+
+  .check,
+  .toggle {
+    display: none;
+  }
+}
