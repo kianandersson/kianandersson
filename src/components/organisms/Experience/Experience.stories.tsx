@@ -5,8 +5,8 @@ import { Experience, type ExperienceEntry } from './Experience';
 const ENTRIES: ExperienceEntry[] = [
   {
     id: 'a',
+    company: 'Acme · Remote',
     role: 'Senior Frontend Engineer',
-    meta: 'Acme · Remote',
     period: '2023 — Present',
     description:
       'Led a team of four engineers on a design-system migration; cut JS shipped by 40% and Lighthouse Performance climbed to 99.',
@@ -15,8 +15,8 @@ const ENTRIES: ExperienceEntry[] = [
   },
   {
     id: 'b',
+    company: 'Globex · Copenhagen',
     role: 'Frontend Engineer',
-    meta: 'Globex · Copenhagen',
     period: '2020 — 2023',
     description:
       'Owned the public-facing booking flow end-to-end; introduced contract-tested integration tests and removed three flaky CI suites.',
@@ -45,7 +45,7 @@ export const Default: Story = {
     await expect(items).toHaveLength(entries.length);
     for (const entry of entries) {
       await expect(canvas.getByText(entry.role)).toBeInTheDocument();
-      await expect(canvas.getByText(entry.meta)).toBeInTheDocument();
+      await expect(canvas.getByText(entry.company)).toBeInTheDocument();
       await expect(canvas.getByText(entry.period)).toBeInTheDocument();
       await expect(canvas.getByText(entry.description)).toBeInTheDocument();
     }

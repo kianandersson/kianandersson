@@ -27,7 +27,7 @@ type SkillsFile = {
 
 type ExperienceFile = {
   role: string;
-  meta: string;
+  company: string;
   description: string;
   technologies: string[];
   concepts?: string[];
@@ -189,12 +189,12 @@ describe('experience vs skills consistency', () => {
         const actual = nameCategory.get(name);
         expect(
           actual !== undefined,
-          `"${role.role} @ ${role.meta}" ${field} includes "${name}" — not a skill, child, or hidden historical entry. ` +
+          `"${role.role} @ ${role.company}" ${field} includes "${name}" — not a skill, child, or hidden historical entry. ` +
             `Either rename it to match skills.yaml, mark it as a child under a paraply, or add it to skills.yaml with hide: true.`,
         ).toBe(true);
         expect(
           actual,
-          `"${role.role} @ ${role.meta}" lists "${name}" under ${field}, but it has category "${actual}" in skills.yaml. ` +
+          `"${role.role} @ ${role.company}" lists "${name}" under ${field}, but it has category "${actual}" in skills.yaml. ` +
             `Expected "${expected}". Move it to the matching field, or fix the category in skills.yaml.`,
         ).toBe(expected);
       }
