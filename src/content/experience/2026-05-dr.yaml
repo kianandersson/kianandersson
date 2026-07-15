@@ -15,7 +15,7 @@ description: >-
   compliance and high security standards.
 
 
-  The platform scaled to millions of users, with up to 500,000 logins within a
+  The platform scaled to millions of users, with up to 500.000 logins within a
   single surge window around major live events, and replaced a SaaS contract worth
   millions a year at a fraction of the infrastructure cost. Every user was migrated
   off the vendor with zero downtime.
