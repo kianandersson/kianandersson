@@ -180,6 +180,18 @@ groups:
         years: 3
         lastUsed: 2026
 
+      - name: Svelte
+        category: technology
+        level: 2
+        years: 0
+        lastUsed: 2024
+
+      - name: Astro
+        category: technology
+        level: 3
+        years: 0
+        lastUsed: 2026
+
       - name: Design Systems
         category: concept
         level: 4
