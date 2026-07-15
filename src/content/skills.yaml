@@ -790,3 +790,7 @@ groups:
       - name: Customer Data Platform
         category: concept
         hide: true
+
+      - name: Data Migration
+        category: concept
+        hide: true

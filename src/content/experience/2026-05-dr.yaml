@@ -3,12 +3,29 @@ meta: Danish Broadcasting Corporation
 start: 2022-06-01
 end: 2026-05-31
 description: >-
-  Built the login platform, and the team behind it, from scratch. Scaled it
-  to millions of users, with up to 500,000 concurrent during live events.
-  Shipped React user interfaces and an accessible, atomic-design component
-  library alongside the backend, established GDPR compliance and a high
-  security bar, and led the migration from a SaaS identity provider to an
-  in-house OAuth/OIDC server that saved the organisation millions.
+  When DR made login a cornerstone of its new strategy, the existing SaaS
+  identity provider could no longer carry the ambition. It could not scale
+  affordably, it fell short of the performance it had promised, and it constrained
+  both the user experience and the protocols DR needed to support. I was brought
+  in to lead the login transformation and made the case to management for
+  replacing the vendor with a platform DR would own and control in-house.
+
+
+  I built the platform, and the six-person team behind it, from scratch. I set the
+  technical direction, designed the architecture, and implemented the foundation
+  the system is built on, an OAuth and OIDC server in Node.js, with a React
+  interface built on an accessible atomic-design component library, GDPR
+  compliance, and a high security bar from day one. As the platform matured, my
+  focus increasingly shifted toward mentoring and reviewing as the team took
+  ownership, though I stayed hands-on for the hardest and most time-critical work.
+
+
+  The platform scaled to millions of users, with up to 500,000 logins during the
+  brief surge around major live events, and replaced a SaaS contract worth
+  millions a year at a fraction of the infrastructure cost. Getting there meant a
+  zero-downtime migration of every user from the SaaS provider, which I led with
+  my team and in close coordination with the teams that integrate with the
+  platform.
 technologies:
   - TypeScript
   - React.js
@@ -66,6 +83,7 @@ concepts:
   - Caching Strategies
   - Service Level Objectives
   - Database Modeling
+  - Data Migration
   - Rate Limiting
   - Secrets Management
   - Atomic Design
