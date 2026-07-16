@@ -3,55 +3,69 @@ meta: Danish Broadcasting Corporation
 start: 2021-05-01
 end: 2022-05-31
 description: >-
-  Led the publication CMS and API team. Grew it from three to seven engineers
-  through hiring and a merge with the CMS team, drove the transition to a
-  microservices architecture, and led a PHP-to-.NET migration aligned with
-  the organisation's broader technology strategy. Lifted agility, cloud
-  maturity, and product scalability across the stack.
+  The publishing platform behind dr.dk, one of Denmark's largest news sites,
+  was spread across too many applications on costly, ageing hosting. The CMS
+  and API teams were brought together to modernise it, and as tech lead of the
+  merged team, I led the transformation.
+
+
+  I forged two teams into one, with shared culture, a shared codebase, and
+  cross-system competence. Working with the enterprise architects, I set the
+  technical direction and designed a content aggregation service, a
+  system-agnostic, event-driven API that unified dr.dk's content, from articles
+  and media to taxonomy and relations, behind a single contract, and took it
+  into production. In parallel I modernised the team's foundation, leading its
+  retraining on .NET, migrating it onto a new in-house Kubernetes platform, and
+  consolidating the application portfolio into a lean core.
+
+
+  The result was a leaner, more cloud-mature platform, with fewer applications
+  to run, modern infrastructure replacing costly hosting, and a more agile and
+  scalable foundation to build on.
 technologies:
   - PHP
-  - .NET
-  - C#
   - Symfony
+  - Laravel
   - Kubernetes
-  - SQL
-  - MongoDB
-  - Docker
-  - REST
-  - Redis
   - Google Cloud Platform
+  - Docker
   - Kong
+  - REST
+  - Open API
+  - JSON:API
+  - MongoDB
+  - Redis
+  - SQL
   - OAuth
   - OpenID Connect
+  - .NET
+  - C#
   - Auth0
-  - JSON:API
-  - Laravel
-  - Open API
   - CircleCI
   - Nginx
 concepts:
   - Software Architecture
   - Microservices Architecture
-  - Domain-Driven Design
   - Event-Driven Architecture
+  - Domain-Driven Design
   - API Design
-  - Scalability
   - Distributed Systems
+  - Scalability
   - High Availability
   - API Gateway
-  - Authentication
-  - Identity & Access Management
-  - Database Modeling
-  - Observability
-  - Authorization
-  - Caching Strategies
-  - Single Sign-On
-  - Secrets Management
-  - Rate Limiting
-  - Federated Identity
-  - Session Management
   - Solution Architecture
   - System Architecture
+  - Database Modeling
+  - Caching Strategies
+  - Observability
+  - Authentication
+  - Authorization
+  - Identity & Access Management
+  - Single Sign-On
+  - Federated Identity
+  - Session Management
+  - Secrets Management
+  - Rate Limiting
 practices:
   - Behavior-Driven Development
   - Continuous Delivery

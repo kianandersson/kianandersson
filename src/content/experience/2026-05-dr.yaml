@@ -3,7 +3,7 @@ meta: Danish Broadcasting Corporation
 start: 2022-06-01
 end: 2026-05-31
 description: >-
-  When DR made login a cornerstone of its strategy, its SaaS identity provider
+  When login became a strategic cornerstone, the SaaS identity provider
   couldn't scale affordably or meet the performance, UX, and protocol requirements.
   I analysed the requirements and recommended an in-house platform, 
   and I led the transformation.

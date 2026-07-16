@@ -3,9 +3,9 @@ meta: Danish Broadcasting Corporation
 start: 2017-07-01
 end: 2021-04-30
 description: >-
-  DR set out to modernise dr.dk, one of Denmark's largest news sites, whose
-  ageing Drupal monolith both ran the editorial workflow and rendered the
-  frontend, leaving it slow and hard to evolve. The answer was a decoupled,
+  An ageing Drupal monolith ran the editorial workflow and rendered the
+  frontend of dr.dk, one of Denmark's largest news sites, leaving it slow and
+  hard to evolve. The answer was a decoupled,
   headless architecture, with a frontend that could evolve independently of
   whatever sat behind it, backed by a content service feeding it structured
   content.
@@ -20,8 +20,8 @@ description: >-
 
   It made dr.dk faster and more resilient, serving nearly a million articles
   from a hard CDN cache that kept it available even if the systems behind
-  it went down. The decoupling proved durable, and DR later replaced the
-  underlying CMS without rebuilding the frontend.
+  it went down. The decoupling proved durable, and the underlying CMS was
+  later replaced without rebuilding the frontend.
 technologies:
   - PHP
   - Symfony
