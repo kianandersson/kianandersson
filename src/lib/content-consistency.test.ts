@@ -234,14 +234,14 @@ describe('experience vs skills consistency', () => {
 describe('experience description length', () => {
   const files = loadExperienceFiles();
 
-  it.each(files)(
-    `$file description is at most ${MAX_DESCRIPTION_LENGTH} characters`,
-    ({ file, data }) => {
-      const length = data.description.length;
-      expect(
-        length <= MAX_DESCRIPTION_LENGTH,
-        `"${file}" description is ${length} characters — trim it to ${MAX_DESCRIPTION_LENGTH} or fewer.`,
-      ).toBe(true);
-    },
-  );
+  it.each(files)(`$file description is at most ${MAX_DESCRIPTION_LENGTH} characters`, ({
+    file,
+    data,
+  }) => {
+    const length = data.description.length;
+    expect(
+      length <= MAX_DESCRIPTION_LENGTH,
+      `"${file}" description is ${length} characters — trim it to ${MAX_DESCRIPTION_LENGTH} or fewer.`,
+    ).toBe(true);
+  });
 });
