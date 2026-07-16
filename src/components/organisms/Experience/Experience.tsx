@@ -63,9 +63,7 @@ export function Experience({ entries, allStackSkills = false, allDomainSkills = 
                   </Text>
                 </div>
               </div>
-              <div class={styles.description}>
-                <ExperienceDescription text={entry.description} />
-              </div>
+              <ExperienceDescription text={entry.description} />
               <div className={styles.chipGroups}>
                 {entry.stack.length > 0 && (
                   <ChipList

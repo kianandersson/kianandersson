@@ -50,10 +50,6 @@
   gap: var(--space-xs);
 }
 
-.description {
-  max-width: 560px;
-}
-
 .chipGroups {
   display: flex;
   flex-direction: column;
