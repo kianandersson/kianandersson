@@ -28,6 +28,9 @@
 }
 
 .body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
   max-width: 540px;
 }
 

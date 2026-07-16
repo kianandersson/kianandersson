@@ -1,4 +1,5 @@
 import { useId } from 'preact/hooks';
+import { toParagraphs } from '../../../lib/paragraphs';
 import { ChevronIcon } from '../../atoms/icons';
 import { Text } from '../../atoms/Text';
 import styles from './ExperienceDescription.module.css';
@@ -7,13 +8,6 @@ type Props = {
   /** Description text; blank lines (a `\n\n` break) separate paragraphs. */
   text: string;
 };
-
-function toParagraphs(text: string): string[] {
-  return text
-    .split(/\n{2,}/)
-    .map((paragraph) => paragraph.trim())
-    .filter(Boolean);
-}
 
 export function ExperienceDescription({ text }: Props) {
   const [lead, ...rest] = toParagraphs(text);

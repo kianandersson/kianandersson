@@ -11,7 +11,8 @@ import { z } from 'zod';
  * - `profilePhoto`: include the hero profile photo on the CV (default: true; set
  *   `false` to leave it off).
  * - `heroTagline`: override the hero intro for this print (some agencies want a
- *   different pitch on the CV); defaults to the site config tagline.
+ *   different pitch on the CV); defaults to the site config tagline. Blank lines
+ *   (a `\n\n` break) split it into paragraphs, like an experience description.
  */
 const PrintOptionsSchema = z.object({
   email: z.email().optional(),

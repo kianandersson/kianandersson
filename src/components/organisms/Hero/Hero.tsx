@@ -1,10 +1,12 @@
 import type { ComponentChildren } from 'preact';
+import { toParagraphs } from '../../../lib/paragraphs';
 import { Heading } from '../../atoms/Heading';
 import { Text } from '../../atoms/Text';
 import styles from './Hero.module.css';
 
 type Props = {
   name: string;
+  /** Intro copy; blank lines (a `\n\n` break) separate paragraphs. */
   tagline: string;
   /** Print only. */
   showProfilePhoto?: boolean;
@@ -12,6 +14,7 @@ type Props = {
 };
 
 export function Hero({ name, tagline, showProfilePhoto = false, children }: Props) {
+  const paragraphs = toParagraphs(tagline);
   return (
     <div className={styles.root}>
       <div className={styles.lead}>
@@ -24,9 +27,11 @@ export function Hero({ name, tagline, showProfilePhoto = false, children }: Prop
             Hi, I'm <span className={styles.name}>{name}</span>.
           </Heading>
           <div className={styles.body}>
-            <Text as="p" size="heading-s" tone="muted">
-              {tagline}
-            </Text>
+            {paragraphs.map((paragraph) => (
+              <Text key={paragraph} as="p" size="heading-s" tone="muted">
+                {paragraph}
+              </Text>
+            ))}
           </div>
         </div>
       </div>
