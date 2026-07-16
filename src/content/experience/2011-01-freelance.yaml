@@ -3,8 +3,19 @@ meta: Freelance
 start: 2011-01-01
 end: 2014-05-31
 description: >-
-  Built portfolio websites and custom CMS solutions for actors and musicians,
-  end to end, from design to deployment. Where the craft started.
+  Clients wanted a website that felt genuinely their own, with a bespoke,
+  distinctive design that set them apart from a templated site. It also
+  had to work in several languages and be easy for the owner to maintain.
+
+
+  Working solo on each project, I designed a custom visual look for
+  each site and built the frontend by hand to match. Behind it I added a
+  PHP CMS so clients could manage their own content, written in raw PHP on
+  a custom MVC and routing layer with the content modelled in SQL.
+
+
+  Every site went live in production, each with a design of its own and
+  built to be responsive, multilingual and search-optimised.
 technologies:
   - PHP
   - JavaScript
