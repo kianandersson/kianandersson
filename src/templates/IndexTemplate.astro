@@ -10,6 +10,7 @@ import { ContactContainer } from '../containers';
 interface Props {
   hero: {
     name: string;
+    title?: string;
     tagline: string;
     recipientName: string;
     availableFrom?: Date;
@@ -42,7 +43,7 @@ const {
 
 <main>
   <section>
-    <Hero name={hero.name} tagline={hero.tagline} showProfilePhoto={profilePhoto}>
+    <Hero name={hero.name} title={hero.title} tagline={hero.tagline} showProfilePhoto={profilePhoto}>
       <ContactContainer
         recipientName={hero.recipientName}
         availableFrom={hero.availableFrom}

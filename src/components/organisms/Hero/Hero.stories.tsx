@@ -20,6 +20,15 @@ type Story = StoryObj<typeof Hero>;
 
 export const Default: Story = {};
 
+// The print CV can override the "Hi, I'm ..." heading via `heroTitle` — e.g. an
+// agency that wants its own CV title. It renders as plain text with no accent
+// colour, since there's no name to pick out of it.
+export const CustomTitle: Story = {
+  args: {
+    title: 'Curriculum Vitae',
+  },
+};
+
 // A blank line (`\n\n`) in the tagline splits it into separate paragraphs —
 // the same convention as experience descriptions. Used by the print CV's
 // `heroTagline` override when an agency wants a longer, multi-paragraph intro.
