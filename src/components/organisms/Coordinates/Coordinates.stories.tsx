@@ -29,7 +29,7 @@ export const PublicLinks: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(
-      canvas.getByRole('heading', { level: 2, name: /My coordinates/i }),
+      canvas.getByRole('heading', { level: 2, name: /Coordinates/i }),
     ).toBeInTheDocument();
     // GitHub/LinkedIn show only the path, but link to the full URL.
     await expect(canvas.getByRole('link', { name: '/example' })).toHaveAttribute(

@@ -47,8 +47,12 @@
     container-type: inline-size;
   }
 
+  .lead {
+    gap: var(--space-7xl);
+  }
+
   .body {
-    max-width: 40ch;
+    max-width: none;
   }
 
   .photo {
