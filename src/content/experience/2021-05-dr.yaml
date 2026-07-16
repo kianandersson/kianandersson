@@ -12,9 +12,8 @@ description: >-
   I forged two teams into one, with shared culture, a shared codebase, and
   cross-system competence. Working with the enterprise architects, I set the
   technical direction and designed a content aggregation service, a
-  system-agnostic, event-driven API that unified dr.dk's content, from articles
-  and media to taxonomy and relations, behind a single contract, and took it
-  into production. In parallel I modernised the team's foundation, leading its
+  system-agnostic, event-driven API that unified dr.dk's content behind a
+  single contract, and took it into production. In parallel I modernised the team's foundation, leading its
   retraining on .NET, migrating it onto a new in-house Kubernetes platform, and
   consolidating the application portfolio into a lean core.
 

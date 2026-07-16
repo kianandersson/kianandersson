@@ -4,21 +4,24 @@ start: 2022-06-01
 end: 2026-05-31
 description: >-
   When login became a strategic cornerstone, the SaaS identity provider
-  couldn't scale affordably or meet the performance, UX, and protocol requirements.
-  I analysed the requirements and recommended an in-house platform, 
-  and I led the transformation.
+  couldn't scale affordably or meet the performance, UX, and protocol
+  requirements. I analysed the requirements and recommended an in-house
+  platform, and I led the transformation.
 
 
-  I built the platform and the six-person team behind it from scratch. I set the
-  technical direction, designed the architecture, and implemented the foundation:
-  an OAuth and OIDC server in Node.js with an accessible React interface, GDPR
-  compliance and high security standards.
+  I built the platform and the six-person team behind it from scratch. I set
+  the technical direction, designed the architecture, and implemented the
+  foundation as an OAuth and OIDC server in Node.js with an accessible React
+  interface built on an atomic-design component library, GDPR compliance, and
+  high security standards. As the platform matured, my focus shifted toward
+  mentoring and reviewing as the team took ownership, though I stayed hands-on
+  for the hardest and most time-critical issues.
 
 
-  The platform scaled to millions of users, with up to 500.000 logins within a
-  single surge window around major live events, and replaced a SaaS contract worth
-  millions a year at a fraction of the infrastructure cost. Every user was migrated
-  off the vendor with zero downtime.
+  The platform scaled to millions of users, with up to 500,000 logins during
+  major live events, and replaced a SaaS contract worth millions a year at a
+  fraction of the infrastructure cost. Every user was migrated off the vendor
+  with zero downtime.
 technologies:
   - TypeScript
   - React.js
