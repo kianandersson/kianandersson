@@ -10,6 +10,8 @@ import { z } from 'zod';
  *   instead of the "+N more" preview.
  * - `profilePhoto`: include the hero profile photo on the CV (default: true; set
  *   `false` to leave it off).
+ * - `heroTagline`: override the hero intro for this print (some agencies want a
+ *   different pitch on the CV); defaults to the site config tagline.
  */
 const PrintOptionsSchema = z.object({
   email: z.email().optional(),
@@ -18,6 +20,7 @@ const PrintOptionsSchema = z.object({
   allStackSkills: z.boolean().optional(),
   allDomainSkills: z.boolean().optional(),
   profilePhoto: z.boolean().optional(),
+  heroTagline: z.string().optional(),
 });
 
 export type PrintOptions = z.infer<typeof PrintOptionsSchema>;

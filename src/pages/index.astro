@@ -11,14 +11,17 @@ import { sortSkills } from '../lib/sort-skills';
 import { siteConfig } from '../site.config';
 import IndexTemplate from '../templates/IndexTemplate.astro';
 
+const printOptions = parsePrintOptions(__PRINT_OPTIONS__);
+
+// The hero intro defaults to the site config tagline; a print build can swap in
+// a different pitch (e.g. an agency that wants its own CV intro).
 const hero = {
   name: siteConfig.firstName,
-  tagline: siteConfig.tagline,
+  tagline: printOptions?.heroTagline ?? siteConfig.tagline,
   recipientName: siteConfig.fullName,
   availableFrom: siteConfig.availableFrom,
 };
 
-const printOptions = parsePrintOptions(__PRINT_OPTIONS__);
 const coordinates: ContactDetails = {
   email: printOptions?.email,
   phone: printOptions?.phone,
