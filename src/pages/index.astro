@@ -13,10 +13,12 @@ import IndexTemplate from '../templates/IndexTemplate.astro';
 
 const printOptions = parsePrintOptions(__PRINT_OPTIONS__);
 
-// The hero intro defaults to the site config tagline; a print build can swap in
-// a different pitch (e.g. an agency that wants its own CV intro).
+// The hero heading and intro default to the site config; a print build can
+// override either (e.g. an agency that wants its own CV title and pitch). A
+// custom title renders without the accent colour — there's no name to pick out.
 const hero = {
   name: siteConfig.firstName,
+  title: printOptions?.heroTitle,
   tagline: printOptions?.heroTagline ?? siteConfig.tagline,
   recipientName: siteConfig.fullName,
   availableFrom: siteConfig.availableFrom,

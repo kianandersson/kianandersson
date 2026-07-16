@@ -25,11 +25,13 @@
  *                               (both default to truncating like the web view)
  *          --no-profile-photo   Leave the hero profile photo off the CV
  *                               (default: included)
+ *          --hero-title <text>  Override the "Hi, I'm ..." heading, rendered
+ *                               without the accent colour (default: greeting)
  *          --hero-tagline <text> Override the hero intro for this print
  *                               (default: the site config tagline)
  *          --options <file>     YAML or JSON with email/phone/minSkillLevel/
  *                               allStackSkills/allMethodSkills/profilePhoto/
- *                               heroTagline (CLI flags win)
+ *                               heroTitle/heroTagline (CLI flags win)
  *          --output <file>      PDF path (default cv.pdf)
  */
 import { existsSync, readFileSync } from 'node:fs';
@@ -61,6 +63,7 @@ type PrintOptions = Contact & {
   allStackSkills?: boolean;
   allMethodSkills?: boolean;
   profilePhoto?: boolean;
+  heroTitle?: string;
   heroTagline?: string;
 };
 
@@ -78,6 +81,7 @@ async function main(): Promise<void> {
       'all-stack-skills': { type: 'boolean' },
       'all-method-skills': { type: 'boolean' },
       'no-profile-photo': { type: 'boolean' },
+      'hero-title': { type: 'string' },
       'hero-tagline': { type: 'string' },
       options: { type: 'string', short: 'o' },
       output: { type: 'string' },
@@ -140,6 +144,7 @@ function collectPrintOptions(values: {
   'all-stack-skills'?: boolean;
   'all-method-skills'?: boolean;
   'no-profile-photo'?: boolean;
+  'hero-title'?: string;
   'hero-tagline'?: string;
   options?: string;
 }): PrintOptions {
@@ -150,6 +155,10 @@ function collectPrintOptions(values: {
     if (typeof value === 'string' && value.trim() !== '') {
       merged[field] = value.trim();
     }
+  }
+  const heroTitle = values['hero-title'] ?? fromFile.heroTitle;
+  if (typeof heroTitle === 'string' && heroTitle.trim() !== '') {
+    merged.heroTitle = heroTitle.trim();
   }
   const heroTagline = values['hero-tagline'] ?? fromFile.heroTagline;
   if (typeof heroTagline === 'string' && heroTagline.trim() !== '') {
@@ -231,9 +240,12 @@ function printUsage(): void {
       `  --all-method-skills     Print each role's methods skills in full\n` +
       `                          (both default to truncating like the web view)\n` +
       `  --no-profile-photo      Leave the hero profile photo off (default: included)\n` +
+      `  --hero-title <text>     Override the "Hi, I'm ..." heading, without the\n` +
+      `                          accent colour (default: standard greeting)\n` +
       `  --hero-tagline <text>   Override the hero intro (default: site config tagline)\n` +
       `  --options, -o <file>    YAML or JSON file with email/phone/minSkillLevel/\n` +
-      `                          allStackSkills/allMethodSkills/profilePhoto/heroTagline\n` +
+      `                          allStackSkills/allMethodSkills/profilePhoto/heroTitle/\n` +
+      `                          heroTagline\n` +
       `                          (CLI flags win)\n` +
       `  --output <file>         PDF output path (default cv.pdf)\n`,
   );

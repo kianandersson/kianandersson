@@ -10,6 +10,9 @@ import { z } from 'zod';
  *   instead of the "+N more" preview.
  * - `profilePhoto`: include the hero profile photo on the CV (default: true; set
  *   `false` to leave it off).
+ * - `heroTitle`: override the "Hi, I'm {name}." heading (some agencies want a
+ *   different CV title); rendered as plain text with no accent colour. Defaults
+ *   to the standard greeting.
  * - `heroTagline`: override the hero intro for this print (some agencies want a
  *   different pitch on the CV); defaults to the site config tagline. Blank lines
  *   (a `\n\n` break) split it into paragraphs, like an experience description.
@@ -21,6 +24,7 @@ const PrintOptionsSchema = z.object({
   allStackSkills: z.boolean().optional(),
   allDomainSkills: z.boolean().optional(),
   profilePhoto: z.boolean().optional(),
+  heroTitle: z.string().optional(),
   heroTagline: z.string().optional(),
 });
 
