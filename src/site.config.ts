@@ -31,7 +31,7 @@ const parsed = SiteConfigSchema.parse({
   role: 'Senior Full-Stack Engineer & Tech Lead',
   location: 'Denmark',
   tagline:
-    'Senior full-stack engineer and tech lead with 15+ years across the stack, building design systems and accessible user interfaces, distributed services, and the engineering teams behind them.',
+    'A senior full-stack engineer and tech lead with 15+ years across the stack, building design systems and accessible user interfaces, distributed services, and the engineering teams behind them.',
   availableFrom: '2026-06-01',
   links: {
     website: 'https://kianandersson.com',
