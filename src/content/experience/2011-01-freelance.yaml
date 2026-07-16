@@ -9,8 +9,8 @@ description: >-
 
 
   Working solo on each project, I designed a custom visual look for
-  each site and built the frontend by hand to match. Behind it I added a
-  PHP CMS so clients could manage their content, written in raw PHP on
+  each site and built the frontend by hand to match. Behind it I built a
+  CMS so clients could manage their content easily, written in raw PHP on
   a custom MVC and routing layer with the content modelled in SQL.
 
 
