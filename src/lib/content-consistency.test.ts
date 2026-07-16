@@ -39,6 +39,19 @@ const REPO_ROOT = process.cwd();
 const SKILLS_PATH = join(REPO_ROOT, 'src/content/skills.yaml');
 const EXPERIENCE_DIR = join(REPO_ROOT, 'src/content/experience');
 
+// Experience descriptions are kept short and scannable. Anything longer reads
+// as a wall of text on the rendered CV. Keep this in sync with the editorial rule.
+const MAX_DESCRIPTION_LENGTH = 1000;
+
+function loadExperienceFiles(): { file: string; data: ExperienceFile }[] {
+  return readdirSync(EXPERIENCE_DIR)
+    .filter((file) => file.endsWith('.yaml'))
+    .map((file) => ({
+      file,
+      data: yaml.load(readFileSync(join(EXPERIENCE_DIR, file), 'utf-8')) as ExperienceFile,
+    }));
+}
+
 function loadSkills(): SkillsFile {
   return yaml.load(readFileSync(SKILLS_PATH, 'utf-8')) as SkillsFile;
 }
@@ -215,5 +228,20 @@ describe('experience vs skills consistency', () => {
 
   it('every organizational item resolves to category "organizational"', () => {
     check('organizational', 'organizational');
+  });
+});
+
+describe('experience description length', () => {
+  const files = loadExperienceFiles();
+
+  it.each(files)(`$file description is at most ${MAX_DESCRIPTION_LENGTH} characters`, ({
+    file,
+    data,
+  }) => {
+    const length = data.description.length;
+    expect(
+      length <= MAX_DESCRIPTION_LENGTH,
+      `"${file}" description is ${length} characters — trim it to ${MAX_DESCRIPTION_LENGTH} or fewer.`,
+    ).toBe(true);
   });
 });

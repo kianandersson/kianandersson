@@ -54,7 +54,7 @@ function toItems(contact: CoordinatesProps): ContactItem[] {
 }
 
 /**
- * Print-only "my coordinates" section for the CV (design: "Option A — 3
+ * Print-only "coordinates" section for the CV (design: "Option A — 3
  * columns"). Hidden on screen, shown in print: the public links always, plus
  * the private email/phone in the local print build (see `PRINT_OPTIONS`).
  */
@@ -68,7 +68,7 @@ export function Coordinates(props: CoordinatesProps) {
 
   return (
     <section class={styles.root} id="coordinates" aria-labelledby="coordinates-heading">
-      <SectionHeader title="My coordinates" id="coordinates-heading" />
+      <SectionHeader title="Coordinates" id="coordinates-heading" />
       <dl class={styles.grid} data-contact-count={contactCount}>
         {items.map((item) => (
           <DefinitionItem key={item.label} label={item.label} value={item.value} href={item.href} />

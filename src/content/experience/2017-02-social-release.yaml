@@ -3,9 +3,22 @@ meta: Social Release
 start: 2017-02-01
 end: 2017-06-30
 description: >-
-  Recruited as lead developer for an early-stage startup building livestreaming
-  and fan engagement for musicians. Designed and built the product and
-  infrastructure from the ground up.
+  An early-stage music startup wanted a paywalled platform that brought fans
+  closer to musicians, with livestreamed concerts, unreleased tracks and
+  personal content. Nothing existed yet, and it had to reach paying customers
+  fast.
+
+
+  As the sole engineer, I owned the technical design and built the product. I
+  modelled the domain of artists, fans and paid content, and built the access
+  control behind the paywall. I integrated a hosted payment platform for billing
+  and a third-party service for the livestreams, so that concert streams and
+  exclusive content reached only paying users. To reach revenue fast, I tailored
+  each artist's space instead of building a generic platform.
+
+
+  The platform went live with paying users and delivered livestreamed concerts
+  for its first artists, taking it from nothing to revenue within months.
 technologies:
   - PHP
   - Laravel

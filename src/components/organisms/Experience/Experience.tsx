@@ -4,6 +4,7 @@ import { TimelineMarker } from '../../atoms/TimelineMarker';
 import { ChipList } from '../../molecules/ChipList';
 import { SectionHeader } from '../../molecules/SectionHeader';
 import styles from './Experience.module.css';
+import { ExperienceDescription } from './ExperienceDescription';
 
 // Web chip area ~556px, Geist Mono 12px ≈ 77 chars/line; cost = text + ~5/item.
 // Budgets stay under 1 line (stack) / 2 lines (domains) so "+N more" never orphans.
@@ -62,11 +63,7 @@ export function Experience({ entries, allStackSkills = false, allDomainSkills = 
                   </Text>
                 </div>
               </div>
-              <div class={styles.description}>
-                <Text as="p" size="body" tone="muted">
-                  {entry.description}
-                </Text>
-              </div>
+              <ExperienceDescription text={entry.description} />
               <div className={styles.chipGroups}>
                 {entry.stack.length > 0 && (
                   <ChipList

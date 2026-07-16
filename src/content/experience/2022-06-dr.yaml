@@ -3,20 +3,33 @@ meta: Danish Broadcasting Corporation
 start: 2022-06-01
 end: 2026-05-31
 description: >-
-  Built the login platform, and the team behind it, from scratch. Scaled it
-  to millions of users, with up to 500,000 concurrent during live events.
-  Shipped React user interfaces and an accessible, atomic-design component
-  library alongside the backend, established GDPR compliance and a high
-  security bar, and led the migration from a SaaS identity provider to an
-  in-house OAuth/OIDC server that saved the organisation millions.
+  When login became a strategic cornerstone, the SaaS identity provider
+  couldn't scale affordably or meet the performance, UX, and protocol
+  requirements. I analysed the requirements and recommended an in-house
+  platform, and I led the transformation.
+
+
+  I built the platform and the six-person team behind it from scratch. I set
+  the technical direction, designed the architecture, and implemented the
+  foundation as an OAuth and OIDC server in Node.js with an accessible React
+  interface built on an atomic-design component library, GDPR compliance, and
+  high security standards. As the platform matured, my focus shifted toward
+  mentoring and reviewing as the team took ownership, though I stayed hands-on
+  for the hardest and most time-critical issues.
+
+
+  The platform scaled to millions of users, with up to 500,000 logins during
+  major live events, and replaced a SaaS contract worth millions a year at a
+  fraction of the infrastructure cost. Every user was migrated off the vendor
+  with zero downtime.
 technologies:
   - TypeScript
   - React.js
   - Node.js
   - Next.js
   - OAuth
-  - GraphQL
   - OpenID Connect
+  - GraphQL
   - Storybook
   - Kubernetes
   - MongoDB
@@ -26,10 +39,12 @@ technologies:
   - REST
   - WebSockets
   - OpenTelemetry
-  - Kong
   - Grafana
-  - Auth0
   - GitHub Actions
+  - k6
+  - Transport Layer Security
+  - Kong
+  - Auth0
   - Helm
   - SASS
   - JavaScript
@@ -43,8 +58,6 @@ technologies:
   - Cypress
   - Nightwatch
   - Supertest
-  - k6
-  - Transport Layer Security
   - MitID
   - Nginx
 concepts:
@@ -56,20 +69,21 @@ concepts:
   - Distributed Systems
   - High Availability
   - Design Systems
+  - Atomic Design
+  - Component Libraries
   - Single Sign-On
   - API Design
   - Observability
-  - Server-Side Rendering
   - Domain-Driven Design
   - Federated Identity
   - Multi-Factor Authentication
-  - Caching Strategies
   - Service Level Objectives
   - Database Modeling
+  - Data Migration
   - Rate Limiting
+  - Server-Side Rendering
+  - Caching Strategies
   - Secrets Management
-  - Atomic Design
-  - Component Libraries
   - GraphQL Schema Design
   - Cryptography
   - Session Management

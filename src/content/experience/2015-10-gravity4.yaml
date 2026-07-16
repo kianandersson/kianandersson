@@ -1,0 +1,36 @@
+role: Software Engineer
+meta: Gravity4
+start: 2015-10-01
+end: 2017-01-31
+description: >-
+  The company ran on an ageing central CMS that handled almost everything the
+  business did, from campaign setup and compliance to the financial reports
+  behind its accounts and targets. It was business-critical but old, and some
+  data was still entered manually.
+
+
+  I joined the central team that owned the CMS and contributed to it, from
+  features and optimisation to landing pages. My biggest contribution was
+  bringing Facebook ad-spend data into the CMS automatically. A separate
+  application already aggregated this data, but it wasn't available in the
+  central CMS, so I built the integration that fed it straight into the system's
+  cost and revenue calculations, letting internal users see how each campaign
+  was performing.
+
+
+  Reports that had relied on manual entry now updated automatically, moving the
+  business much closer to real-time reporting. It could pull current campaign
+  economics whenever needed, covering millions in ad spend and revenue each
+  month.
+technologies:
+  - PHP
+  - SQL
+  - JavaScript
+  - CSS
+  - SASS
+  - HTML
+  - Nginx
+concepts:
+  - Database Modeling
+practices:
+  - Responsive Web Design

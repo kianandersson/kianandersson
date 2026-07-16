@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/preact-vite';
-import { expect, within } from 'storybook/test';
+import { expect, userEvent, within } from 'storybook/test';
 import { Experience, type ExperienceEntry } from './Experience';
 
 const ENTRIES: ExperienceEntry[] = [
@@ -53,6 +53,42 @@ export const Default: Story = {
       await expect(within(item).getByText('Stack')).toBeInTheDocument();
       await expect(within(item).getByText('Domains')).toBeInTheDocument();
     }
+  },
+};
+
+const LONG_PARAGRAPHS = [
+  'When the platform made login a cornerstone of its new strategy, the existing SaaS identity provider could no longer carry the ambition. It could not scale affordably, it fell short of the performance it had promised, and it constrained both the user experience and the protocols the product needed to support.',
+  'I built the platform, and the six-person team behind it, from scratch. I set the technical direction, designed the architecture, and implemented the foundation the system is built on, with a high security bar from day one.',
+  'The platform scaled to millions of users, replacing a SaaS contract worth millions a year at a fraction of the infrastructure cost, delivered through a zero-downtime migration of every existing account.',
+].join('\n\n');
+
+const LONG_ENTRY: ExperienceEntry[] = [
+  {
+    id: 'long',
+    role: 'Tech Lead',
+    meta: 'Acme · Copenhagen',
+    period: '2022 — Present',
+    description: LONG_PARAGRAPHS,
+    stack: ['TypeScript', 'Node', 'React', 'OAuth', 'OpenID Connect'],
+    domains: ['Identity', 'Platform engineering', 'Web performance'],
+  },
+];
+
+// A long, multi-paragraph description clamps to a preview and toggles open via
+// the pure-CSS checkbox; the label swaps between "Read more" and "Read less".
+export const ReadMore: Story = {
+  args: { entries: LONG_ENTRY },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    // Every paragraph is in the DOM regardless of the collapsed state.
+    await expect(canvas.getByText(/cornerstone of its new strategy/)).toBeInTheDocument();
+    await expect(canvas.getByText(/zero-downtime migration/)).toBeInTheDocument();
+
+    const toggle = canvas.getByRole('checkbox');
+    await expect(toggle).not.toBeChecked();
+
+    await userEvent.click(canvas.getByText(/read more/i));
+    await expect(toggle).toBeChecked();
   },
 };
 
