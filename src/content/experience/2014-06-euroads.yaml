@@ -1,11 +1,26 @@
 role: Software Engineer
-meta: EuroAds / Gravity4
+meta: EuroAds
 start: 2014-06-01
-end: 2017-01-31
+end: 2015-09-30
 description: >-
-  Built tooling to optimise ad campaign management across platforms, including
-  a real-time revenue and spend dashboard for Facebook campaigns that materially
-  improved profitability for the team running them.
+  A small ad team ran paid Facebook campaigns, earning money each time a click
+  turned into a sale on an advertiser's page. The work was all manual, and the
+  team had little control over it. They couldn't tell which ad was making money
+  and which was losing it, and a campaign could lose tens of thousands overnight
+  before anyone noticed.
+
+
+  As the team's only engineer, I designed and built a dashboard that showed each
+  campaign's profit or loss close to real time. I automated the campaign
+  creation they had done by hand, so one idea could launch as hundreds of ads,
+  each aimed at a different audience, and the team could test versions against
+  each other. When a campaign's losses crossed a set limit, the system stopped
+  it automatically.
+
+
+  For the first time the team could see how every campaign was performing and
+  act the same day. A handful of people ran far more campaigns than they could
+  by hand. Nothing on the market did this at the time.
 technologies:
   - PHP
   - JavaScript
@@ -17,7 +32,10 @@ technologies:
   - REST
   - Nginx
 concepts:
+  - Software Architecture
   - Database Modeling
 practices:
   - A/B Testing
   - Responsive Web Design
+organizational:
+  - Stakeholder Management
