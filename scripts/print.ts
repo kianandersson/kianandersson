@@ -13,8 +13,9 @@
  *   pnpm print --email me@example.com --phone "+45 12 34 56 78"
  *   pnpm print --email me@example.com --min-skill-level 3
  *   pnpm print --email me@example.com --all-stack-skills --all-method-skills
- *   pnpm print --options ./my-details.json
- *   pnpm print            # uses print.options.json if present
+ *   pnpm print --email me@example.com --hero-tagline "Custom CV intro"
+ *   pnpm print --options ./my-details.yaml
+ *   pnpm print            # uses print.options.yaml (or .json) if present
  *
  * Options: --email --phone
  *          --min-skill-level <1-5>  Drop skills below this level from "all
@@ -24,12 +25,16 @@
  *                               (both default to truncating like the web view)
  *          --no-profile-photo   Leave the hero profile photo off the CV
  *                               (default: included)
- *          --options <file>     JSON with email/phone/minSkillLevel/
- *                               allStackSkills/allMethodSkills/profilePhoto
- *                               (CLI flags win)
+ *          --hero-title <text>  Override the "Hi, I'm ..." heading, rendered
+ *                               without the accent colour (default: greeting)
+ *          --hero-tagline <text> Override the hero intro for this print
+ *                               (default: the site config tagline)
+ *          --options <file>     YAML or JSON with email/phone/minSkillLevel/
+ *                               allStackSkills/allMethodSkills/profilePhoto/
+ *                               heroTitle/heroTagline (CLI flags win)
  *          --output <file>      PDF path (default cv.pdf)
  */
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { rm } from 'node:fs/promises';
 import type { AddressInfo } from 'node:net';
 import { createServer } from 'node:net';
@@ -38,10 +43,18 @@ import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { chromium } from '@playwright/test';
 import { build, preview } from 'astro';
+import yaml from 'js-yaml';
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const CONTACT_FIELDS = ['email', 'phone'] as const;
-const DEFAULT_OPTIONS_FILE = join(ROOT, 'print.options.json');
+// The default options file, in resolution order. YAML is preferred so the
+// file can carry comments (e.g. an option toggled off); the legacy `.json`
+// still works because YAML is a superset of JSON.
+const DEFAULT_OPTIONS_FILES = [
+  join(ROOT, 'print.options.yaml'),
+  join(ROOT, 'print.options.yml'),
+  join(ROOT, 'print.options.json'),
+];
 
 type ContactField = (typeof CONTACT_FIELDS)[number];
 type Contact = Partial<Record<ContactField, string>>;
@@ -50,6 +63,8 @@ type PrintOptions = Contact & {
   allStackSkills?: boolean;
   allMethodSkills?: boolean;
   profilePhoto?: boolean;
+  heroTitle?: string;
+  heroTagline?: string;
 };
 
 // Build inside the project root (not the OS temp dir): the Cloudflare adapter
@@ -66,6 +81,8 @@ async function main(): Promise<void> {
       'all-stack-skills': { type: 'boolean' },
       'all-method-skills': { type: 'boolean' },
       'no-profile-photo': { type: 'boolean' },
+      'hero-title': { type: 'string' },
+      'hero-tagline': { type: 'string' },
       options: { type: 'string', short: 'o' },
       output: { type: 'string' },
       help: { type: 'boolean', short: 'h' },
@@ -127,6 +144,8 @@ function collectPrintOptions(values: {
   'all-stack-skills'?: boolean;
   'all-method-skills'?: boolean;
   'no-profile-photo'?: boolean;
+  'hero-title'?: string;
+  'hero-tagline'?: string;
   options?: string;
 }): PrintOptions {
   const fromFile = readOptionsFile(values.options);
@@ -136,6 +155,14 @@ function collectPrintOptions(values: {
     if (typeof value === 'string' && value.trim() !== '') {
       merged[field] = value.trim();
     }
+  }
+  const heroTitle = values['hero-title'] ?? fromFile.heroTitle;
+  if (typeof heroTitle === 'string' && heroTitle.trim() !== '') {
+    merged.heroTitle = heroTitle.trim();
+  }
+  const heroTagline = values['hero-tagline'] ?? fromFile.heroTagline;
+  if (typeof heroTagline === 'string' && heroTagline.trim() !== '') {
+    merged.heroTagline = heroTagline.trim();
   }
   const minSkillLevel = parseMinSkillLevel(values['min-skill-level'] ?? fromFile.minSkillLevel);
   if (minSkillLevel !== undefined) {
@@ -168,8 +195,16 @@ function parseMinSkillLevel(value: unknown): number | undefined {
   return level;
 }
 
+/**
+ * Reads the options file (explicit --options, else the first default file that
+ * exists). Parsed as YAML, which is a superset of JSON — so a legacy `.json`
+ * file still works, while a `.yaml` file may carry comments to toggle options
+ * off. A missing/empty/comments-only file reads as no options.
+ */
 function readOptionsFile(explicitPath?: string): Record<string, unknown> {
-  const path = explicitPath ? resolve(explicitPath) : DEFAULT_OPTIONS_FILE;
+  const path = explicitPath ? resolve(explicitPath) : DEFAULT_OPTIONS_FILES.find(existsSync);
+  // No default options file present: fine, everything comes from CLI flags.
+  if (!path) return {};
   let raw: string;
   try {
     raw = readFileSync(path, 'utf8');
@@ -179,9 +214,10 @@ function readOptionsFile(explicitPath?: string): Record<string, unknown> {
     return {};
   }
   try {
-    return JSON.parse(raw);
+    const parsed = yaml.load(raw);
+    return parsed && typeof parsed === 'object' ? (parsed as Record<string, unknown>) : {};
   } catch (cause) {
-    throw new Error(`Options file is not valid JSON: ${path}`, { cause });
+    throw new Error(`Options file is not valid YAML: ${path}`, { cause });
   }
 }
 
@@ -194,8 +230,9 @@ function printUsage(): void {
       `  pnpm print --email me@example.com --phone "+45 12 34 56 78"\n` +
       `  pnpm print --email me@example.com --min-skill-level 3\n` +
       `  pnpm print --email me@example.com --all-stack-skills --all-method-skills\n` +
-      `  pnpm print --options ./my-details.json\n` +
-      `  pnpm print            # uses print.options.json if present\n\n` +
+      `  pnpm print --email me@example.com --hero-tagline "Custom CV intro"\n` +
+      `  pnpm print --options ./my-details.yaml\n` +
+      `  pnpm print            # uses print.options.yaml (or .json) if present\n\n` +
       `Private options: ${CONTACT_FIELDS.map((f) => `--${f}`).join(' ')}\n` +
       `  --min-skill-level <1-5> Drop skills below this level from "all skills"\n` +
       `                          (default: keep every skill)\n` +
@@ -203,8 +240,12 @@ function printUsage(): void {
       `  --all-method-skills     Print each role's methods skills in full\n` +
       `                          (both default to truncating like the web view)\n` +
       `  --no-profile-photo      Leave the hero profile photo off (default: included)\n` +
-      `  --options, -o <file>    JSON file with email/phone/minSkillLevel/\n` +
-      `                          allStackSkills/allMethodSkills/profilePhoto\n` +
+      `  --hero-title <text>     Override the "Hi, I'm ..." heading, without the\n` +
+      `                          accent colour (default: standard greeting)\n` +
+      `  --hero-tagline <text>   Override the hero intro (default: site config tagline)\n` +
+      `  --options, -o <file>    YAML or JSON file with email/phone/minSkillLevel/\n` +
+      `                          allStackSkills/allMethodSkills/profilePhoto/heroTitle/\n` +
+      `                          heroTagline\n` +
       `                          (CLI flags win)\n` +
       `  --output <file>         PDF output path (default cv.pdf)\n`,
   );

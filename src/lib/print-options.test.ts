@@ -67,4 +67,24 @@ describe('parsePrintOptions', () => {
   it('throws when profilePhoto is not a boolean', () => {
     expect(() => parsePrintOptions('{"profilePhoto":"no"}')).toThrow();
   });
+
+  it('parses a hero title override', () => {
+    expect(parsePrintOptions('{"heroTitle":"Curriculum Vitae"}')).toEqual({
+      heroTitle: 'Curriculum Vitae',
+    });
+  });
+
+  it('drops a blank hero title', () => {
+    expect(parsePrintOptions('{"heroTitle":""}')).toBeNull();
+  });
+
+  it('parses a hero tagline override', () => {
+    expect(parsePrintOptions('{"heroTagline":"Custom CV intro"}')).toEqual({
+      heroTagline: 'Custom CV intro',
+    });
+  });
+
+  it('drops a blank hero tagline', () => {
+    expect(parsePrintOptions('{"heroTagline":""}')).toBeNull();
+  });
 });
