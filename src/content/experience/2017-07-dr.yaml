@@ -3,44 +3,52 @@ meta: Danish Broadcasting Corporation
 start: 2017-07-01
 end: 2021-04-30
 description: >-
-  Built and maintained services for storing, indexing, and serving content
-  from the organisation's CMS systems, powering dr.dk and other internal
-  clients. Took on growing architectural and lead responsibility from 2019,
-  including establishing the Auth0-based identity platform that the rest of
-  the organisation consumed.
+  DR set out to modernise dr.dk, one of Denmark's largest news sites, whose
+  ageing Drupal monolith both ran the editorial workflow and rendered the
+  frontend, leaving it slow and hard to evolve. The answer was a decoupled,
+  headless architecture, with a frontend that could evolve independently of
+  whatever sat behind it, backed by a content service feeding it structured
+  content.
+
+
+  I owned the architecture of the content service at the application level and
+  built its core. I designed its event-driven pipeline, the REST API, and the
+  caching strategy behind it, and I wrote the indexing engine and the parser
+  that turned Drupal's raw HTML into a component-oriented model the frontend
+  could consume directly.
+
+
+  It made dr.dk faster and more resilient, serving nearly a million articles
+  from a hard CDN cache that kept it available even if the systems behind
+  it went down. The decoupling proved durable, and DR later replaced the
+  underlying CMS without rebuilding the frontend.
 technologies:
   - PHP
   - Symfony
-  - OAuth
-  - OpenID Connect
-  - Auth0
+  - REST
+  - Open API
+  - JSON:API
   - SQL
   - Redis
   - Docker
-  - REST
-  - Kong
-  - Open API
-  - Apigee
-  - CircleCI
   - Nginx
+  - CircleCI
+  - Kong
+  - Apigee
+  - OAuth
 concepts:
   - Software Architecture
   - API Design
-  - Authentication
-  - Identity & Access Management
-  - Microservices Architecture
-  - Authorization
-  - Single Sign-On
+  - Event-Driven Architecture
+  - Database Modeling
+  - Caching Strategies
   - Distributed Systems
   - Scalability
   - High Availability
-  - Event-Driven Architecture
+  - Microservices Architecture
   - API Gateway
-  - Federated Identity
-  - Database Modeling
-  - Caching Strategies
-  - Secrets Management
-  - Session Management
+  - Authentication
+  - Authorization
   - Solution Architecture
   - System Architecture
 practices:
