@@ -16,6 +16,11 @@ import { z } from 'zod';
  * - `heroTagline`: override the hero intro for this print (some agencies want a
  *   different pitch on the CV); defaults to the site config tagline. Blank lines
  *   (a `\n\n` break) split it into paragraphs, like an experience description.
+ * - `keySkills`: override the hand-picked "Key skills" reel for this print (e.g.
+ *   a CV tailored to what a client is hiring for). Behaves exactly like editing
+ *   the `featured` list in skills.yaml: a full, ordered replacement, and every
+ *   name must match a visible skill. Omitted keeps the default reel; an empty
+ *   list hides the section entirely.
  */
 const PrintOptionsSchema = z.object({
   email: z.email().optional(),
@@ -26,6 +31,7 @@ const PrintOptionsSchema = z.object({
   profilePhoto: z.boolean().optional(),
   heroTitle: z.string().optional(),
   heroTagline: z.string().optional(),
+  keySkills: z.array(z.string().min(1)).optional(),
 });
 
 export type PrintOptions = z.infer<typeof PrintOptionsSchema>;

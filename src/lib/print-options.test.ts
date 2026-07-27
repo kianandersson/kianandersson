@@ -87,4 +87,20 @@ describe('parsePrintOptions', () => {
   it('drops a blank hero tagline', () => {
     expect(parsePrintOptions('{"heroTagline":""}')).toBeNull();
   });
+
+  it('parses a key skills override, preserving order', () => {
+    expect(parsePrintOptions('{"keySkills":["React.js","GraphQL","TypeScript"]}')).toEqual({
+      keySkills: ['React.js', 'GraphQL', 'TypeScript'],
+    });
+  });
+
+  it('keeps an empty key skills list (it hides the section)', () => {
+    expect(parsePrintOptions('{"keySkills":[]}')).toEqual({ keySkills: [] });
+  });
+
+  it('throws when key skills is not an array of non-empty strings', () => {
+    expect(() => parsePrintOptions('{"keySkills":"React.js"}')).toThrow();
+    expect(() => parsePrintOptions('{"keySkills":[1,2]}')).toThrow();
+    expect(() => parsePrintOptions('{"keySkills":["React.js",""]}')).toThrow();
+  });
 });

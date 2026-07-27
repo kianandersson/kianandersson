@@ -8,9 +8,13 @@ dist/
 
 # Print output and options
 cv.pdf
+cv.*.pdf
 print.options.json
 print.options.yaml
 print.options.yml
+print.options.*.json
+print.options.*.yaml
+print.options.*.yml
 .print/
 
 # Signature render artifact
