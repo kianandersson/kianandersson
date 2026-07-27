@@ -5,6 +5,7 @@ import { formatPeriod } from '../lib/formatPeriod';
 import { groupSkills } from '../lib/group-skills';
 import { buildPersonJsonLd } from '../lib/person-json-ld';
 import { type ContactDetails, parsePrintOptions } from '../lib/print-options';
+import { resolveKeySkills } from '../lib/resolve-key-skills';
 import type { SkillLevel } from '../lib/skill';
 import { sortGroups } from '../lib/sort-groups';
 import { sortSkills } from '../lib/sort-skills';
@@ -69,11 +70,21 @@ const allSkills: VisibleSkill[] = (await getCollection('skills'))
   }));
 
 const skillByName = new Map(allSkills.map((skill) => [skill.name, skill]));
-const keySkills = (await getCollection('keySkills'))
-  .sort((a, b) => a.data.order - b.data.order)
-  .map((entry) => skillByName.get(entry.data.name))
-  .filter((skill): skill is VisibleSkill => skill !== undefined)
-  .map(({ id, name, level, years }) => ({ id, name, level, years }));
+
+// Key skills are a hand-picked highlight reel from `featured` in skills.yaml. A
+// print build can override the reel entirely (e.g. a CV tailored to what a
+// client is hiring for): the override resolves each name to a visible skill and
+// fails loudly on a typo, and an empty override hides the section. With no
+// override we fall back to the default reel, where an unmatched name is dropped
+// (a content test guards those). The lookup ignores minSkillLevel either way, so
+// key skills show regardless of level.
+const keySkillEntries = printOptions?.keySkills
+  ? resolveKeySkills(printOptions.keySkills, skillByName)
+  : (await getCollection('keySkills'))
+      .sort((a, b) => a.data.order - b.data.order)
+      .map((entry) => skillByName.get(entry.data.name))
+      .filter((skill): skill is VisibleSkill => skill !== undefined);
+const keySkills = keySkillEntries.map(({ id, name, level, years }) => ({ id, name, level, years }));
 
 const skillGroups = sortGroups(
   groupSkills(allSkills.filter((skill) => skill.level >= minSkillLevel)).map(

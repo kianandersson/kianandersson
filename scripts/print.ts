@@ -14,6 +14,7 @@
  *   pnpm print --email me@example.com --min-skill-level 3
  *   pnpm print --email me@example.com --all-stack-skills --all-method-skills
  *   pnpm print --email me@example.com --hero-tagline "Custom CV intro"
+ *   pnpm print --email me@example.com --key-skill "React.js" --key-skill "GraphQL"
  *   pnpm print --options ./my-details.yaml
  *   pnpm print            # uses print.options.yaml (or .json) if present
  *
@@ -29,9 +30,12 @@
  *                               without the accent colour (default: greeting)
  *          --hero-tagline <text> Override the hero intro for this print
  *                               (default: the site config tagline)
+ *          --key-skill <name>   Override a "Key skills" entry; repeat to build
+ *                               the full ordered reel (default: the featured
+ *                               list). Each name must match a visible skill.
  *          --options <file>     YAML or JSON with email/phone/minSkillLevel/
  *                               allStackSkills/allMethodSkills/profilePhoto/
- *                               heroTitle/heroTagline (CLI flags win)
+ *                               heroTitle/heroTagline/keySkills (CLI flags win)
  *          --output <file>      PDF path (default cv.pdf)
  */
 import { existsSync, readFileSync } from 'node:fs';
@@ -65,6 +69,7 @@ type PrintOptions = Contact & {
   profilePhoto?: boolean;
   heroTitle?: string;
   heroTagline?: string;
+  keySkills?: string[];
 };
 
 // Build inside the project root (not the OS temp dir): the Cloudflare adapter
@@ -83,6 +88,7 @@ async function main(): Promise<void> {
       'no-profile-photo': { type: 'boolean' },
       'hero-title': { type: 'string' },
       'hero-tagline': { type: 'string' },
+      'key-skill': { type: 'string', multiple: true },
       options: { type: 'string', short: 'o' },
       output: { type: 'string' },
       help: { type: 'boolean', short: 'h' },
@@ -146,6 +152,7 @@ function collectPrintOptions(values: {
   'no-profile-photo'?: boolean;
   'hero-title'?: string;
   'hero-tagline'?: string;
+  'key-skill'?: string[];
   options?: string;
 }): PrintOptions {
   const fromFile = readOptionsFile(values.options);
@@ -163,6 +170,14 @@ function collectPrintOptions(values: {
   const heroTagline = values['hero-tagline'] ?? fromFile.heroTagline;
   if (typeof heroTagline === 'string' && heroTagline.trim() !== '') {
     merged.heroTagline = heroTagline.trim();
+  }
+  // Key skills fully replace the default reel (CLI wins over the file). An empty
+  // list is kept as-is — it deliberately hides the section — while an absent
+  // value leaves the default reel in place. Names are validated against the
+  // visible skills at build time, so a typo fails loudly there.
+  const keySkills = values['key-skill'] ?? fromFile.keySkills;
+  if (Array.isArray(keySkills)) {
+    merged.keySkills = keySkills.map((name) => String(name).trim());
   }
   const minSkillLevel = parseMinSkillLevel(values['min-skill-level'] ?? fromFile.minSkillLevel);
   if (minSkillLevel !== undefined) {
@@ -231,6 +246,7 @@ function printUsage(): void {
       `  pnpm print --email me@example.com --min-skill-level 3\n` +
       `  pnpm print --email me@example.com --all-stack-skills --all-method-skills\n` +
       `  pnpm print --email me@example.com --hero-tagline "Custom CV intro"\n` +
+      `  pnpm print --email me@example.com --key-skill "React.js" --key-skill "GraphQL"\n` +
       `  pnpm print --options ./my-details.yaml\n` +
       `  pnpm print            # uses print.options.yaml (or .json) if present\n\n` +
       `Private options: ${CONTACT_FIELDS.map((f) => `--${f}`).join(' ')}\n` +
@@ -243,9 +259,12 @@ function printUsage(): void {
       `  --hero-title <text>     Override the "Hi, I'm ..." heading, without the\n` +
       `                          accent colour (default: standard greeting)\n` +
       `  --hero-tagline <text>   Override the hero intro (default: site config tagline)\n` +
+      `  --key-skill <name>      Override a "Key skills" entry; repeat for the full\n` +
+      `                          ordered reel (default: the featured list). Each name\n` +
+      `                          must match a visible skill\n` +
       `  --options, -o <file>    YAML or JSON file with email/phone/minSkillLevel/\n` +
       `                          allStackSkills/allMethodSkills/profilePhoto/heroTitle/\n` +
-      `                          heroTagline\n` +
+      `                          heroTagline/keySkills\n` +
       `                          (CLI flags win)\n` +
       `  --output <file>         PDF output path (default cv.pdf)\n`,
   );

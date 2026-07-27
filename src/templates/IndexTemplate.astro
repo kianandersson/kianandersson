@@ -51,9 +51,13 @@ const {
       />
     </Hero>
   </section>
-  <section id="key-skills" aria-labelledby="key-skills-heading">
-    <KeySkills skills={keySkills} allSkillsHref="#skills" />
-  </section>
+  {
+    keySkills.length > 0 && (
+      <section id="key-skills" aria-labelledby="key-skills-heading">
+        <KeySkills skills={keySkills} allSkillsHref="#skills" />
+      </section>
+    )
+  }
   <section id="experience" aria-labelledby="experience-heading">
     <Experience
       entries={experience}
