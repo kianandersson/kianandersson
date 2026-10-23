@@ -46,6 +46,7 @@ technologies:
   - Kong
   - Auth0
   - Helm
+  - Argo CD
   - SASS
   - JavaScript
   - React Native
@@ -60,6 +61,7 @@ technologies:
   - Supertest
   - MitID
   - Nginx
+  - Elasticsearch
 concepts:
   - Authentication
   - Identity & Access Management
@@ -110,6 +112,7 @@ practices:
   - Continuous Delivery
   - Agile Development
   - DevOps
+  - GitOps
   - Monitoring
   - Event Tracking
   - Behavioral Analytics

@@ -36,6 +36,7 @@ technologies:
   - Kong
   - Apigee
   - OAuth
+  - Elasticsearch
 concepts:
   - Software Architecture
   - API Design

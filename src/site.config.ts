@@ -32,7 +32,7 @@ const parsed = SiteConfigSchema.parse({
   location: 'Denmark',
   tagline:
     'A senior full-stack engineer and tech lead with 15+ years across the stack, building design systems and accessible user interfaces, distributed services, and the engineering teams behind them.',
-  availableFrom: '2026-06-01',
+  availableFrom: '2026-11-02',
   links: {
     website: 'https://kianandersson.com',
     github: 'https://github.com/kianandersson',
