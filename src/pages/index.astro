@@ -14,13 +14,19 @@ import IndexTemplate from '../templates/IndexTemplate.astro';
 
 const printOptions = parsePrintOptions(__PRINT_OPTIONS__);
 
+// The public site is English; a print build can switch the CV to Danish. Copy
+// without a Danish translation falls back to English, and skill names always
+// stay English as the industry terms they are.
+const locale = printOptions?.locale ?? 'en';
+const isDanish = locale === 'da';
+
 // The hero heading and intro default to the site config; a print build can
 // override either (e.g. an agency that wants its own CV title and pitch). A
 // custom title renders without the accent colour — there's no name to pick out.
 const hero = {
   name: siteConfig.firstName,
   title: printOptions?.heroTitle,
-  tagline: printOptions?.heroTagline ?? siteConfig.tagline,
+  tagline: printOptions?.heroTagline ?? (isDanish ? siteConfig.da.tagline : siteConfig.tagline),
   recipientName: siteConfig.fullName,
   availableFrom: siteConfig.availableFrom,
 };
@@ -28,7 +34,7 @@ const hero = {
 const coordinates: ContactDetails = {
   email: printOptions?.email,
   phone: printOptions?.phone,
-  location: siteConfig.location,
+  location: isDanish ? siteConfig.da.location : siteConfig.location,
   website: siteConfig.links.website,
   github: siteConfig.links.github,
   linkedin: siteConfig.links.linkedin,
@@ -54,9 +60,16 @@ type VisibleSkill = {
   children?: string[];
 };
 
-const groupOrder = (await getCollection('skillGroups'))
-  .sort((a, b) => a.data.order - b.data.order)
-  .map((entry) => entry.data.name);
+const groupEntries = (await getCollection('skillGroups')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const groupOrder = groupEntries.map((entry) => entry.data.name);
+const groupLabel = new Map(
+  groupEntries.map((entry) => [
+    entry.data.name,
+    (isDanish && entry.data.da?.name) || entry.data.name,
+  ]),
+);
 
 const allSkills: VisibleSkill[] = (await getCollection('skills'))
   .filter((entry) => !entry.data.hide)
@@ -94,7 +107,7 @@ const skillGroups = sortGroups(
     }),
   ),
   groupOrder,
-);
+).map(({ group, skills }) => ({ group: groupLabel.get(group) ?? group, skills }));
 
 const experienceEntries = (await getCollection('experience')).sort(
   (a, b) => b.data.start.getTime() - a.data.start.getTime(),
@@ -103,15 +116,18 @@ const experienceEntries = (await getCollection('experience')).sort(
 const STACK_LIMIT = 20;
 const DOMAINS_LIMIT = 20;
 
-const experience = experienceEntries.map((entry) => ({
-  id: entry.id,
-  role: entry.data.role,
-  meta: entry.data.meta,
-  period: formatPeriod(entry.data.start, entry.data.end),
-  description: entry.data.description,
-  stack: entry.data.technologies.slice(0, STACK_LIMIT),
-  domains: (entry.data.concepts ?? []).slice(0, DOMAINS_LIMIT),
-}));
+const experience = experienceEntries.map((entry) => {
+  const translation = isDanish ? entry.data.da : undefined;
+  return {
+    id: entry.id,
+    role: translation?.role ?? entry.data.role,
+    meta: translation?.meta ?? entry.data.meta,
+    period: formatPeriod(entry.data.start, entry.data.end, locale),
+    description: translation?.description ?? entry.data.description,
+    stack: entry.data.technologies.slice(0, STACK_LIMIT),
+    domains: (entry.data.concepts ?? []).slice(0, DOMAINS_LIMIT),
+  };
+});
 
 const jsonLd = buildPersonJsonLd(
   siteConfig,
@@ -127,7 +143,7 @@ const jsonLd = buildPersonJsonLd(
 );
 ---
 
-<BaseLayout jsonLd={jsonLd}>
+<BaseLayout jsonLd={jsonLd} lang={locale}>
   <IndexTemplate
     hero={hero}
     keySkills={keySkills}
@@ -138,6 +154,7 @@ const jsonLd = buildPersonJsonLd(
     allStackSkills={allStackSkills}
     allDomainSkills={allDomainSkills}
     profilePhoto={profilePhoto}
+    locale={locale}
   />
 </BaseLayout>
 

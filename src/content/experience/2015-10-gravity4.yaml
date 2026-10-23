@@ -22,6 +22,27 @@ description: >-
   business much closer to real-time reporting. It could pull current campaign
   economics whenever needed, covering millions in ad spend and revenue each
   month.
+da:
+  description: >-
+    Virksomheden kørte på et ældre centralt CMS, der håndterede næsten alt i
+    forretningen, fra kampagneopsætning og compliance til den økonomiske
+    rapportering bag regnskab og budgetter. Det var forretningskritisk, men
+    gammelt, og en del data blev stadig tastet ind i hånden.
+
+
+    Jeg kom med i det centrale team, der havde ansvaret for CMS'et, og
+    bidrog med alt fra nye features og optimering til landingssider. Mit
+    største bidrag var at få data om Facebook-annonceforbrug automatisk ind
+    i systemet. En anden applikation samlede allerede dataene, men de nåede
+    aldrig frem til CMS'et, så jeg byggede en integration, der førte dem
+    direkte ind i beregningerne af omkostninger og omsætning. Så kunne
+    interne brugere se, hvordan hver kampagne klarede sig.
+
+
+    Rapporter, der før krævede manuel indtastning, blev nu opdateret
+    automatisk. Forretningen kom langt tættere på realtidsrapportering og
+    kunne til enhver tid trække de aktuelle kampagnetal for millioner i
+    annonceforbrug og omsætning om måneden.
 technologies:
   - PHP
   - SQL

@@ -1,3 +1,5 @@
+import type { Locale } from '../../../lib/locale';
+import { MESSAGES } from '../../../lib/messages';
 import { Heading } from '../../atoms/Heading';
 import { Text } from '../../atoms/Text';
 import { TimelineMarker } from '../../atoms/TimelineMarker';
@@ -35,12 +37,19 @@ type Props = {
   /** Print build only: render each role's full stack / domains list (see ChipList). */
   allStackSkills?: boolean;
   allDomainSkills?: boolean;
+  locale?: Locale;
 };
 
-export function Experience({ entries, allStackSkills = false, allDomainSkills = false }: Props) {
+export function Experience({
+  entries,
+  allStackSkills = false,
+  allDomainSkills = false,
+  locale = 'en',
+}: Props) {
+  const messages = MESSAGES[locale];
   return (
     <div className={styles.root}>
-      <SectionHeader title="Experience" id="experience-heading" />
+      <SectionHeader title={messages.experienceTitle} id="experience-heading" />
       <div className={styles.timeline}>
         <span className={styles.rail} aria-hidden="true" />
         <ol className={styles.list}>
@@ -63,11 +72,11 @@ export function Experience({ entries, allStackSkills = false, allDomainSkills = 
                   </Text>
                 </div>
               </div>
-              <ExperienceDescription text={entry.description} />
+              <ExperienceDescription text={entry.description} locale={locale} />
               <div className={styles.chipGroups}>
                 {entry.stack.length > 0 && (
                   <ChipList
-                    label="Stack"
+                    label={messages.stackLabel}
                     items={entry.stack}
                     maxChars={STACK_MAX_CHARS}
                     perItemCost={CHIP_PER_ITEM_COST}
@@ -76,11 +85,12 @@ export function Experience({ entries, allStackSkills = false, allDomainSkills = 
                     printPerItemCost={PRINT_PER_ITEM_COST}
                     variant="stack"
                     expand={allStackSkills}
+                    locale={locale}
                   />
                 )}
                 {entry.domains.length > 0 && (
                   <ChipList
-                    label="Domains"
+                    label={messages.domainsLabel}
                     items={entry.domains}
                     maxChars={DOMAINS_MAX_CHARS}
                     perItemCost={CHIP_PER_ITEM_COST}
@@ -89,6 +99,7 @@ export function Experience({ entries, allStackSkills = false, allDomainSkills = 
                     printPerItemCost={PRINT_PER_ITEM_COST}
                     variant="domains"
                     expand={allDomainSkills}
+                    locale={locale}
                   />
                 )}
               </div>

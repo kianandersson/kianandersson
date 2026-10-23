@@ -16,6 +16,22 @@ description: >-
 
   Every site went live in production, each with a design of its own and
   built to be responsive, multilingual and search-optimised.
+da:
+  description: >-
+    Kunderne ville have en hjemmeside, der føltes som deres egen, med et
+    skræddersyet design med særpræg frem for en standardskabelon. Den skulle
+    også fungere på flere sprog og være let for ejeren selv at vedligeholde.
+
+
+    Jeg arbejdede alene på hvert projekt, designede et skræddersyet visuelt
+    udtryk til hver side og udviklede frontenden fra bunden ud fra det. Bag
+    den byggede jeg et CMS, så kunderne selv kunne redigere deres indhold.
+    Det var skrevet i ren PHP på et egenudviklet MVC- og routinglag med
+    indholdet modelleret i SQL.
+
+
+    Alle siderne gik i luften med hvert sit design og var responsive,
+    flersprogede og søgemaskineoptimerede.
 technologies:
   - PHP
   - JavaScript

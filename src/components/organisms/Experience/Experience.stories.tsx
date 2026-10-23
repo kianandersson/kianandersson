@@ -92,6 +92,21 @@ export const ReadMore: Story = {
   },
 };
 
+// The Danish print CV: section copy and the read-more toggle follow the locale,
+// while entry content arrives already translated.
+export const Danish: Story = {
+  args: { entries: LONG_ENTRY, locale: 'da' },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(
+      canvas.getByRole('heading', { level: 2, name: /Erhvervserfaring/i }),
+    ).toBeInTheDocument();
+    await expect(canvas.getByText('Stack')).toBeInTheDocument();
+    await expect(canvas.getByText('Domæner')).toBeInTheDocument();
+    await expect(canvas.getByText('Vis mere')).toBeInTheDocument();
+  },
+};
+
 export const EmptyBehavior: Story = {
   args: { entries: [] },
   tags: ['!dev', '!autodocs'],

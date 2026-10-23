@@ -23,4 +23,11 @@ describe('formatPeriod', () => {
     expect(formatPeriod(new Date('2021-06'), new Date('2023-02'))).toBe('Jun 2021 — Feb 2023');
     expect(formatPeriod(new Date('2023-03'))).toBe('Mar 2023 — Present');
   });
+
+  it('formats Danish month abbreviations, "nu" and an en dash for a Danish period', () => {
+    expect(formatPeriod(new Date('2022-06-01'), new Date('2026-05-31'), 'da')).toBe(
+      'jun. 2022 – maj 2026',
+    );
+    expect(formatPeriod(new Date('2023-10-01'), undefined, 'da')).toBe('okt. 2023 – nu');
+  });
 });

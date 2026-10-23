@@ -21,6 +21,14 @@ describe('levelLabel', () => {
   it('returns "Expert" for level 5', () => {
     expect(levelLabel(5)).toBe('Expert');
   });
+
+  it('returns Danish labels for the da locale', () => {
+    expect(levelLabel(1, 'da')).toBe('Kendskab');
+    expect(levelLabel(2, 'da')).toBe('Godt kendskab');
+    expect(levelLabel(3, 'da')).toBe('Erfaren');
+    expect(levelLabel(4, 'da')).toBe('Meget erfaren');
+    expect(levelLabel(5, 'da')).toBe('Ekspert');
+  });
 });
 
 describe('dotArray', () => {

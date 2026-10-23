@@ -21,6 +21,28 @@ description: >-
   For the first time the team could see how every campaign was performing and
   act the same day. A handful of people ran far more campaigns than they could
   by hand. Nothing on the market did this at the time.
+da:
+  description: >-
+    Et lille annonceteam kørte betalte Facebook-kampagner og tjente penge,
+    hver gang et klik blev til et salg hos en annoncør. Arbejdet var helt
+    manuelt, og teamet havde ringe kontrol over det. De kunne ikke se,
+    hvilke annoncer der gav overskud, og hvilke der gav tab, og en kampagne
+    kunne tabe titusindvis af kroner på én nat, før nogen opdagede det.
+
+
+    Som teamets eneste udvikler designede og byggede jeg et dashboard, der
+    viste hver kampagnes over- eller underskud næsten i realtid. Jeg
+    automatiserede kampagneoprettelsen, som de hidtil havde lavet i hånden.
+    Nu kunne én idé blive til hundredvis af annoncer, hver rettet mod sin
+    egen målgruppe, og teamet kunne teste varianter op mod hinanden. Når en
+    kampagnes tab oversteg en fastsat grænse, stoppede systemet den
+    automatisk.
+
+
+    For første gang kunne teamet se, hvordan hver kampagne klarede sig, og
+    handle samme dag. En håndfuld mennesker kunne nu køre langt flere
+    kampagner end før. Dengang fandtes der intet på markedet, der kunne det
+    samme.
 technologies:
   - PHP
   - JavaScript

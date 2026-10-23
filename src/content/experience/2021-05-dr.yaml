@@ -21,6 +21,28 @@ description: >-
   The result was a leaner, more cloud-mature platform, with fewer applications
   to run, modern infrastructure replacing costly hosting, and a more agile and
   scalable foundation to build on.
+da:
+  meta: DR
+  description: >-
+    Publiceringsplatformen bag dr.dk, et af Danmarks største nyhedssites,
+    var spredt over for mange applikationer på dyr og forældet hosting. CMS-
+    og API-teamene blev lagt sammen for at modernisere den, og som tech lead
+    for det samlede team stod jeg i spidsen for transformationen.
+
+
+    Jeg smeltede de to teams sammen til ét med fælles kultur, fælles
+    kodebase og kompetencer på tværs af systemerne. Sammen med
+    enterprise-arkitekterne satte jeg den tekniske retning. Jeg designede og
+    idriftsatte en content aggregation service: et systemagnostisk,
+    eventdrevet API, der samlede dr.dk's indhold bag én kontrakt. Samtidig
+    moderniserede jeg teamets tekniske grundlag. Jeg ledte omskolingen til
+    .NET, flyttede driften til en ny intern Kubernetes-platform og
+    konsoliderede applikationsporteføljen til en slank kerne.
+
+
+    Resultatet blev en mere cloud-moden platform med færre applikationer at
+    drive, moderne infrastruktur i stedet for dyr hosting og et mere
+    fleksibelt og skalerbart grundlag at bygge videre på.
 technologies:
   - PHP
   - Symfony

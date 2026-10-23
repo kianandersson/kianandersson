@@ -22,6 +22,28 @@ description: >-
   major live events, and replaced a SaaS contract worth millions a year at a
   fraction of the infrastructure cost. Every user was migrated off the vendor
   with zero downtime.
+da:
+  meta: DR
+  description: >-
+    Da login blev en strategisk hjørnesten, kunne SaaS-identitetsudbyderen
+    hverken skalere til en fornuftig pris eller leve op til kravene til
+    performance, UX og protokoller. Jeg analyserede kravene, anbefalede en
+    egenudviklet platform og stod i spidsen for transformationen.
+
+
+    Jeg byggede både platformen og det seksmandsstærke team bag den op fra
+    bunden. Jeg satte den tekniske retning, designede arkitekturen og
+    byggede fundamentet: en OAuth- og OIDC-server i Node.js og en
+    tilgængelig React-brugerflade på et atomic design-komponentbibliotek med
+    GDPR-compliance og høje sikkerhedskrav. Efterhånden som teamet tog
+    ejerskab, skiftede mit fokus til mentoring og reviews, men jeg var
+    fortsat hands-on på de sværeste og mest tidskritiske opgaver.
+
+
+    Platformen skalerede til millioner af brugere med op til 500.000 logins
+    under store live-events. Den erstattede en SaaS-kontrakt til millioner
+    om året, og infrastrukturen kostede kun en brøkdel. Alle brugere blev
+    migreret fra leverandøren uden nedetid.
 technologies:
   - TypeScript
   - React.js

@@ -1,4 +1,6 @@
 import { useId } from 'preact/hooks';
+import type { Locale } from '../../../lib/locale';
+import { MESSAGES } from '../../../lib/messages';
 import { toParagraphs } from '../../../lib/paragraphs';
 import { ChevronIcon } from '../../atoms/icons';
 import { Text } from '../../atoms/Text';
@@ -7,9 +9,10 @@ import styles from './ExperienceDescription.module.css';
 type Props = {
   /** Description text; blank lines (a `\n\n` break) separate paragraphs. */
   text: string;
+  locale?: Locale;
 };
 
-export function ExperienceDescription({ text }: Props) {
+export function ExperienceDescription({ text, locale = 'en' }: Props) {
   const [lead, ...rest] = toParagraphs(text);
   const toggleId = useId();
   const bodyId = useId();
@@ -54,8 +57,8 @@ export function ExperienceDescription({ text }: Props) {
       <input type="checkbox" id={toggleId} className={styles.check} aria-controls={bodyId} />
       {body}
       <label className={styles.toggle} for={toggleId}>
-        <span className={styles.more}>Read more</span>
-        <span className={styles.less}>Read less</span>
+        <span className={styles.more}>{MESSAGES[locale].readMore}</span>
+        <span className={styles.less}>{MESSAGES[locale].readLess}</span>
         <span className={styles.chevron} aria-hidden="true">
           <ChevronIcon direction="down" size={14} />
         </span>

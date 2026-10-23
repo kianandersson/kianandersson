@@ -8,6 +8,8 @@ featured:
 
 groups:
   - name: Leadership & Architecture
+    da:
+      name: Ledelse & arkitektur
     skills:
       - name: Technical Leadership
         category: organizational
@@ -99,6 +101,8 @@ groups:
         hide: true
 
   - name: Languages & Runtimes
+    da:
+      name: Programmeringssprog & runtimes
     skills:
       - name: TypeScript
         category: technology
@@ -155,6 +159,8 @@ groups:
         lastUsed: 2026
 
   - name: Frontend
+    da:
+      name: Frontend
     skills:
       - name: React.js
         category: technology
@@ -256,6 +262,8 @@ groups:
         hide: true
 
   - name: Backend & APIs
+    da:
+      name: "Backend & API'er"
     skills:
       - name: API Gateway
         category: concept
@@ -329,6 +337,8 @@ groups:
         hide: true
 
   - name: Databases
+    da:
+      name: Databaser
     skills:
       - name: SQL
         category: technology
@@ -367,6 +377,8 @@ groups:
         lastUsed: 2026
 
   - name: Cloud & DevOps
+    da:
+      name: Cloud & DevOps
     skills:
       - name: Docker
         category: technology
@@ -491,6 +503,8 @@ groups:
         hide: true
 
   - name: Security & Identity
+    da:
+      name: Sikkerhed & identitet
     skills:
       - name: OAuth
         category: technology
@@ -616,6 +630,8 @@ groups:
         hide: true
 
   - name: Quality & Testing
+    da:
+      name: Kvalitet & test
     skills:
       - name: Test Automation
         category: practice
@@ -701,6 +717,8 @@ groups:
         hide: true
 
   - name: Methodologies & Practices
+    da:
+      name: Metoder & praksis
     skills:
       - name: Agile Development
         category: practice
@@ -811,6 +829,8 @@ groups:
         hide: true
 
   - name: Data & Analytics
+    da:
+      name: Data & analyse
     skills:
       - name: Product Analytics
         category: practice
