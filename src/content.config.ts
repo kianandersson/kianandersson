@@ -34,7 +34,7 @@ function yamlDir(relativeDir: string): Loader {
 
 type SkillsFile = {
   featured: string[];
-  groups: { name: string; skills: Record<string, unknown>[] }[];
+  groups: { name: string; da?: { name: string }; skills: Record<string, unknown>[] }[];
 };
 
 const skills = defineCollection({
@@ -86,6 +86,14 @@ const experience = defineCollection({
     organizational: z.array(z.string().min(1)).optional(),
     start: z.coerce.date(),
     end: z.coerce.date().optional(),
+    da: z
+      .object({
+        role: z.string().min(1),
+        meta: z.string().min(1),
+        description: z.string().min(1),
+      })
+      .partial()
+      .optional(),
   }),
 });
 
@@ -97,12 +105,14 @@ const skillGroups = defineCollection({
         id: slugify(group.name),
         name: group.name,
         order: index,
+        da: group.da,
       }));
     },
   }),
   schema: z.object({
     name: z.string().min(1),
     order: z.number().int().nonnegative(),
+    da: z.object({ name: z.string().min(1) }).optional(),
   }),
 });
 

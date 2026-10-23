@@ -1,4 +1,6 @@
 import type { ComponentChildren } from 'preact';
+import type { Locale } from '../../../lib/locale';
+import { MESSAGES } from '../../../lib/messages';
 import { toParagraphs } from '../../../lib/paragraphs';
 import { Heading } from '../../atoms/Heading';
 import { Text } from '../../atoms/Text';
@@ -16,10 +18,18 @@ type Props = {
   tagline: string;
   /** Print only. */
   showProfilePhoto?: boolean;
+  locale?: Locale;
   children?: ComponentChildren;
 };
 
-export function Hero({ name, title, tagline, showProfilePhoto = false, children }: Props) {
+export function Hero({
+  name,
+  title,
+  tagline,
+  showProfilePhoto = false,
+  locale = 'en',
+  children,
+}: Props) {
   const paragraphs = toParagraphs(tagline);
   return (
     <div className={styles.root}>
@@ -34,7 +44,7 @@ export function Hero({ name, title, tagline, showProfilePhoto = false, children 
               title
             ) : (
               <>
-                Hi, I'm <span className={styles.name}>{name}</span>.
+                {MESSAGES[locale].heroGreeting} <span className={styles.name}>{name}</span>.
               </>
             )}
           </Heading>

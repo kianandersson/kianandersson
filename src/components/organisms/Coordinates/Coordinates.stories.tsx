@@ -85,6 +85,22 @@ export const WithEmailOnly: Story = {
   },
 };
 
+export const Danish: Story = {
+  args: {
+    email: 'me@example.com',
+    phone: '+45 12 34 56 78',
+    location: 'Danmark',
+    locale: 'da',
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole('heading', { level: 2, name: /Kontakt/i })).toBeInTheDocument();
+    for (const label of ['E-mail', 'Telefon', 'Bopæl', 'Hjemmeside', 'GitHub', 'LinkedIn']) {
+      await expect(canvas.getByText(label)).toBeInTheDocument();
+    }
+  },
+};
+
 export const EmptyBehavior: Story = {
   // Clear the defaults from meta so nothing renders.
   args: { location: undefined, website: undefined, github: undefined, linkedin: undefined },

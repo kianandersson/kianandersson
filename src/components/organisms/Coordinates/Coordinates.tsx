@@ -1,3 +1,5 @@
+import type { Locale } from '../../../lib/locale';
+import { MESSAGES } from '../../../lib/messages';
 import { DefinitionItem } from '../../molecules/DefinitionItem';
 import { SectionHeader } from '../../molecules/SectionHeader';
 import styles from './Coordinates.module.css';
@@ -10,6 +12,7 @@ export type CoordinatesProps = {
   website?: string;
   github?: string;
   linkedin?: string;
+  locale?: Locale;
 };
 
 type ContactItem = { label: string; value: string; href?: string };
@@ -25,13 +28,18 @@ function urlPath(url: string): string {
 }
 
 function toItems(contact: CoordinatesProps): ContactItem[] {
+  const messages = MESSAGES[contact.locale ?? 'en'];
   const items: ContactItem[] = [];
   if (contact.email) {
-    items.push({ label: 'Email', value: contact.email, href: `mailto:${contact.email}` });
+    items.push({
+      label: messages.emailLabel,
+      value: contact.email,
+      href: `mailto:${contact.email}`,
+    });
   }
   if (contact.phone) {
     items.push({
-      label: 'Phone',
+      label: messages.phoneLabel,
       value: contact.phone,
       href: `tel:${contact.phone.replace(/\s+/g, '')}`,
     });
@@ -39,10 +47,14 @@ function toItems(contact: CoordinatesProps): ContactItem[] {
   // Location sits right after the contact fields. With no email/phone it lands
   // first; the grid then nudges it to the end on the wide layout (see the CSS).
   if (contact.location) {
-    items.push({ label: 'Location', value: contact.location });
+    items.push({ label: messages.locationLabel, value: contact.location });
   }
   if (contact.website) {
-    items.push({ label: 'Website', value: stripScheme(contact.website), href: contact.website });
+    items.push({
+      label: messages.websiteLabel,
+      value: stripScheme(contact.website),
+      href: contact.website,
+    });
   }
   if (contact.github) {
     items.push({ label: 'GitHub', value: urlPath(contact.github), href: contact.github });
@@ -68,7 +80,10 @@ export function Coordinates(props: CoordinatesProps) {
 
   return (
     <section class={styles.root} id="coordinates" aria-labelledby="coordinates-heading">
-      <SectionHeader title="Coordinates" id="coordinates-heading" />
+      <SectionHeader
+        title={MESSAGES[props.locale ?? 'en'].coordinatesTitle}
+        id="coordinates-heading"
+      />
       <dl class={styles.grid} data-contact-count={contactCount}>
         {items.map((item) => (
           <DefinitionItem key={item.label} label={item.label} value={item.value} href={item.href} />

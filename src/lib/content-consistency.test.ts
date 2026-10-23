@@ -17,6 +17,7 @@ type SkillItem = {
 
 type SkillGroup = {
   name: string;
+  da?: { name?: string };
   skills: SkillItem[];
 };
 
@@ -33,6 +34,7 @@ type ExperienceFile = {
   concepts?: string[];
   practices?: string[];
   organizational?: string[];
+  da?: { role?: string; meta?: string; description?: string };
 };
 
 const REPO_ROOT = process.cwd();
@@ -243,5 +245,27 @@ describe('experience description length', () => {
       length <= MAX_DESCRIPTION_LENGTH,
       `"${file}" description is ${length} characters — trim it to ${MAX_DESCRIPTION_LENGTH} or fewer.`,
     ).toBe(true);
+  });
+});
+
+// The print CV can switch to Danish (`locale: da`). Anything untranslated falls
+// back to English, so a missing translation would silently mix languages on the
+// Danish CV — these guards keep the translations complete.
+describe('Danish translations', () => {
+  const files = loadExperienceFiles();
+
+  it.each(files)('$file has a Danish description within the length limit', ({ file, data }) => {
+    const length = data.da?.description?.length ?? 0;
+    expect(length > 0, `"${file}" is missing da.description`).toBe(true);
+    expect(
+      length <= MAX_DESCRIPTION_LENGTH,
+      `"${file}" da.description is ${length} characters — trim it to ${MAX_DESCRIPTION_LENGTH} or fewer.`,
+    ).toBe(true);
+  });
+
+  it('every skill group has a Danish name', () => {
+    for (const group of loadSkills().groups) {
+      expect(group.da?.name, `Group "${group.name}" is missing da.name`).toBeTruthy();
+    }
   });
 });
