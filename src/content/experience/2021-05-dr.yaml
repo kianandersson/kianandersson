@@ -42,6 +42,7 @@ technologies:
   - Auth0
   - CircleCI
   - Nginx
+  - Elasticsearch
 concepts:
   - Software Architecture
   - Microservices Architecture
