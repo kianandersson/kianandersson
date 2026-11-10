@@ -199,6 +199,15 @@ describe('buildPersonJsonLd', () => {
     ]);
   });
 
+  it('lists a skill once when it is both a visible skill and a child', () => {
+    const json = buildPersonJsonLd(site, experience, siteUrl, [
+      { name: 'Information Security', children: ['Risk Management', 'Cryptography'] },
+      { name: 'Risk Management' },
+    ]);
+
+    expect(json.knowsAbout).toEqual(['Information Security', 'Risk Management', 'Cryptography']);
+  });
+
   it('omits knowsAbout when no skills are provided', () => {
     const json = buildPersonJsonLd(site, experience, siteUrl);
     expect(json.knowsAbout).toBeUndefined();

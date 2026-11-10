@@ -35,7 +35,7 @@ da:
     Jeg byggede platformen og det seksmandsstærke team op fra bunden. Jeg
     satte den tekniske retning, designede arkitekturen og byggede fundamentet
     som en OpenID Connect-server med en tilgængelig brugerflade. Jeg stod for
-    sikkerhedsrisikovurdering og DPIA og ledte hærdningen mod reelle angreb.
+    sikkerhedsrisikovurdering og DPIA og ledede hærdningen mod reelle angreb.
     Efterhånden som teamet tog ejerskab, skiftede mit fokus til mentoring og
     reviews, men jeg var fortsat hands-on på de sværeste og mest tidskritiske
     opgaver.
@@ -96,22 +96,15 @@ concepts:
   - Rate Limiting
   - Design Systems
   - API Design
-  - Atomic Design
-  - Component Libraries
   - Single Sign-On
   - Observability
   - Domain-Driven Design
-  - Federated Identity
   - Service Level Objectives
   - Database Modeling
   - Data Migration
   - Server-Side Rendering
   - Caching Strategies
   - Secrets Management
-  - GraphQL Schema Design
-  - Cryptography
-  - Session Management
-  - Distributed Tracing
   - API Gateway
   - Customer Data Platform
 practices:

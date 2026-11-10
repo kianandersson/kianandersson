@@ -35,7 +35,7 @@ da:
     enterprise-arkitekterne satte jeg den tekniske retning og designede og
     idriftsatte en systemagnostisk, eventdrevet content aggregation service,
     der samlede dr.dk's indhold bag én kontrakt. Samtidig moderniserede jeg
-    teamets tekniske grundlag. Jeg ledte omskolingen til .NET, flyttede
+    teamets tekniske grundlag. Jeg ledede omskolingen til .NET, flyttede
     driften til en ny intern Kubernetes-platform og konsoliderede
     applikationsporteføljen til en slank kerne. Jeg repræsenterede også teamet
     i DR's arkitekturfora og koordinerede tværgående indsatser.
@@ -83,8 +83,6 @@ concepts:
   - Authentication
   - Authorization
   - Single Sign-On
-  - Federated Identity
-  - Session Management
   - Secrets Management
   - Rate Limiting
 practices:

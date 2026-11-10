@@ -70,8 +70,8 @@ groups:
       - name: Vendor Evaluation
         category: practice
         level: 3
-        years: 4
-        lastUsed: 2022
+        years: 7
+        lastUsed: 2026
 
       - name: Legacy Modernization
         category: concept
