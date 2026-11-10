@@ -8,7 +8,7 @@ Built with [Astro](https://astro.build) and [Preact](https://preactjs.com).
 
 ## Develop
 
-Requires Node ≥22.18, pnpm 11, and Playwright's Chromium.
+Requires Node ≥22.23.4, pnpm 11, and Playwright's Chromium.
 
 ```sh
 pnpm install
