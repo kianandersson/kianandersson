@@ -14,6 +14,7 @@ interface Props {
     tagline: string;
     recipientName: string;
     availableFrom?: Date;
+    renderedAt: number;
   };
   keySkills: KeySkill[];
   experience: ExperienceEntry[];
@@ -47,6 +48,7 @@ const {
       <ContactContainer
         recipientName={hero.recipientName}
         availableFrom={hero.availableFrom}
+        renderedAt={hero.renderedAt}
         client:load
       />
     </Hero>
