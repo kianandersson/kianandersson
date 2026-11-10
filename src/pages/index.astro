@@ -49,6 +49,7 @@ const minSkillLevel = printOptions?.minSkillLevel ?? 1;
 // build can opt to expand either list in full instead, independently.
 const allStackSkills = printOptions?.allStackSkills ?? false;
 const allDomainSkills = printOptions?.allDomainSkills ?? false;
+const allPracticeSkills = printOptions?.allPracticeSkills ?? false;
 const profilePhoto = printOptions?.profilePhoto ?? true;
 
 type VisibleSkill = {
@@ -115,7 +116,7 @@ const experienceEntries = (await getCollection('experience')).sort(
 
 const STACK_LIMIT = 20;
 const DOMAINS_LIMIT = 20;
-const METHODS_LIMIT = 20;
+const PRACTICES_LIMIT = 20;
 
 const experience = experienceEntries.map((entry) => {
   const translation = isDanish ? entry.data.da : undefined;
@@ -127,7 +128,7 @@ const experience = experienceEntries.map((entry) => {
     description: translation?.description ?? entry.data.description,
     stack: entry.data.technologies.slice(0, STACK_LIMIT),
     domains: (entry.data.concepts ?? []).slice(0, DOMAINS_LIMIT),
-    methods: (entry.data.practices ?? []).slice(0, METHODS_LIMIT),
+    practices: (entry.data.practices ?? []).slice(0, PRACTICES_LIMIT),
   };
 });
 
@@ -155,6 +156,7 @@ const jsonLd = buildPersonJsonLd(
     coordinates={coordinates}
     allStackSkills={allStackSkills}
     allDomainSkills={allDomainSkills}
+    allPracticeSkills={allPracticeSkills}
     profilePhoto={profilePhoto}
     locale={locale}
   />

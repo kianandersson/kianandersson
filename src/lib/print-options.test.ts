@@ -56,6 +56,10 @@ describe('parsePrintOptions', () => {
     });
   });
 
+  it('parses allPracticeSkills', () => {
+    expect(parsePrintOptions('{"allPracticeSkills":true}')).toEqual({ allPracticeSkills: true });
+  });
+
   it('throws when allStackSkills is not a boolean', () => {
     expect(() => parsePrintOptions('{"allStackSkills":"yes"}')).toThrow();
   });

@@ -1,8 +1,9 @@
 .row {
-  display: flex;
-  gap: var(--space-m);
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: var(--space-m);
+  row-gap: var(--space-xs);
   align-items: baseline;
-  flex-wrap: wrap;
 }
 
 .label {
@@ -10,7 +11,6 @@
   font-size: var(--text-caption-s-size);
   line-height: var(--text-caption-s-leading);
   color: var(--color-text-muted);
-  flex: 0 0 56px;
 }
 
 .chips {
@@ -18,7 +18,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-xs);
-  flex: 1;
+  grid-column: -2 / -1;
 }
 
 /* Overflow bucket — stays in the DOM (SEO/crawler-friendly) and joins the
@@ -34,11 +34,11 @@
 
 .printList {
   display: none;
+  grid-column: -2 / -1;
   margin: 0;
   font-family: var(--font-mono);
   font-size: var(--text-caption-s-size);
   line-height: var(--text-list-leading);
-  flex: 1;
 }
 
 .printList[data-variant="stack"] {

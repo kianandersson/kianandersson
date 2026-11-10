@@ -8,8 +8,10 @@ import { SectionHeader } from '../../molecules/SectionHeader';
 import styles from './Experience.module.css';
 import { ExperienceDescription } from './ExperienceDescription';
 
-// Web chip area ~556px, Geist Mono 12px ≈ 77 chars/line; cost = text + ~5/item.
-// Budgets stay under 1 line (stack) / 2 lines (domains) so "+N more" never orphans.
+// Web chip area ~550px, Geist Mono 12px ≈ 76 chars/line; cost = text + ~5/item.
+// Budgets stay under 1 line (stack) / 2 lines (domains, practices) so "+N more"
+// never orphans. The label column sizes to the longest label, so the chip area
+// shrinks slightly with longer labels; the budgets keep a margin for that.
 const CHIP_PER_ITEM_COST = 5;
 const STACK_MAX_CHARS = 58;
 const STACK_MIN_ITEMS = 3;
@@ -17,11 +19,10 @@ const DOMAINS_MAX_CHARS = 112;
 const DOMAINS_MIN_ITEMS = 3;
 
 // Print list ~604px, mono ~9px ≈ 112 chars/line; plain comma text (~2/item).
-// Budgets target ~1 line (stack) / ~2 lines (domains) / ~1.5 lines (methods).
+// Budgets target ~1 line (stack) / ~2 lines (domains, practices).
 const PRINT_PER_ITEM_COST = 2;
 const PRINT_STACK_MAX_CHARS = 95;
 const PRINT_DOMAINS_MAX_CHARS = 200;
-const PRINT_METHODS_MAX_CHARS = 150;
 
 export type ExperienceEntry = {
   id: string;
@@ -31,14 +32,15 @@ export type ExperienceEntry = {
   description: string;
   stack: string[];
   domains: string[];
-  methods: string[];
+  practices: string[];
 };
 
 type Props = {
   entries: ExperienceEntry[];
-  /** Print build only: render each role's full stack / domains list (see ChipList). */
+  /** Print build only: render each role's full stack / domains / practices list (see ChipList). */
   allStackSkills?: boolean;
   allDomainSkills?: boolean;
+  allPracticeSkills?: boolean;
   locale?: Locale;
 };
 
@@ -46,6 +48,7 @@ export function Experience({
   entries,
   allStackSkills = false,
   allDomainSkills = false,
+  allPracticeSkills = false,
   locale = 'en',
 }: Props) {
   const messages = MESSAGES[locale];
@@ -104,16 +107,17 @@ export function Experience({
                     locale={locale}
                   />
                 )}
-                {entry.methods.length > 0 && (
+                {entry.practices.length > 0 && (
                   <ChipList
-                    label={messages.methodsLabel}
-                    items={entry.methods}
+                    label={messages.practicesLabel}
+                    items={entry.practices}
                     maxChars={DOMAINS_MAX_CHARS}
                     perItemCost={CHIP_PER_ITEM_COST}
                     minItems={DOMAINS_MIN_ITEMS}
-                    printMaxChars={PRINT_METHODS_MAX_CHARS}
+                    printMaxChars={PRINT_DOMAINS_MAX_CHARS}
                     printPerItemCost={PRINT_PER_ITEM_COST}
                     variant="domains"
+                    expand={allPracticeSkills}
                     locale={locale}
                   />
                 )}
