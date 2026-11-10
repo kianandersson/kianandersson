@@ -7,6 +7,8 @@ const SiteConfigSchema = z.object({
   role: z.string(),
   location: z.string(),
   tagline: z.string(),
+  /** Meta/OG description. Search results and link previews cut off around 160 characters. */
+  description: z.string().max(160),
   links: z.object({
     website: z.url(),
     github: z.url(),
@@ -33,10 +35,12 @@ export type SiteConfig = SiteConfigInput & { fullName: string; defaultTitle: str
 const parsed = SiteConfigSchema.parse({
   firstName: 'Kian',
   lastName: 'Andersson',
-  role: 'Senior Full-Stack Engineer & Tech Lead',
+  role: 'Solution Architect & Tech Lead',
   location: 'Denmark',
   tagline:
-    'A senior full-stack engineer and tech lead with 15+ years across the stack, building design systems and accessible user interfaces, distributed services, and the engineering teams behind them.',
+    'A solution architect and tech lead with 15+ years in software engineering, building identity and access management solutions, distributed services, design systems and accessible user interfaces, and the engineering teams behind them.',
+  description:
+    'Freelance solution architect and tech lead in Denmark with 15+ years in software engineering and deep expertise in identity and access management.',
   availableFrom: '2026-11-02',
   links: {
     website: 'https://kianandersson.com',
@@ -51,7 +55,7 @@ const parsed = SiteConfigSchema.parse({
   da: {
     location: 'Danmark',
     tagline:
-      'Senior full-stack engineer og tech lead med over 15 års erfaring på tværs af hele stacken. Jeg bygger designsystemer og tilgængelige brugerflader, distribuerede services og de udviklingsteams, der står bag dem.',
+      'Løsningsarkitekt og tech lead med over 15 års erfaring inden for softwareudvikling. Jeg har bygget løsninger til identitets- og adgangsstyring, distribuerede services, designsystemer og tilgængelige brugerflader og opbygget de udviklingsteams, der står bag dem.',
   },
 });
 

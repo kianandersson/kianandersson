@@ -27,13 +27,13 @@ da:
     og platformen skulle hurtigt ud til betalende kunder.
 
 
-    Som eneste udvikler stod jeg for det tekniske design og byggede
-    produktet. Jeg modellerede domænet omkring kunstnere, fans og betalt
-    indhold og byggede adgangskontrollen bag betalingsmuren. Jeg integrerede
-    en hostet betalingsplatform og en tredjepartstjeneste til livestreams,
-    så koncerter og eksklusivt indhold kun var tilgængeligt for betalende
-    brugere. For hurtigt at skabe omsætning skræddersyede jeg hver kunstners
-    univers frem for at bygge en generisk platform.
+    Som eneste udvikler stod jeg for det tekniske design og byggede produktet.
+    Jeg modellerede domænet omkring kunstnere, fans og betalt indhold og
+    byggede adgangskontrollen bag betalingsmuren. Jeg integrerede en hostet
+    betalingsplatform og en tredjepartstjeneste til livestreams, så koncerter
+    og eksklusivt indhold kun var tilgængelige for betalende brugere. For
+    hurtigt at skabe omsætning skræddersyede jeg hver kunstners univers frem
+    for at bygge en generisk platform.
 
 
     Platformen gik i luften med betalende brugere og livestreamede koncerter
@@ -53,8 +53,6 @@ technologies:
 concepts:
   - Software Architecture
   - Database Modeling
-  - Solution Architecture
-  - System Architecture
 practices:
   - Responsive Web Design
   - Search Engine Optimization
