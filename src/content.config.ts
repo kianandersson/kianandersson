@@ -15,19 +15,28 @@ function slugify(name: string): string {
 function yamlDir(relativeDir: string): Loader {
   return {
     name: 'yaml-dir',
-    load: async ({ store, parseData, generateDigest, logger }) => {
+    load: async ({ store, parseData, generateDigest, logger, watcher }) => {
       const dir = resolve(process.cwd(), relativeDir);
-      store.clear();
-      const files = await readdir(dir);
-      for (const fileName of files) {
-        if (!fileName.endsWith('.yaml')) continue;
-        const id = fileName.replace(/\.yaml$/, '');
-        const text = await readFile(join(dir, fileName), 'utf-8');
-        const raw = yaml.load(text) as Record<string, unknown>;
-        const data = await parseData({ id, data: raw });
-        store.set({ id, data, digest: generateDigest(text) });
-      }
-      logger.info(`Loaded ${store.keys().length} entries from ${relativeDir}`);
+      const sync = async () => {
+        store.clear();
+        const files = await readdir(dir);
+        for (const fileName of files) {
+          if (!fileName.endsWith('.yaml')) continue;
+          const id = fileName.replace(/\.yaml$/, '');
+          const text = await readFile(join(dir, fileName), 'utf-8');
+          const raw = yaml.load(text) as Record<string, unknown>;
+          const data = await parseData({ id, data: raw });
+          store.set({ id, data, digest: generateDigest(text) });
+        }
+        logger.info(`Loaded ${store.keys().length} entries from ${relativeDir}`);
+      };
+      await sync();
+      // Dev only: reload the collection when a YAML file in the folder changes,
+      // so edits show up without restarting the dev server.
+      watcher?.add(dir);
+      watcher?.on('all', async (_event, path) => {
+        if (path.startsWith(dir) && path.endsWith('.yaml')) await sync();
+      });
     },
   };
 }

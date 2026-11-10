@@ -54,18 +54,16 @@ export default defineConfig({
     define: {
       __PRINT_OPTIONS__: JSON.stringify(process.env.PRINT_OPTIONS ?? ''),
     },
+    // The adapter merges these into the SSR (workerd) deps optimizer.
     optimizeDeps: {
-      // Workaround for astro/issues/16248: deps that aren't reachable by the
-      // SSR scanner end up discovered at runtime, triggering rebundles that
-      // reload mid-render — the first request paints an empty page. The
-      // adapter merges this list into its own SSR include.
-      include: [
-        '@astrojs/preact/server.js',
-        'astro/actions/runtime/entrypoints/server.js',
-        'astro/zod',
-        'preact/devtools',
-        'resend',
-      ],
+      // Injected by @astrojs/preact in dev only, so the scanner misses it. Found
+      // mid-request, it triggers a re-bundle that reloads workerd and breaks
+      // the first render.
+      include: ['preact/devtools'],
+      // Astro scans every src/**/*.ts for server deps, which reaches the
+      // build-time integrations in src/integrations/. Bundling these
+      // Node-only deps fails (fsevents.node), so dev never starts.
+      exclude: ['@playwright/test', 'sharp'],
     },
   },
 });
