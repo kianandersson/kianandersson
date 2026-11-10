@@ -7,7 +7,8 @@ import { LOCALES } from './locale';
  *
  * - `email` / `phone`: private contact details (the rest comes from site config).
  * - `minSkillLevel`: drop skills below this level from "all skills" (default: all).
- * - `allStackSkills` / `allDomainSkills`: print a role's full stack/domains list
+ * - `allStackSkills` / `allDomainSkills` / `allPracticeSkills`: print a role's
+ *   full stack/domains/practices list
  *   instead of the "+N more" preview.
  * - `profilePhoto`: include the hero profile photo on the CV (default: true; set
  *   `false` to leave it off).
@@ -32,6 +33,7 @@ const PrintOptionsSchema = z.object({
   minSkillLevel: z.coerce.number().int().min(1).max(5).optional(),
   allStackSkills: z.boolean().optional(),
   allDomainSkills: z.boolean().optional(),
+  allPracticeSkills: z.boolean().optional(),
   profilePhoto: z.boolean().optional(),
   heroTitle: z.string().optional(),
   heroTagline: z.string().optional(),

@@ -50,10 +50,26 @@
   gap: var(--space-xs);
 }
 
+/* The rows share one label column, sized to the longest label in the current
+   locale, so the chips line up across Stack, Domains and Practices. */
 .chipGroups {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-s);
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: var(--space-m);
+  row-gap: var(--space-s);
+}
+
+.chipGroups > * {
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+}
+
+/* Too narrow for a label column: the label sits above its chips instead, so
+   long chips never overflow. */
+@container (max-width: 480px) {
+  .chipGroups {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 @media print {

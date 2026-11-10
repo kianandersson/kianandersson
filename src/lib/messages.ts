@@ -7,6 +7,7 @@ type Messages = {
   experienceTitle: string;
   stackLabel: string;
   domainsLabel: string;
+  practicesLabel: string;
   readMore: string;
   readLess: string;
   moreItems: (count: number) => string;
@@ -29,6 +30,7 @@ export const MESSAGES: Record<Locale, Messages> = {
     experienceTitle: 'Experience',
     stackLabel: 'Stack',
     domainsLabel: 'Domains',
+    practicesLabel: 'Practices',
     readMore: 'Read more',
     readLess: 'Read less',
     moreItems: (count) => `+${count} more`,
@@ -49,6 +51,7 @@ export const MESSAGES: Record<Locale, Messages> = {
     experienceTitle: 'Erhvervserfaring',
     stackLabel: 'Stack',
     domainsLabel: 'Domæner',
+    practicesLabel: 'Praksis',
     readMore: 'Vis mere',
     readLess: 'Vis mindre',
     moreItems: (count) => `+${count} flere`,

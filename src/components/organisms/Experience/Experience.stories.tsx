@@ -12,6 +12,7 @@ const ENTRIES: ExperienceEntry[] = [
       'Led a team of four engineers on a design-system migration; cut JS shipped by 40% and Lighthouse Performance climbed to 99.',
     stack: ['TypeScript', 'React', 'Next.js', 'Vite', 'Vitest', 'Playwright'],
     domains: ['Design systems', 'Web performance', 'Accessibility'],
+    practices: ['Code review', 'Test automation'],
   },
   {
     id: 'b',
@@ -22,6 +23,7 @@ const ENTRIES: ExperienceEntry[] = [
       'Owned the public-facing booking flow end-to-end; introduced contract-tested integration tests and removed three flaky CI suites.',
     stack: ['TypeScript', 'React', 'Webpack', 'Node'],
     domains: ['Developer experience', 'Continuous delivery'],
+    practices: ['Contract testing'],
   },
 ];
 
@@ -49,9 +51,11 @@ export const Default: Story = {
       await expect(canvas.getByText(entry.period)).toBeInTheDocument();
       await expect(canvas.getByText(entry.description)).toBeInTheDocument();
     }
+    await expect(canvas.getByText('Code review')).toBeInTheDocument();
     for (const item of items) {
       await expect(within(item).getByText('Stack')).toBeInTheDocument();
       await expect(within(item).getByText('Domains')).toBeInTheDocument();
+      await expect(within(item).getByText('Practices')).toBeInTheDocument();
     }
   },
 };
@@ -71,6 +75,7 @@ const LONG_ENTRY: ExperienceEntry[] = [
     description: LONG_PARAGRAPHS,
     stack: ['TypeScript', 'Node', 'React', 'OAuth', 'OpenID Connect'],
     domains: ['Identity', 'Platform engineering', 'Web performance'],
+    practices: ['Risk management', 'Incident management'],
   },
 ];
 
@@ -103,7 +108,19 @@ export const Danish: Story = {
     ).toBeInTheDocument();
     await expect(canvas.getByText('Stack')).toBeInTheDocument();
     await expect(canvas.getByText('Domæner')).toBeInTheDocument();
+    await expect(canvas.getByText('Praksis')).toBeInTheDocument();
     await expect(canvas.getByText('Vis mere')).toBeInTheDocument();
+  },
+};
+
+// A role without practices renders no practices row.
+export const WithoutPractices: Story = {
+  args: { entries: [{ ...ENTRIES[1], practices: [] }] },
+  tags: ['!dev', '!autodocs'],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByText('Domains')).toBeInTheDocument();
+    await expect(canvas.queryByText('Practices')).not.toBeInTheDocument();
   },
 };
 

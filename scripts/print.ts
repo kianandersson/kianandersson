@@ -12,7 +12,7 @@
  * Usage:
  *   pnpm print --email me@example.com --phone "+45 12 34 56 78"
  *   pnpm print --email me@example.com --min-skill-level 3
- *   pnpm print --email me@example.com --all-stack-skills --all-method-skills
+ *   pnpm print --email me@example.com --all-stack-skills --all-domain-skills
  *   pnpm print --email me@example.com --hero-tagline "Custom CV intro"
  *   pnpm print --email me@example.com --key-skill "React.js" --key-skill "GraphQL"
  *   pnpm print --email me@example.com --locale da
@@ -23,8 +23,9 @@
  *          --min-skill-level <1-5>  Drop skills below this level from "all
  *                                   skills" (default: keep every skill)
  *          --all-stack-skills   Print each role's stack skills in full
- *          --all-method-skills  Print each role's methods skills in full
- *                               (both default to truncating like the web view)
+ *          --all-domain-skills  Print each role's domains in full
+ *          --all-practice-skills Print each role's practices in full
+ *                               (all default to truncating like the web view)
  *          --no-profile-photo   Leave the hero profile photo off the CV
  *                               (default: included)
  *          --hero-title <text>  Override the "Hi, I'm ..." heading, rendered
@@ -37,7 +38,8 @@
  *          --locale <en|da>     CV language (default: en). Danish swaps the UI
  *                               copy and any content with a `da` translation
  *          --options <file>     YAML or JSON with email/phone/minSkillLevel/
- *                               allStackSkills/allMethodSkills/profilePhoto/
+ *                               allStackSkills/allDomainSkills/allPracticeSkills/
+ *                               profilePhoto/
  *                               heroTitle/heroTagline/keySkills/locale
  *                               (CLI flags win)
  *          --output <file>      PDF path (default cv.pdf)
@@ -70,7 +72,8 @@ type Contact = Partial<Record<ContactField, string>>;
 type PrintOptions = Contact & {
   minSkillLevel?: number;
   allStackSkills?: boolean;
-  allMethodSkills?: boolean;
+  allDomainSkills?: boolean;
+  allPracticeSkills?: boolean;
   profilePhoto?: boolean;
   heroTitle?: string;
   heroTagline?: string;
@@ -90,7 +93,8 @@ async function main(): Promise<void> {
       phone: { type: 'string' },
       'min-skill-level': { type: 'string' },
       'all-stack-skills': { type: 'boolean' },
-      'all-method-skills': { type: 'boolean' },
+      'all-domain-skills': { type: 'boolean' },
+      'all-practice-skills': { type: 'boolean' },
       'no-profile-photo': { type: 'boolean' },
       'hero-title': { type: 'string' },
       'hero-tagline': { type: 'string' },
@@ -155,7 +159,8 @@ function collectPrintOptions(values: {
   phone?: string;
   'min-skill-level'?: string;
   'all-stack-skills'?: boolean;
-  'all-method-skills'?: boolean;
+  'all-domain-skills'?: boolean;
+  'all-practice-skills'?: boolean;
   'no-profile-photo'?: boolean;
   'hero-title'?: string;
   'hero-tagline'?: string;
@@ -198,8 +203,11 @@ function collectPrintOptions(values: {
   if ((values['all-stack-skills'] ?? fromFile.allStackSkills) === true) {
     merged.allStackSkills = true;
   }
-  if ((values['all-method-skills'] ?? fromFile.allMethodSkills) === true) {
-    merged.allMethodSkills = true;
+  if ((values['all-domain-skills'] ?? fromFile.allDomainSkills) === true) {
+    merged.allDomainSkills = true;
+  }
+  if ((values['all-practice-skills'] ?? fromFile.allPracticeSkills) === true) {
+    merged.allPracticeSkills = true;
   }
   // The photo is included by default; only emit the option to leave it off.
   // The CLI flag wins, then the file can opt out with `profilePhoto: false`.
@@ -270,7 +278,7 @@ function printUsage(): void {
       `Usage:\n` +
       `  pnpm print --email me@example.com --phone "+45 12 34 56 78"\n` +
       `  pnpm print --email me@example.com --min-skill-level 3\n` +
-      `  pnpm print --email me@example.com --all-stack-skills --all-method-skills\n` +
+      `  pnpm print --email me@example.com --all-stack-skills --all-domain-skills\n` +
       `  pnpm print --email me@example.com --hero-tagline "Custom CV intro"\n` +
       `  pnpm print --email me@example.com --key-skill "React.js" --key-skill "GraphQL"\n` +
       `  pnpm print --email me@example.com --locale da\n` +
@@ -280,8 +288,9 @@ function printUsage(): void {
       `  --min-skill-level <1-5> Drop skills below this level from "all skills"\n` +
       `                          (default: keep every skill)\n` +
       `  --all-stack-skills      Print each role's stack skills in full\n` +
-      `  --all-method-skills     Print each role's methods skills in full\n` +
-      `                          (both default to truncating like the web view)\n` +
+      `  --all-domain-skills     Print each role's domains in full\n` +
+      `  --all-practice-skills   Print each role's practices in full\n` +
+      `                          (all default to truncating like the web view)\n` +
       `  --no-profile-photo      Leave the hero profile photo off (default: included)\n` +
       `  --hero-title <text>     Override the "Hi, I'm ..." heading, without the\n` +
       `                          accent colour (default: standard greeting)\n` +
@@ -291,7 +300,8 @@ function printUsage(): void {
       `                          must match a visible skill\n` +
       `  --locale <en|da>        CV language (default: en)\n` +
       `  --options, -o <file>    YAML or JSON file with email/phone/minSkillLevel/\n` +
-      `                          allStackSkills/allMethodSkills/profilePhoto/heroTitle/\n` +
+      `                          allStackSkills/allDomainSkills/allPracticeSkills/\n` +
+      `                          profilePhoto/heroTitle/\n` +
       `                          heroTagline/keySkills/locale\n` +
       `                          (CLI flags win)\n` +
       `  --output <file>         PDF output path (default cv.pdf)\n`,

@@ -29,6 +29,12 @@ test.describe('Experience section', () => {
     }
   });
 
+  test('shows a practices group for roles that record practices', async ({ page }) => {
+    await page.goto('/');
+    const section = page.getByRole('region', { name: /Experience/i });
+    await expect(section.getByText('Practices', { exact: true }).first()).toBeVisible();
+  });
+
   test('does not horizontally scroll the page at 360px viewport', async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 800 });
     await page.goto('/');
