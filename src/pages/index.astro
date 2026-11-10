@@ -115,6 +115,7 @@ const experienceEntries = (await getCollection('experience')).sort(
 
 const STACK_LIMIT = 20;
 const DOMAINS_LIMIT = 20;
+const METHODS_LIMIT = 20;
 
 const experience = experienceEntries.map((entry) => {
   const translation = isDanish ? entry.data.da : undefined;
@@ -126,6 +127,7 @@ const experience = experienceEntries.map((entry) => {
     description: translation?.description ?? entry.data.description,
     stack: entry.data.technologies.slice(0, STACK_LIMIT),
     domains: (entry.data.concepts ?? []).slice(0, DOMAINS_LIMIT),
+    methods: (entry.data.practices ?? []).slice(0, METHODS_LIMIT),
   };
 });
 

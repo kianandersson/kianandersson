@@ -17,10 +17,11 @@ const DOMAINS_MAX_CHARS = 112;
 const DOMAINS_MIN_ITEMS = 3;
 
 // Print list ~604px, mono ~9px ≈ 112 chars/line; plain comma text (~2/item).
-// Budgets target ~1 line (stack) / ~2 lines (domains).
+// Budgets target ~1 line (stack) / ~2 lines (domains) / ~1.5 lines (methods).
 const PRINT_PER_ITEM_COST = 2;
 const PRINT_STACK_MAX_CHARS = 95;
 const PRINT_DOMAINS_MAX_CHARS = 200;
+const PRINT_METHODS_MAX_CHARS = 150;
 
 export type ExperienceEntry = {
   id: string;
@@ -30,6 +31,7 @@ export type ExperienceEntry = {
   description: string;
   stack: string[];
   domains: string[];
+  methods: string[];
 };
 
 type Props = {
@@ -99,6 +101,19 @@ export function Experience({
                     printPerItemCost={PRINT_PER_ITEM_COST}
                     variant="domains"
                     expand={allDomainSkills}
+                    locale={locale}
+                  />
+                )}
+                {entry.methods.length > 0 && (
+                  <ChipList
+                    label={messages.methodsLabel}
+                    items={entry.methods}
+                    maxChars={DOMAINS_MAX_CHARS}
+                    perItemCost={CHIP_PER_ITEM_COST}
+                    minItems={DOMAINS_MIN_ITEMS}
+                    printMaxChars={PRINT_METHODS_MAX_CHARS}
+                    printPerItemCost={PRINT_PER_ITEM_COST}
+                    variant="domains"
                     locale={locale}
                   />
                 )}

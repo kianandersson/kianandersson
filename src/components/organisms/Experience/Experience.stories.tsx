@@ -12,6 +12,7 @@ const ENTRIES: ExperienceEntry[] = [
       'Led a team of four engineers on a design-system migration; cut JS shipped by 40% and Lighthouse Performance climbed to 99.',
     stack: ['TypeScript', 'React', 'Next.js', 'Vite', 'Vitest', 'Playwright'],
     domains: ['Design systems', 'Web performance', 'Accessibility'],
+    methods: ['Code review', 'Test automation'],
   },
   {
     id: 'b',
@@ -22,6 +23,7 @@ const ENTRIES: ExperienceEntry[] = [
       'Owned the public-facing booking flow end-to-end; introduced contract-tested integration tests and removed three flaky CI suites.',
     stack: ['TypeScript', 'React', 'Webpack', 'Node'],
     domains: ['Developer experience', 'Continuous delivery'],
+    methods: ['Contract testing'],
   },
 ];
 
@@ -52,6 +54,7 @@ export const Default: Story = {
     for (const item of items) {
       await expect(within(item).getByText('Stack')).toBeInTheDocument();
       await expect(within(item).getByText('Domains')).toBeInTheDocument();
+      await expect(within(item).getByText('Methods')).toBeInTheDocument();
     }
   },
 };
@@ -71,6 +74,7 @@ const LONG_ENTRY: ExperienceEntry[] = [
     description: LONG_PARAGRAPHS,
     stack: ['TypeScript', 'Node', 'React', 'OAuth', 'OpenID Connect'],
     domains: ['Identity', 'Platform engineering', 'Web performance'],
+    methods: ['Risk management', 'Incident management'],
   },
 ];
 
@@ -103,6 +107,7 @@ export const Danish: Story = {
     ).toBeInTheDocument();
     await expect(canvas.getByText('Stack')).toBeInTheDocument();
     await expect(canvas.getByText('Domæner')).toBeInTheDocument();
+    await expect(canvas.getByText('Metoder')).toBeInTheDocument();
     await expect(canvas.getByText('Vis mere')).toBeInTheDocument();
   },
 };
