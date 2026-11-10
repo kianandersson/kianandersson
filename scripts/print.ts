@@ -52,6 +52,7 @@ import { parseArgs } from 'node:util';
 import { chromium } from '@playwright/test';
 import { build, preview } from 'astro';
 import yaml from 'js-yaml';
+import { LOCALES, type Locale } from '../src/lib/locale.ts';
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const CONTACT_FIELDS = ['email', 'phone'] as const;
@@ -74,7 +75,7 @@ type PrintOptions = Contact & {
   heroTitle?: string;
   heroTagline?: string;
   keySkills?: string[];
-  locale?: string;
+  locale?: Locale;
 };
 
 // Build inside the project root (not the OS temp dir): the Cloudflare adapter
@@ -186,10 +187,9 @@ function collectPrintOptions(values: {
   if (Array.isArray(keySkills)) {
     merged.keySkills = keySkills.map((name) => String(name).trim());
   }
-  // Validated against the supported locales at build time.
-  const locale = values.locale ?? fromFile.locale;
-  if (typeof locale === 'string' && locale.trim() !== '') {
-    merged.locale = locale.trim();
+  const locale = parseLocale(values.locale ?? fromFile.locale);
+  if (locale !== undefined) {
+    merged.locale = locale;
   }
   const minSkillLevel = parseMinSkillLevel(values['min-skill-level'] ?? fromFile.minSkillLevel);
   if (minSkillLevel !== undefined) {
@@ -220,6 +220,20 @@ function parseMinSkillLevel(value: unknown): number | undefined {
     throw new Error(`--min-skill-level must be an integer from 1 to 5 (got ${String(value)})`);
   }
   return level;
+}
+
+/**
+ * Validates the locale up front. Left to the build, a typo such as `DA` only
+ * logs a validation error, and the PDF captures an error page instead of the CV.
+ */
+function parseLocale(value: unknown): Locale | undefined {
+  if (value === undefined || value === null || value === '') return undefined;
+  const locale = String(value).trim();
+  const match = LOCALES.find((supported) => supported === locale);
+  if (!match) {
+    throw new Error(`--locale must be one of ${LOCALES.join(', ')} (got ${String(value)})`);
+  }
+  return match;
 }
 
 /**

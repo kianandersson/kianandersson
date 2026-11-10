@@ -34,7 +34,7 @@ type ExperienceFile = {
   concepts?: string[];
   practices?: string[];
   organizational?: string[];
-  da?: { role?: string; meta?: string; description?: string };
+  da?: { meta?: string; description?: string };
 };
 
 const REPO_ROOT = process.cwd();

@@ -120,7 +120,7 @@ const experience = experienceEntries.map((entry) => {
   const translation = isDanish ? entry.data.da : undefined;
   return {
     id: entry.id,
-    role: translation?.role ?? entry.data.role,
+    role: entry.data.role,
     meta: translation?.meta ?? entry.data.meta,
     period: formatPeriod(entry.data.start, entry.data.end, locale),
     description: translation?.description ?? entry.data.description,

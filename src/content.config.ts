@@ -88,7 +88,6 @@ const experience = defineCollection({
     end: z.coerce.date().optional(),
     da: z
       .object({
-        role: z.string().min(1),
         meta: z.string().min(1),
         description: z.string().min(1),
       })
