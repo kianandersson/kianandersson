@@ -50,8 +50,10 @@ const {
       <ContactContainer
         recipientName={hero.recipientName}
         availableFrom={hero.availableFrom}
-        client:load
-      />
+        client:only="preact"
+      >
+        <div slot="fallback" class="contact-placeholder" aria-hidden="true"></div>
+      </ContactContainer>
     </Hero>
   </section>
   {
@@ -91,7 +93,18 @@ const {
     gap: 72px;
   }
 
+  /* The contact island renders in the browser only, so its availability
+     reflects the visitor's date rather than the build date. The placeholder
+     holds the trigger row's height until it mounts, so nothing shifts. */
+  .contact-placeholder {
+    height: 44px;
+  }
+
   @media print {
+    .contact-placeholder {
+      display: none;
+    }
+
     main {
       /* @page margin governs the edges; the gutter keeps the right-aligned
          meter dots from clipping at the printable edge. */

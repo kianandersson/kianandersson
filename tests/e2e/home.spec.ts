@@ -18,13 +18,14 @@ test.describe('Home page', () => {
   test('opens the inline contact form when the CTA is clicked', async ({ page }) => {
     await page.goto('/');
 
-    // The accessible name flips between "Get in touch …" and "Close contact form"
-    // as the form toggles open, so anchor on the aria-controls *presence* instead
-    // of its value (the id is generated per-render via useId).
-    const cta = page.locator('button[aria-controls]').first();
-    await cta.click();
+    // The contact island renders in the browser only, so wait for the CTA by
+    // name. Its accessible name flips to "Close contact form" once it is open.
+    await page.getByRole('button', { name: /get in touch/i }).click();
 
-    await expect(cta).toHaveAttribute('aria-expanded', 'true');
+    await expect(page.getByRole('button', { name: /close contact form/i })).toHaveAttribute(
+      'aria-expanded',
+      'true',
+    );
     await expect(page.getByRole('form', { name: /contact/i })).toBeVisible();
     await expect(page.getByLabel('From')).toBeVisible();
     await expect(page.getByRole('button', { name: /send message/i })).toBeDisabled();
