@@ -20,6 +20,11 @@ const SiteConfigSchema = z.object({
       level: z.enum(LANGUAGE_LEVELS),
     }),
   ),
+  /** Danish copy for the print CV (`locale: da`). */
+  da: z.object({
+    location: z.string(),
+    tagline: z.string(),
+  }),
 });
 
 type SiteConfigInput = z.infer<typeof SiteConfigSchema>;
@@ -43,6 +48,11 @@ const parsed = SiteConfigSchema.parse({
     { name: 'Danish', level: 'Native' },
     { name: 'English', level: 'Fluent' },
   ],
+  da: {
+    location: 'Danmark',
+    tagline:
+      'Senior full-stack engineer og tech lead med over 15 års erfaring på tværs af hele stacken. Jeg bygger designsystemer og tilgængelige brugerflader, distribuerede services og de udviklingsteams, der står bag dem.',
+  },
 });
 
 const fullName = `${parsed.firstName} ${parsed.lastName}`;

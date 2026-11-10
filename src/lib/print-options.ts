@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { LOCALES } from './locale';
 
 /**
  * Build-time print options, injected via `PRINT_OPTIONS` (JSON) only for the
@@ -21,6 +22,9 @@ import { z } from 'zod';
  *   the `featured` list in skills.yaml: a full, ordered replacement, and every
  *   name must match a visible skill. Omitted keeps the default reel; an empty
  *   list hides the section entirely.
+ * - `locale`: the CV language (default: `en`). `da` swaps the printed UI copy
+ *   and any content carrying a `da` translation; untranslated content and skill
+ *   names stay English.
  */
 const PrintOptionsSchema = z.object({
   email: z.email().optional(),
@@ -32,6 +36,7 @@ const PrintOptionsSchema = z.object({
   heroTitle: z.string().optional(),
   heroTagline: z.string().optional(),
   keySkills: z.array(z.string().min(1)).optional(),
+  locale: z.enum(LOCALES).optional(),
 });
 
 export type PrintOptions = z.infer<typeof PrintOptionsSchema>;

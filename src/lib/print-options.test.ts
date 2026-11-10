@@ -103,4 +103,12 @@ describe('parsePrintOptions', () => {
     expect(() => parsePrintOptions('{"keySkills":[1,2]}')).toThrow();
     expect(() => parsePrintOptions('{"keySkills":["React.js",""]}')).toThrow();
   });
+
+  it('parses a print locale', () => {
+    expect(parsePrintOptions('{"locale":"da"}')).toEqual({ locale: 'da' });
+  });
+
+  it('throws on an unsupported locale', () => {
+    expect(() => parsePrintOptions('{"locale":"de"}')).toThrow();
+  });
 });

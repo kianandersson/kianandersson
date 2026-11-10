@@ -49,3 +49,16 @@ export const EmptyBehavior: Story = {
     await expect(canvas.queryAllByRole('listitem')).toHaveLength(0);
   },
 };
+
+export const Danish: Story = {
+  args: { locale: 'da' },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(
+      canvas.getByRole('heading', { level: 2, name: /Nøglekompetencer/i }),
+    ).toBeInTheDocument();
+    await expect(canvas.getByRole('link', { name: /Alle kompetencer/i })).toBeInTheDocument();
+    await expect(canvas.getAllByText('Ekspert').length).toBeGreaterThan(0);
+    await expect(canvas.getByText('+7 år')).toBeInTheDocument();
+  },
+};

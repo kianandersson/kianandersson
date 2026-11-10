@@ -1,4 +1,6 @@
 import { useState } from 'preact/hooks';
+import type { Locale } from '../../../lib/locale';
+import { MESSAGES } from '../../../lib/messages';
 import type { SkillLevel } from '../../../lib/skill';
 import { Accordion } from '../../molecules/Accordion';
 import { SectionHeader } from '../../molecules/SectionHeader';
@@ -19,14 +21,15 @@ export type SkillGroup = {
 
 type Props = {
   groups: SkillGroup[];
+  locale?: Locale;
 };
 
-export function SkillGroups({ groups }: Props) {
+export function SkillGroups({ groups, locale = 'en' }: Props) {
   const [openGroup, setOpenGroup] = useState<string | null>(null);
 
   return (
     <div className={styles.root}>
-      <SectionHeader title="Skills" id="skills-heading" />
+      <SectionHeader title={MESSAGES[locale].skillsTitle} id="skills-heading" />
       <div className={styles.groups}>
         {groups.map((group) => (
           <Accordion
@@ -39,7 +42,12 @@ export function SkillGroups({ groups }: Props) {
             <ul className={styles.list}>
               {group.skills.map((skill) => (
                 <li key={skill.id} className={styles.item}>
-                  <SkillRow name={skill.name} level={skill.level} years={skill.years} />
+                  <SkillRow
+                    name={skill.name}
+                    level={skill.level}
+                    years={skill.years}
+                    locale={locale}
+                  />
                 </li>
               ))}
             </ul>

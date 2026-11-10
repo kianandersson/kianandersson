@@ -15,6 +15,7 @@
  *   pnpm print --email me@example.com --all-stack-skills --all-method-skills
  *   pnpm print --email me@example.com --hero-tagline "Custom CV intro"
  *   pnpm print --email me@example.com --key-skill "React.js" --key-skill "GraphQL"
+ *   pnpm print --email me@example.com --locale da
  *   pnpm print --options ./my-details.yaml
  *   pnpm print            # uses print.options.yaml (or .json) if present
  *
@@ -33,9 +34,12 @@
  *          --key-skill <name>   Override a "Key skills" entry; repeat to build
  *                               the full ordered reel (default: the featured
  *                               list). Each name must match a visible skill.
+ *          --locale <en|da>     CV language (default: en). Danish swaps the UI
+ *                               copy and any content with a `da` translation
  *          --options <file>     YAML or JSON with email/phone/minSkillLevel/
  *                               allStackSkills/allMethodSkills/profilePhoto/
- *                               heroTitle/heroTagline/keySkills (CLI flags win)
+ *                               heroTitle/heroTagline/keySkills/locale
+ *                               (CLI flags win)
  *          --output <file>      PDF path (default cv.pdf)
  */
 import { existsSync, readFileSync } from 'node:fs';
@@ -48,6 +52,7 @@ import { parseArgs } from 'node:util';
 import { chromium } from '@playwright/test';
 import { build, preview } from 'astro';
 import yaml from 'js-yaml';
+import { LOCALES, type Locale } from '../src/lib/locale.ts';
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const CONTACT_FIELDS = ['email', 'phone'] as const;
@@ -70,6 +75,7 @@ type PrintOptions = Contact & {
   heroTitle?: string;
   heroTagline?: string;
   keySkills?: string[];
+  locale?: Locale;
 };
 
 // Build inside the project root (not the OS temp dir): the Cloudflare adapter
@@ -89,6 +95,7 @@ async function main(): Promise<void> {
       'hero-title': { type: 'string' },
       'hero-tagline': { type: 'string' },
       'key-skill': { type: 'string', multiple: true },
+      locale: { type: 'string' },
       options: { type: 'string', short: 'o' },
       output: { type: 'string' },
       help: { type: 'boolean', short: 'h' },
@@ -153,6 +160,7 @@ function collectPrintOptions(values: {
   'hero-title'?: string;
   'hero-tagline'?: string;
   'key-skill'?: string[];
+  locale?: string;
   options?: string;
 }): PrintOptions {
   const fromFile = readOptionsFile(values.options);
@@ -178,6 +186,10 @@ function collectPrintOptions(values: {
   const keySkills = values['key-skill'] ?? fromFile.keySkills;
   if (Array.isArray(keySkills)) {
     merged.keySkills = keySkills.map((name) => String(name).trim());
+  }
+  const locale = parseLocale(values.locale ?? fromFile.locale);
+  if (locale !== undefined) {
+    merged.locale = locale;
   }
   const minSkillLevel = parseMinSkillLevel(values['min-skill-level'] ?? fromFile.minSkillLevel);
   if (minSkillLevel !== undefined) {
@@ -208,6 +220,20 @@ function parseMinSkillLevel(value: unknown): number | undefined {
     throw new Error(`--min-skill-level must be an integer from 1 to 5 (got ${String(value)})`);
   }
   return level;
+}
+
+/**
+ * Validates the locale up front. Left to the build, a typo such as `DA` only
+ * logs a validation error, and the PDF captures an error page instead of the CV.
+ */
+function parseLocale(value: unknown): Locale | undefined {
+  if (value === undefined || value === null || value === '') return undefined;
+  const locale = String(value).trim();
+  const match = LOCALES.find((supported) => supported === locale);
+  if (!match) {
+    throw new Error(`--locale must be one of ${LOCALES.join(', ')} (got ${String(value)})`);
+  }
+  return match;
 }
 
 /**
@@ -247,6 +273,7 @@ function printUsage(): void {
       `  pnpm print --email me@example.com --all-stack-skills --all-method-skills\n` +
       `  pnpm print --email me@example.com --hero-tagline "Custom CV intro"\n` +
       `  pnpm print --email me@example.com --key-skill "React.js" --key-skill "GraphQL"\n` +
+      `  pnpm print --email me@example.com --locale da\n` +
       `  pnpm print --options ./my-details.yaml\n` +
       `  pnpm print            # uses print.options.yaml (or .json) if present\n\n` +
       `Private options: ${CONTACT_FIELDS.map((f) => `--${f}`).join(' ')}\n` +
@@ -262,9 +289,10 @@ function printUsage(): void {
       `  --key-skill <name>      Override a "Key skills" entry; repeat for the full\n` +
       `                          ordered reel (default: the featured list). Each name\n` +
       `                          must match a visible skill\n` +
+      `  --locale <en|da>        CV language (default: en)\n` +
       `  --options, -o <file>    YAML or JSON file with email/phone/minSkillLevel/\n` +
       `                          allStackSkills/allMethodSkills/profilePhoto/heroTitle/\n` +
-      `                          heroTagline/keySkills\n` +
+      `                          heroTagline/keySkills/locale\n` +
       `                          (CLI flags win)\n` +
       `  --output <file>         PDF output path (default cv.pdf)\n`,
   );

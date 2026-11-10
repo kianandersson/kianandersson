@@ -22,6 +22,29 @@ description: >-
   from a hard CDN cache that kept it available even if the systems behind
   it went down. The decoupling proved durable, and the underlying CMS was
   later replaced without rebuilding the frontend.
+da:
+  meta: DR
+  description: >-
+    En ældre Drupal-monolit styrede det redaktionelle workflow og renderede
+    frontenden på dr.dk, et af Danmarks største nyhedssites, og gjorde sitet
+    langsomt og svært at videreudvikle. Løsningen var en afkoblet
+    headless-arkitektur med en frontend, der kunne udvikles uafhængigt af
+    systemerne bagved, og en content service, der forsynede den med
+    struktureret indhold.
+
+
+    Jeg havde ansvaret for content servicens arkitektur på
+    applikationsniveau og byggede dens kerne. Jeg designede den eventdrevne
+    pipeline, REST-API'et og cachingstrategien, og jeg skrev
+    indekseringsmotoren og den parser, der omsatte Drupals rå HTML til en
+    komponentorienteret model, som frontenden kunne bruge direkte.
+
+
+    Det gjorde dr.dk hurtigere og mere robust. Næsten én million artikler
+    blev serveret fra en hård CDN-cache, der holdt sitet oppe, selv hvis
+    systemerne bagved gik ned. Afkoblingen viste sig holdbar, og det
+    underliggende CMS blev senere udskiftet, uden at frontenden skulle
+    bygges om.
 technologies:
   - PHP
   - Symfony

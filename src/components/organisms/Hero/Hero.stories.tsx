@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/preact-vite';
+import { expect, within } from 'storybook/test';
 import { Hero } from './Hero';
 
 const meta: Meta<typeof Hero> = {
@@ -36,5 +37,16 @@ export const MultipleParagraphs: Story = {
   args: {
     tagline:
       'Senior frontend engineer who picks the right tool for the job.\n\nCurrently freelance and looking for the next interesting problem.',
+  },
+};
+
+// The Danish print CV greets in Danish; the name keeps its accent colour.
+export const Danish: Story = {
+  args: { locale: 'da' },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(
+      canvas.getByRole('heading', { level: 1, name: 'Hej, jeg hedder Kian.' }),
+    ).toBeInTheDocument();
   },
 };

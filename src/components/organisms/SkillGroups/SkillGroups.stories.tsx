@@ -75,6 +75,19 @@ export const SingleOpenBehavior: Story = {
   },
 };
 
+export const Danish: Story = {
+  args: { locale: 'da' },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(
+      canvas.getByRole('heading', { level: 2, name: /^Kompetencer$/i }),
+    ).toBeInTheDocument();
+    await userEvent.click(canvas.getByRole('button', { name: /Languages/i }));
+    await expect(canvas.getByText('Godt kendskab')).toBeInTheDocument();
+    await expect(canvas.getByText('+10 år')).toBeInTheDocument();
+  },
+};
+
 export const EmptyBehavior: Story = {
   args: { groups: [] },
   tags: ['!dev', '!autodocs'],

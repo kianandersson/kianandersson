@@ -34,6 +34,19 @@ export const Default: Story = {
   },
 };
 
+export const Danish: Story = {
+  args: { locale: 'da' },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole('heading', { level: 2, name: /Øvrigt/i })).toBeInTheDocument();
+    await expect(canvas.getByText('Sprog')).toBeInTheDocument();
+    await expect(canvas.getByText('Dansk')).toBeInTheDocument();
+    await expect(canvas.getByText('Modersmål')).toBeInTheDocument();
+    await expect(canvas.getByText('Engelsk')).toBeInTheDocument();
+    await expect(canvas.getByText('Flydende')).toBeInTheDocument();
+  },
+};
+
 export const EmptyBehavior: Story = {
   args: { languages: [] },
   tags: ['!dev', '!autodocs'],

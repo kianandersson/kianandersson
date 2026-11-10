@@ -19,6 +19,26 @@ description: >-
 
   The platform went live with paying users and delivered livestreamed concerts
   for its first artists, taking it from nothing to revenue within months.
+da:
+  description: >-
+    En musikstartup i en tidlig fase ville bringe fans tættere på musikerne
+    med en platform bag betalingsmur, hvor de fik adgang til livestreamede
+    koncerter, uudgivne numre og personligt indhold. Intet var bygget endnu,
+    og platformen skulle hurtigt ud til betalende kunder.
+
+
+    Som eneste udvikler stod jeg for det tekniske design og byggede
+    produktet. Jeg modellerede domænet omkring kunstnere, fans og betalt
+    indhold og byggede adgangskontrollen bag betalingsmuren. Jeg integrerede
+    en hostet betalingsplatform og en tredjepartstjeneste til livestreams,
+    så koncerter og eksklusivt indhold kun var tilgængeligt for betalende
+    brugere. For hurtigt at skabe omsætning skræddersyede jeg hver kunstners
+    univers frem for at bygge en generisk platform.
+
+
+    Platformen gik i luften med betalende brugere og livestreamede koncerter
+    med de første kunstnere. På få måneder var virksomheden gået fra nul til
+    omsætning.
 technologies:
   - PHP
   - Laravel

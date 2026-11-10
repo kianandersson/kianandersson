@@ -1,5 +1,7 @@
 import { useCallback, useState } from 'preact/hooks';
 import { sliceList } from '../../../lib/chip-list';
+import type { Locale } from '../../../lib/locale';
+import { MESSAGES } from '../../../lib/messages';
 import { Chip, type ChipVariant } from '../../atoms/Chip';
 import { TextLink } from '../../atoms/TextLink';
 import styles from './ChipList.module.css';
@@ -14,6 +16,7 @@ type Props = {
   printMaxChars?: number;
   printPerItemCost?: number;
   expand?: boolean;
+  locale?: Locale;
 };
 
 // Leading non-breaking space (with nowrap) keeps "+N more" off its own line.
@@ -29,7 +32,9 @@ export function ChipList({
   printMaxChars,
   printPerItemCost,
   expand = false,
+  locale = 'en',
 }: Props) {
+  const messages = MESSAGES[locale];
   const [isOpen, setOpen] = useState(false);
   const toggle = useCallback(() => setOpen((prev) => !prev), []);
 
@@ -62,14 +67,16 @@ export function ChipList({
         )}
         {hasMore && (
           <TextLink type="button" onClick={toggle} aria-expanded={isOpen}>
-            {isOpen ? 'Show less' : `+${hiddenCount} more`}
+            {isOpen ? messages.showLess : messages.moreItems(hiddenCount)}
           </TextLink>
         )}
       </div>
       <p className={styles.printList} data-variant={variant} aria-hidden="true">
         {printItems.join(', ')}
         {printHiddenCount > 0 && (
-          <span className={styles.printMore}>{`${MORE_PREFIX}+${printHiddenCount} more`}</span>
+          <span
+            className={styles.printMore}
+          >{`${MORE_PREFIX}${messages.moreItems(printHiddenCount)}`}</span>
         )}
       </p>
     </div>

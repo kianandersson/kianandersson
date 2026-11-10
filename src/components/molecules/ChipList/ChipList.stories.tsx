@@ -77,3 +77,22 @@ export const Domains: Story = {
     items: ['Design systems', 'Web performance', 'Accessibility', 'Developer experience'],
   },
 };
+
+// The Danish print CV: the overflow toggle follows the locale.
+export const Danish: Story = {
+  args: { locale: 'da' },
+  tags: ['!dev', '!autodocs'],
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    const { hiddenCount } = sliceList(args.items as string[], {
+      maxChars: args.maxChars as number,
+      minItems: args.minItems as number | undefined,
+    });
+
+    const toggle = canvas.getByRole('button');
+    await expect(toggle).toHaveAccessibleName(new RegExp(`${hiddenCount} flere`, 'i'));
+
+    await userEvent.click(toggle);
+    await expect(canvas.getByRole('button', { name: /vis færre/i })).toBeInTheDocument();
+  },
+};
