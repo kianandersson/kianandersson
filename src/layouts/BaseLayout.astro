@@ -17,7 +17,7 @@ interface Props {
 
 const {
   title = siteConfig.defaultTitle,
-  description = `${siteConfig.fullName}, ${siteConfig.role} based in ${siteConfig.location}.`,
+  description = siteConfig.description,
   jsonLd,
   showPrint = true,
   lang = 'en',

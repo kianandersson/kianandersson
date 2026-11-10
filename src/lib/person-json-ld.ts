@@ -95,7 +95,7 @@ export function buildPersonJsonLd(
       : undefined,
     hasOccupation: hasOccupation.length ? hasOccupation : undefined,
     knowsAbout: skills.length
-      ? skills.flatMap((skill) => [skill.name, ...(skill.children ?? [])])
+      ? [...new Set(skills.flatMap((skill) => [skill.name, ...(skill.children ?? [])]))]
       : undefined,
   };
 }

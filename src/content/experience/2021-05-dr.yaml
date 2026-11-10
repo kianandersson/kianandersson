@@ -3,106 +3,98 @@ meta: Danish Broadcasting Corporation
 start: 2021-05-01
 end: 2022-05-31
 description: >-
-  The publishing platform behind dr.dk, one of Denmark's largest news sites,
-  was spread across too many applications on costly, ageing hosting. The CMS
-  and API teams were brought together to modernise it, and as tech lead of the
-  merged team, I led the transformation.
+  The publishing platform behind dr.dk was spread across too many applications
+  on costly, ageing hosting. The CMS and API teams were brought together to
+  modernise it, and as tech lead of the merged team, I led the transformation.
 
 
   I forged two teams into one, with shared culture, a shared codebase, and
   cross-system competence. Working with the enterprise architects, I set the
   technical direction and designed a content aggregation service, a
   system-agnostic, event-driven API that unified dr.dk's content behind a
-  single contract, and took it into production. In parallel I modernised the team's foundation, leading its
-  retraining on .NET, migrating it onto a new in-house Kubernetes platform, and
-  consolidating the application portfolio into a lean core.
+  single contract, and took it into production. In parallel I modernised the
+  team's foundation, leading its retraining on .NET, migrating it onto a new
+  in-house Kubernetes platform, and consolidating the application portfolio
+  into a lean core. I also represented the team in DR's architecture forums,
+  aligning cross-cutting efforts across teams.
 
 
   The result was a leaner, more cloud-mature platform, with fewer applications
-  to run, modern infrastructure replacing costly hosting, and a more agile and
-  scalable foundation to build on.
+  to run and modern infrastructure replacing costly hosting.
 da:
   meta: DR
   description: >-
-    Publiceringsplatformen bag dr.dk, et af Danmarks største nyhedssites,
-    var spredt over for mange applikationer på dyr og forældet hosting. CMS-
-    og API-teamene blev lagt sammen for at modernisere den, og som tech lead
-    for det samlede team stod jeg i spidsen for transformationen.
+    Publiceringsplatformen bag dr.dk var spredt over for mange applikationer
+    på dyr og forældet hosting. CMS- og API-teamene blev lagt sammen for at
+    modernisere den, og som tech lead for det samlede team stod jeg i spidsen
+    for transformationen.
 
 
-    Jeg smeltede de to teams sammen til ét med fælles kultur, fælles
+    Jeg fik de to teams til at fungere som ét team med fælles kultur, fælles
     kodebase og kompetencer på tværs af systemerne. Sammen med
-    enterprise-arkitekterne satte jeg den tekniske retning. Jeg designede og
-    idriftsatte en content aggregation service: et systemagnostisk,
-    eventdrevet API, der samlede dr.dk's indhold bag én kontrakt. Samtidig
-    moderniserede jeg teamets tekniske grundlag. Jeg ledte omskolingen til
-    .NET, flyttede driften til en ny intern Kubernetes-platform og
-    konsoliderede applikationsporteføljen til en slank kerne.
+    enterprise-arkitekterne satte jeg den tekniske retning og designede og
+    idriftsatte en systemagnostisk, eventdrevet content aggregation service,
+    der samlede dr.dk's indhold bag én kontrakt. Samtidig moderniserede jeg
+    teamets tekniske grundlag. Jeg ledede omskolingen til .NET, flyttede
+    driften til en ny intern Kubernetes-platform og konsoliderede
+    applikationsporteføljen til en slank kerne. Jeg repræsenterede også teamet
+    i DR's arkitekturfora og koordinerede tværgående indsatser.
 
 
-    Resultatet blev en mere cloud-moden platform med færre applikationer at
-    drive, moderne infrastruktur i stedet for dyr hosting og et mere
-    fleksibelt og skalerbart grundlag at bygge videre på.
+    Resultatet blev en slankere og mere cloud-moden platform med færre
+    applikationer at drive og moderne infrastruktur i stedet for dyr hosting.
 technologies:
   - PHP
   - Symfony
-  - Laravel
   - Kubernetes
   - Google Cloud Platform
-  - Docker
   - Kong
+  - Auth0
   - REST
   - Open API
-  - JSON:API
+  - Docker
   - MongoDB
   - Redis
-  - SQL
   - OAuth
   - OpenID Connect
   - .NET
   - C#
-  - Auth0
+  - Laravel
+  - SQL
+  - JSON:API
   - CircleCI
   - Nginx
   - Elasticsearch
 concepts:
-  - Software Architecture
-  - Microservices Architecture
+  - Solution Architecture
+  - Legacy Modernization
   - Event-Driven Architecture
-  - Domain-Driven Design
   - API Design
+  - Microservices Architecture
   - Distributed Systems
+  - Domain-Driven Design
+  - API Gateway
+  - Identity & Access Management
   - Scalability
   - High Availability
-  - API Gateway
-  - Solution Architecture
-  - System Architecture
   - Database Modeling
   - Caching Strategies
   - Observability
   - Authentication
   - Authorization
-  - Identity & Access Management
   - Single Sign-On
-  - Federated Identity
-  - Session Management
   - Secrets Management
   - Rate Limiting
 practices:
-  - Behavior-Driven Development
-  - Continuous Delivery
+  - Architecture Documentation
   - Code Review
+  - Continuous Delivery
+  - DevOps
   - Test Automation
   - Test-Driven Development
-  - Continuous Integration
-  - Continuous Deployment
-  - Unit Testing
-  - Integration Testing
-  - End-to-End Testing
-  - Agile Development
-  - DevOps
+  - Behavior-Driven Development
   - Monitoring
-  - Technical Writing
+  - Agile Development
 organizational:
   - Technical Hiring
   - Engineering Management

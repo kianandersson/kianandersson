@@ -5,17 +5,17 @@ end: 2026-05-31
 description: >-
   When login became a strategic cornerstone, the SaaS identity provider
   couldn't scale affordably or meet the performance, UX, and protocol
-  requirements. I analysed the requirements and recommended an in-house
-  platform, and I led the transformation.
+  requirements. I analysed the requirements, built the business case and
+  roadmap for an in-house platform, and led the transformation.
 
 
   I built the platform and the six-person team behind it from scratch. I set
   the technical direction, designed the architecture, and implemented the
-  foundation as an OAuth and OIDC server in Node.js with an accessible React
-  interface built on an atomic-design component library, GDPR compliance, and
-  high security standards. As the platform matured, my focus shifted toward
-  mentoring and reviewing as the team took ownership, though I stayed hands-on
-  for the hardest and most time-critical issues.
+  foundation as an OpenID Connect server with an accessible interface. I owned
+  the security risk assessment and DPIA and led the hardening against real
+  attacks. As the platform matured, my focus shifted toward mentoring and
+  reviewing as the team took ownership, though I stayed hands-on for the
+  hardest and most time-critical issues.
 
 
   The platform scaled to millions of users, with up to 500,000 logins during
@@ -27,17 +27,18 @@ da:
   description: >-
     Da login blev en strategisk hjørnesten, kunne SaaS-identitetsudbyderen
     hverken skalere til en fornuftig pris eller leve op til kravene til
-    performance, UX og protokoller. Jeg analyserede kravene, anbefalede en
-    egenudviklet platform og stod i spidsen for transformationen.
+    performance, UX og protokoller. Jeg analyserede kravene, lavede business
+    case og roadmap for en egenudviklet platform og stod i spidsen for
+    transformationen.
 
 
-    Jeg byggede både platformen og det seksmandsstærke team bag den op fra
-    bunden. Jeg satte den tekniske retning, designede arkitekturen og
-    byggede fundamentet: en OAuth- og OIDC-server i Node.js og en
-    tilgængelig React-brugerflade på et atomic design-komponentbibliotek med
-    GDPR-compliance og høje sikkerhedskrav. Efterhånden som teamet tog
-    ejerskab, skiftede mit fokus til mentoring og reviews, men jeg var
-    fortsat hands-on på de sværeste og mest tidskritiske opgaver.
+    Jeg byggede platformen og det seksmandsstærke team op fra bunden. Jeg
+    satte den tekniske retning, designede arkitekturen og byggede fundamentet
+    som en OpenID Connect-server med en tilgængelig brugerflade. Jeg stod for
+    sikkerhedsrisikovurdering og DPIA og ledede hærdningen mod reelle angreb.
+    Efterhånden som teamet tog ejerskab, skiftede mit fokus til mentoring og
+    reviews, men jeg var fortsat hands-on på de sværeste og mest tidskritiske
+    opgaver.
 
 
     Platformen skalerede til millioner af brugere med op til 500.000 logins
@@ -46,16 +47,16 @@ da:
     migreret fra leverandøren uden nedetid.
 technologies:
   - TypeScript
-  - React.js
   - Node.js
-  - Next.js
   - OAuth
   - OpenID Connect
-  - GraphQL
-  - Storybook
-  - Kubernetes
+  - React.js
   - MongoDB
   - Redis
+  - Kubernetes
+  - GraphQL
+  - Next.js
+  - Storybook
   - Docker
   - Google Cloud Platform
   - REST
@@ -85,48 +86,40 @@ technologies:
   - Nginx
   - Elasticsearch
 concepts:
-  - Authentication
   - Identity & Access Management
-  - Software Architecture
-  - Authorization
   - Information Security
+  - Solution Architecture
+  - Authentication
+  - Authorization
   - Distributed Systems
   - High Availability
+  - Rate Limiting
   - Design Systems
-  - Atomic Design
-  - Component Libraries
-  - Single Sign-On
   - API Design
+  - Single Sign-On
   - Observability
   - Domain-Driven Design
-  - Federated Identity
-  - Multi-Factor Authentication
   - Service Level Objectives
   - Database Modeling
   - Data Migration
-  - Rate Limiting
   - Server-Side Rendering
   - Caching Strategies
   - Secrets Management
-  - GraphQL Schema Design
-  - Cryptography
-  - Session Management
-  - Distributed Tracing
   - API Gateway
-  - Solution Architecture
-  - System Architecture
   - Customer Data Platform
 practices:
-  - Site Reliability Engineering
+  - Architecture Documentation
+  - Vendor Evaluation
+  - Risk Management
   - GDPR
   - Incident Management
-  - Web Performance
-  - Accessibility
-  - Internationalization
-  - Compliance
-  - Risk Management
   - Vulnerability Management
   - OWASP
+  - Compliance
+  - Site Reliability Engineering
+  - Accessibility
+  - Web Performance
+  - Internationalization
   - Responsive Web Design
   - Test Automation
   - Performance Testing
@@ -138,7 +131,6 @@ practices:
   - Monitoring
   - Event Tracking
   - Behavioral Analytics
-  - Technical Writing
 organizational:
   - Engineering Management
   - Technical Leadership

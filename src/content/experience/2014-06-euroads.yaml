@@ -40,15 +40,14 @@ da:
 
 
     For første gang kunne teamet se, hvordan hver kampagne klarede sig, og
-    handle samme dag. En håndfuld mennesker kunne nu køre langt flere
-    kampagner end før. Dengang fandtes der intet på markedet, der kunne det
+    handle samme dag. En håndfuld mennesker kørte nu langt flere kampagner,
+    end de kunne manuelt. Dengang fandtes der intet på markedet, der kunne det
     samme.
 technologies:
   - PHP
   - JavaScript
   - SQL
   - Amazon Web Services
-  - CSS
   - SASS
   - HTML
   - REST

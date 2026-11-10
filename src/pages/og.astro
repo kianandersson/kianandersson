@@ -15,10 +15,13 @@ import '../styles/tokens.css';
 // system or stored preference — this page carries its own theme context.
 const theme = 'dark';
 
-// Same source the Hero "Key skills" block draws from.
+// Same source the Hero "Key skills" block draws from. The fixed-size card fits
+// two rows of chips, so it shows the first four.
+const OG_SKILL_LIMIT = 4;
 const skills = (await getCollection('keySkills'))
   .sort((a, b) => a.data.order - b.data.order)
-  .map((entry) => entry.data.name);
+  .map((entry) => entry.data.name)
+  .slice(0, OG_SKILL_LIMIT);
 ---
 
 <html lang="en" data-theme={theme}>

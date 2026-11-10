@@ -12,16 +12,17 @@ description: >-
 
 
   I owned the architecture of the content service at the application level and
-  built its core. I designed its event-driven pipeline, the REST API, and the
-  caching strategy behind it, and I wrote the indexing engine and the parser
-  that turned Drupal's raw HTML into a component-oriented model the frontend
-  could consume directly.
+  built its core. I designed its event-driven pipeline, the API, and the
+  caching strategy, and I wrote the parser that turned Drupal's HTML into a
+  component model the frontend could consume directly. From 2019 I also acted
+  as the team's technical lead and led the evaluation of API gateways for
+  enterprise architecture.
 
 
   It made dr.dk faster and more resilient, serving nearly a million articles
-  from a hard CDN cache that kept it available even if the systems behind
-  it went down. The decoupling proved durable, and the underlying CMS was
-  later replaced without rebuilding the frontend.
+  from a hard CDN cache that kept it available even if the systems behind it
+  went down. The decoupling proved durable, and the CMS was later replaced
+  without rebuilding the frontend.
 da:
   meta: DR
   description: >-
@@ -29,66 +30,61 @@ da:
     frontenden på dr.dk, et af Danmarks største nyhedssites, og gjorde sitet
     langsomt og svært at videreudvikle. Løsningen var en afkoblet
     headless-arkitektur med en frontend, der kunne udvikles uafhængigt af
-    systemerne bagved, og en content service, der forsynede den med
-    struktureret indhold.
+    systemerne bagved, og en content service, der gav den struktureret
+    indhold.
 
 
-    Jeg havde ansvaret for content servicens arkitektur på
-    applikationsniveau og byggede dens kerne. Jeg designede den eventdrevne
-    pipeline, REST-API'et og cachingstrategien, og jeg skrev
-    indekseringsmotoren og den parser, der omsatte Drupals rå HTML til en
-    komponentorienteret model, som frontenden kunne bruge direkte.
+    Jeg havde ansvar for applikationsarkitekturen i content servicen og
+    byggede dens kerne. Jeg designede den eventdrevne pipeline, API'et og
+    cachingstrategien og skrev den parser, der omsatte Drupals HTML til en
+    komponentmodel, som frontenden kunne bruge direkte. Fra 2019 fungerede jeg
+    også som teamets tech lead og ledede vurderingen af API-gateways for
+    enterprise-arkitekterne.
 
 
-    Det gjorde dr.dk hurtigere og mere robust. Næsten én million artikler
-    blev serveret fra en hård CDN-cache, der holdt sitet oppe, selv hvis
-    systemerne bagved gik ned. Afkoblingen viste sig holdbar, og det
-    underliggende CMS blev senere udskiftet, uden at frontenden skulle
-    bygges om.
+    Det gjorde dr.dk hurtigere og mere robust. Næsten én million artikler blev
+    serveret fra en hård CDN-cache, der holdt sitet oppe, selv hvis systemerne
+    bagved gik ned. Afkoblingen viste sig holdbar, og CMS'et blev senere
+    udskiftet, uden at frontenden skulle bygges om.
 technologies:
   - PHP
   - Symfony
   - REST
   - Open API
-  - JSON:API
-  - SQL
-  - Redis
-  - Docker
-  - Nginx
-  - CircleCI
   - Kong
   - Apigee
   - OAuth
+  - Redis
   - Elasticsearch
+  - Docker
+  - SQL
+  - JSON:API
+  - Nginx
+  - CircleCI
 concepts:
-  - Software Architecture
+  - Solution Architecture
   - API Design
+  - Legacy Modernization
   - Event-Driven Architecture
-  - Database Modeling
-  - Caching Strategies
-  - Distributed Systems
-  - Scalability
-  - High Availability
-  - Microservices Architecture
   - API Gateway
+  - Distributed Systems
+  - Caching Strategies
+  - High Availability
+  - Scalability
+  - Microservices Architecture
+  - Database Modeling
   - Authentication
   - Authorization
-  - Solution Architecture
-  - System Architecture
 practices:
-  - Behavior-Driven Development
-  - Test-Driven Development
-  - Test Automation
-  - Continuous Delivery
+  - Architecture Documentation
+  - Vendor Evaluation
   - Code Review
-  - Continuous Integration
-  - Continuous Deployment
-  - Unit Testing
-  - Integration Testing
-  - End-to-End Testing
-  - Agile Development
+  - Continuous Delivery
+  - Test Automation
+  - Test-Driven Development
+  - Behavior-Driven Development
   - DevOps
   - Monitoring
-  - Technical Writing
+  - Agile Development
 organizational:
   - Technical Leadership

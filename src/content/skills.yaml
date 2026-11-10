@@ -1,39 +1,23 @@
 featured:
-  - TypeScript
-  - Node.js
-  - React.js
+  - Solution Architecture
   - Technical Leadership
-  - Software Architecture
-  - Design Systems
+  - Identity & Access Management
+  - Information Security
+  - Distributed Systems
+  - TypeScript
 
 groups:
-  - name: Leadership & Architecture
+  - name: Architecture
     da:
-      name: Ledelse & arkitektur
+      name: Arkitektur
     skills:
-      - name: Technical Leadership
-        category: organizational
-        level: 4
-        years: 7
-        lastUsed: 2026
-        children:
-          - Stakeholder Management
-
-      - name: Engineering Management
-        category: organizational
-        level: 4
-        years: 5
-        lastUsed: 2026
-        children:
-          - Change Management
-
-      - name: Software Architecture
+      - name: Solution Architecture
         category: concept
         level: 4
-        years: 7
+        years: 9
         lastUsed: 2026
         children:
-          - Solution Architecture
+          - Software Architecture
           - System Architecture
 
       - name: Microservices Architecture
@@ -72,6 +56,75 @@ groups:
         years: 5
         lastUsed: 2026
 
+      - name: Architecture Documentation
+        category: practice
+        level: 4
+        years: 9
+        lastUsed: 2026
+        children:
+          - Architecture Decision Records
+          - Software Architecture Document
+          - UML
+          - Technical Writing
+
+      - name: Vendor Evaluation
+        category: practice
+        level: 3
+        years: 7
+        lastUsed: 2026
+
+      - name: Legacy Modernization
+        category: concept
+        level: 4
+        years: 9
+        lastUsed: 2026
+        children:
+          - Data Migration
+
+      - name: Architecture Decision Records
+        category: practice
+        hide: true
+
+      - name: Software Architecture Document
+        category: practice
+        hide: true
+
+      - name: UML
+        category: practice
+        hide: true
+
+      - name: Software Architecture
+        category: concept
+        hide: true
+
+      - name: System Architecture
+        category: concept
+        hide: true
+
+      - name: Data Migration
+        category: concept
+        hide: true
+
+  - name: Leadership
+    da:
+      name: Ledelse
+    skills:
+      - name: Technical Leadership
+        category: organizational
+        level: 4
+        years: 7
+        lastUsed: 2026
+        children:
+          - Stakeholder Management
+
+      - name: Engineering Management
+        category: organizational
+        level: 4
+        years: 5
+        lastUsed: 2026
+        children:
+          - Change Management
+
       - name: Mentoring
         category: organizational
         level: 4
@@ -86,179 +139,167 @@ groups:
 
       - name: Stakeholder Management
         category: organizational
-        hide: true
+        level: 4
+        years: 5
+        lastUsed: 2026
 
       - name: Change Management
         category: organizational
         hide: true
 
-      - name: Solution Architecture
-        category: concept
-        hide: true
-
-      - name: System Architecture
-        category: concept
-        hide: true
-
-  - name: Languages & Runtimes
+  - name: Security & Identity
     da:
-      name: Programmeringssprog & runtimes
+      name: Sikkerhed & identitet
     skills:
-      - name: TypeScript
+      - name: OAuth
         category: technology
         level: 5
-        years: 6
+        years: 7
         lastUsed: 2026
 
-      - name: JavaScript
+      - name: OpenID Connect
         category: technology
         level: 5
-        years: 15
+        years: 7
         lastUsed: 2026
 
-      - name: Node.js
-        category: technology
-        level: 5
-        years: 6
+      - name: GDPR
+        category: practice
+        level: 4
+        years: 4
         lastUsed: 2026
 
-      - name: PHP
-        category: technology
-        level: 5
-        years: 11
-        lastUsed: 2022
-
-      - name: C#
-        category: technology
+      - name: ISO 27001
+        category: practice
         level: 2
-        years: 1
-        lastUsed: 2022
+        years: 0
+        lastUsed: 2026
 
-      - name: .NET
-        category: technology
+      - name: NIS2
+        category: practice
         level: 2
-        years: 1
-        lastUsed: 2022
+        years: 0
+        lastUsed: 2026
 
-      - name: Go
-        category: technology
+      - name: DORA
+        category: practice
         level: 1
         years: 0
         lastUsed: 2026
 
-      - name: Bun
-        category: technology
-        level: 3
-        years: 1
-        lastUsed: 2026
-
-      - name: Deno
-        category: technology
-        level: 3
-        years: 1
-        lastUsed: 2026
-
-  - name: Frontend
-    da:
-      name: Frontend
-    skills:
-      - name: React.js
-        category: technology
-        level: 5
-        years: 6
-        lastUsed: 2026
-
-      - name: React Native
-        category: technology
-        level: 2
-        years: 3
-        lastUsed: 2026
-
-      - name: Next.js
-        category: technology
-        level: 3
-        years: 4
-        lastUsed: 2025
-
-      - name: Expo
-        category: technology
-        level: 2
-        years: 3
-        lastUsed: 2026
-
-      - name: Svelte
-        category: technology
+      - name: CIS Controls
+        category: practice
         level: 2
         years: 0
+        lastUsed: 2026
+
+      - name: Auth0
+        category: technology
+        level: 4
+        years: 5
         lastUsed: 2024
 
-      - name: Astro
-        category: technology
-        level: 3
-        years: 0
+      - name: Authentication
+        category: concept
+        level: 4
+        years: 7
+        lastUsed: 2026
+        children:
+          - Session Management
+          - Multi-Factor Authentication
+          - Federated Identity
+          - OAuth
+          - OpenID Connect
+          - Auth0
+          - MitID
+
+      - name: Authorization
+        category: concept
+        level: 4
+        years: 9
         lastUsed: 2026
 
-      - name: Design Systems
+      - name: Identity & Access Management
+        category: concept
+        level: 4
+        years: 7
+        lastUsed: 2026
+
+      - name: Single Sign-On
+        category: concept
+        level: 4
+        years: 7
+        lastUsed: 2026
+
+      - name: Information Security
         category: concept
         level: 4
         years: 4
         lastUsed: 2026
         children:
-          - Component Libraries
-          - Atomic Design
+          - Compliance
+          - Risk Management
+          - Vulnerability Management
+          - Cryptography
 
-      - name: Storybook
-        category: technology
-        level: 3
-        years: 4
-        lastUsed: 2026
-
-      - name: Server-Side Rendering
-        category: concept
-        level: 3
-        years: 4
-        lastUsed: 2026
-
-      - name: Accessibility
+      - name: OWASP
         category: practice
         level: 3
         years: 4
         lastUsed: 2026
 
-      - name: Internationalization
+      - name: Secrets Management
+        category: concept
+        level: 3
+        years: 9
+        lastUsed: 2026
+
+      - name: Transport Layer Security
+        category: technology
+        level: 3
+        years: 4
+        lastUsed: 2026
+
+      - name: Rate Limiting
+        category: concept
+        level: 3
+        years: 5
+        lastUsed: 2026
+
+      - name: MitID
+        category: technology
+        hide: true
+
+      - name: Session Management
+        category: concept
+        hide: true
+
+      - name: Multi-Factor Authentication
+        category: concept
+        hide: true
+
+      - name: Federated Identity
+        category: concept
+        hide: true
+
+      - name: Compliance
+        category: practice
+        hide: true
+
+      - name: Risk Management
         category: practice
         level: 3
         years: 4
         lastUsed: 2026
 
-      - name: Web Performance
+      - name: Vulnerability Management
         category: practice
         level: 3
-        years: 3
+        years: 4
         lastUsed: 2026
 
-      - name: CSS
-        category: technology
-        level: 5
-        years: 15
-        lastUsed: 2026
-        children:
-          - SASS
-
-      - name: HTML
-        category: technology
-        hide: true
-
-      - name: Component Libraries
+      - name: Cryptography
         category: concept
-        hide: true
-
-      - name: Atomic Design
-        category: concept
-        hide: true
-
-      - name: SASS
-        category: technology
         hide: true
 
   - name: Backend & APIs
@@ -335,46 +376,6 @@ groups:
       - name: GraphQL Schema Design
         category: concept
         hide: true
-
-  - name: Databases
-    da:
-      name: Databaser
-    skills:
-      - name: SQL
-        category: technology
-        level: 4
-        years: 15
-        lastUsed: 2026
-
-      - name: MongoDB
-        category: technology
-        level: 4
-        years: 5
-        lastUsed: 2026
-
-      - name: Redis
-        category: technology
-        level: 3
-        years: 9
-        lastUsed: 2026
-
-      - name: Elasticsearch
-        category: technology
-        level: 2
-        years: 9
-        lastUsed: 2026
-
-      - name: Caching Strategies
-        category: concept
-        level: 3
-        years: 9
-        lastUsed: 2026
-
-      - name: Database Modeling
-        category: concept
-        level: 4
-        years: 15
-        lastUsed: 2026
 
   - name: Cloud & DevOps
     da:
@@ -502,130 +503,342 @@ groups:
         category: concept
         hide: true
 
-  - name: Security & Identity
+  - name: Frontend
     da:
-      name: Sikkerhed & identitet
+      name: Frontend
     skills:
-      - name: OAuth
+      - name: React.js
         category: technology
         level: 5
-        years: 7
+        years: 6
         lastUsed: 2026
 
-      - name: OpenID Connect
+      - name: React Native
         category: technology
-        level: 5
-        years: 7
+        level: 2
+        years: 3
         lastUsed: 2026
 
-      - name: GDPR
-        category: practice
-        level: 4
+      - name: Next.js
+        category: technology
+        level: 3
         years: 4
+        lastUsed: 2025
+
+      - name: Expo
+        category: technology
+        level: 2
+        years: 3
         lastUsed: 2026
 
-      - name: Auth0
+      - name: Svelte
         category: technology
-        level: 4
-        years: 5
+        level: 2
+        years: 0
         lastUsed: 2024
 
-      - name: Authentication
-        category: concept
-        level: 4
-        years: 7
-        lastUsed: 2026
-        children:
-          - Session Management
-          - Multi-Factor Authentication
-          - Federated Identity
-          - OAuth
-          - OpenID Connect
-          - Auth0
-          - MitID
-
-      - name: Authorization
-        category: concept
-        level: 4
-        years: 9
+      - name: Astro
+        category: technology
+        level: 3
+        years: 0
         lastUsed: 2026
 
-      - name: Identity & Access Management
-        category: concept
-        level: 4
-        years: 7
-        lastUsed: 2026
-
-      - name: Single Sign-On
-        category: concept
-        level: 4
-        years: 7
-        lastUsed: 2026
-
-      - name: Information Security
+      - name: Design Systems
         category: concept
         level: 4
         years: 4
         lastUsed: 2026
         children:
-          - Compliance
-          - Risk Management
-          - Vulnerability Management
-          - Cryptography
+          - Component Libraries
+          - Atomic Design
 
-      - name: OWASP
-        category: practice
-        level: 3
-        years: 4
-        lastUsed: 2026
-
-      - name: Secrets Management
-        category: concept
-        level: 3
-        years: 9
-        lastUsed: 2026
-
-      - name: Transport Layer Security
+      - name: Storybook
         category: technology
         level: 3
         years: 4
         lastUsed: 2026
 
-      - name: Rate Limiting
+      - name: Server-Side Rendering
         category: concept
+        level: 3
+        years: 4
+        lastUsed: 2026
+
+      - name: Accessibility
+        category: practice
+        level: 3
+        years: 4
+        lastUsed: 2026
+
+      - name: Internationalization
+        category: practice
+        level: 3
+        years: 4
+        lastUsed: 2026
+
+      - name: Web Performance
+        category: practice
+        level: 3
+        years: 3
+        lastUsed: 2026
+
+      - name: CSS
+        category: technology
+        level: 5
+        years: 15
+        lastUsed: 2026
+        children:
+          - SASS
+
+      - name: Responsive Web Design
+        category: practice
+        level: 4
+        years: 10
+        lastUsed: 2026
+
+      - name: Search Engine Optimization
+        category: practice
+        level: 3
+        years: 4
+        lastUsed: 2026
+
+      - name: HTML
+        category: technology
+        hide: true
+
+      - name: Component Libraries
+        category: concept
+        hide: true
+
+      - name: Atomic Design
+        category: concept
+        hide: true
+
+      - name: SASS
+        category: technology
+        hide: true
+
+  - name: Databases
+    da:
+      name: Databaser
+    skills:
+      - name: SQL
+        category: technology
+        level: 4
+        years: 15
+        lastUsed: 2026
+
+      - name: MongoDB
+        category: technology
+        level: 4
+        years: 5
+        lastUsed: 2026
+
+      - name: Redis
+        category: technology
+        level: 3
+        years: 9
+        lastUsed: 2026
+
+      - name: Elasticsearch
+        category: technology
+        level: 2
+        years: 9
+        lastUsed: 2026
+
+      - name: Caching Strategies
+        category: concept
+        level: 3
+        years: 9
+        lastUsed: 2026
+
+      - name: Database Modeling
+        category: concept
+        level: 4
+        years: 15
+        lastUsed: 2026
+
+  - name: Languages & Runtimes
+    da:
+      name: Programmeringssprog & runtimes
+    skills:
+      - name: TypeScript
+        category: technology
+        level: 5
+        years: 6
+        lastUsed: 2026
+
+      - name: JavaScript
+        category: technology
+        level: 5
+        years: 15
+        lastUsed: 2026
+
+      - name: Node.js
+        category: technology
+        level: 5
+        years: 6
+        lastUsed: 2026
+
+      - name: PHP
+        category: technology
+        level: 5
+        years: 11
+        lastUsed: 2022
+
+      - name: C#
+        category: technology
+        level: 2
+        years: 1
+        lastUsed: 2022
+
+      - name: .NET
+        category: technology
+        level: 2
+        years: 1
+        lastUsed: 2022
+
+      - name: Go
+        category: technology
+        level: 1
+        years: 0
+        lastUsed: 2026
+
+      - name: Bun
+        category: technology
+        level: 3
+        years: 1
+        lastUsed: 2026
+
+      - name: Deno
+        category: technology
+        level: 3
+        years: 1
+        lastUsed: 2026
+
+  - name: Methodologies & Practices
+    da:
+      name: Metoder & praksis
+    skills:
+      - name: Agile Development
+        category: practice
+        level: 4
+        years: 9
+        lastUsed: 2026
+        children:
+          - Scrum
+
+      - name: Continuous Delivery
+        category: practice
+        level: 4
+        years: 9
+        lastUsed: 2026
+        children:
+          - Continuous Integration
+          - Continuous Deployment
+
+      - name: Test-Driven Development
+        category: practice
         level: 3
         years: 5
         lastUsed: 2026
 
-      - name: MitID
-        category: technology
-        hide: true
+      - name: Behavior-Driven Development
+        category: practice
+        level: 3
+        years: 5
+        lastUsed: 2022
 
-      - name: Session Management
-        category: concept
-        hide: true
+      - name: Code Review
+        category: practice
+        level: 4
+        years: 9
+        lastUsed: 2026
 
-      - name: Multi-Factor Authentication
-        category: concept
-        hide: true
-
-      - name: Federated Identity
-        category: concept
-        hide: true
-
-      - name: Compliance
+      - name: Technical Writing
         category: practice
         hide: true
 
-      - name: Risk Management
+      - name: AI Engineering
+        category: practice
+        level: 3
+        years: 0
+        lastUsed: 2026
+        children:
+          - Prompt Engineering
+          - Retrieval-Augmented Generation
+          - LLM Evaluation
+
+      - name: AI-Assisted Development
+        category: practice
+        level: 4
+        years: 2
+        lastUsed: 2026
+        children:
+          - Agentic Development
+
+      - name: Scrum
         category: practice
         hide: true
 
-      - name: Vulnerability Management
+      - name: Continuous Integration
         category: practice
         hide: true
 
-      - name: Cryptography
+      - name: Continuous Deployment
+        category: practice
+        hide: true
+
+      - name: Agentic Development
+        category: practice
+        hide: true
+
+      - name: Prompt Engineering
+        category: practice
+        level: 3
+        years: 0
+        lastUsed: 2026
+        hide: true
+
+      - name: Retrieval-Augmented Generation
+        category: concept
+        level: 3
+        years: 0
+        lastUsed: 2026
+        hide: true
+
+      - name: LLM Evaluation
+        category: practice
+        level: 2
+        years: 0
+        lastUsed: 2026
+        hide: true
+
+      - name: Product Analytics
+        category: practice
+        level: 3
+        years: 1
+        lastUsed: 2026
+        children:
+          - Event Tracking
+          - Behavioral Analytics
+          - Customer Data Platform
+
+      - name: A/B Testing
+        category: practice
+        level: 2
+        years: 2
+        lastUsed: 2017
+
+      - name: Event Tracking
+        category: practice
+        hide: true
+
+      - name: Behavioral Analytics
+        category: practice
+        hide: true
+
+      - name: Customer Data Platform
         category: concept
         hide: true
 
@@ -714,152 +927,4 @@ groups:
 
       - name: End-to-End Testing
         category: practice
-        hide: true
-
-  - name: Methodologies & Practices
-    da:
-      name: Metoder & praksis
-    skills:
-      - name: Agile Development
-        category: practice
-        level: 4
-        years: 9
-        lastUsed: 2026
-        children:
-          - Scrum
-
-      - name: Continuous Delivery
-        category: practice
-        level: 4
-        years: 9
-        lastUsed: 2026
-        children:
-          - Continuous Integration
-          - Continuous Deployment
-
-      - name: Test-Driven Development
-        category: practice
-        level: 3
-        years: 5
-        lastUsed: 2026
-
-      - name: Behavior-Driven Development
-        category: practice
-        level: 3
-        years: 5
-        lastUsed: 2022
-
-      - name: Code Review
-        category: practice
-        level: 4
-        years: 9
-        lastUsed: 2026
-
-      - name: Technical Writing
-        category: practice
-        level: 4
-        years: 9
-        lastUsed: 2026
-
-      - name: Responsive Web Design
-        category: practice
-        level: 4
-        years: 10
-        lastUsed: 2026
-
-      - name: Search Engine Optimization
-        category: practice
-        level: 3
-        years: 4
-        lastUsed: 2026
-
-      - name: AI Engineering
-        category: practice
-        level: 3
-        years: 0
-        lastUsed: 2026
-        children:
-          - Prompt Engineering
-          - Retrieval-Augmented Generation
-          - LLM Evaluation
-
-      - name: AI-Assisted Development
-        category: practice
-        level: 4
-        years: 2
-        lastUsed: 2026
-        children:
-          - Agentic Development
-
-      - name: Scrum
-        category: practice
-        hide: true
-
-      - name: Continuous Integration
-        category: practice
-        hide: true
-
-      - name: Continuous Deployment
-        category: practice
-        hide: true
-
-      - name: Agentic Development
-        category: practice
-        hide: true
-
-      - name: Prompt Engineering
-        category: practice
-        level: 3
-        years: 0
-        lastUsed: 2026
-        hide: true
-
-      - name: Retrieval-Augmented Generation
-        category: concept
-        level: 3
-        years: 0
-        lastUsed: 2026
-        hide: true
-
-      - name: LLM Evaluation
-        category: practice
-        level: 2
-        years: 0
-        lastUsed: 2026
-        hide: true
-
-  - name: Data & Analytics
-    da:
-      name: Data & analyse
-    skills:
-      - name: Product Analytics
-        category: practice
-        level: 3
-        years: 1
-        lastUsed: 2026
-        children:
-          - Event Tracking
-          - Behavioral Analytics
-          - Customer Data Platform
-
-      - name: A/B Testing
-        category: practice
-        level: 2
-        years: 2
-        lastUsed: 2017
-
-      - name: Event Tracking
-        category: practice
-        hide: true
-
-      - name: Behavioral Analytics
-        category: practice
-        hide: true
-
-      - name: Customer Data Platform
-        category: concept
-        hide: true
-
-      - name: Data Migration
-        category: concept
         hide: true

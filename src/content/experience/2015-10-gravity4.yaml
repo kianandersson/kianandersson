@@ -26,8 +26,8 @@ da:
   description: >-
     Virksomheden kørte på et ældre centralt CMS, der håndterede næsten alt i
     forretningen, fra kampagneopsætning og compliance til den økonomiske
-    rapportering bag regnskab og budgetter. Det var forretningskritisk, men
-    gammelt, og en del data blev stadig tastet ind i hånden.
+    rapportering bag regnskab og måltal. Det var forretningskritisk, men
+    gammelt, og noget data blev stadig tastet ind i hånden.
 
 
     Jeg kom med i det centrale team, der havde ansvaret for CMS'et, og
@@ -47,7 +47,6 @@ technologies:
   - PHP
   - SQL
   - JavaScript
-  - CSS
   - SASS
   - HTML
   - Nginx
