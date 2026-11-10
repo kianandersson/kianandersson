@@ -4,12 +4,10 @@ import styles from './AvailabilityStatus.module.css';
 
 export type AvailabilityStatusProps = {
   availableFrom: Date;
-  /** Current time in ms; passed in so the caller controls the clock. */
-  now: number;
 };
 
-export function AvailabilityStatus({ availableFrom, now }: AvailabilityStatusProps) {
-  const isAvailableNow = availableFrom.getTime() <= now;
+export function AvailabilityStatus({ availableFrom }: AvailabilityStatusProps) {
+  const isAvailableNow = availableFrom.getTime() <= Date.now();
 
   return (
     <span class={styles.root} data-state={isAvailableNow ? 'available' : 'future'}>

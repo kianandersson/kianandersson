@@ -7,7 +7,7 @@ const ONE_DAY = 24 * 60 * 60 * 1000;
 type Args = { availableFrom: number };
 
 function AvailabilityStatusDemo({ availableFrom }: Args) {
-  return <AvailabilityStatus availableFrom={new Date(availableFrom)} now={Date.now()} />;
+  return <AvailabilityStatus availableFrom={new Date(availableFrom)} />;
 }
 
 const meta: Meta<typeof AvailabilityStatusDemo> = {
