@@ -27,10 +27,10 @@ description: >-
   hands-on for the hardest issues.
 
 
-  The platform scaled to millions of users, with up to 500,000 logins during
-  major live events, and replaced a SaaS contract worth millions a year at a
-  fraction of the cost. Every user was migrated off the vendor and reconciled
-  against the old solution.
+  The platform scaled to millions of users, with peaks of 500,000 users
+  authenticating within minutes, and replaced a SaaS contract worth millions a
+  year at a fraction of the cost. Every user was migrated off the vendor and
+  reconciled against the old solution.
 da:
   meta: DR
   description: >-
@@ -58,9 +58,9 @@ da:
     mod reelle angreb og forblev hands-on på de sværeste opgaver.
 
 
-    Platformen skalerede til millioner af brugere med op til 500.000 logins
-    under store live-events og erstattede en SaaS-kontrakt til millioner om
-    året for en brøkdel af prisen. Alle brugere blev migreret fra
+    Platformen skalerede til millioner af brugere med spidsbelastninger på
+    500.000 logins på få minutter og erstattede en SaaS-kontrakt til millioner
+    om året for en brøkdel af prisen. Alle brugere blev migreret fra
     leverandøren og afstemt mod den gamle løsning.
 technologies:
   - TypeScript
