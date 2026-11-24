@@ -3,46 +3,59 @@ meta: Danish Broadcasting Corporation
 start: 2021-05-01
 end: 2022-05-31
 description: >-
-  The publishing platform behind dr.dk was spread across too many applications
-  on costly, ageing hosting. The CMS and API teams were brought together to
-  modernise it, and as tech lead of the merged team, I led the transformation.
+  The publishing platform behind dr.dk was spread across more than 20
+  applications on costly, ageing hosting platforms. The CMS and API teams were
+  merged to modernise it, and as tech lead of the merged team, I led the
+  transformation.
 
 
-  I forged two teams into one, with shared culture, a shared codebase, and
-  cross-system competence. Working with the enterprise architects, I set the
-  technical direction and designed a content aggregation service, a
-  system-agnostic, event-driven API that unified dr.dk's content behind a
-  single contract, and took it into production. In parallel I modernised the
-  team's foundation, leading its retraining on .NET, migrating it onto a new
-  in-house Kubernetes platform, and consolidating the application portfolio
-  into a lean core. I also represented the team in DR's architecture forums,
-  aligning cross-cutting efforts across teams.
+  I mapped the full system and hosting landscape and planned the transition
+  from the existing to the new solution, consolidating the portfolio into
+  fewer than five applications on a new in-house Kubernetes platform. In
+  parallel I led the team's retraining on .NET and forged two teams into one.
 
 
-  The result was a leaner, more cloud-mature platform, with fewer applications
-  to run and modern infrastructure replacing costly hosting.
+  Working with architects across the organisation, I designed and took into
+  production an event-driven content aggregation service that unified dr.dk's
+  content behind a single integration contract for frontends and other
+  backend systems alike. I developed a shared information model together with
+  frontend and backend architects and built reprocessing in from the start
+  with idempotency, dead-letter queues, and replay. In the organisation's
+  architecture forums I advised fellow architects on cross-cutting
+  architecture decisions.
+
+
+  The result was a leaner, cloud-native platform with far fewer applications
+  to run, modern infrastructure replacing costly hosting, and one contract
+  between dr.dk's content and the products that use it.
 da:
   meta: DR
   description: >-
-    Publiceringsplatformen bag dr.dk var spredt over for mange applikationer
-    på dyr og forældet hosting. CMS- og API-teamene blev lagt sammen for at
-    modernisere den, og som tech lead for det samlede team stod jeg i spidsen
-    for transformationen.
+    Publiceringsplatformen bag dr.dk var spredt over mere end 20 applikationer
+    på dyre og forældede hostingplatforme. CMS- og API-teamene blev lagt
+    sammen for at modernisere den, og som tech lead for det samlede team stod
+    jeg i spidsen for transformationen.
 
 
-    Jeg fik de to teams til at fungere som ét team med fælles kultur, fælles
-    kodebase og kompetencer på tværs af systemerne. Sammen med
-    enterprise-arkitekterne satte jeg den tekniske retning og designede og
-    idriftsatte en systemagnostisk, eventdrevet content aggregation service,
-    der samlede dr.dk's indhold bag én kontrakt. Samtidig moderniserede jeg
-    teamets tekniske grundlag. Jeg ledede omskolingen til .NET, flyttede
-    driften til en ny intern Kubernetes-platform og konsoliderede
-    applikationsporteføljen til en slank kerne. Jeg repræsenterede også teamet
-    i DR's arkitekturfora og koordinerede tværgående indsatser.
+    Jeg kortlagde det samlede system- og hostinglandskab og planlagde
+    overgangen fra eksisterende til ny løsning, hvor porteføljen blev
+    konsolideret til under fem applikationer på en ny intern
+    Kubernetes-platform. Samtidig ledede jeg teamets omskoling til .NET og
+    samlede de to teams til ét.
 
 
-    Resultatet blev en slankere og mere cloud-moden platform med færre
-    applikationer at drive og moderne infrastruktur i stedet for dyr hosting.
+    Sammen med arkitekter på tværs af organisationen designede og
+    idriftsatte jeg en eventdrevet content aggregation service, der samlede
+    dr.dk's indhold bag én integrationskontrakt for både frontends og andre
+    backend-systemer. Jeg udviklede en fælles informationsmodel sammen med
+    frontend- og backend-arkitekter og byggede genbehandling ind fra start med
+    idempotens, dead letter-køer og replay. I organisationens arkitekturfora
+    gav jeg sparring til andre arkitekter på tværgående arkitekturbeslutninger.
+
+
+    Resultatet blev en slankere, cloud-native platform med langt færre
+    applikationer at drive, moderne infrastruktur i stedet for dyr hosting og
+    én kontrakt mellem dr.dk's indhold og de produkter, der bruger det.
 technologies:
   - PHP
   - Symfony
@@ -96,6 +109,7 @@ practices:
   - Monitoring
   - Agile Development
 organizational:
+  - Stakeholder Management
   - Technical Hiring
   - Engineering Management
   - Technical Leadership
