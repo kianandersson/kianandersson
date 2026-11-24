@@ -43,7 +43,7 @@ const EXPERIENCE_DIR = join(REPO_ROOT, 'src/content/experience');
 
 // Experience descriptions are kept short and scannable. Anything longer reads
 // as a wall of text on the rendered CV. Keep this in sync with the editorial rule.
-const MAX_DESCRIPTION_LENGTH = 1000;
+const MAX_DESCRIPTION_LENGTH = 1500;
 
 function loadExperienceFiles(): { file: string; data: ExperienceFile }[] {
   return readdirSync(EXPERIENCE_DIR)

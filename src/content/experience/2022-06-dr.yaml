@@ -3,48 +3,65 @@ meta: Danish Broadcasting Corporation
 start: 2022-06-01
 end: 2026-05-31
 description: >-
-  When login became a strategic cornerstone, the SaaS identity provider
-  couldn't scale affordably or meet the performance, UX, and protocol
-  requirements. I analysed the requirements, built the business case and
-  roadmap for an in-house platform, and led the transformation.
+  When login became a strategic cornerstone, the SaaS identity provider that
+  more than 15 systems depended on couldn't scale affordably or meet the
+  performance, UX, and protocol requirements.
 
 
-  I built the platform and the six-person team behind it from scratch. I set
-  the technical direction, designed the architecture, and implemented the
-  foundation as an OpenID Connect server with an accessible interface. I owned
-  the security risk assessment and DPIA and led the hardening against real
-  attacks. As the platform matured, my focus shifted toward mentoring and
-  reviewing as the team took ownership, though I stayed hands-on for the
-  hardest and most time-critical issues.
+  I weighed the alternatives, from switching vendor to building in-house, on
+  cost and risk and wrote the decision paper for management and the steering
+  committee, who followed my recommendation to build. I then built the
+  platform and the six-person team behind it from scratch, designed the
+  architecture, and implemented the foundation as an OpenID Connect server
+  with an accessible interface.
+
+
+  As architect across the login area, I set the direction for how other teams
+  integrated, established a shared information model, clarified data
+  ownership in light of GDPR, and defined the integration contracts, including
+  an event-based deletion protocol across every product. I set the
+  non-functional requirements as SLAs and SLOs, backed by monitoring,
+  runbooks, and disaster recovery able to rebuild the entire platform, drove
+  the test strategy, and recorded key decisions as ADRs. I owned the security
+  risk assessment and DPIA, led the hardening against real attacks, and stayed
+  hands-on for the hardest issues.
 
 
   The platform scaled to millions of users, with up to 500,000 logins during
   major live events, and replaced a SaaS contract worth millions a year at a
-  fraction of the infrastructure cost. Every user was migrated off the vendor
-  with zero downtime.
+  fraction of the cost. Every user was migrated off the vendor and reconciled
+  against the old solution.
 da:
   meta: DR
   description: >-
-    Da login blev en strategisk hjørnesten, kunne SaaS-identitetsudbyderen
-    hverken skalere til en fornuftig pris eller leve op til kravene til
-    performance, UX og protokoller. Jeg analyserede kravene, lavede business
-    case og roadmap for en egenudviklet platform og stod i spidsen for
-    transformationen.
+    Da login blev en strategisk hjørnesten, kunne SaaS-identitetsudbyderen,
+    som mere end 15 systemer afhang af, hverken skalere til en fornuftig pris
+    eller leve op til kravene til performance, UX og protokoller.
 
 
-    Jeg byggede platformen og det seksmandsstærke team op fra bunden. Jeg
-    satte den tekniske retning, designede arkitekturen og byggede fundamentet
-    som en OpenID Connect-server med en tilgængelig brugerflade. Jeg stod for
-    sikkerhedsrisikovurdering og DPIA og ledede hærdningen mod reelle angreb.
-    Efterhånden som teamet tog ejerskab, skiftede mit fokus til mentoring og
-    reviews, men jeg var fortsat hands-on på de sværeste og mest tidskritiske
-    opgaver.
+    Jeg vurderede alternativerne, fra leverandørskifte til egenudvikling, ud
+    fra økonomi og risiko og skrev beslutningsoplægget til ledelse og
+    styregruppe, som fulgte min anbefaling om at bygge selv. Derefter byggede
+    jeg platformen og det seksmandsstærke team bag den op fra bunden,
+    designede arkitekturen og implementerede fundamentet som en OpenID
+    Connect-server med en tilgængelig brugerflade.
+
+
+    Som arkitekt på tværs af login-området satte jeg retningen for, hvordan
+    andre teams integrerede, etablerede en fælles informationsmodel, afklarede
+    dataejerskab i lyset af GDPR og definerede integrationskontrakterne,
+    herunder en eventbaseret sletteprotokol på tværs af alle produkter. Jeg
+    fastlagde de ikke-funktionelle krav som SLA'er og SLO'er understøttet af
+    overvågning, runbooks og disaster recovery, der kan genetablere hele
+    platformen, drev teststrategien og dokumenterede centrale beslutninger i
+    ADR'er. Jeg stod for sikkerhedsrisikovurdering og DPIA, ledede hærdningen
+    mod reelle angreb og forblev hands-on på de sværeste opgaver.
 
 
     Platformen skalerede til millioner af brugere med op til 500.000 logins
-    under store live-events. Den erstattede en SaaS-kontrakt til millioner
-    om året, og infrastrukturen kostede kun en brøkdel. Alle brugere blev
-    migreret fra leverandøren uden nedetid.
+    under store live-events og erstattede en SaaS-kontrakt til millioner om
+    året for en brøkdel af prisen. Alle brugere blev migreret fra
+    leverandøren og afstemt mod den gamle løsning.
 technologies:
   - TypeScript
   - Node.js
@@ -132,6 +149,7 @@ practices:
   - Event Tracking
   - Behavioral Analytics
 organizational:
+  - Stakeholder Management
   - Engineering Management
   - Technical Leadership
   - Technical Hiring
